@@ -1,0 +1,45 @@
+.background:hover{
+    cursor: pointer;
+    transition: transform 0.2s;
+    transform: scale(1.4) rotateZ(-10deg);
+}
+
+.background a {
+    color: black
+}
+
+.background a:hover{
+    color: black
+    
+}
+
+a {
+    text-decoration: none;
+}
+
+.home {
+    color: black;
+    margin-top: 60px;
+}
+
+h1 {
+    font-size: 60px;
+    font-family: 'Mate SC', serif;
+}
+
+  @media (min-width: 764px) and (max-width: 1240px){
+      .responsive{
+          flex-direction: column;
+      }
+  }
+
+@media (min-width: 601px){
+    .card {
+        width: 600px;
+    }
+}
+
+body{ 
+    background-color: #faf0e6
+}
+

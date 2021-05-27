@@ -1,0 +1,79 @@
+<div class="row">
+    {{#with costHours}}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/find">Find</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Edit {{project_id}}</li>
+        </ol>
+    </nav>
+    <form action='/find/costs_hours/{{id}}' method="POST">
+        <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
+            <h5 style="background-color: #bf5700;" class="card-header">Costs &amp; Hours</h5>
+            <div class="card-body w-100 text-end">
+                <table id="tableData" class="table text-light text-center mt-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">Project ID</th>
+                            <th scope="col">Implementation or Annual</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Costs</th>
+                            <th scope="col">Hours</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <input disabled value="{{project_id}}" name="project_id" type="text"
+                                        class="form-control">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <div class="input-group mb-3">
+                                        <select name="imp_or_ann" class="form-select" id="inputGroupSelect01">
+                                            <option disabled selected>{{imp_or_ann}}</option>
+                                            <option>Implementation</option>
+                                            <option>Annual</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <div class="input-group mb-3">
+                                        <select name="category" class="form-select" id="inputGroupSelect01">
+                                            <option disabled selected>{{category}}</option>
+                                            <option>EMO</option>
+                                            <option>Analysts</option>
+                                            <option>Maintenance</option>
+                                            <option>ETS</option>
+                                            <option>BOT</option>
+                                            <option>OtherUT</option>
+                                            <option>Materials</option>
+                                            <option>Non-UT Contract</option>
+                                            <option>Contingency</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <input value="{{cost}}" name="cost" type="text" class="form-control">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <input value="{{hours}}" name="hours" type="text" class="form-control">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-success text-light">Submit</button>
+            </div>
+        </div>
+    </form>
+    {{/with}}
+</div>

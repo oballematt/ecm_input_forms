@@ -1,0 +1,172 @@
+
+
+<div class="row">
+    {{#with metadata}}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/find">Find</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Edit {{project_id}}</li>
+        </ol>
+    </nav>
+    <form action="/find/{{project_id}}" method="POST">
+        <div class="card border-secondary mt-3 w-100 text-light" style="background-color: #333f48;">
+            <h5 style="background-color: #bf5700;" class="card-header">Project Info</h5>
+            <div class="card-body text-black">
+                <section class="row">
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="inputGroupSelect01">Building:</label>
+                            <select name="building" class="form-select" id="inputGroupSelect01">
+                                <option disabled selected>{{building}}</option>
+                                {{/with}}
+                                {{#each bldgs}}
+                                <option>{{acronym}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        {{#with metadata}}
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="inputGroupSelect01">Measure Type:</label>
+                            <select name="measure_type" class="form-select" id="inputGroupSelect01">
+                                <option disabled selected>{{measure_type}}</option>
+                                <option>BAS Upgrade</option>
+                                <option>BAS Upgrade &amp; Scheduling</option>
+                                <option>Data Center</option>
+                                <option>EBCx</option>
+                                <option>Holiday Scheduling</option>
+                                <option>Lighting</option>
+                                <option>Optimum Energy</option>
+                                <option>Scheduling</option>
+                                <option>Valves</option>
+                                <option>VFD Exhaust Fan</option>
+                                <option>VFD Supply Dan</option>
+                                <option>Water</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="inputGroupSelect01">Status:</label>
+                            <select name="status" class="form-select" id="inputGroupSelect01">
+                                <option disabled selected>{{status}}</option>
+                                <option>0-Cancelled</option>
+                                <option>1-Planning</option>
+                                <option>2-In Progress</option>
+                                <option>3-In Reporting Period</option>
+                                <option>5-Completed</option>
+                            </select>
+                        </div>
+                        <div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Project Fiscal
+                                        Year:</span>
+                                </div>
+                                <input disabled name="fiscal_year" value={{fiscal_year}} type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-5">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Start Date:</span>
+                            </div>
+                            <input placeholder="mm/dd/yy" value={{baseline_start_date}} name="baseline_start_date"
+                                type="text" class="form-control" />
+                            <input placeholder="mm/yy/dd" value={{reporting_period_start_date}}
+                                name="reporting_period_start_date" type="text" class="form-control" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default"># of Days:</span>
+                            </div>
+                            <input placeholder="mm/dd/yy" value={{length_baseline_period_days}}
+                                name="length_baseline_period_days" type="text" class="form-control" />
+                            <input placeholder="mm/dd/yy" value={{length_reporting_period_days}}
+                                name="length_reporting_period_days" type="text" class="form-control" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">End Date:</span>
+                            </div>
+                            <input disabled name="baseline_end_date" value={{baseline_end_date}} type="text"
+                                class="form-control" />
+                            <input disabled name="reporting_period_end_date" value={{reporting_period_end_date}} type="text"
+                                class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-5">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Staff Lead:</span>
+                            </div>
+                            <select name="staff_lead" class="form-select" id="inputGroupSelect01">
+                                <option disabled selected>{{staff_lead}}</option>
+                                <option>Adam Keeling</option>
+                                <option>Amanda Berens</option>
+                                <option>Buddy Bishop</option>
+                                <option>Dave Cooper</option>
+                                <option>Grace Hsieh</option>
+                                <option>John Milton</option>
+                                <option>Matt Stevens</option>
+                                <option>Meagan Jones</option>
+                                <option>Pat Mazur</option>
+                                <option>Richard Shearman</option>
+                                <option>Travis Isakson</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Staff Support:</span>
+                            </div>
+                            <select name="staff_colead" class="form-select" id="inputGroupSelect01">
+                                <option disabled selected>{{staff_colead}}</option>
+                                <option>Adam Keeling</option>
+                                <option>Amanda Berens</option>
+                                <option>Buddy Bishop</option>
+                                <option>Dave Cooper</option>
+                                <option>Grace Hsieh</option>
+                                <option>John Milton</option>
+                                <option>Matt Stevens</option>
+                                <option>Meagan Jones</option>
+                                <option>Pat Mazur</option>
+                                <option>Richard Shearman</option>
+                                <option>Travis Isakson</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Analyst:</span>
+                            </div>
+                            <select name="analyst" class="form-select" id="inputGroupSelect01">
+                                <option disabled selected>{{analyst}}</option>
+                                <option>Jeff McComas</option>
+                                <option>Josh Butler</option>
+                                <option>Laura Chiasson</option>
+                                <option>Terrell McRee</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+                <section class="input-group mt-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Project Description:</span>
+                    </div>
+                    <textarea rows='5' name="project_description" class="form-control"
+                        aria-label="With textarea">{{project_description}}</textarea>
+                </section>
+                <section class="input-group mt-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Nonenergy Benefits:</span>
+                    </div>
+                    <textarea rows='2' name="nonenergy_benefits" class="form-control"
+                        aria-label="With textarea">{{nonenergy_benefits}}</textarea>
+                </section>
+                {{/with}}
+                <div class='text-end text-white mt-3'>
+                    <button class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

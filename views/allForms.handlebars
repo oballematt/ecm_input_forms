@@ -1,0 +1,320 @@
+<div class="row">
+    <div class="col-md-12">
+        <nav class='mt-5' aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Find</li>
+            </ol>
+        </nav>
+        <form action="/find" method="POST">
+            <div class="input-group mt-5">
+                <input type="text" name="project_id" class="form-control" placeholder="Project ID"
+                    aria-label="Project ID" aria-describedby="button-addon2">
+                <button class="btn btn-success" type="submit" id="button-addon2">Search</button>
+            </div>
+            <div class="card border-secondary mt-3 w-100 text-light" style="background-color: #333f48;">
+                <h5 style="background-color: #bf5700;" class="card-header">Project Info</h5>
+                <div class="card-body text-black">
+                    <section class="row">
+                        <div class="col-md-4">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Building:</label>
+                                <select disabled name="building" class="form-select" id="inputGroupSelect01">
+                                    {{#with metadata}}
+                                    <option selected>{{building}}</option>
+                                    {{/with}}
+                                </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Measure Type:</label>
+                                <select disabled name="measure_type" class="form-select" id="inputGroupSelect01">
+                                    {{#with metadata}}
+                                    <option selected>{{measure_type}}</option>
+                                    {{/with}}
+                                </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Status:</label>
+                                <select disabled name="status" class="form-select" id="inputGroupSelect01">
+                                    {{#with metadata}}
+                                    <option selected>{{status}}</option>
+                                    {{/with}}
+                                </select>
+                            </div>
+                            <div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">Project Fiscal
+                                            Year:</span>
+                                    </div>
+                                    {{#with metadata}}
+                                    <input disabled name="fiscal_year" value={{fiscal_year}} type="text"
+                                        class="form-control">
+                                    {{/with}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-5">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Start Date:</span>
+                                </div>
+                                {{#with metadata}}
+                                <input disabled placeholder="mm/dd/yy" value={{baseline_start_date}}
+                                    name="baseline_start_date" type="text" class="form-control" />
+                                <input disabled placeholder="mm/yy/dd" value={{reporting_period_start_date}}
+                                    name="reporting_period_start_date" type="text" class="form-control" />
+                                {{/with}}
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default"># of Days:</span>
+                                </div>
+                                {{#with metadata}}
+                                <input disabled placeholder="mm/dd/yy" value={{length_baseline_period_days}}
+                                    name="length_baseline_period_days" type="text" class="form-control" />
+                                <input disabled placeholder="mm/dd/yy" value={{length_reporting_period_days}}
+                                    name="length_reporting_period_days" type="text" class="form-control" />
+                                {{/with}}
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">End Date:</span>
+                                </div>
+                                {{#with metadata}}
+                                <input disabled name="baseline_end_date" value={{baseline_end_date}} type="text"
+                                    class="form-control" />
+                                <input disabled name="reporting_period_end_date" value={{reporting_period_end_date}}
+                                    type="text" class="form-control" />
+                                {{/with}}
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-5">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Staff Lead:</span>
+                                </div>
+                                <select disabled name="staff_lead" class="form-select" id="inputGroupSelect01">
+                                    {{#with metadata}}
+                                    <option selected>{{staff_lead}}</option>
+                                    {{/with}}
+                                </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Staff Support:</span>
+                                </div>
+                                <select disabled name="staff_colead" class="form-select" id="inputGroupSelect01">
+                                    {{#with metadata}}
+                                    <option selected>{{staff_colead}}</option>
+                                    {{/with}}
+                                </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Analyst:</span>
+                                </div>
+                                <select disabled name="analyst" class="form-select" id="inputGroupSelect01">
+                                    {{#with metadata}}
+                                    <option selected>{{analyst}}</option>
+                                    {{/with}}
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="input-group mt-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Project Description:</span>
+                        </div>
+                        {{#with metadata}}
+                        <textarea disabled rows='5' name="project_description" class="form-control"
+                            aria-label="With textarea">{{project_description}}</textarea>
+                        {{/with}}
+                    </section>
+                    <section class="input-group mt-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Nonenergy Benefits:</span>
+                        </div>
+                        {{#with metadata}}
+                        <textarea disabled rows='2' name="nonenergy_benefits" class="form-control"
+                            aria-label="With textarea">{{nonenergy_benefits}}</textarea>
+                        {{/with}}
+                    </section>
+                    <div class='text-end text-white mt-3'>
+                        {{#with metadata}}
+                        <a href="/find/{{project_id}}"><button type="button" class='btn btn-warning'>Edit</button></a>
+                        <a href="/delete/{{project_id}}"><button type="button"
+                                class='btn btn-danger'>Delete</button></a>
+                        {{/with}}
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row responsive">
+                <section class="col-md-6">
+                    <div class="card border-secondary text-light mb-3" style="background-color: #333f48;">
+                        <h5 style="background-color: #bf5700;" class="card-header">Costs &amp; Hours</h5>
+                        <div class="card-body">
+                            <table class="table text-light">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Project ID</th>
+                                        <th scope="col">Implementation or Annual</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">$Cost</th>
+                                        <th scope="col">Hours</th>
+                                        <th scope="col">Edit</th>
+                                        <th scope="col">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each costsHours}}
+                                    <tr>
+                                        <td>{{project_id}}</td>
+                                        <td>{{imp_or_ann}}</td>
+                                        <td>{{category}}</td>
+                                        <td>{{cost}}</td>
+                                        <td>{{hours}}</td>
+                                        <td>
+                                            <a href="/find/costs_hours/{{id}}">
+                                                <button type="button" class='btn btn-warning'><i
+                                                        class="fas fa-edit"></i></button>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="/delete/costs_hours/{{id}}">
+                                                <button type="button" class='btn btn-danger'><i
+                                                        class="fas fa-trash-alt"></i></button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <section class="col-md-6">
+                    <div class="card border-secondary text-light" style="background-color: #333f48">
+                        <h5 style="background-color: #bf5700;" class="card-header">Fundings</h5>
+                        <div class="card-body">
+                            <table class="table text-light">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Project ID</th>
+                                        <th scope="col">Source</th>
+                                        <th scope="col">$ Implementation</th>
+                                        <th scope="col">$ Annual</th>
+                                        <th scope="col">Edit</th>
+                                        <th scope="col">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each funding}}
+                                    <tr>
+                                        <td>{{project_id}}</td>
+                                        <td>{{source}}</td>
+                                        <td>{{implementation}}</td>
+                                        <td>{{annual}}</td>
+                                        <td>
+                                            <a href="/find/funding/{{id}}" class='btn btn-warning'>
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="/delete/funding/{{id}}" class='btn btn-danger'>
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <hr>
+            <div class="row responsive">
+                <section class="col-md-6">
+                    <div class="card border-secondary text-light" style="background-color: #333f48">
+                        <h5 style="background-color: #bf5700;" class="card-header">Baseline</h5>
+                        <div class="card-body">
+                            <table class="table text-light">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Project ID</th>
+                                        <th scope="col">Commodity</th>
+                                        <th scope="col">Unit</th>
+                                        <th scope="col">Value</th>
+                                        <th scope="col">Edit</th>
+                                        <th scope="col">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each baseline}}
+                                    <tr>
+                                        <td>{{project_id}}</td>
+                                        <td>{{commodity}}</td>
+                                        <td>{{unit}}</td>
+                                        <td>{{value}}</td>
+                                        <td>
+                                            <a href="/find/baseline/{{id}}" class='btn btn-warning'>
+                                                <i class="fas fa-edit"></i>
+                                        </td>
+                                        <td>
+                                            <a href="/delete/baseline/{{id}}" class='btn btn-danger'>
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <section class="col-md-6">
+                    <div class="card border-secondary text-light mb-3" style="background-color: #333f48" ;>
+                        <h5 style="background-color: #bf5700;" class="card-header">Savings</h5>
+                        <div class="card-body">
+                            <table class="table text-light">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Project ID</th>
+                                        <th scope="col">Phase</th>
+                                        <th scope="col">Commodity</th>
+                                        <th scope="col">Unit</th>
+                                        <th scope="col">$ Value</th>
+                                        <th scope="col">Edit</th>
+                                        <th scope="col">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each savings}}
+                                    <tr>
+                                        <td>{{project_id}}</td>
+                                        <td>{{phase}}</td>
+                                        <td>{{commodity}}</td>
+                                        <td>{{unit}}</td>
+                                        <td>{{value}}</td>
+                                        <td>
+                                            <a href="/find/savings/{{id}}" class='btn btn-warning'>
+                                                <i class="fas fa-edit"></i>
+                                        </td>
+                                        <td>
+                                            <a href="/delete/savings/{{id}}" class='btn btn-danger'>
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </form>
+    </div>
+</div>
