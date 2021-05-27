@@ -19,7 +19,7 @@ module.exports = {
         } catch (error) {
 
             console.error(error.message);
-            return res.status(500).json(error);
+            return res.render('error');
             
         }
     },
