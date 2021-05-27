@@ -1,6 +1,6 @@
 $(document).ready(() => {
 
-    $('#addRow').click(function(e) {
+    $('#tableData').on('click', 'button.addRow', function(e) {
         const cloneRow = $('#tableData tbody tr').first();
         e.preventDefault();
         let data = {
@@ -22,7 +22,7 @@ $(document).ready(() => {
 
     })
 
-    $('#addRowF').click(function(e) {
+    $('#tableData').on('click', 'button.addRowF', function(e) {
         const cloneRow = $('#tableData tbody tr').first();
         e.preventDefault();
         let data = {
@@ -43,7 +43,7 @@ $(document).ready(() => {
 
     })
 
-    $('#addRowB').click(function(e) {
+    $('#tableData').on('click', 'button.addRowB', function(e) {
         const cloneRow = $('#tableData tbody tr').first();
         e.preventDefault();
         let data = {
@@ -64,7 +64,7 @@ $(document).ready(() => {
 
     })
 
-    $('#addRowS').click(function(e) {
+    $('#tableData').on('click', 'button.addRowS', function(e) {
         const cloneRow = $('#tableData tbody tr').first();
         e.preventDefault();
         let data = {
