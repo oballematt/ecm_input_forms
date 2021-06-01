@@ -8,7 +8,7 @@ $(document).ready(() => {
         localStorage.setItem('pid', $(".pid").val())
     })
 
-    $('#formData').on('click', 'button.addRow', function (e) {
+    $('#tableData').on('click', 'button.addRow', function (e) {
         const cloneRow = $('#tableData tbody tr').first();
         e.preventDefault();
         let errors = [];
