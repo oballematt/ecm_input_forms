@@ -1,8 +1,5 @@
 $(document).ready(() => {
 
-    const pid = []
-    $(".project_id").val(pid)
-
     $('#tableData').on('click', 'button.addRow', function(e) {
         const cloneRow = $('#tableData tbody tr').first();
         e.preventDefault();
@@ -21,7 +18,6 @@ $(document).ready(() => {
             cloneRow.clone().appendTo('#tableData tbody').find(".cost, .hours").val(''),
             $("#next").removeAttr('disabled'),
             $("#link").attr('href', '/fundings'),
-            pid.push($(".project_id").val())
         )
     })
 
