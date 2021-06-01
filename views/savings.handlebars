@@ -9,6 +9,7 @@
         <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
             <h5 style="background-color: #bf5700;" class="card-header">Savings</h5>
             <div class="card-body w-100 text-end">
+                 <div id="errors" class="text-start"></div>
                 <table id="tableData" class="table text-light text-center mt-3">
                     <thead>
                         <tr>
@@ -23,7 +24,7 @@
                         <tr>
                             <td>
                                 <div class="input-group mb-3">
-                                    <input name="project_id" type="text" class="form-control project_id">
+                                    <input disabled name="project_id" type="text" class="form-control project_id">
                                 </div>
                             </td>
                             <td>
@@ -84,7 +85,7 @@
                     <a href='/baseline'><button type="button" class='btn btn-warning'>Back</button></a>
                 </div>
                 <div class="col-6 text-end">
-                    <button disabled type="button" id="next" class="btn btn-success" data-bs-toggle="modal"
+                    <button disabled type="button" id="finish" class="btn btn-success" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
                         Finish
                     </button>

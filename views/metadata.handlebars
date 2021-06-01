@@ -8,12 +8,12 @@
     <div class="card border-secondary mb-3 w-100 text-light" style="background-color: #333f48;">
         <h5 style="background-color: #bf5700;" class="card-header">Project Info</h5>
         <div class="card-body text-black">
-             {{#each errors}}
-            <div class="error">
+            {{#each errors}}
+            <div class="my-2" style="border: 1px solid black;">
                 <p>{{text}}</p>
             </div>
             {{/each}}
-            <form action="/metadata" method="POST">
+            <form id="formData" action="/metadata" method="POST">
                 <div class="row">
                     <div class="col-md-4">
                         <div>
@@ -21,12 +21,12 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroup-sizing-default">Project ID:</span>
                                 </div>
-                                <input name="project_id" type="text" id="pid" class="form-control">
+                                <input name="project_id" type="text" id="pid" class="form-control pid">
                             </div>
                         </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="inputGroupSelect01">Building:</label>
-                            <select name="building" class="form-select" id="inputGroupSelect01">
+                            <select id="building" name="building" class="form-select building" id="inputGroupSelect01">
                                 <option disabled selected>Choose...</option>
                                 {{#each bldgs}}
                                 <option>{{acronym}}</option>
@@ -35,7 +35,7 @@
                         </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="inputGroupSelect01">Measure Type:</label>
-                            <select name="measure_type" class="form-select" id="inputGroupSelect01">
+                            <select id="measure_type" name="measure_type" class="form-select measure_type" id="inputGroupSelect01">
                                 <option disabled selected>Choose...</option>
                                 <option>AHU DDC</option>
                                 <option>AHU DDC &amp; Scheduling</option>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="inputGroupSelect01">Status:</label>
-                            <select name="status" class="form-select" id="inputGroupSelect01">
+                            <select id="status" name="status" class="form-select status" id="inputGroupSelect01">
                                 <option disabled selected>Choose...</option>
                                 <option>0-Cancelled</option>
                                 <option>1-Planning</option>
@@ -71,18 +71,19 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">Start Date:</span>
                             </div>
-                            <input placeholder="mm/dd/yy" name="baseline_start_date" type="text" class="form-control" />
-                            <input placeholder="mm/dd/yy" name="reporting_period_start_date" type="text"
-                                class="form-control" />
+                            <input id="baseline_start" placeholder="mm/dd/yy" name="baseline_start_date" type="text"
+                                class="form-control baseline_start" />
+                            <input id="reporting_start" placeholder="mm/dd/yy" name="reporting_period_start_date"
+                                type="text" class="form-control reporting_start" />
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default"># of Days:</span>
                             </div>
-                            <input name="length_baseline_period_days" type="text"
-                                class="form-control" />
-                            <input name="length_reporting_period_days" type="text"
-                                class="form-control" />
+                            <input id="baseline_length" name="length_baseline_period_days" type="text"
+                                class="form-control baseline_length" />
+                            <input id="reporting_length" name="length_reporting_period_days" type="text"
+                                class="form-control reporting_length" />
                         </div>
                     </div>
                     <div class="col-md-4 mt-5">
@@ -90,7 +91,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">Staff Lead:</span>
                             </div>
-                            <select name="staff_lead" class="form-select" id="inputGroupSelect01">
+                            <select id="staff_lead" name="staff_lead" class="form-select staff_lead" id="inputGroupSelect01">
                                 <option disbaled selected>Choose...</option>
                                 <option>Adam Keeling</option>
                                 <option>Amanda Berens</option>
@@ -109,7 +110,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">Staff Support:</span>
                             </div>
-                            <select name="staff_colead" class="form-select" id="inputGroupSelect01">
+                            <select id="staff_colead" name="staff_colead" class="form-select staff_colead" id="inputGroupSelect01">
                                 <option disbaled selected>Choose...</option>
                                 <option>Adam Keeling</option>
                                 <option>Amanda Berens</option>
@@ -128,7 +129,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">Analyst:</span>
                             </div>
-                            <select name="analyst" class="form-select" id="inputGroupSelect01">
+                            <select id="analyst" name="analyst" class="form-select analyst" id="inputGroupSelect01">
                                 <option disabled selected>Choose...</option>
                                 <option>Jeff McComas</option>
                                 <option>Josh Butler</option>
@@ -142,19 +143,19 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Project Description:</span>
                     </div>
-                    <textarea rows='5' name="project_description" class="form-control"
+                    <textarea id="project_description" rows='5' name="project_description" class="form-control project_description"
                         aria-label="With textarea"></textarea>
                 </div>
                 <div class="input-group mt-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Nonenergy Benefits:</span>
                     </div>
-                    <textarea rows='2' name="nonenergy_benefits" class="form-control"
+                    <textarea id="nonenergy_benefits" rows='2' name="nonenergy_benefits" class="form-control nonenergy_benefits"
                         aria-label="With textarea"></textarea>
                 </div>
                 <div class="text-end">
                     <button type="submit" style="background-color: #bf5700;"
-                        class="btn text-light btn-warning  mt-3">Next</button>
+                        class="btn text-light btn-warning data mt-3">Next</button>
                 </div>
             </form>
         </div>
