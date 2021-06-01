@@ -16,6 +16,16 @@
             try {   
                 const bldgs = await Bldg_metadata.findAll();
 
+                const pid = await Prjt_metadata.findAll({
+                    where: {
+                        project_id
+                    }
+                })
+
+                if(pid.length !==0) {
+                    errors.push({text: 'Project ID already exists'})
+                }
+
                 if(!project_id) {
                     errors.push({text: 'Please add a project ID' });
                   }
