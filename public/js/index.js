@@ -111,10 +111,10 @@ $(document).ready(() => {
         if (!data.commodity) {
             errors.push({ text: "please select an option for commodity" })
         }
-        if (!data.implementation) {
+        if (!data.unit) {
             errors.push({ text: "please enter an option for unit" })
         }
-        if (!data.annual) {
+        if (!data.value) {
             errors.push({ text: "please enter a value" })
         }
 
