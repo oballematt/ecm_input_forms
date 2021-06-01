@@ -52,6 +52,7 @@
                         project_description, nonenergy_benefits, baseline_start_date, reporting_period_start_date, length_baseline_period_days,
                         length_reporting_period_days
                     });
+
     
                     return res.redirect('/costs_hours');
 
@@ -60,7 +61,7 @@
             } catch (error) {
 
                 console.error(error.message);
-                return res.render('error');
+                return res.status(500).json(error);
             };
 
         },

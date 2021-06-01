@@ -24,7 +24,7 @@ a {
 
 h1 {
     font-size: 60px;
-    font-family: 'Mate SC', serif;
+    /* font-family: 'Mate SC', serif; */
 }
 
   @media (min-width: 764px) and (max-width: 1240px){
