@@ -12,5 +12,9 @@ router.get('/delete/baseline/:id', baselineController.deleteBaseline);
 
 router.get('/find/baseline/:id', baselineController.getOneBaseline);
 
+router.get('/add/baseline/:project_id', baselineController.getOneByProjectId)
+
+router.post('/add/baseline/:project_id', baselineController.createBaseline)
+
 
 module.exports = router

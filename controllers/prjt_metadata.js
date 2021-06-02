@@ -22,7 +22,7 @@
                     }
                 })
 
-                if(pid.length !==0) {
+                if(pid.length !== 0) {
                     errors.push({text: 'Project ID already exists'})
                 }
 
@@ -39,22 +39,30 @@
                     errors.push({text: 'Please add a status' });
                   }
                   if(!baseline_start_date) {
-                    errors.push({text: 'Please add a start date' });
+                    errors.push({text: 'Please add a start date for baseline' });
                   }
                   if(!reporting_period_start_date) {
-                    errors.push({text: 'Please add a start date' });
+                    errors.push({text: 'Please add a start date for reporting period' });
                   }
                   if(!length_baseline_period_days) {
-                    errors.push({text: 'Please add # of days' });
+                    errors.push({text: 'Please add # of days for baseline' });
                   }
                   if(!length_reporting_period_days) {
-                    errors.push({ text: 'Please # of days' });
+                    errors.push({ text: 'Please add # of days for reporting period' });
                   }
 
                   if (errors.length > 0) {
-                        res.render('metadata', {
+                        res.render('create/metadata', {
                             errors,
-                            bldgs
+                            bldgs,
+                            project_id,
+                            building,
+                            measure_type,
+                            status,
+                            baseline_start_date,
+                            reporting_period_start_date,
+                            length_baseline_period_days,
+                            length_reporting_period_days
                         })
                   } else {
                     const metadata = await Prjt_metadata.create({
@@ -83,7 +91,7 @@
 
                 const bldgs = await Bldg_metadata.findAll();
 
-                return res.render('metadata', {
+                return res.render('create/metadata', {
                     bldgs
                 });
 
@@ -109,7 +117,7 @@
 
                 const bldgs = await Bldg_metadata.findAll();
     
-                return res.render('edit', {
+                return res.render('edit/edit', {
                     metadata,
                     bldgs
                 });

@@ -1,0 +1,85 @@
+<div class="row">
+    {{#with costHours}}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/find">Find</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Add {{project_id}}</li>
+        </ol>
+    </nav>
+    <form action='/add/costs_hours/{{project_id}}' id="formData" method="POST">
+        <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
+            <h5 style="background-color: #bf5700;" class="card-header">Costs &amp; Hours</h5>
+            <div class="card-body w-100 text-end">
+                <div id="errors" class="text-start"></div>
+                <table id="tableData" class="table text-light text-center mt-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">Project ID</th>
+                            <th scope="col">Implementation or Annual</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Costs</th>
+                            <th scope="col">Hours</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <input id="validationCustom03" value="{{project_id}}" name="project_id" type="text"
+                                        class="form-control">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <div class="input-group mb-3">
+                                        <select name="imp_or_ann" class="form-select imp_or_ann"
+                                            id="inputGroupSelect01">
+                                            <option disabled selected>Choose...</option>
+                                            <option>Implementation</option>
+                                            <option>Annual</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <div class="input-group mb-3">
+                                        <select name="category" class="form-select category" id="inputGroupSelect01">
+                                            <option disabled selected>Choose...</option>
+                                            <option>EMO</option>
+                                            <option>Analysts</option>
+                                            <option>Maintenance</option>
+                                            <option>ETS</option>
+                                            <option>BOT</option>
+                                            <option>OtherUT</option>
+                                            <option>Materials</option>
+                                            <option>Non-UT Contract</option>
+                                            <option>Contingency</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <input name="cost" type="text" class="cost form-control">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <input name="hours" type="text" class="hours form-control">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer text-end">
+                <button type="submit" class="btn btn-success text-light">Submit
+                </button>
+            </div>
+        </div>
+    </form>
+    {{/with}}
+</div>

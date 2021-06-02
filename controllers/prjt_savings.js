@@ -11,7 +11,7 @@ module.exports = {
                 project_id, phase, commodity, unit, value
             });
 
-            return res.redirect('/');
+            return res.redirect('/find');
             
         } catch (error) {
 
@@ -22,7 +22,7 @@ module.exports = {
     },
 
     getForm: async (req, res) => {
-        return res.render('savings')
+        return res.render('create/savings')
     },
 
     getOneSavings: async (req, res) => {
@@ -36,7 +36,7 @@ module.exports = {
                 }
             });
 
-            return res.render('editSavings', {
+            return res.render('edit/editSavings', {
                 savings
             });
 
@@ -72,6 +72,29 @@ module.exports = {
             
         }
         
+    },
+
+    getOneByProjectId: async (req, res) => {
+        const { project_id } = req.params
+
+        try {
+
+            const savings = await Prjt_savings.findOne({
+                where: {
+                    project_id
+                }
+            });
+
+            return res.render('add/addSavings', {
+                savings
+            });
+
+        } catch (error) {
+
+            console.error(error.message);
+            return res.status(500).json(error);
+
+        };
     },
 
     deleteSavings: async (req, res) => {

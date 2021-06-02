@@ -27,6 +27,14 @@ h1 {
     /* font-family: 'Mate SC', serif; */
 }
 
+.disclaimer{
+    color: lightgray
+}
+
+.project_id {
+    font-weight: bold;
+}
+
   @media (min-width: 764px) and (max-width: 1240px){
       .responsive{
           flex-direction: column;

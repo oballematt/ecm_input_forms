@@ -11,7 +11,7 @@ module.exports = {
                 project_id, commodity, unit, value
             });
             
-            return res.redirect('/savings')
+            return res.redirect('/find')
 
         } catch (error) {
 
@@ -22,7 +22,7 @@ module.exports = {
     },
 
     getForm:  (req, res) => {
-        return res.render('baseline');
+        return res.render('create/baseline');
     },
 
     getOneBaseline: async (req, res) => {
@@ -36,7 +36,7 @@ module.exports = {
                 }
             });
 
-            return res.render('editBaseline', {
+            return res.render('edit/editBaseline', {
                 baseline
             });
 
@@ -74,6 +74,29 @@ module.exports = {
         
     },
 
+    getOneByProjectId: async (req, res) => {
+        const { project_id } = req.params
+
+        try {
+
+            const baseline = await Prjt_baseline.findOne({
+                where: {
+                    project_id
+                }
+            });
+
+            return res.render('add/addBaseline', {
+                baseline
+            });
+
+        } catch (error) {
+
+            console.error(error.message);
+            return res.status(500).json(error);
+
+        };
+    },
+
     deleteBaseline: async (req, res) => {
         const { id } = req.params;
 
@@ -84,7 +107,9 @@ module.exports = {
                 }
             });
 
-            return res.redirect('/find')
+            return res.render('edit/allForms', {
+                baseline
+            })
 
         } catch (error) {
             

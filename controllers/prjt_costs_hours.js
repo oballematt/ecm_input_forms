@@ -1,4 +1,4 @@
-const { Prjt_costs_hours } = require ('../models');
+const { Prjt_costs_hours } = require('../models');
 
 module.exports = {
 
@@ -9,24 +9,24 @@ module.exports = {
         const { project_id, imp_or_ann, category, cost, hours } = req.body;
 
         try {
-            
             const costHours = await Prjt_costs_hours.create({
                 project_id, imp_or_ann, category, cost, hours,
             });
 
-            return res.render('cost_hours')
+            return res.redirect('/find')
+
 
         } catch (error) {
 
             console.error(error.message);
             return res.status(500).json(error);
-            
+
         }
     },
 
     // Renders the form to add data to costs_hours table onto the /costs_hours route
     getForm: (req, res) => {
-        return res.render('cost_hours')
+        return res.render('create/cost_hours')
     },
 
     getOneCostsHours: async (req, res) => {
@@ -40,7 +40,7 @@ module.exports = {
                 }
             });
 
-            return res.render('editCostsHours', {
+            return res.render('edit/editCostsHours', {
                 costHours
             });
 
@@ -54,10 +54,10 @@ module.exports = {
 
     updateCostsHours: async (req, res) => {
         try {
-            
-            const { imp_or_ann, category, cost, hours }  = req.body;
+
+            const { imp_or_ann, category, cost, hours } = req.body;
             const { id } = req.params
-    
+
             const costHours = await Prjt_costs_hours.update({
                 imp_or_ann, category, cost, hours
             },
@@ -67,22 +67,45 @@ module.exports = {
                     }
                 });
 
-                return res.redirect('/find')
+            return res.redirect('/find')
 
         } catch (error) {
 
             console.error(error.message);
             return res.status(500).json(error);
-            
+
         }
-        
+
+    },
+
+    getOneByProjectId: async (req, res) => {
+        const { project_id } = req.params
+
+        try {
+
+            const costHours = await Prjt_costs_hours.findOne({
+                where: {
+                    project_id
+                }
+            });
+
+            return res.render('add/addCostsHours', {
+                costHours
+            });
+
+        } catch (error) {
+
+            console.error(error.message);
+            return res.status(500).json(error);
+
+        };
     },
 
     deleteCostsHours: async (req, res) => {
         const { id } = req.params;
 
         try {
-            await Prjt_costs_hours.destroy({ 
+            const costHours = await Prjt_costs_hours.destroy({
                 where: {
                     id
                 }
@@ -91,10 +114,10 @@ module.exports = {
             return res.redirect('/find')
 
         } catch (error) {
-            
+
             console.error(error.message);
             return res.status(500).json(error);
-            
+
         }
     },
 

@@ -12,5 +12,9 @@ router.get('/delete/savings/:id', savingsController.deleteSavings);
 
 router.get('/find/savings/:id', savingsController.getOneSavings);
 
+router.get('/add/savings/:project_id', savingsController.getOneByProjectId)
+
+router.post('/add/savings/:project_id', savingsController.createSavings)
+
 
 module.exports = router

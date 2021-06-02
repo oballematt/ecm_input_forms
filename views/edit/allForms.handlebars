@@ -6,7 +6,7 @@
                 <li class="breadcrumb-item active" aria-current="page">Find</li>
             </ol>
         </nav>
-        <form action="/find" method="POST">
+        <form id="formData" action="/find" method="POST">
             <div class="input-group mt-5">
                 <input type="text" name="project_id" class="form-control" placeholder="Project ID"
                     aria-label="Project ID" aria-describedby="button-addon2">
@@ -173,7 +173,7 @@
                                         <td>{{project_id}}</td>
                                         <td>{{imp_or_ann}}</td>
                                         <td>{{category}}</td>
-                                        <td>{{cost}}</td>
+                                        <td>${{cost}}</td>
                                         <td>{{hours}}</td>
                                         <td>
                                             <a href="/find/costs_hours/{{id}}">
@@ -182,16 +182,25 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="/delete/costs_hours/{{id}}">
+                                            <a class="deleteId" href="/delete/costs_hours/{{id}}">
                                                 <button type="button" class='btn btn-danger'><i
                                                         class="fas fa-trash-alt"></i></button>
                                             </a>
                                         </td>
                                     </tr>
-                                    {{/each}}
                                 </tbody>
+                                {{/each}}
                             </table>
                         </div>
+                        {{#with costHours}}
+                        <div class="card-footer text-end">
+                            <a href="/add/costs_hours/{{project_id}}">
+                                <button type="button" class='btn btn-success'><i class="fas fa-plus-circle">&nbsp;Add
+                                        Record</i>
+                                </button>
+                            </a>
+                        </div>
+                        {{/with}}
                     </div>
                 </section>
                 <section class="col-md-6">
@@ -203,7 +212,7 @@
                                     <tr>
                                         <th scope="col">Project ID</th>
                                         <th scope="col">Source</th>
-                                        <th scope="col">$ Implementation</th>
+                                        <th scope="col">$ Implem</th>
                                         <th scope="col">$ Annual</th>
                                         <th scope="col">Edit</th>
                                         <th scope="col">Delete</th>
@@ -214,8 +223,8 @@
                                     <tr>
                                         <td>{{project_id}}</td>
                                         <td>{{source}}</td>
-                                        <td>{{implementation}}</td>
-                                        <td>{{annual}}</td>
+                                        <td>${{implementation}}</td>
+                                        <td>${{annual}}</td>
                                         <td>
                                             <a href="/find/funding/{{id}}" class='btn btn-warning'>
                                                 <i class="fas fa-edit"></i>
@@ -231,6 +240,15 @@
                                 </tbody>
                             </table>
                         </div>
+                        {{#with fundings}}
+                        <div class="card-footer text-end">
+                            <a href="/add/fundings/{{project_id}}">
+                                <button type="button" class='btn btn-success'><i class="fas fa-plus-circle">&nbsp;Add
+                                        Record</i>
+                                </button>
+                            </a>
+                        </div>
+                        {{/with}}
                     </div>
                 </section>
             </div>
@@ -272,6 +290,15 @@
                                 </tbody>
                             </table>
                         </div>
+                        {{#with baselinePid}}
+                        <div class="card-footer text-end">
+                            <a href="/add/baseline/{{project_id}}">
+                                <button type="button" class='btn btn-success'><i class="fas fa-plus-circle">&nbsp;Add
+                                        Record</i>
+                                </button>
+                            </a>
+                        </div>
+                        {{/with}}
                     </div>
                 </section>
                 <section class="col-md-6">
@@ -297,7 +324,7 @@
                                         <td>{{phase}}</td>
                                         <td>{{commodity}}</td>
                                         <td>{{unit}}</td>
-                                        <td>{{value}}</td>
+                                        <td>${{value}}</td>
                                         <td>
                                             <a href="/find/savings/{{id}}" class='btn btn-warning'>
                                                 <i class="fas fa-edit"></i>
@@ -312,6 +339,15 @@
                                 </tbody>
                             </table>
                         </div>
+                        {{#with savingsPid}}
+                        <div class="card-footer text-end">
+                            <a href="/add/savings/{{project_id}}">
+                                <button type="button" class='btn btn-success'><i class="fas fa-plus-circle">&nbsp;Add
+                                        Record</i>
+                                </button>
+                            </a>
+                        </div>
+                        {{/with}}
                     </div>
                 </section>
             </div>

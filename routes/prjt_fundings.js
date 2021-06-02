@@ -12,4 +12,8 @@ router.get('/delete/funding/:id', fundingController.deleteFunding);
 
 router.get('/find/funding/:id', fundingController.getOneFunding);
 
+router.get('/add/fundings/:project_id', fundingController.getOneByProjectId)
+
+router.post('/add/fundings/:project_id', fundingController.createFunding)
+
 module.exports = router;

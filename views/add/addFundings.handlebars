@@ -1,0 +1,63 @@
+<div class="row">
+    {{#with fundings}}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/find">Find</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Add {{project_id}}</li>
+        </ol>
+    </nav>
+    <form action='/add/fundings/{{project_id}}' id="formData" method="POST">
+        <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
+            <h5 style="background-color: #bf5700;" class="card-header">Fundings</h5>
+            <div class="card-body w-100 text-end">
+                <div id="errors" class="text-start"></div>
+                <table id="tableData" class="table text-light text-center mt-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">Project ID</th>
+                            <th scope="col">Source</th>
+                            <th scope="col">$ Implem</th>
+                            <th scope="col">$ Annual</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <input id="validationCustom03" value="{{project_id}}" name="project_id" type="text"
+                                        class="form-control">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <div class="input-group mb-3">
+                                        <select name="source" class="form-select source" id="inputGroupSelect01">
+                                            <option disabled selected>Choose</option>
+                                            <option>Green Fund</option>
+                                            <option>Facilities</option>
+                                            <option>R and R</option>
+                                            <option>UEM</option>
+                                            <option>AUX</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <input name="implementation" type="text" class="form-control implementation">
+                            </td>
+                            <td>
+                                <input name="annual" type="text" class="form-control annual">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer text-end">
+                <button type="submit" class="btn btn-success text-light">Submit
+                </button>
+            </div>
+        </div>
+    </form>
+    {{/with}}
+</div>

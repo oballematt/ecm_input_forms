@@ -11,7 +11,7 @@ module.exports = {
                 project_id, implementation, source, annual
             });
 
-            return res.redirect('/baseline')
+            return res.redirect('/find')
 
         } catch (error) {
 
@@ -23,7 +23,7 @@ module.exports = {
     },
 
     getForm: (req, res) => {
-        return res.render('fundings')
+        return res.render('create/fundings')
     },
 
     getOneFunding: async (req, res) => {
@@ -37,7 +37,7 @@ module.exports = {
                 }
             });
 
-            return res.render('editFundings', {
+            return res.render('edit/editFundings', {
                 funding
             });
 
@@ -73,6 +73,29 @@ module.exports = {
             
         }
         
+    },
+
+    getOneByProjectId: async (req, res) => {
+        const { project_id } = req.params
+
+        try {
+
+            const fundings = await Prjt_funding.findOne({
+                where: {
+                    project_id
+                }
+            });
+
+            return res.render('add/addFundings', {
+                fundings
+            });
+
+        } catch (error) {
+
+            console.error(error.message);
+            return res.status(500).json(error);
+
+        };
     },
 
     deleteFunding: async (req, res) => {

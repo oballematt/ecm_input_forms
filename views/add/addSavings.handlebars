@@ -1,0 +1,90 @@
+<div class="row">
+    {{#with savings}}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/find">Find</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Add {{project_id}}</li>
+        </ol>
+    </nav>
+    <form action='/add/savings/{{project_id}}' id="formData" method="POST">
+        <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
+            <h5 style="background-color: #bf5700;" class="card-header">Savings</h5>
+            <div class="card-body w-100 text-end">
+                <div id="errors" class="text-start"></div>
+                <table id="tableData" class="table text-light text-center mt-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">Project ID</th>
+                            <th scope="col">Phase</th>
+                            <th scope="col">Commodity</th>
+                            <th scope="col">Unit</th>
+                            <th scope="col">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <input id="validationCustom03" value="{{project_id}}" name="project_id" type="text"
+                                        class="form-control">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <select name="phase" class="form-select phase" id="inputGroupSelect01">
+                                        <option disabled selected>Choose</option>
+                                        <option>MV</option>
+                                        <option>Predicted</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <select name="commodity" class="form-select commodity" id="inputGroupSelect01">
+                                        <option disabled selected>Choose</option>
+                                        <option>CHW</option>
+                                        <option>ELE</option>
+                                        <option>STM</option>
+                                        <option>HHW</option>
+                                        <option>GAS</option>
+                                        <option>WATER</option>
+                                        <option>PEAK_CHW</option>
+                                        <option>LABOR</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <div class="input-group mb-3">
+                                        <select name="unit" class="form-select unit" id="inputGroupSelect01">
+                                            <option disabled selected>Choose</option>
+                                            <option>tonhr</option>
+                                            <option>kWh</option>
+                                            <option>lb</option>
+                                            <option>mmbtu</option>
+                                            <option>CCF</option>
+                                            <option>kgal</option>
+                                            <option>ton</option>
+                                            <option>Hours</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <input name="value" type="text" class="form-control value">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer text-end">
+                <button type="submit" class="btn btn-success text-light">Submit
+                </button>
+            </div>
+        </div>
+    </form>
+    {{/with}}
+</div>

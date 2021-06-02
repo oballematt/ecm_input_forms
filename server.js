@@ -21,6 +21,7 @@ app.engine(
 );
 
 app.set('view engine', 'handlebars');
+app.set('views', path.join(__dirname, 'views'))
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -29,7 +30,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => res.render('home'));
-app.get('/find', (req, res) => res.render('allForms'))
+app.get('/find', (req, res) => res.render('edit/allForms'))
 
 //Express Route
 app.use('/', require("./routes/prjt_metadata"));
