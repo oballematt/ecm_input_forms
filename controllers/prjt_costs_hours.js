@@ -6,15 +6,48 @@ module.exports = {
     createCostsHours: async (req, res) => {
 
 
-        const { project_id, imp_or_ann, category, cost, hours } = req.body;
+        let { project_id, imp_or_ann, category, cost, hours } = req.body;
+
+        let errors = []
 
         try {
+
+            const costHours = await Prjt_costs_hours.findOne({
+                where: {
+                    project_id
+                }
+            });
+            
+            if (!imp_or_ann){
+                errors.push({text: "please select an option for implementation or annual"})
+            };
+
+            if (!category){
+                errors.push({text: "please select an option for category"})
+            };
+
+            if (!cost){
+                errors.push({text: "please enter a value for cost"})
+            };
+
+            if (!hours){
+                errors.push({text: "please enter a value for hours"})
+            };
+
+            if (errors.length > 0){
+                 res.render('add/addCostsHours', {
+                    errors, imp_or_ann, category, cost, hours, costHours
+                })
+            
+            } else {
+
             const costHours = await Prjt_costs_hours.create({
                 project_id, imp_or_ann, category, cost, hours,
             });
 
             return res.redirect('/find')
 
+        }
 
         } catch (error) {
 

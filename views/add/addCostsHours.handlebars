@@ -7,11 +7,18 @@
             <li class="breadcrumb-item active" aria-current="page">Add {{project_id}}</li>
         </ol>
     </nav>
-    <form action='/add/costs_hours/{{project_id}}' id="formData" method="POST">
-        <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
-            <h5 style="background-color: #bf5700;" class="card-header">Costs &amp; Hours</h5>
-            <div class="card-body w-100 text-end">
-                <div id="errors" class="text-start"></div>
+    <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
+        <h5 style="background-color: #bf5700;" class="card-header">Costs &amp; Hours</h5>
+        <div class="card-body w-100">
+            {{/with}}
+            {{#each errors}}
+            <div class="my-2 text-start" style="border: 1px solid black;">
+                <p>{{text}}</p>
+            </div>
+            {{/each}}
+            {{#with costHours}}
+            <form action='/add/costs_hours/{{project_id}}' id="formData" method="POST">
+            {{/with}}
                 <table id="tableData" class="table text-light text-center mt-3">
                     <thead>
                         <tr>
@@ -26,18 +33,20 @@
                         <tr>
                             <td>
                                 <div class="input-group mb-3">
+                                    {{#with costHours}}
                                     <input id="validationCustom03" value="{{project_id}}" name="project_id" type="text"
+                                    {{/with}}
                                         class="form-control">
                                 </div>
                             </td>
                             <td>
                                 <div class="input-group mb-3">
                                     <div class="input-group mb-3">
-                                        <select name="imp_or_ann" class="form-select imp_or_ann"
+                                        <select value='{{imp_or_ann}}' name="imp_or_ann" class="form-select imp_or_ann"
                                             id="inputGroupSelect01">
-                                            <option disabled selected>Choose...</option>
-                                            <option>Implementation</option>
-                                            <option>Annual</option>
+                                            <option disabled>Choose...</option>
+                                            <option selected value='{{imp_or_ann}}'>Implementation</option>
+                                            <option selected value='{{imp_or_ann}}'>Annual</option>
                                         </select>
 
                                     </div>
@@ -46,7 +55,7 @@
                             <td>
                                 <div class="input-group mb-3">
                                     <div class="input-group mb-3">
-                                        <select name="category" class="form-select category" id="inputGroupSelect01">
+                                        <select value='{{category}}' name="category" class="form-select category" id="inputGroupSelect01">
                                             <option disabled selected>Choose...</option>
                                             <option>EMO</option>
                                             <option>Analysts</option>
@@ -63,23 +72,23 @@
                             </td>
                             <td>
                                 <div class="input-group mb-3">
-                                    <input name="cost" type="text" class="cost form-control">
+                                    <input value='{{cost}}' name="cost" type="text" class="cost form-control">
                                 </div>
                             </td>
                             <td>
                                 <div class="input-group mb-3">
-                                    <input name="hours" type="text" class="hours form-control">
+                                    <input value='{{hours}}' name="hours" type="text" class="hours form-control">
                                 </div>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-            </div>
-            <div class="card-footer text-end">
-                <button type="submit" class="btn btn-success text-light">Submit
-                </button>
-            </div>
+
+                <div class="card-footer text-end">
+                    <button type="submit" class="btn btn-success text-light">Submit
+                    </button>
+                </div>
+            </form>
         </div>
-    </form>
-    {{/with}}
+    </div>
 </div>

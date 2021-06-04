@@ -10,7 +10,14 @@
     <form action='/add/fundings/{{project_id}}' id="formData" method="POST">
         <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
             <h5 style="background-color: #bf5700;" class="card-header">Fundings</h5>
-            <div class="card-body w-100 text-end">
+            <div class="card-body w-100">
+                {{/with}}
+                {{#each errors}}
+                <div class="my-2 text-start" style="border: 1px solid black;">
+                    <p>{{text}}</p>
+                </div>
+                {{/each}}
+                {{#with fundings}}
                 <div id="errors" class="text-start"></div>
                 <table id="tableData" class="table text-light text-center mt-3">
                     <thead>

@@ -1,23 +1,55 @@
-const { Prjt_savings } = require ('../models');
+const { Prjt_savings } = require('../models');
 
 module.exports = {
 
     createSavings: async (req, res) => {
-        const { project_id, phase, commodity, unit, value } = req.body;
+        let { project_id, phase, commodity, unit, value } = req.body;
+
+        let errors = []
 
         try {
 
-            const savings = await Prjt_savings.create({
-                project_id, phase, commodity, unit, value
+            const savings = await Prjt_savings.findOne({
+                where: {
+                    project_id
+                }
             });
 
-            return res.redirect('/find');
-            
+            if (!phase) {
+                errors.push({ text: "please select an option for phase" })
+            };
+
+            if (!commodity) {
+                errors.push({ text: "please select an option for commodity" })
+            };
+
+            if (!unit) {
+                errors.push({ text: "please select an option for unit" })
+            };
+
+            if (!value) {
+                errors.push({ text: "please enter a value for value field " })
+            };
+
+            if (errors.length > 0) {
+                res.render('add/addSavings', {
+                    errors, phase, commodity, unit, value, savings
+                })
+
+            } else {
+
+                const savings = await Prjt_savings.create({
+                    project_id, phase, commodity, unit, value
+                });
+
+                return res.redirect('/find');
+            }
+
         } catch (error) {
 
             console.error(error.message);
             return res.status(500).json(error);
-            
+
         }
     },
 
@@ -50,10 +82,10 @@ module.exports = {
 
     updateSavings: async (req, res) => {
         try {
-            
-            const { phase, commodity, unit, value }  = req.body;
+
+            const { phase, commodity, unit, value } = req.body;
             const { id } = req.params
-    
+
             const savings = await Prjt_savings.update({
                 phase, commodity, unit, value
             },
@@ -63,15 +95,15 @@ module.exports = {
                     }
                 });
 
-                return res.redirect('/find')
+            return res.redirect('/find')
 
         } catch (error) {
 
             console.error(error.message);
             return res.status(500).json(error);
-            
+
         }
-        
+
     },
 
     getOneByProjectId: async (req, res) => {
@@ -101,7 +133,7 @@ module.exports = {
         const { id } = req.params;
 
         try {
-            await Prjt_savings.destroy({ 
+            await Prjt_savings.destroy({
                 where: {
                     id
                 }
@@ -110,10 +142,10 @@ module.exports = {
             return res.redirect('/find')
 
         } catch (error) {
-            
+
             console.error(error.message);
             return res.status(500).json(error);
-            
+
         }
     }
 }

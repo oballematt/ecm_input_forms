@@ -7,11 +7,24 @@
             </ol>
         </nav>
         <form id="formData" action="/find" method="POST">
-            <div class="input-group mt-5">
-                <input type="text" name="project_id" class="form-control" placeholder="Project ID"
-                    aria-label="Project ID" aria-describedby="button-addon2">
-                <button class="btn btn-success" type="submit" id="button-addon2">Search</button>
+            <div class="input-group">
+                <select name="project_id" class="form-select" id="inputGroupSelect04"
+                    aria-label="Example select with button addon">
+                    <option selected disabled>Project ID</option>
+                    {{#each projectId}}
+                    <option>{{project_id}}</option>
+                    {{/each}}
+                </select>
+                <button class="btn btn-success" type="submit">Search</button>
             </div>
+            {{#with metadata}}
+            <div class="mt-3 text-center">
+                <button title="This will delete all data related to project ID: {{project_id}}" data-toggle="tooltip"
+                    data-placement="top" type="button" class="btn btn-danger" 
+                    <span data-bs-toggle="modal" data-bs-target="#exampleModal">Delete All</span>
+                </button>
+            </div>
+            {{/with}}
             <div class="card border-secondary mt-3 w-100 text-light" style="background-color: #333f48;">
                 <h5 style="background-color: #bf5700;" class="card-header">Project Info</h5>
                 <div class="card-body text-black">
@@ -351,6 +364,42 @@
                     </div>
                 </section>
             </div>
+            {{#with metadata}}
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
+                            <h5 style="background-color: #bf5700;" class="card-header">Attention</h5>
+                            <div class="card-body">
+                                <div class="modal-body mt-1">
+                                    <h5 style="line-height: 35px">By continuing with this action,
+                                        <strong><u>ALL</u></strong>
+                                        data records will be deleted from:
+                                        <ul>
+                                            <li>Project Info</li>
+                                            <li>Costs &amp; Hours</li>
+                                            <li>Fundings</li>
+                                            <li>Baseline</li>
+                                            <li>Savings</li>
+                                        </ul>Project ID:
+                                        <ul>
+                                            <li><strong>{{project_id}}</strong></li>
+                                        </ul>
+                                    </h5>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Go
+                                        Back</button>
+                                    <a href="/delete/all/{{project_id}}"><button type="button"
+                                            class="btn btn-danger">Delete</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/with}}
         </form>
     </div>
 </div>

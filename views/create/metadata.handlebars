@@ -73,18 +73,18 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">Start Date:</span>
                             </div>
-                            <input placeholder="mm/dd/yy" name="baseline_start_date" type="text"
+                            <input autocomplete="off" id="datepicker" value="{{baseline_start_date}}" placeholder="mm/dd/yy" name="baseline_start_date" type="text"
                                 class="form-control baseline_start" />
-                            <input id="reporting_start" placeholder="mm/dd/yy" name="reporting_period_start_date"
+                            <input autocomplete="off" value="{{reporting_period_start_date}}" id="reporting_start" placeholder="mm/dd/yy" name="reporting_period_start_date"
                                 type="text" class="form-control reporting_start" />
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default"># of Days:</span>
                             </div>
-                            <input id="baseline_length" name="length_baseline_period_days" type="text"
+                            <input value="{{length_baseline_period_days}}" id="baseline_length" name="length_baseline_period_days" type="text"
                                 class="form-control baseline_length" />
-                            <input id="reporting_length" name="length_reporting_period_days" type="text"
+                            <input value="{{length_reporting_period_days}}" id="reporting_length" name="length_reporting_period_days" type="text"
                                 class="form-control reporting_length" />
                         </div>
                     </div>
@@ -148,14 +148,14 @@
                         <span class="input-group-text">Project Description:</span>
                     </div>
                     <textarea id="project_description" rows='5' name="project_description"
-                        class="form-control project_description" aria-label="With textarea"></textarea>
+                        class="form-control project_description" aria-label="With textarea">{{project_description}}</textarea>
                 </div>
                 <div class="input-group mt-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Nonenergy Benefits:</span>
                     </div>
                     <textarea id="nonenergy_benefits" rows='2' name="nonenergy_benefits"
-                        class="form-control nonenergy_benefits" aria-label="With textarea"></textarea>
+                        class="form-control nonenergy_benefits" aria-label="With textarea">{{nonenergy_benefits}}</textarea>
                 </div>
                 <div class="text-end">
                     <button type="submit" style="background-color: #bf5700;"

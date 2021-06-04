@@ -3,15 +3,43 @@ const { Prjt_baseline } = require('../models');
 module.exports = {
 
     createBaseline: async (req, res) => {
-        const { project_id, commodity, unit, value } = req.body;
+        let { project_id, commodity, unit, value } = req.body;
+
+        let errors = [];
 
         try {
+
+            const baseline = await Prjt_baseline.findOne({
+                where: {
+                    project_id
+                }
+            });
+
+            if (!commodity){
+                errors.push({text: "please select an option for commodity"})
+            };
+
+            if (!unit){
+                errors.push({text: "please select an option for unit"})
+            };
+
+            if (!value){
+                errors.push({text: "please enter a value for value field"})
+            };
+
+            if (errors.length > 0){
+                 res.render('add/addBaseline', {
+                    errors, commodity, unit, value, baseline
+                })
+            
+            } else {
             
             const baseline = await Prjt_baseline.create({
                 project_id, commodity, unit, value
             });
             
-            return res.redirect('/find')
+            return res.redirect('/find');
+        };
 
         } catch (error) {
 

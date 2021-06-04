@@ -9,10 +9,10 @@
         <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
             <h5 style="background-color: #bf5700;" class="card-header">Baseline</h5>
             <div class="card-body w-100 text-end">
+                <div id="errors" class="text-start"></div>
                 <table id="tableData" class="table text-light text-center mt-3">
                     <thead>
                         <tr>
-                            <th scope="col">Project ID</th>
                             <th scope="col">Commodity</th>
                             <th scope="col">Unit</th>
                             <th scope="col">Value</th>
@@ -20,9 +20,6 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>
-                                <input disabled name="project_id" type="text" class="form-control project_id">
-                            </td>
                             <td>
                                 <div class="input-group mb-3">
                                     <select name="commodity" class="form-select commodity" id="inputGroupSelect01">
@@ -67,10 +64,10 @@
                 </table>
             </div>
             <div class="row text-center my-3">
-                <div class="col-4">
+                <div class="col-5">
                     <a class="btn btn-warning" href="/fundings" role="button">Back</a>
                 </div>
-                 <div class="col-6 text-end">
+                 <div class="col-5 text-end">
                     <button disabled id="next" type="button" class='btn btn-success'><a id="link" class="text-white">Next</a></button>
                 </div>
             </div>

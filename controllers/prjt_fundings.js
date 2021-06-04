@@ -3,23 +3,53 @@ const { Prjt_funding } = require('../models');
 module.exports = {
 
     createFunding: async (req, res) => {
-        try {
-            
-            const { project_id, implementation, source, annual } = req.body;
 
-            const funding = await Prjt_funding.create({
-                project_id, implementation, source, annual
+        let { project_id, implementation, source, annual } = req.body;
+
+        let errors = []
+
+        try {
+
+            const fundings = await Prjt_funding.findOne({
+                where: {
+                    project_id
+                }
             });
 
-            return res.redirect('/find')
+            if (!implementation) {
+                errors.push({ text: "please select an option for source" })
+            };
+
+            if (!source) {
+                errors.push({ text: "please enter a value for implementation" })
+            };
+
+            if (!annual) {
+                errors.push({ text: "please enter a value for annual" })
+            };
+
+            if (errors.length > 0) {
+                res.render('add/addFundings', {
+                    errors, implementation, source, annual, fundings
+                })
+
+            } else {
+
+                const funding = await Prjt_funding.create({
+                    project_id, implementation, source, annual
+                });
+
+                return res.redirect('/find')
+
+            };
 
         } catch (error) {
 
             console.error(error.message);
             return res.status(500).json(error);
-            
+
         }
-       
+
     },
 
     getForm: (req, res) => {
@@ -50,13 +80,14 @@ module.exports = {
     },
 
     updateFunding: async (req, res) => {
+
+        const { implementation, source, annual } = req.body;
+        const { id } = req.params
+
         try {
-            
-            const { implementation, source, annual }  = req.body;
-            const { id } = req.params
-    
+
             const funding = await Prjt_funding.update({
-                 implementation, source, annual
+                implementation, source, annual
             },
                 {
                     where: {
@@ -64,15 +95,15 @@ module.exports = {
                     }
                 });
 
-                return res.redirect('/find')
+            return res.redirect('/find')
 
         } catch (error) {
 
             console.error(error.message);
             return res.status(500).json(error);
-            
+
         }
-        
+
     },
 
     getOneByProjectId: async (req, res) => {
@@ -102,7 +133,7 @@ module.exports = {
         const { id } = req.params;
 
         try {
-            await Prjt_funding.destroy({ 
+            await Prjt_funding.destroy({
                 where: {
                     id
                 }
@@ -111,10 +142,10 @@ module.exports = {
             return res.redirect('/find')
 
         } catch (error) {
-            
+
             console.error(error.message);
             return res.status(500).json(error);
-            
+
         }
     }
 

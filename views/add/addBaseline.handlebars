@@ -10,8 +10,14 @@
     <form action='/add/baseline/{{project_id}}' id="formData" method="POST">
         <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
             <h5 style="background-color: #bf5700;" class="card-header">Baseline</h5>
-            <div class="card-body w-100 text-end">
-                <div id="errors" class="text-start"></div>
+            <div class="card-body w-100">
+                {{/with}}
+                {{#each errors}}
+                <div class="my-2 text-start" style="border: 1px solid black;">
+                    <p>{{text}}</p>
+                </div>
+                {{/each}}
+                {{#with baseline}}
                 <table id="tableData" class="table text-light text-center mt-3">
                     <thead>
                         <tr>
@@ -32,17 +38,17 @@
                             <td>
                                 <div class="input-group mb-3">
                                     <div class="input-group mb-3">
-                                       <select name="commodity" class="form-select commodity" id="inputGroupSelect01">
-                                        <option disabled selected>Choose</option>
-                                        <option>CHW</option>
-                                        <option>ELE</option>
-                                        <option>STM</option>
-                                        <option>HHW</option>
-                                        <option>GAS</option>
-                                        <option>WATER</option>
-                                        <option>PEAK_CHW</option>
-                                        <option>LABOR</option>
-                                    </select>
+                                        <select name="commodity" class="form-select commodity" id="inputGroupSelect01">
+                                            <option disabled selected>Choose</option>
+                                            <option>CHW</option>
+                                            <option>ELE</option>
+                                            <option>STM</option>
+                                            <option>HHW</option>
+                                            <option>GAS</option>
+                                            <option>WATER</option>
+                                            <option>PEAK_CHW</option>
+                                            <option>LABOR</option>
+                                        </select>
                                     </div>
                                 </div>
                             </td>
@@ -50,16 +56,16 @@
                                 <div class="input-group mb-3">
                                     <div class="input-group mb-3">
                                         <select name="unit" class="form-select unit" id="inputGroupSelect01">
-                                        <option disabled selected>Choose</option>
-                                        <option>tonhr</option>
-                                        <option>kWh</option>
-                                        <option>lb</option>
-                                        <option>mmbtu</option>
-                                        <option>CCF</option>
-                                        <option>kgal</option>
-                                        <option>ton</option>
-                                        <option>Hours</option>
-                                    </select>
+                                            <option disabled selected>Choose</option>
+                                            <option>tonhr</option>
+                                            <option>kWh</option>
+                                            <option>lb</option>
+                                            <option>mmbtu</option>
+                                            <option>CCF</option>
+                                            <option>kgal</option>
+                                            <option>ton</option>
+                                            <option>Hours</option>
+                                        </select>
                                     </div>
                                 </div>
                             </td>
@@ -71,6 +77,7 @@
                         </tr>
                     </tbody>
                 </table>
+                 {{/with}}
             </div>
             <div class="card-footer text-end">
                 <button type="submit" class="btn btn-success text-light">Submit
@@ -78,5 +85,4 @@
             </div>
         </div>
     </form>
-    {{/with}}
 </div>
