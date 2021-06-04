@@ -17,14 +17,6 @@
                 </select>
                 <button class="btn btn-success" type="submit">Search</button>
             </div>
-            {{#with metadata}}
-            <div class="mt-3 text-center">
-                <button title="This will delete all data related to project ID: {{project_id}}" data-toggle="tooltip"
-                    data-placement="top" type="button" class="btn btn-danger" 
-                    <span data-bs-toggle="modal" data-bs-target="#exampleModal">Delete All</span>
-                </button>
-            </div>
-            {{/with}}
             <div class="card border-secondary mt-3 w-100 text-light" style="background-color: #333f48;">
                 <h5 style="background-color: #bf5700;" class="card-header">Project Info</h5>
                 <div class="card-body text-black">
@@ -171,10 +163,9 @@
                             <table class="table text-light">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Project ID</th>
                                         <th scope="col">Implementation or Annual</th>
                                         <th scope="col">Category</th>
-                                        <th scope="col">$Cost</th>
+                                        <th scope="col">$ Cost</th>
                                         <th scope="col">Hours</th>
                                         <th scope="col">Edit</th>
                                         <th scope="col">Delete</th>
@@ -183,10 +174,9 @@
                                 <tbody>
                                     {{#each costsHours}}
                                     <tr>
-                                        <td>{{project_id}}</td>
                                         <td>{{imp_or_ann}}</td>
                                         <td>{{category}}</td>
-                                        <td>${{cost}}</td>
+                                        <td>{{cost}}</td>
                                         <td>{{hours}}</td>
                                         <td>
                                             <a href="/find/costs_hours/{{id}}">
@@ -223,7 +213,6 @@
                             <table class="table text-light">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Project ID</th>
                                         <th scope="col">Source</th>
                                         <th scope="col">$ Implem</th>
                                         <th scope="col">$ Annual</th>
@@ -234,10 +223,9 @@
                                 <tbody>
                                     {{#each funding}}
                                     <tr>
-                                        <td>{{project_id}}</td>
                                         <td>{{source}}</td>
-                                        <td>${{implementation}}</td>
-                                        <td>${{annual}}</td>
+                                        <td>{{implementation}}</td>
+                                        <td>{{annual}}</td>
                                         <td>
                                             <a href="/find/funding/{{id}}" class='btn btn-warning'>
                                                 <i class="fas fa-edit"></i>
@@ -274,7 +262,6 @@
                             <table class="table text-light">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Project ID</th>
                                         <th scope="col">Commodity</th>
                                         <th scope="col">Unit</th>
                                         <th scope="col">Value</th>
@@ -285,7 +272,6 @@
                                 <tbody>
                                     {{#each baseline}}
                                     <tr>
-                                        <td>{{project_id}}</td>
                                         <td>{{commodity}}</td>
                                         <td>{{unit}}</td>
                                         <td>{{value}}</td>
@@ -321,11 +307,10 @@
                             <table class="table text-light">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Project ID</th>
                                         <th scope="col">Phase</th>
                                         <th scope="col">Commodity</th>
                                         <th scope="col">Unit</th>
-                                        <th scope="col">$ Value</th>
+                                        <th scope="col">Value</th>
                                         <th scope="col">Edit</th>
                                         <th scope="col">Delete</th>
                                     </tr>
@@ -333,11 +318,10 @@
                                 <tbody>
                                     {{#each savings}}
                                     <tr>
-                                        <td>{{project_id}}</td>
                                         <td>{{phase}}</td>
                                         <td>{{commodity}}</td>
                                         <td>{{unit}}</td>
-                                        <td>${{value}}</td>
+                                        <td>{{value}}</td>
                                         <td>
                                             <a href="/find/savings/{{id}}" class='btn btn-warning'>
                                                 <i class="fas fa-edit"></i>
@@ -398,6 +382,14 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            {{/with}}
+            {{#with metadata}}
+            <div class="text-end mb-3">
+                <button title="This will delete all data related to project ID: {{project_id}}" data-toggle="tooltip"
+                    data-placement="top" type="button" class="btn btn-danger" 
+                    <span data-bs-toggle="modal" data-bs-target="#exampleModal">Delete Project</span>
+                </button>
             </div>
             {{/with}}
         </form>
