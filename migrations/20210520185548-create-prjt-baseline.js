@@ -2,18 +2,17 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('prjt_baseline_test', {
-     
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false
+      },
       project_id: {
         type: Sequelize.STRING,
-        primaryKey: true
       },
       commodity: {
-        type: Sequelize.STRING,
-        primaryKey: true
-      },
-      unit: {
-        type: Sequelize.STRING,
-        primaryKey: true
+        type: Sequelize.STRING,     
       },
       value: {
         type: Sequelize.REAL

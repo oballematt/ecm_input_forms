@@ -29,9 +29,6 @@ module.exports = (sequelize, DataTypes) => {
     commodity: {
       type: DataTypes.STRING,
     },
-    unit: {
-      type: DataTypes.STRING,
-    },
     value: DataTypes.REAL
   }, {
     sequelize,

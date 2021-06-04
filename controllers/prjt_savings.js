@@ -3,7 +3,7 @@ const { Prjt_savings } = require('../models');
 module.exports = {
 
     createSavings: async (req, res) => {
-        let { project_id, phase, commodity, unit, value } = req.body;
+        let { project_id, phase, commodity, value } = req.body;
 
         let errors = []
 
@@ -23,23 +23,19 @@ module.exports = {
                 errors.push({ text: "please select an option for commodity" })
             };
 
-            if (!unit) {
-                errors.push({ text: "please select an option for unit" })
-            };
-
             if (!value) {
                 errors.push({ text: "please enter a value for value field " })
             };
 
             if (errors.length > 0) {
                 res.render('add/addSavings', {
-                    errors, phase, commodity, unit, value, savings
+                    errors, phase, commodity, value, savings
                 })
 
             } else {
 
                 const savings = await Prjt_savings.create({
-                    project_id, phase, commodity, unit, value
+                    project_id, phase, commodity, value
                 });
 
                 return res.redirect('/find');
@@ -83,11 +79,11 @@ module.exports = {
     updateSavings: async (req, res) => {
         try {
 
-            const { phase, commodity, unit, value } = req.body;
+            const { phase, commodity, value } = req.body;
             const { id } = req.params
 
             const savings = await Prjt_savings.update({
-                phase, commodity, unit, value
+                phase, commodity, value
             },
                 {
                     where: {

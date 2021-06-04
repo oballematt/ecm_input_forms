@@ -162,8 +162,8 @@
                         <div class="card-body">
                             <table class="table text-light">
                                 <thead>
-                                    <tr>
-                                        <th scope="col">Implementation or Annual</th>
+                                    <tr class="text-end">
+                                        <th class="text-start" scope="col">Implementation or Annual</th>
                                         <th scope="col">Category</th>
                                         <th scope="col">$ Cost</th>
                                         <th scope="col">Hours</th>
@@ -173,11 +173,11 @@
                                 </thead>
                                 <tbody>
                                     {{#each costsHours}}
-                                    <tr>
-                                        <td>{{imp_or_ann}}</td>
+                                    <tr class="text-end">
+                                        <td class="text-start">{{imp_or_ann}}</td>
                                         <td>{{category}}</td>
-                                        <td>{{cost}}</td>
-                                        <td>{{hours}}</td>
+                                        <td class="text-end">{{cost}}</td>
+                                        <td class="text-end">{{hours}}</td>
                                         <td>
                                             <a href="/find/costs_hours/{{id}}">
                                                 <button type="button" class='btn btn-warning'><i
@@ -212,8 +212,8 @@
                         <div class="card-body">
                             <table class="table text-light">
                                 <thead>
-                                    <tr>
-                                        <th scope="col">Source</th>
+                                    <tr class="text-end">
+                                        <th class="text-start" scope="col">Source</th>
                                         <th scope="col">$ Implem</th>
                                         <th scope="col">$ Annual</th>
                                         <th scope="col">Edit</th>
@@ -222,8 +222,8 @@
                                 </thead>
                                 <tbody>
                                     {{#each funding}}
-                                    <tr>
-                                        <td>{{source}}</td>
+                                    <tr class="text-end">
+                                        <td class="text-start">{{source}}</td>
                                         <td>{{implementation}}</td>
                                         <td>{{annual}}</td>
                                         <td>
@@ -261,9 +261,8 @@
                         <div class="card-body">
                             <table class="table text-light">
                                 <thead>
-                                    <tr>
-                                        <th scope="col">Commodity</th>
-                                        <th scope="col">Unit</th>
+                                    <tr class="text-end">
+                                        <th class="text-start" scope="col">Commodity</th>
                                         <th scope="col">Value</th>
                                         <th scope="col">Edit</th>
                                         <th scope="col">Delete</th>
@@ -271,9 +270,8 @@
                                 </thead>
                                 <tbody>
                                     {{#each baseline}}
-                                    <tr>
-                                        <td>{{commodity}}</td>
-                                        <td>{{unit}}</td>
+                                    <tr class="text-end">
+                                        <td class="text-start">{{commodity}}</td>
                                         <td>{{value}}</td>
                                         <td>
                                             <a href="/find/baseline/{{id}}" class='btn btn-warning'>
@@ -306,10 +304,9 @@
                         <div class="card-body">
                             <table class="table text-light">
                                 <thead>
-                                    <tr>
-                                        <th scope="col">Phase</th>
+                                    <tr class="text-end">
+                                        <th class="text-start" scope="col">Phase</th>
                                         <th scope="col">Commodity</th>
-                                        <th scope="col">Unit</th>
                                         <th scope="col">Value</th>
                                         <th scope="col">Edit</th>
                                         <th scope="col">Delete</th>
@@ -317,10 +314,9 @@
                                 </thead>
                                 <tbody>
                                     {{#each savings}}
-                                    <tr>
-                                        <td>{{phase}}</td>
+                                    <tr class="text-end">
+                                        <td class="text-start">{{phase}}</td>
                                         <td>{{commodity}}</td>
-                                        <td>{{unit}}</td>
                                         <td>{{value}}</td>
                                         <td>
                                             <a href="/find/savings/{{id}}" class='btn btn-warning'>

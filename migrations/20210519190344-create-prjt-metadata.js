@@ -2,9 +2,14 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('prjt_metadata', {
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false
+      },
       project_id: {
-        type: Sequelize.STRING,
-        primaryKey: true
+        type: Sequelize.STRING
       },
       building: {
         type: Sequelize.STRING

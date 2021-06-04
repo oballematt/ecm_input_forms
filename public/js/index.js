@@ -16,11 +16,9 @@ $(document).ready(() => {
         dataArray.push($("#addImpAnn").val());
         dataArray.push($("#addCategory").val());
         dataArray.push($("#addBaseCommodity").val());
-        dataArray.push($("#addBaseUnit").val());
         dataArray.push($("#addSource").val());
         dataArray.push($("#addPhase").val());
         dataArray.push($("#addSavingsCommodity").val());
-        dataArray.push($("#addSavingsUnit").val());
         localStorage.setItem('pid', $(".pid").val())
         localStorage.setItem('values', JSON.stringify(dataArray))
     });
@@ -38,11 +36,46 @@ $(document).ready(() => {
         $('#addImpAnn').val(getVal[6]);
         $('#addCategory').val(getVal[7]);
         $('#addBaseCommodity').val(getVal[8]);
-        $('#addBaseUnit').val(getVal[9]);
-        $('#addSource').val(getVal[10]);
-        $('#addPhase').val(getVal[11]);
-        $('#addSavingsCommodity').val(getVal[12]);
-        $('#addSavingsUnit').val(getVal[13]);
+        $('#addSource').val(getVal[9]);
+        $('#addPhase').val(getVal[10]);
+        $('#addSavingsCommodity').val(getVal[11]);
+
+        if(getVal[0] === null){
+            $("#building").val("Choose...")
+        }
+        if(getVal[1] === null){
+            $("#measure_type").val("Choose...")
+        }
+        if(getVal[2] === null){
+            $("#status").val("Choose...")
+        }
+        if(getVal[3] === null){
+            $("#staff_lead").val("Choose...")
+        }
+        if(getVal[4] === null){
+            $("#staff_colead").val("Choose...")
+        }
+        if(getVal[5] === null){
+            $("#analyst").val("Choose...")
+        }
+        if(getVal[6] === null){
+            $("#addImpAnn").val("Choose...")
+        }
+        if(getVal[7] === null){
+            $("#addCategory").val("Choose...")
+        }
+        if(getVal[8] === null){
+            $("#addBaseCommodity").val("Choose...")
+        }
+        if(getVal[9] === null){
+            $("#addSource").val("Choose...")
+        }
+        if(getVal[10] === null){
+            $("#addPhase").val("Choose...")
+        }
+        if(getVal[11] === null){
+            $("#addSavingsCommodity").val("Choose...")
+        }
     };
 
     $('select[name="measure_type"]').on('change', () => {
@@ -152,24 +185,6 @@ $(document).ready(() => {
         }
     });
 
-    $("#tableData").on("change", ".commodity", function () {
-        if ($(this).val() === 'CHW') $(this).closest('tr').find(".unit").val("tonhr");
-
-        if ($(this).val() === 'ELE') $(this).closest('tr').find(".unit").val("kWh");
-
-        if ($(this).val() === 'STM') $(this).closest('tr').find(".unit").val("lb");
-
-        if ($(this).val() === 'HHW') $(this).closest('tr').find(".unit").val("mmbtu");
-
-        if ($(this).val() === 'GAS') $(this).closest('tr').find(".unit").val("CCF");
-
-        if ($(this).val() === 'WATER') $(this).closest('tr').find(".unit").val("kgal");
-
-        if ($(this).val() === 'PEAK_CHW') $(this).closest('tr').find(".unit").val("ton");
-
-        if ($(this).val() === 'LABOR') $(this).closest('tr').find(".unit").val("Hours");
-    })
-
     $('#tableData').on('click', 'button.addRowB', (e) => {
 
         const cloneRow = $('#tableData tbody tr').first();
@@ -178,7 +193,6 @@ $(document).ready(() => {
         let data = {
             project_id: getPid,
             commodity: $(".commodity").last().val(),
-            unit: $(".unit").last().val(),
             value: $(".value").last().val(),
         }
 
@@ -187,9 +201,6 @@ $(document).ready(() => {
         };
         if (!data.commodity) {
             errors.push({ text: "Please select an option for commodity" })
-        };
-        if (!data.unit) {
-            errors.push({ text: "Please select an option for unit" })
         };
         if (!data.value) {
             errors.push({ text: "Please enter a value for value field" })
@@ -222,7 +233,6 @@ $(document).ready(() => {
             project_id: getPid,
             phase: $(".phase").last().val(),
             commodity: $(".commodity").last().val(),
-            unit: $(".unit").last().val(),
             value: $(".value").last().val()
         }
 
@@ -234,9 +244,6 @@ $(document).ready(() => {
         };
         if (!data.commodity) {
             errors.push({ text: "Please select an option for commodity" })
-        };
-        if (!data.unit) {
-            errors.push({ text: "Please select an option for unit" })
         };
         if (!data.value) {
             errors.push({ text: "Please enter a value for value field" })
