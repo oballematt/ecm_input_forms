@@ -1,5 +1,3 @@
-
-
 <div class="row">
     {{#with metadata}}
     <nav aria-label="breadcrumb">
@@ -13,6 +11,13 @@
         <div class="card border-secondary mt-3 w-100 text-light" style="background-color: #333f48;">
             <h5 style="background-color: #bf5700;" class="card-header">Project Info</h5>
             <div class="card-body text-black">
+                {{/with}}
+                {{#each errors}}
+                <div class="my-2" style="border: 1px solid black;">
+                    <p>{{text}}</p>
+                </div>
+                {{/each}}
+                {{#with metadata}}
                 <section class="row">
                     <div class="col-md-4">
                         <div class="input-group mb-3">
@@ -30,7 +35,7 @@
                             <label class="input-group-text" for="inputGroupSelect01">Measure Type:</label>
                             <select name="measure_type" class="form-select" id="inputGroupSelect01">
                                 <option disabled selected>{{measure_type}}</option>
-                                 <option>AHU DDC</option>
+                                <option>AHU DDC</option>
                                 <option>AHU DDC &amp; Scheduling</option>
                                 <option>Data Center</option>
                                 <option>EBCx</option>
@@ -63,7 +68,8 @@
                                     <span class="input-group-text" id="inputGroup-sizing-default">Project Fiscal
                                         Year:</span>
                                 </div>
-                                <input disabled name="fiscal_year" value={{fiscal_year}} type="text" class="form-control">
+                                <input disabled name="fiscal_year" value={{fiscal_year}} type="text"
+                                    class="form-control">
                             </div>
                         </div>
                     </div>
@@ -92,8 +98,8 @@
                             </div>
                             <input disabled name="baseline_end_date" value={{baseline_end_date}} type="text"
                                 class="form-control" />
-                            <input disabled name="reporting_period_end_date" value={{reporting_period_end_date}} type="text"
-                                class="form-control" />
+                            <input disabled name="reporting_period_end_date" value={{reporting_period_end_date}}
+                                type="text" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-4 mt-5">

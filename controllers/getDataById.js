@@ -51,31 +51,6 @@ module.exports = {
                 ]
             });
 
-            // These controllers are for finding an exisiting table record by project ID so the user can add onto it later if they need to.
-            const costHours = await Prjt_costs_hours.findOne({
-                where: {
-                    project_id
-                }
-            });
-
-            const fundings = await Prjt_funding.findOne({
-                where: {
-                    project_id
-                }
-            });
-
-            const baselinePid = await Prjt_baseline.findOne({
-                where: {
-                    project_id
-                }
-            })
-
-            const savingsPid = await Prjt_savings.findOne({
-                where: {
-                    project_id
-                }
-            })
-
             const projectId = await Prjt_metadata.findAll({
                 order: [
                     ['project_id', 'ASC']
@@ -84,14 +59,10 @@ module.exports = {
 
             return res.render('edit/allForms', {
                 metadata,
-                costsHours,
-                costHours,
-                baseline,
-                baselinePid,
-                funding,
-                fundings,
-                savings,
-                savingsPid,
+                costsHours,           
+                baseline,             
+                funding,              
+                savings,              
                 projectId
             });
 

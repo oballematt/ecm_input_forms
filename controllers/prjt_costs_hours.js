@@ -42,7 +42,7 @@ module.exports = {
             } else {
 
             const costHours = await Prjt_costs_hours.create({
-                project_id, imp_or_ann, category, cost, hours,
+               project_id, imp_or_ann, category, cost, hours,
             });
 
             return res.redirect('/find')

@@ -4,26 +4,49 @@ $(document).ready(() => {
         $('[data-toggle="tooltip"]').tooltip()
     });
 
+    const dataArray = []
+
     $("#formData").on('submit', () => {
+        dataArray.push($("#building").val());
+        dataArray.push($("#measure_type").val());
+        dataArray.push($("#status").val());
+        dataArray.push($("#staff_lead").val());
+        dataArray.push($("#staff_colead").val());
+        dataArray.push($("#analyst").val());
+        dataArray.push($("#addImpAnn").val());
+        dataArray.push($("#addCategory").val());
+        dataArray.push($("#addBaseCommodity").val());
+        dataArray.push($("#addBaseUnit").val());
+        dataArray.push($("#addSource").val());
+        dataArray.push($("#addPhase").val());
+        dataArray.push($("#addSavingsCommodity").val());
+        dataArray.push($("#addSavingsUnit").val());
         localStorage.setItem('pid', $(".pid").val())
+        localStorage.setItem('values', JSON.stringify(dataArray))
     });
 
     const getPid = localStorage.getItem('pid');
 
-    $(".project_id").val(getPid);
-
-    $("#measure_type").on("change", () => {
-        localStorage.setItem('val', $("#measure_type").val())
-    });
-
     window.onload = () => {
-        const getVal = localStorage.getItem('val');
-        $('#measure_type').val(getVal);
+        const getVal = JSON.parse(localStorage.getItem('values'));
+        $('#building').val(getVal[0]);
+        $('#measure_type').val(getVal[1]);
+        $('#status').val(getVal[2]);
+        $('#staff_lead').val(getVal[3]);
+        $('#staff_colead').val(getVal[4]);
+        $('#analyst').val(getVal[5]);
+        $('#addImpAnn').val(getVal[6]);
+        $('#addCategory').val(getVal[7]);
+        $('#addBaseCommodity').val(getVal[8]);
+        $('#addBaseUnit').val(getVal[9]);
+        $('#addSource').val(getVal[10]);
+        $('#addPhase').val(getVal[11]);
+        $('#addSavingsCommodity').val(getVal[12]);
+        $('#addSavingsUnit').val(getVal[13]);
     };
 
     $('select[name="measure_type"]').on('change', () => {
         $(".pid").val($("#building").val() + ' ' + "2021" + ' ' + $("#measure_type").val());
-        $(".pid").removeAttr("style");
     });
 
 
@@ -83,6 +106,7 @@ $(document).ready(() => {
                 $("#next").removeAttr('disabled'),
                 $("#link").attr('href', '/fundings'),
                 console.log(data),
+                $('#errors').text('')
             )
         }
     });
@@ -122,7 +146,8 @@ $(document).ready(() => {
             }).then(
                 cloneRow.clone().appendTo('#tableData tbody').find(".implementation, .annual").val(''),
                 $("#next").removeAttr('disabled'),
-                $("#link").attr('href', '/baseline')
+                $("#link").attr('href', '/baseline'),
+                $('#errors').text('')
             )
         }
     });
@@ -183,7 +208,8 @@ $(document).ready(() => {
             }).then(
                 cloneRow.clone().appendTo('#tableData tbody').find(".value").val(''),
                 $("#next").removeAttr('disabled'),
-                $("#link").attr('href', '/savings')
+                $("#link").attr('href', '/savings'),
+                $('#errors').text('')
             )
         }
     });
@@ -229,7 +255,8 @@ $(document).ready(() => {
             }).then(
                 cloneRow.clone().appendTo('#tableData tbody').find(".value").val(''),
                 $("#finish").removeAttr('disabled'),
-                $("#link").attr('href', '/')
+                $("#link").attr('href', '/'),
+                $('#errors').text('')
             )
         }
     });

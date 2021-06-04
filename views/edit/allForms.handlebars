@@ -205,7 +205,7 @@
                                 {{/each}}
                             </table>
                         </div>
-                        {{#with costHours}}
+                        {{#with metadata}}
                         <div class="card-footer text-end">
                             <a href="/add/costs_hours/{{project_id}}">
                                 <button type="button" class='btn btn-success'><i class="fas fa-plus-circle">&nbsp;Add
@@ -253,7 +253,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{#with fundings}}
+                        {{#with metadata}}
                         <div class="card-footer text-end">
                             <a href="/add/fundings/{{project_id}}">
                                 <button type="button" class='btn btn-success'><i class="fas fa-plus-circle">&nbsp;Add
@@ -303,7 +303,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{#with baselinePid}}
+                        {{#with metadata}}
                         <div class="card-footer text-end">
                             <a href="/add/baseline/{{project_id}}">
                                 <button type="button" class='btn btn-success'><i class="fas fa-plus-circle">&nbsp;Add
@@ -352,7 +352,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{#with savingsPid}}
+                        {{#with metadata}}
                         <div class="card-footer text-end">
                             <a href="/add/savings/{{project_id}}">
                                 <button type="button" class='btn btn-success'><i class="fas fa-plus-circle">&nbsp;Add
@@ -373,16 +373,16 @@
                             <h5 style="background-color: #bf5700;" class="card-header">Attention</h5>
                             <div class="card-body">
                                 <div class="modal-body mt-1">
-                                    <h5 style="line-height: 35px">By continuing with this action,
+                                    <h5 style="line-height: 35px">Continuing with this action will delete 
                                         <strong><u>ALL</u></strong>
-                                        data records will be deleted from:
+                                        data records from:
                                         <ul>
                                             <li>Project Info</li>
                                             <li>Costs &amp; Hours</li>
                                             <li>Fundings</li>
                                             <li>Baseline</li>
                                             <li>Savings</li>
-                                        </ul>Project ID:
+                                        </ul>Associated with Project ID:
                                         <ul>
                                             <li><strong>{{project_id}}</strong></li>
                                         </ul>
