@@ -14,6 +14,6 @@ router.get('/find/costs_hours/:id', costsHoursController.getOneCostsHours);
 
 router.get('/add/costs_hours/:project_id', costsHoursController.getOneByProjectId)
 
-router.post('/add/costs_hours/:project_id', costsHoursController.createCostsHours)
+router.post('/add/costs_hours/:project_id', costsHoursController.createByProjectId)
 
 module.exports = router;

@@ -35,33 +35,32 @@
                             </td>
                             <td>
                                 <div class="input-group mb-3">
-                                    <div class="input-group mb-3">
-                                        <select name="commodity" id="addBaseCommodity" class="form-select commodity" id="inputGroupSelect01">
-                                            <option disabled selected>Choose</option>
-                                            <option>CHW</option>
-                                            <option>ELE</option>
-                                            <option>STM</option>
-                                            <option>HHW</option>
-                                            <option>GAS</option>
-                                            <option>WATER</option>
-                                            <option>PEAK_CHW</option>
-                                            <option>LABOR</option>
-                                        </select>
-                                    </div>
+                                    <select name="commodity" id="addBaseCommodity" class="form-select commodity"
+                                        id="inputGroupSelect01">
+                                        <option disabled selected>Choose...</option>
+                                        <option>CHW</option>
+                                        <option>ELE</option>
+                                        <option>STM</option>
+                                        <option>HHW</option>
+                                        <option>GAS</option>
+                                        <option>WATER</option>
+                                        <option>PEAK_CHW</option>
+                                        <option>LABOR</option>
+                                    </select>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-group mb-3">
-                                    <input name="value" type="text" class="form-control value">
+                                    <input value="{{value}}" name="value" type="text" class="form-control value">
                                 </div>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                 {{/with}}
+                {{/with}}
             </div>
             <div class="card-footer text-end">
-                <button type="submit" class="btn btn-success text-light">Submit
+                <button type="submit" class="btn btn-success text-light clear">Submit
                 </button>
             </div>
         </div>

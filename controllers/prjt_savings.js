@@ -1,4 +1,4 @@
-const { Prjt_savings } = require('../models');
+const { Prjt_savings, Prjt_metadata } = require('../models');
 
 module.exports = {
 
@@ -9,7 +9,7 @@ module.exports = {
 
         try {
 
-            const savings = await Prjt_savings.findOne({
+            const savings = await Prjt_metadata.findOne({
                 where: {
                     project_id
                 }
@@ -107,7 +107,7 @@ module.exports = {
 
         try {
 
-            const savings = await Prjt_savings.findOne({
+            const savings = await Prjt_metadata.findOne({
                 where: {
                     project_id
                 }

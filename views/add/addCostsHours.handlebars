@@ -18,7 +18,7 @@
             {{/each}}
             {{#with costHours}}
             <form action='/add/costs_hours/{{project_id}}' id="formData" method="POST">
-            {{/with}}
+                {{/with}}
                 <table id="tableData" class="table text-light text-center mt-3">
                     <thead>
                         <tr>
@@ -34,27 +34,24 @@
                                 <div class="input-group mb-3">
                                     {{#with costHours}}
                                     <input id="validationCustom03" value="{{project_id}}" name="project_id" type="text"
-                                    {{/with}}
-                                        class="form-control">
+                                        {{/with}} class="form-control">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <select value='{{imp_or_ann}}' id="addImpAnn" name="imp_or_ann"
+                                        class="form-select imp_or_ann" id="inputGroupSelect01">
+                                        <option selected disabled>Choose...</option>
+                                        <option>Implementation</option>
+                                        <option>Annual</option>
+                                    </select>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-group mb-3">
                                     <div class="input-group mb-3">
-                                        <select value='{{imp_or_ann}}' id="addImpAnn" name="imp_or_ann" class="form-select imp_or_ann"
-                                            id="inputGroupSelect01">
-                                            <option selected disabled>Choose...</option>
-                                            <option >Implementation</option>
-                                            <option >Annual</option>
-                                        </select>
-
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-group mb-3">
-                                    <div class="input-group mb-3">
-                                        <select value='{{category}}' id="addCategory" name="category" class="form-select category" id="inputGroupSelect01">
+                                        <select value='{{category}}' id="addCategory" name="category"
+                                            class="form-select category" id="inputGroupSelect01">
                                             <option disabled selected>Choose...</option>
                                             <option>EMO</option>
                                             <option>Analysts</option>
@@ -84,7 +81,7 @@
                 </table>
 
                 <div class="card-footer text-end">
-                    <button type="submit" class="btn btn-success text-light">Submit
+                    <button type="submit" class="btn btn-success text-light clear">Submit
                     </button>
                 </div>
             </form>

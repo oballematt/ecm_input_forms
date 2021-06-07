@@ -14,6 +14,6 @@ router.get('/find/funding/:id', fundingController.getOneFunding);
 
 router.get('/add/fundings/:project_id', fundingController.getOneByProjectId)
 
-router.post('/add/fundings/:project_id', fundingController.createFunding)
+router.post('/add/fundings/:project_id', fundingController.createFundingByProjectId)
 
 module.exports = router;

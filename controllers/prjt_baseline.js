@@ -1,4 +1,4 @@
-const { Prjt_baseline } = require('../models');
+const { Prjt_baseline, Prjt_metadata } = require('../models');
 
 module.exports = {
 
@@ -9,7 +9,7 @@ module.exports = {
 
         try {
 
-            const baseline = await Prjt_baseline.findOne({
+            const baseline = await Prjt_metadata.findOne({
                 where: {
                     project_id
                 }
@@ -103,7 +103,7 @@ module.exports = {
 
         try {
 
-            const baseline = await Prjt_baseline.findOne({
+            const baseline = await Prjt_metadata.findOne({
                 where: {
                     project_id
                 }

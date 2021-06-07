@@ -4,78 +4,36 @@ $(document).ready(() => {
         $('[data-toggle="tooltip"]').tooltip()
     });
 
-    const dataArray = []
+    const ids = ['building', 'measure_type', 'status', 'staff_lead', 'staff_colead', 'analyst', 'addImpAnn', 'addCategory', 
+    'addBaseCommodity', 'addSource', 'addPhase', 'addSavingsCommodity'];
+
+    let dataObj = {};
 
     $("#formData").on('submit', () => {
-        dataArray.push($("#building").val());
-        dataArray.push($("#measure_type").val());
-        dataArray.push($("#status").val());
-        dataArray.push($("#staff_lead").val());
-        dataArray.push($("#staff_colead").val());
-        dataArray.push($("#analyst").val());
-        dataArray.push($("#addImpAnn").val());
-        dataArray.push($("#addCategory").val());
-        dataArray.push($("#addBaseCommodity").val());
-        dataArray.push($("#addSource").val());
-        dataArray.push($("#addPhase").val());
-        dataArray.push($("#addSavingsCommodity").val());
-        localStorage.setItem('pid', $(".pid").val())
-        localStorage.setItem('values', JSON.stringify(dataArray))
+        ids.forEach(id => dataObj[id] = $('#' + id).val());
+
+        localStorage.setItem('values', JSON.stringify(dataObj));
+
+        localStorage.setItem('pid', $(".pid").val());
+
     });
+
+    $('#searchData').on('submit', () => {
+        localStorage.setItem("search", $("#search").val())
+    })
 
     const getPid = localStorage.getItem('pid');
 
     window.onload = () => {
-        const getVal = JSON.parse(localStorage.getItem('values'));
-        $('#building').val(getVal[0]);
-        $('#measure_type').val(getVal[1]);
-        $('#status').val(getVal[2]);
-        $('#staff_lead').val(getVal[3]);
-        $('#staff_colead').val(getVal[4]);
-        $('#analyst').val(getVal[5]);
-        $('#addImpAnn').val(getVal[6]);
-        $('#addCategory').val(getVal[7]);
-        $('#addBaseCommodity').val(getVal[8]);
-        $('#addSource').val(getVal[9]);
-        $('#addPhase').val(getVal[10]);
-        $('#addSavingsCommodity').val(getVal[11]);
+        const storedVals = localStorage.getItem('values');
+        const searchedVal = localStorage.getItem('search')
 
-        if(getVal[0] === null){
-            $("#building").val("Choose...")
-        }
-        if(getVal[1] === null){
-            $("#measure_type").val("Choose...")
-        }
-        if(getVal[2] === null){
-            $("#status").val("Choose...")
-        }
-        if(getVal[3] === null){
-            $("#staff_lead").val("Choose...")
-        }
-        if(getVal[4] === null){
-            $("#staff_colead").val("Choose...")
-        }
-        if(getVal[5] === null){
-            $("#analyst").val("Choose...")
-        }
-        if(getVal[6] === null){
-            $("#addImpAnn").val("Choose...")
-        }
-        if(getVal[7] === null){
-            $("#addCategory").val("Choose...")
-        }
-        if(getVal[8] === null){
-            $("#addBaseCommodity").val("Choose...")
-        }
-        if(getVal[9] === null){
-            $("#addSource").val("Choose...")
-        }
-        if(getVal[10] === null){
-            $("#addPhase").val("Choose...")
-        }
-        if(getVal[11] === null){
-            $("#addSavingsCommodity").val("Choose...")
-        }
+        if (storedVals) {
+            dataObj = JSON.parse(storedVals)
+            ids.forEach(id => $('#' + id).val(dataObj[id] || 'Choose...'));
+        };
+
+        $("#search").val(searchedVal)
     };
 
     $('select[name="measure_type"]').on('change', () => {
@@ -98,8 +56,12 @@ $(document).ready(() => {
 
     dateInput_2.datepicker(options);
 
-    $('#tableData').on('click', 'button.addRow', (e) => {
-        const cloneRow = $('#tableData tbody tr').first();
+    const $table = $("#tableData"),
+          $tbody = $table.find('tbody'),
+          $cloneRow = $tbody.find('tr').first().clone()
+
+
+    $table.on('click', 'button.addRow', (e) => {
         e.preventDefault();
         let errors = [];
         let data = {
@@ -135,17 +97,17 @@ $(document).ready(() => {
                 type: 'POST',
                 data: data
             }).then(
-                cloneRow.clone().appendTo('#tableData tbody').find(".cost, .hours").val(''),
+                $tbody.find(':input').prop('disabled', true).css("background-color", "green"),
+                $tbody.append($cloneRow.clone()),
                 $("#next").removeAttr('disabled'),
                 $("#link").attr('href', '/fundings'),
-                console.log(data),
                 $('#errors').text('')
             )
         }
     });
 
-    $('#tableData').on('click', 'button.addRowF', (e) => {
-        const cloneRow = $('#tableData tbody tr').first();
+
+    $table.on('click', 'button.addRowF', (e) => {
         e.preventDefault();
         let errors = []
         let data = {
@@ -161,10 +123,10 @@ $(document).ready(() => {
             errors.push({ text: "Please select an option for source" })
         };
         if (!data.implementation) {
-            errors.push({ text: "Please enter a value for implementation" })
+            errors.push({ text: "Please enter a value for implementation (if value is unknown, enter 0)" })
         };
         if (!data.annual) {
-            errors.push({ text: "Please enter a value for annual" })
+            errors.push({ text: "Please enter a value for annual (if value is unknown, enter 0)" })
         };
 
         if (errors.length > 0) {
@@ -177,17 +139,17 @@ $(document).ready(() => {
                 type: 'POST',
                 data: data
             }).then(
-                cloneRow.clone().appendTo('#tableData tbody').find(".implementation, .annual").val(''),
+                $tbody.find(':input').prop('disabled', true).css("background-color", "green"),
+                $tbody.append($cloneRow.clone()),
                 $("#next").removeAttr('disabled'),
                 $("#link").attr('href', '/baseline'),
                 $('#errors').text('')
-            )
+            );
         }
     });
 
-    $('#tableData').on('click', 'button.addRowB', (e) => {
+    $table.on('click', 'button.addRowB', (e) => {
 
-        const cloneRow = $('#tableData tbody tr').first();
         e.preventDefault();
         let errors = []
         let data = {
@@ -203,7 +165,7 @@ $(document).ready(() => {
             errors.push({ text: "Please select an option for commodity" })
         };
         if (!data.value) {
-            errors.push({ text: "Please enter a value for value field" })
+            errors.push({ text: "Please enter a value for value field (if value is unknown, enter 0)" })
         }
 
         if (errors.length > 0) {
@@ -217,7 +179,8 @@ $(document).ready(() => {
                 type: 'POST',
                 data: data
             }).then(
-                cloneRow.clone().appendTo('#tableData tbody').find(".value").val(''),
+                $tbody.find(':input').prop('disabled', true).css("background-color", "green"),
+                $tbody.append($cloneRow.clone()),
                 $("#next").removeAttr('disabled'),
                 $("#link").attr('href', '/savings'),
                 $('#errors').text('')
@@ -225,8 +188,7 @@ $(document).ready(() => {
         }
     });
 
-    $('#tableData').on('click', 'button.addRowS', (e) => {
-        const cloneRow = $('#tableData tbody tr').first();
+    $table.on('click', 'button.addRowS', (e) => {
         e.preventDefault();
         let errors = []
         let data = {
@@ -246,7 +208,7 @@ $(document).ready(() => {
             errors.push({ text: "Please select an option for commodity" })
         };
         if (!data.value) {
-            errors.push({ text: "Please enter a value for value field" })
+            errors.push({ text: "Please enter a value for value field (if value is unknown, enter 0)" })
         };
 
         if (errors.length > 0) {
@@ -260,7 +222,8 @@ $(document).ready(() => {
                 type: 'POST',
                 data: data
             }).then(
-                cloneRow.clone().appendTo('#tableData tbody').find(".value").val(''),
+                $tbody.find(':input').prop('disabled', true).css("background-color", "green"),
+                $tbody.append($cloneRow.clone()),
                 $("#finish").removeAttr('disabled'),
                 $("#link").attr('href', '/'),
                 $('#errors').text('')
@@ -271,5 +234,9 @@ $(document).ready(() => {
     $("#finish").on("click", () => {
         localStorage.clear();
     });
+
+    $(".clear").on("click", () => {
+        localStorage.removeItem("values")
+    })
 
 });

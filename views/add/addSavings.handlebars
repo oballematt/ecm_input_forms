@@ -46,7 +46,7 @@
                             <td>
                                 <div class="input-group mb-3">
                                     <select id="addSavingsCommodity" name="commodity" class="form-select commodity" id="inputGroupSelect01">
-                                        <option disabled selected>Choose</option>
+                                        <option disabled selected>Choose...</option>
                                         <option>CHW</option>
                                         <option>ELE</option>
                                         <option>STM</option>
@@ -60,7 +60,7 @@
                             </td>
                             <td>
                                 <div class="input-group mb-3">
-                                    <input name="value" type="text" class="form-control value">
+                                    <input value="{{value}}" name="value" type="text" class="form-control value">
                                 </div>
                             </td>
                         </tr>
@@ -68,7 +68,7 @@
                 </table>
             </div>
             <div class="card-footer text-end">
-                <button type="submit" class="btn btn-success text-light">Submit
+                <button type="submit" class="btn btn-success text-light clear">Submit
                 </button>
             </div>
         </div>

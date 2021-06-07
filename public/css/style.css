@@ -35,9 +35,13 @@ h1 {
     font-weight: bold;
 }
 
-  @media (min-width: 764px) and (max-width: 1240px){
+  @media (min-width: 764px) and (max-width: 1204px){
       .responsive{
           flex-direction: column;
+      }
+
+      .deleteBtn{
+        text-align: left;
       }
   }
 

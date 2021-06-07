@@ -37,30 +37,30 @@
                             </td>
                             <td>
                                 <div class="input-group mb-3">
-                                    <div class="input-group mb-3">
-                                        <select id="addSource" name="source" class="form-select source" id="inputGroupSelect01">
-                                            <option disabled selected>Choose</option>
-                                            <option>Green Fund</option>
-                                            <option>Facilities</option>
-                                            <option>R and R</option>
-                                            <option>UEM</option>
-                                            <option>AUX</option>
-                                        </select>
-                                    </div>
+                                    <select id="addSource" name="source" class="form-select source"
+                                        id="inputGroupSelect01">
+                                        <option disabled selected>Choose...</option>
+                                        <option>Green Fund</option>
+                                        <option>Facilities</option>
+                                        <option>R and R</option>
+                                        <option>UEM</option>
+                                        <option>AUX</option>
+                                    </select>
                                 </div>
                             </td>
                             <td>
-                                <input name="implementation" type="text" class="form-control implementation">
+                                <input value="{{implementation}}" name="implementation" type="text"
+                                    class="form-control implementation">
                             </td>
                             <td>
-                                <input name="annual" type="text" class="form-control annual">
+                                <input value="{{annual}}" name="annual" type="text" class="form-control annual">
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="card-footer text-end">
-                <button type="submit" class="btn btn-success text-light">Submit
+                <button type="submit" class="btn btn-success text-light clear">Submit
                 </button>
             </div>
         </div>

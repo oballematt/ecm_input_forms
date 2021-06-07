@@ -1,4 +1,4 @@
-const { Prjt_funding } = require('../models');
+const { Prjt_funding, Prjt_metadata } = require('../models');
 
 module.exports = {
 
@@ -6,11 +6,33 @@ module.exports = {
 
         let { project_id, implementation, source, annual } = req.body;
 
+
+        try {
+
+            const funding = await Prjt_funding.create({
+                project_id, implementation, source, annual
+            });
+
+            return res.redirect('/find')
+
+        } catch (error) {
+
+            console.error(error.message);
+            return res.status(500).json(error);
+
+        }
+
+    },
+
+    createFundingByProjectId: async (req, res) => {
+
+        let { project_id, implementation, source, annual } = req.body;
+
         let errors = []
 
         try {
 
-            const fundings = await Prjt_funding.findOne({
+            const fundings = await Prjt_metadata.findOne({
                 where: {
                     project_id
                 }
@@ -111,7 +133,7 @@ module.exports = {
 
         try {
 
-            const fundings = await Prjt_funding.findOne({
+            const fundings = await Prjt_metadata.findOne({
                 where: {
                     project_id
                 }

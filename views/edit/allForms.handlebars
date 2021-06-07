@@ -6,10 +6,9 @@
                 <li class="breadcrumb-item active" aria-current="page">Find</li>
             </ol>
         </nav>
-        <form id="formData" action="/find" method="POST">
+        <form id="searchData" action="/find" method="POST">
             <div class="input-group">
-                <select name="project_id" class="form-select" id="inputGroupSelect04"
-                    aria-label="Example select with button addon">
+                <select name="project_id" class="form-select" id="search" aria-label="Example select with button addon">
                     <option selected disabled>Project ID</option>
                     {{#each projectId}}
                     <option>{{project_id}}</option>
@@ -148,8 +147,6 @@
                     <div class='text-end text-white mt-3'>
                         {{#with metadata}}
                         <a href="/find/{{project_id}}"><button type="button" class='btn btn-warning'>Edit</button></a>
-                        <a href="/delete/{{project_id}}"><button type="button"
-                                class='btn btn-danger'>Delete</button></a>
                         {{/with}}
                     </div>
                 </div>
@@ -198,7 +195,8 @@
                         {{#with metadata}}
                         <div class="card-footer text-end">
                             <a href="/add/costs_hours/{{project_id}}">
-                                <button type="button" class='btn btn-success'><i class="fas fa-plus-circle">&nbsp;Add
+                                <button type="button" class='btn btn-success clear'><i
+                                        class="fas fa-plus-circle">&nbsp;Add
                                         Record</i>
                                 </button>
                             </a>
@@ -244,7 +242,8 @@
                         {{#with metadata}}
                         <div class="card-footer text-end">
                             <a href="/add/fundings/{{project_id}}">
-                                <button type="button" class='btn btn-success'><i class="fas fa-plus-circle">&nbsp;Add
+                                <button type="button" class='btn btn-success clear'><i
+                                        class="fas fa-plus-circle">&nbsp;Add
                                         Record</i>
                                 </button>
                             </a>
@@ -256,7 +255,7 @@
             <hr>
             <div class="row responsive">
                 <section class="col-md-6">
-                    <div class="card border-secondary text-light" style="background-color: #333f48">
+                    <div class="card border-secondary mb-3 text-light" style="background-color: #333f48">
                         <h5 style="background-color: #bf5700;" class="card-header">Baseline</h5>
                         <div class="card-body">
                             <table class="table text-light">
@@ -290,7 +289,8 @@
                         {{#with metadata}}
                         <div class="card-footer text-end">
                             <a href="/add/baseline/{{project_id}}">
-                                <button type="button" class='btn btn-success'><i class="fas fa-plus-circle">&nbsp;Add
+                                <button type="button" class='btn btn-success clear'><i
+                                        class="fas fa-plus-circle">&nbsp;Add
                                         Record</i>
                                 </button>
                             </a>
@@ -335,13 +335,20 @@
                         {{#with metadata}}
                         <div class="card-footer text-end">
                             <a href="/add/savings/{{project_id}}">
-                                <button type="button" class='btn btn-success'><i class="fas fa-plus-circle">&nbsp;Add
+                                <button type="button" class='btn btn-success clear'><i
+                                        class="fas fa-plus-circle">&nbsp;Add
                                         Record</i>
                                 </button>
                             </a>
                         </div>
-                        {{/with}}
                     </div>
+                    <div class="mb-3 text-end">
+                        <button title="This will delete all data related to project ID: {{project_id}}"
+                            data-toggle="tooltip" data-placement="top" type="button" class="btn btn-danger" <span
+                            data-bs-toggle="modal" data-bs-target="#exampleModal">Delete Project</span>
+                        </button>
+                    </div>
+                    {{/with}}
                 </section>
             </div>
             {{#with metadata}}
@@ -353,7 +360,7 @@
                             <h5 style="background-color: #bf5700;" class="card-header">Attention</h5>
                             <div class="card-body">
                                 <div class="modal-body mt-1">
-                                    <h5 style="line-height: 35px">Continuing with this action will delete 
+                                    <h5 style="line-height: 35px">Continuing with this action will delete
                                         <strong><u>ALL</u></strong>
                                         data records from:
                                         <ul>
@@ -378,14 +385,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            {{/with}}
-            {{#with metadata}}
-            <div class="text-end mb-3">
-                <button title="This will delete all data related to project ID: {{project_id}}" data-toggle="tooltip"
-                    data-placement="top" type="button" class="btn btn-danger" 
-                    <span data-bs-toggle="modal" data-bs-target="#exampleModal">Delete Project</span>
-                </button>
             </div>
             {{/with}}
         </form>

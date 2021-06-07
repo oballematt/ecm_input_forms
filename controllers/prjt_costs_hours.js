@@ -1,9 +1,31 @@
-const { Prjt_costs_hours } = require('../models');
+const { Prjt_costs_hours, Prjt_metadata } = require('../models');
 
 module.exports = {
 
     // Add costs and hours to database
     createCostsHours: async (req, res) => {
+
+        let { project_id, imp_or_ann, category, cost, hours } = req.body;
+
+        try {
+
+            const costHours = await Prjt_costs_hours.create({
+               project_id, imp_or_ann, category, cost, hours,
+            });
+
+            return res.json(costHours)
+
+        
+
+        } catch (error) {
+
+            console.error(error.message);
+            return res.status(500).json(error);
+
+        }
+    },
+
+    createByProjectId: async (req, res) => {
 
 
         let { project_id, imp_or_ann, category, cost, hours } = req.body;
@@ -12,7 +34,7 @@ module.exports = {
 
         try {
 
-            const costHours = await Prjt_costs_hours.findOne({
+            const costHours = await Prjt_metadata.findOne({
                 where: {
                     project_id
                 }
@@ -116,7 +138,7 @@ module.exports = {
 
         try {
 
-            const costHours = await Prjt_costs_hours.findOne({
+            const costHours = await Prjt_metadata.findOne({
                 where: {
                     project_id
                 }
@@ -138,6 +160,7 @@ module.exports = {
         const { id } = req.params;
 
         try {
+
             const costHours = await Prjt_costs_hours.destroy({
                 where: {
                     id

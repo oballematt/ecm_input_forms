@@ -36,30 +36,28 @@
                             </td>
                             <td>
                                 <div class="input-group mb-3">
-                                    <div class="input-group mb-3">
-                                        <select name="category" class="form-select category" id="inputGroupSelect01">
-                                            <option disabled selected>Choose...</option>
-                                            <option>EMO</option>
-                                            <option>Analysts</option>
-                                            <option>Maintenance</option>
-                                            <option>ETS</option>
-                                            <option>BOT</option>
-                                            <option>OtherUT</option>
-                                            <option>Materials</option>
-                                            <option>Non-UT Contract</option>
-                                            <option>Contingency</option>
-                                        </select>
-                                    </div>
+                                    <select name="category" class="form-select category" id="inputGroupSelect01">
+                                        <option disabled selected>Choose...</option>
+                                        <option>EMO</option>
+                                        <option>Analysts</option>
+                                        <option>Maintenance</option>
+                                        <option>ETS</option>
+                                        <option>BOT</option>
+                                        <option>OtherUT</option>
+                                        <option>Materials</option>
+                                        <option>Non-UT Contract</option>
+                                        <option>Contingency</option>
+                                    </select>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-group mb-3">
-                                    <input name="cost" type="text" class="cost form-control">
+                                    <input autocomplete="off" name="cost" type="text" class="cost form-control">
                                 </div>
                             </td>
                             <td>
                                 <div class="input-group mb-3">
-                                    <input name="hours" type="text" class="hours form-control">
+                                    <input autocomplete="off" name="hours" type="text" class="hours form-control">
                                 </div>
                             </td>
                             <td>
@@ -73,10 +71,7 @@
                 </table>
             </div>
             <div class="row text-center my-3">
-                <div class="col-4">
-                    <a href='/metadata'><button type="button" class='btn btn-warning'>Back</button></a>
-                </div>
-                <div class="col-6 text-end">
+                <div class="col-11 text-end">
                     <button disabled id="next" type="button" class='btn btn-success'><a id="link"
                             class="text-white">Next</a>
                     </button>
