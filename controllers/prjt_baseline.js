@@ -131,9 +131,7 @@ module.exports = {
                 }
             });
 
-            return res.render('edit/allForms', {
-                baseline
-            })
+            return res.redirect('/find')
 
         } catch (error) {
             
