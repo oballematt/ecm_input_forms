@@ -7,6 +7,9 @@
             </ol>
         </nav>
         <form id="searchData" action="/find" method="POST">
+        {{#each errors}}
+        <p>{{text}}</p>
+        {{/each}}
             <div class="input-group">
                 <select name="project_id" class="form-select" id="search" aria-label="Example select with button addon">
                     <option selected disabled>Project ID</option>

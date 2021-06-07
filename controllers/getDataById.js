@@ -7,8 +7,28 @@ module.exports = {
         try {
             const { project_id } = req.body
 
+            let errors = []
+
             //These controllers are for finding all exisiting records in these tables based on project_id so the user can view the information
             //and either update or delete the information if they need too. 
+            const projectId = await Prjt_metadata.findAll({
+                order: [
+                    ['project_id', 'ASC']
+                ]
+            })
+            
+            if (!project_id){
+                errors.push({text: "Please select a project ID"})
+            }
+
+            if (errors.length > 0){
+                res.render('edit/allForms', {
+                    errors,
+                    projectId
+                })
+            
+            } else {
+
             const metadata = await Prjt_metadata.findOne({
                 where: {
                     project_id
@@ -51,13 +71,6 @@ module.exports = {
                 ]
             });
 
-
-            const projectId = await Prjt_metadata.findAll({
-                order: [
-                    ['project_id', 'ASC']
-                ]
-            })
-
             return res.render('edit/allForms', {
                 metadata,
                 costsHours,
@@ -66,6 +79,8 @@ module.exports = {
                 savings,
                 projectId
             });
+
+        }
 
         } catch (error) {
 

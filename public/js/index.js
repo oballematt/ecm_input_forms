@@ -12,21 +12,21 @@ $(document).ready(() => {
     $("#formData").on('submit', () => {
         ids.forEach(id => dataObj[id] = $('#' + id).val());
 
-        localStorage.setItem('values', JSON.stringify(dataObj));
+        sessionStorage.setItem('values', JSON.stringify(dataObj));
 
-        localStorage.setItem('pid', $(".pid").val());
+        sessionStorage.setItem('pid', $(".pid").val());
 
     });
 
     $('#searchData').on('submit', () => {
-        localStorage.setItem("search", $("#search").val())
+        sessionStorage.setItem("search", $("#search").val())
     })
 
-    const getPid = localStorage.getItem('pid');
+    const getPid = sessionStorage.getItem('pid');
 
     window.onload = () => {
-        const storedVals = localStorage.getItem('values');
-        const searchedVal = localStorage.getItem('search')
+        const storedVals = sessionStorage.getItem('values');
+        const searchedVal = sessionStorage.getItem('search')
 
         if (storedVals) {
             dataObj = JSON.parse(storedVals)
@@ -34,7 +34,12 @@ $(document).ready(() => {
         };
 
         $("#search").val(searchedVal)
+
+        if (!searchedVal || searchedVal === 'null') {
+            $("#search").val('Project ID')
+        }
     };
+
 
     $('select[name="measure_type"]').on('change', () => {
         $(".pid").val($("#building").val() + ' ' + "2021" + ' ' + $("#measure_type").val());
@@ -81,10 +86,10 @@ $(document).ready(() => {
             errors.push({ text: "Please select an option for category" })
         };
         if (!data.cost) {
-            errors.push({ text: "Please enter a value for cost (if the cost is unknown, enter 0)" })
+            errors.push({ text: "Please enter a value for cost (if value is unknown, enter 0)" })
         };
         if (!data.hours) {
-            errors.push({ text: "Please enter a value for hours" })
+            errors.push({ text: "Please enter a value for hours (id values is unkown, enter 0)" })
         };
 
         if (errors.length > 0) {
@@ -232,11 +237,11 @@ $(document).ready(() => {
     });
 
     $("#finish").on("click", () => {
-        localStorage.clear();
+        sessionStorage.clear();
     });
 
     $(".clear").on("click", () => {
-        localStorage.removeItem("values")
+        sessionStorage.removeItem("values")
     })
 
 });

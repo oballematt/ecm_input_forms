@@ -39,10 +39,6 @@ h1 {
       .responsive{
           flex-direction: column;
       }
-
-      .deleteBtn{
-        text-align: left;
-      }
   }
 
 @media (min-width: 601px){
