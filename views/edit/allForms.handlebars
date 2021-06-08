@@ -2,14 +2,14 @@
     <div class="col-md-12">
         <nav class='mt-5' aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a class="clear" href="/" role="button">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Find</li>
             </ol>
         </nav>
         <form id="searchData" action="/find" method="POST">
-        {{#each errors}}
-        <p>{{text}}</p>
-        {{/each}}
+            {{#each errors}}
+            <p>{{text}}</p>
+            {{/each}}
             <div class="input-group">
                 <select name="project_id" class="form-select" id="search" aria-label="Example select with button addon">
                     <option selected disabled>Project ID</option>
@@ -164,8 +164,8 @@
                                 <thead>
                                     <tr class="text-end">
                                         <th class="text-start" scope="col">Implementation or Annual</th>
-                                        <th scope="col">Category</th>
-                                        <th scope="col">$ Cost</th>
+                                        <th class="text-start" scope="col">Category</th>
+                                        <th scope="col">Cost</th>
                                         <th scope="col">Hours</th>
                                         <th scope="col">Edit</th>
                                         <th scope="col">Delete</th>
@@ -175,7 +175,7 @@
                                     {{#each costsHours}}
                                     <tr class="text-end">
                                         <td class="text-start">{{imp_or_ann}}</td>
-                                        <td>{{category}}</td>
+                                        <td class="text-start">{{category}}</td>
                                         <td class="text-end">{{cost}}</td>
                                         <td class="text-end">{{hours}}</td>
                                         <td>
@@ -309,7 +309,7 @@
                                 <thead>
                                     <tr class="text-end">
                                         <th class="text-start" scope="col">Phase</th>
-                                        <th scope="col">Commodity</th>
+                                        <th class="text-start" scope="col">Commodity</th>
                                         <th scope="col">Value</th>
                                         <th scope="col">Edit</th>
                                         <th scope="col">Delete</th>
@@ -319,7 +319,7 @@
                                     {{#each savings}}
                                     <tr class="text-end">
                                         <td class="text-start">{{phase}}</td>
-                                        <td>{{commodity}}</td>
+                                        <td class="text-start">{{commodity}}</td>
                                         <td>{{value}}</td>
                                         <td>
                                             <a href="/find/savings/{{id}}" class='btn btn-warning'>
@@ -345,15 +345,64 @@
                             </a>
                         </div>
                     </div>
-                    <div class="mb-3 text-end">
-                        <button title="This will delete all data related to project ID: {{project_id}}"
-                            data-toggle="tooltip" data-placement="top" type="button" class="btn btn-danger" <span
-                            data-bs-toggle="modal" data-bs-target="#exampleModal">Delete Project</span>
-                        </button>
-                    </div>
                     {{/with}}
                 </section>
             </div>
+            <hr>
+            <div class="row justify-content-center">
+                <section class="col-md-6">
+                    <div class="card border-secondary text-light mb-3" style="background-color: #333f48" ;>
+                        <h5 style="background-color: #bf5700;" class="card-header">Misc Savings</h5>
+                        <div class="card-body">
+                            <table class="table text-light">
+                                <thead>
+                                    <tr class="text-end">
+                                        <th class="text-start" scope="col">Phase</th>
+                                        <th class="text-start" scope="col">Owner</th>
+                                        <th scope="col">Misc Savings</th>
+                                        <th scope="col">Edit</th>
+                                        <th scope="col">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each miscSavings}}
+                                    <tr class="text-end">
+                                        <td class="text-start">{{phase}}</td>
+                                        <td class="text-start">{{misc_owner}}</td>
+                                        <td>{{misc_savings}}</td>
+                                        <td>
+                                            <a href="/find/miscsavings/{{id}}" class='btn btn-warning'>
+                                                <i class="fas fa-edit"></i>
+                                        </td>
+                                        <td>
+                                            <a href="/delete/miscsavings/{{id}}" class='btn btn-danger'>
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                        {{#with metadata}}
+                        <div class="card-footer text-end">
+                            <a href="/add/miscsavings/{{project_id}}">
+                                <button type="button" class='btn btn-success clear'><i
+                                        class="fas fa-plus-circle">&nbsp;Add
+                                        Record</i>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+                <div class="mb-3 text-center">
+                    <button title="This will delete all data related to project ID: {{project_id}}"
+                        data-toggle="tooltip" data-placement="top" type="button" class="btn btn-danger" <span
+                        data-bs-toggle="modal" data-bs-target="#exampleModal">Delete Project</span>
+                    </button>
+                </div>
+            </div>
+            {{/with}}
             {{#with metadata}}
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
@@ -372,6 +421,7 @@
                                             <li>Fundings</li>
                                             <li>Baseline</li>
                                             <li>Savings</li>
+                                            <li>Misc Savings</li>
                                         </ul>Associated with Project ID:
                                         <ul>
                                             <li><strong>{{project_id}}</strong></li>

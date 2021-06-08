@@ -1,35 +1,43 @@
 <div class="row">
-    {{#with savings}}
+    {{#with miscSavings}}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item"><a href="/find">Find</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Edit {{project_id}}</li>
+            <li class="breadcrumb-item active" aria-current="page">Add {{project_id}}</li>
         </ol>
     </nav>
-    <form action='/find/savings/{{id}}' method="POST">
+    <form action='/add/miscsavings/{{project_id}}' id="formData" method="POST">
         <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
             <h5 style="background-color: #bf5700;" class="card-header">Savings</h5>
             <div class="card-body w-100 text-end">
+                {{/with}}
+                {{#each errors}}
+                <div class="my-2 text-start" style="border: 1px solid black;">
+                    <p>{{text}}</p>
+                </div>
+                {{/each}}
+                {{#with miscSavings}}
                 <table id="tableData" class="table text-light text-center mt-3">
                     <thead>
                         <tr>
                             <th scope="col">Phase</th>
-                            <th scope="col">Commodity</th>
-                            <th scope="col">Value</th>
+                            <th scope="col">Owner</th>
+                            <th scope="col">Misc Savings</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td style="display: none">
                                 <div class="input-group mb-3">
-                                    <input disabled value="{{project_id}}" name="project_id" type="text" class="form-control">
+                                    <input id="validationCustom03" value="{{project_id}}" name="project_id" type="text"
+                                        class="form-control">
                                 </div>
                             </td>
                             <td>
                                 <div class="input-group mb-3">
-                                    <select name="phase" class="form-select" id="inputGroupSelect01">
-                                        <option disabled selected>{{phase}}</option>
+                                    <select id="addMiscPhase" name="phase" class="form-select phase" id="inputGroupSelect01">
+                                        <option disabled selected>Choose</option>
                                         <option>MV</option>
                                         <option>Predicted</option>
                                     </select>
@@ -37,28 +45,26 @@
                             </td>
                             <td>
                                 <div class="input-group mb-3">
-                                    <select name="commodity" class="form-select" id="inputGroupSelect01">
-                                        <option disabled selected>{{commodity}}</option>
-                                        <option>CHW</option>
-                                        <option>ELE</option>
-                                        <option>STM</option>
-                                        <option>HHW</option>
-                                        <option>GAS</option>
-                                        <option>WATER</option>
-                                        <option>PEAK_CHW</option>
-                                        <option>LABOR</option>
+                                    <select id="addOwner" name="misc_owner" class="form-select misc_owner" id="inputGroupSelect01">
+                                        <option disabled selected>Choose...</option>
+                                        <option>UEM</option>
+                                        <option>NON-UEM</option>
+                                        <option>AUX</option>
                                     </select>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-group mb-3">
-                                    <input value="{{value}}" name="value" type="text" class="form-control">
+                                    <input value="{{misc_savings}}" name="misc_savings" type="text" class="form-control misc_savings">
                                 </div>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                 <button type="submit" class="btn btn-success text-light">Submit</button>
+            </div>
+            <div class="card-footer text-end">
+                <button type="submit" class="btn btn-success text-light clear">Submit
+                </button>
             </div>
         </div>
     </form>

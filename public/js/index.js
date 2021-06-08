@@ -4,8 +4,10 @@ $(document).ready(() => {
         $('[data-toggle="tooltip"]').tooltip()
     });
 
-    const ids = ['building', 'measure_type', 'status', 'staff_lead', 'staff_colead', 'analyst', 'addImpAnn', 'addCategory', 
-    'addBaseCommodity', 'addSource', 'addPhase', 'addSavingsCommodity'];
+    $(".pid").prop("readonly", true)
+
+    const ids = ['building', 'measure_type', 'status', 'staff_lead', 'staff_colead', 'analyst', 'addImpAnn', 'addCategory',
+        'addBaseCommodity', 'addSource', 'addPhase', 'addSavingsCommodity'];
 
     let dataObj = {};
 
@@ -40,9 +42,18 @@ $(document).ready(() => {
         }
     };
 
-
-    $('select[name="measure_type"]').on('change', () => {
-        $(".pid").val($("#building").val() + ' ' + "2021" + ' ' + $("#measure_type").val());
+    $("#formData").on("change", ["#building", "#measure_type"], () => {
+        if ($("#measure_type").val() === null) {
+            
+            $("#measure_type").val('');
+        
+        } else if ($("#building").val() === null) {
+            
+            $("#building").val('');
+            
+        } else {
+            $(".pid").val($("#building").val() + ' ' + '2021' + ' ' + $("#measure_type").val());
+        }
     });
 
 
@@ -62,8 +73,8 @@ $(document).ready(() => {
     dateInput_2.datepicker(options);
 
     const $table = $("#tableData"),
-          $tbody = $table.find('tbody'),
-          $cloneRow = $tbody.find('tr').first().clone()
+        $tbody = $table.find('tbody'),
+        $cloneRow = $tbody.find('tr').first().clone()
 
 
     $table.on('click', 'button.addRow', (e) => {

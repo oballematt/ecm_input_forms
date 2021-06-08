@@ -1,4 +1,4 @@
-const { Prjt_metadata, Prjt_costs_hours, Prjt_baseline, Prjt_funding, Prjt_savings } = require('../models');
+const { Prjt_metadata, Prjt_costs_hours, Prjt_baseline, Prjt_funding, Prjt_savings, Prjt_misc_savings } = require('../models');
 
 module.exports = {
     //All of the below controllers render onto the /find route of the project so when a user searches for a specific project ID
@@ -71,12 +71,22 @@ module.exports = {
                 ]
             });
 
+            const miscSavings = await Prjt_misc_savings.findAll({
+                where: {
+                    project_id
+                },
+                order: [
+                    ['id', 'ASC']
+                ]
+            });
+
             return res.render('edit/allForms', {
                 metadata,
                 costsHours,
                 baseline,
                 funding,
                 savings,
+                miscSavings,
                 projectId
             });
 

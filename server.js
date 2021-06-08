@@ -38,6 +38,7 @@ app.use('/', require('./routes/prjt_savings'));
 app.use('/', require('./routes/prjt_fundings'));
 app.use('/', require('./routes/prjt_baseline'));
 app.use('/', require('./routes/getDataById'));
+app.use('/', require('./routes/prjt_misc_savings'))
 
 app.listen(port, async () => {
   console.log(`Server started on port ${port}`);

@@ -1,5 +1,5 @@
 <div class="row">
-    {{#with savings}}
+    {{#with miscSavings}}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -7,7 +7,7 @@
             <li class="breadcrumb-item active" aria-current="page">Edit {{project_id}}</li>
         </ol>
     </nav>
-    <form action='/find/savings/{{id}}' method="POST">
+    <form action='/find/miscsavings/{{id}}' method="POST">
         <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
             <h5 style="background-color: #bf5700;" class="card-header">Savings</h5>
             <div class="card-body w-100 text-end">
@@ -15,8 +15,8 @@
                     <thead>
                         <tr>
                             <th scope="col">Phase</th>
-                            <th scope="col">Commodity</th>
-                            <th scope="col">Value</th>
+                            <th scope="col">Owner</th>
+                            <th scope="col">Misc Savings</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,22 +37,17 @@
                             </td>
                             <td>
                                 <div class="input-group mb-3">
-                                    <select name="commodity" class="form-select" id="inputGroupSelect01">
-                                        <option disabled selected>{{commodity}}</option>
-                                        <option>CHW</option>
-                                        <option>ELE</option>
-                                        <option>STM</option>
-                                        <option>HHW</option>
-                                        <option>GAS</option>
-                                        <option>WATER</option>
-                                        <option>PEAK_CHW</option>
-                                        <option>LABOR</option>
+                                    <select name="misc_owner" class="form-select" id="inputGroupSelect01">
+                                        <option disabled selected>{{misc_owner}}</option>
+                                        <option>UEM</option>
+                                        <option>NON-UEM</option>
+                                        <option>AUX</option>
                                     </select>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-group mb-3">
-                                    <input value="{{value}}" name="value" type="text" class="form-control">
+                                    <input value="{{misc_savings}}" name="misc_savings" type="text" class="form-control">
                                 </div>
                             </td>
                         </tr>
