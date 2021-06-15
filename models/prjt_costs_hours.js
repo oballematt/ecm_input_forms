@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Prjt_costs_hours',
-    tableName: 'prjt_costs_hours_test',
+    tableName: 'prjt_costs_hours',
     timestamps: false
   });
   return Prjt_costs_hours;

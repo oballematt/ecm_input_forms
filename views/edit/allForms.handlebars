@@ -1,3 +1,8 @@
+<div id="overlay" style="display:none;">
+    <div class="spinner"></div>
+    <br />
+    Getting data, this will take a few seconds
+</div>
 <div class="row">
     <div class="col-md-12">
         <nav class='mt-5' aria-label="breadcrumb">
@@ -17,7 +22,7 @@
                     <option>{{project_id}}</option>
                     {{/each}}
                 </select>
-                <button class="btn btn-success" type="submit">Search</button>
+                <button id="load" class="btn btn-success" type="submit">Search</button>
             </div>
             <div class="card border-secondary mt-3 w-100 text-light" style="background-color: #333f48;">
                 <h5 style="background-color: #bf5700;" class="card-header">Project Info</h5>
@@ -157,7 +162,7 @@
             <hr>
             <div class="row responsive">
                 <section class="col-md-6">
-                    <div class="card border-secondary text-light mb-3" style="background-color: #333f48;">
+                    <div class="card border-secondary h-100 text-light mb-3" style="background-color: #333f48;">
                         <h5 style="background-color: #bf5700;" class="card-header">Costs &amp; Hours</h5>
                         <div class="card-body">
                             <table class="table text-light">
@@ -208,7 +213,7 @@
                     </div>
                 </section>
                 <section class="col-md-6">
-                    <div class="card border-secondary text-light" style="background-color: #333f48">
+                    <div class="card border-secondary h-100 text-light" style="background-color: #333f48">
                         <h5 style="background-color: #bf5700;" class="card-header">Fundings</h5>
                         <div class="card-body">
                             <table class="table text-light">
@@ -258,7 +263,7 @@
             <hr>
             <div class="row responsive">
                 <section class="col-md-6">
-                    <div class="card border-secondary mb-3 text-light" style="background-color: #333f48">
+                    <div class="card border-secondary h-100 mb-3 text-light" style="background-color: #333f48">
                         <h5 style="background-color: #bf5700;" class="card-header">Baseline</h5>
                         <div class="card-body">
                             <table class="table text-light">
@@ -302,7 +307,7 @@
                     </div>
                 </section>
                 <section class="col-md-6">
-                    <div class="card border-secondary text-light mb-3" style="background-color: #333f48" ;>
+                    <div class="card border-secondary h-100 text-light mb-3" style="background-color: #333f48" ;>
                         <h5 style="background-color: #bf5700;" class="card-header">Savings</h5>
                         <div class="card-body">
                             <table class="table text-light">
@@ -349,9 +354,9 @@
                 </section>
             </div>
             <hr>
-            <div class="row justify-content-center">
-                <section class="col-md-6">
-                    <div class="card border-secondary text-light mb-3" style="background-color: #333f48" ;>
+            <div class="row responsive justify-content-center">
+                <section class="col-md-6 mb-5">
+                    <div class="card border-secondary text-light" style="background-color: #333f48" ;>
                         <h5 style="background-color: #bf5700;" class="card-header">Misc Savings</h5>
                         <div class="card-body">
                             <table class="table text-light">
@@ -394,45 +399,48 @@
                             </a>
                         </div>
                     </div>
+                    {{/with}}
                 </section>
-                <div class="mb-3 text-center">
-                    <button title="This will delete all data related to project ID: {{project_id}}"
-                        data-toggle="tooltip" data-placement="top" type="button" class="btn btn-danger" <span
-                        data-bs-toggle="modal" data-bs-target="#exampleModal">Delete Project</span>
-                    </button>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{> predictedPartial}}
+                    </div>
+                    <div class="col-md-12">
+                        {{> mvPartial}}
+                    </div>
                 </div>
-            </div>
-            {{/with}}
-            {{#with metadata}}
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
-                            <h5 style="background-color: #bf5700;" class="card-header">Attention</h5>
-                            <div class="card-body">
-                                <div class="modal-body mt-1">
-                                    <h5 style="line-height: 35px">Continuing with this action will delete
-                                        <strong><u>ALL</u></strong>
-                                        data records from:
-                                        <ul>
-                                            <li>Project Info</li>
-                                            <li>Costs &amp; Hours</li>
-                                            <li>Fundings</li>
-                                            <li>Baseline</li>
-                                            <li>Savings</li>
-                                            <li>Misc Savings</li>
-                                        </ul>Associated with Project ID:
-                                        <ul>
-                                            <li><strong>{{project_id}}</strong></li>
-                                        </ul>
-                                    </h5>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Go
-                                        Back</button>
-                                    <a href="/delete/all/{{project_id}}"><button type="button"
-                                            class="btn btn-danger">Delete</button></a>
+                {{#with metadata}}
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
+                                <h5 style="background-color: #bf5700;" class="card-header">Attention</h5>
+                                <div class="card-body">
+                                    <div class="modal-body mt-1">
+                                        <h5 style="line-h-100: 35px">Continuing with this action will delete
+                                            <strong><u>ALL</u></strong>
+                                            data records from:
+                                            <ul>
+                                                <li>Project Info</li>
+                                                <li>Costs &amp; Hours</li>
+                                                <li>Fundings</li>
+                                                <li>Baseline</li>
+                                                <li>Savings</li>
+                                                <li>Misc Savings</li>
+                                            </ul>Associated with Project ID:
+                                            <ul>
+                                                <li><strong>{{project_id}}</strong></li>
+                                            </ul>
+                                        </h5>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Go
+                                            Back</button>
+                                        <a href="/delete/all/{{project_id}}"><button type="button"
+                                                class="btn btn-danger">Delete</button></a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -442,4 +450,12 @@
             {{/with}}
         </form>
     </div>
+    {{#with metadata}}
+    <div class="mb-3 text-center">
+        <button title="This will delete all data related to project ID: {{project_id}}" data-toggle="tooltip"
+            data-placement="top" type="button" class="btn btn-danger" <span data-bs-toggle="modal"
+            data-bs-target="#exampleModal">Delete Project</span>
+        </button>
+    </div>
+    {{/with}}
 </div>

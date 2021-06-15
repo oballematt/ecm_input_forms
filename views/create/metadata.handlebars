@@ -1,11 +1,11 @@
-<div class="row">
+<div class="row margin">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">Project Info</li>
         </ol>
     </nav>
-    <div class="card border-secondary mb-3 w-100 text-light" style="background-color: #333f48;">
+    <div class="card mb-3 w-100 text-light" style="background-color: #333f48;">
         <h5 style="background-color: #bf5700;" class="card-header">Project Info</h5>
         <div class="card-body text-black">
             {{#each errors}}
@@ -71,24 +71,11 @@
                         </div>
                     </div>
                      <div class="col-md-4 mt-4">
-                        {{!-- <div class="text-center">
-                            <label for="basic-url" class="form-label">Baseline</label>
-                        <div class='text-center'>
-                            <label for="reportingTitle" class="form-label">Reporting Prd</label>
-                        </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">Start Date:</span>
                             </div>
-                            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
-                            <input type="text" class="form-control" id="reportingTitle" aria-describedby="basic-addon3">
-                        </div> --}} 
-
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-default">Start Date:</span>
-                            </div>
-                            <input autocomplete="off" id="baseline" value="{{baseline_start_date}}"
+                            <input autocomplete="off" id="datepicker" value="{{baseline_start_date}}"
                                 placeholder="Baseline" name="baseline_start_date" type="text"
                                 class="form-control baseline_start" />
                             <input autocomplete="off" value="{{reporting_period_start_date}}" id="reporting"

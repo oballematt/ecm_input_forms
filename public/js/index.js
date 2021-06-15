@@ -1,61 +1,18 @@
 $(document).ready(() => {
 
     $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
+        $('[data-toggle="tooltip"]').tooltip();
     });
 
-    $(".pid").prop("readonly", true)
+    $(".pid").prop("readonly", true);
 
-    const ids = ['building', 'measure_type', 'status', 'staff_lead', 'staff_colead', 'analyst', 'addImpAnn', 'addCategory',
-        'addBaseCommodity', 'addSource', 'addPhase', 'addSavingsCommodity'];
-
-    let dataObj = {};
-
-    $("#formData").on('submit', () => {
-        ids.forEach(id => dataObj[id] = $('#' + id).val());
-
-        sessionStorage.setItem('values', JSON.stringify(dataObj));
-
-        sessionStorage.setItem('pid', $(".pid").val());
-
-    });
-
-    $('#searchData').on('submit', () => {
-        sessionStorage.setItem("search", $("#search").val())
-    })
-
-    const getPid = sessionStorage.getItem('pid');
-
-    window.onload = () => {
-        const storedVals = sessionStorage.getItem('values');
-        const searchedVal = sessionStorage.getItem('search')
-
-        if (storedVals) {
-            dataObj = JSON.parse(storedVals)
-            ids.forEach(id => $('#' + id).val(dataObj[id] || 'Choose...'));
-        };
-
-        $("#search").val(searchedVal)
-
-        if (!searchedVal || searchedVal === 'null') {
-            $("#search").val('Project ID')
-        }
-    };
-
-    $("#formData").on("change", ["#building", "#measure_type"], () => {
-        if ($("#measure_type").val() === null) {
-            
-            $("#measure_type").val('');
-        
-        } else if ($("#building").val() === null) {
-            
-            $("#building").val('');
-            
-        } else {
-            $(".pid").val($("#building").val() + ' ' + '2021' + ' ' + $("#measure_type").val());
-        }
-    });
-
+    $('#load').click(function(){
+		$('#overlay').fadeIn().delay(8000).fadeOut();
+        $('html, body').css({
+            overflow: 'hidden',
+            height: '100%'
+        });
+	});
 
     const dateInput_1 = $('input[name="baseline_start_date"]');
 
@@ -72,9 +29,86 @@ $(document).ready(() => {
 
     dateInput_2.datepicker(options);
 
+    const ids = ['building', 'measure_type', 'status', 'staff_lead', 'staff_colead', 'analyst', 'addImpAnn', 'addCategory',
+        'addBaseCommodity', 'addSource', 'addPhase', 'addSavingsCommodity'];
+
+    let dataObj = {};
+
+    $("#formData").on('submit', () => {
+        ids.forEach(id => dataObj[id] = $('#' + id).val());
+
+        sessionStorage.setItem('values', JSON.stringify(dataObj));
+
+        sessionStorage.setItem('pid', $(".pid").val());
+
+    });
+
+    $('#searchData').on('submit', () => {
+        sessionStorage.setItem("search", $("#search").val());
+    });
+
+    const getPid = sessionStorage.getItem('pid');
+
+
+    window.onload = () => {
+        const storedVals = sessionStorage.getItem('values');
+        const searchedVal = sessionStorage.getItem('search');
+
+        $(".title").text(function (i, curr) {
+            if (curr === "peak_CHW"){
+                $(this).text('Peak CHW');
+            };
+
+            if (curr === 'labor'){
+                $(this).text("Maintenance");
+            };
+        });
+
+        $(".percent").text(function (i, curr) {
+            return parseFloat(curr * 100).toFixed(0) + "%";
+        });
+
+        $(".years").text(function (i, curr) {
+            return parseFloat(curr * 100).toFixed(2);
+        });
+
+        $(".whole").text(function (i, curr) {
+            return parseFloat(curr).toFixed(0);
+        });
+
+        $(".whole_dollar").text(function (i, curr) {
+            return "$" + parseFloat(curr).toFixed(0);
+        });
+
+        if (storedVals) {
+            dataObj = JSON.parse(storedVals);
+            ids.forEach(id => $('#' + id).val(dataObj[id] || 'Choose...'));
+        };
+
+        $("#search").val(searchedVal);
+
+        if (!searchedVal || searchedVal === 'null') {
+            $("#search").val('Project ID');
+        };
+    };
+
+    $("#formData").on("change", ["#building", "#measure_type"], () => {
+        if ($("#measure_type").val() === null) {
+
+            $("#measure_type").val('');
+
+        } else if ($("#building").val() === null) {
+
+            $("#building").val('');
+
+        } else {
+            $(".pid").val($("#building").val() + ' ' + '2021' + ' ' + $("#measure_type").val());
+        };
+    });
+
     const $table = $("#tableData"),
         $tbody = $table.find('tbody'),
-        $cloneRow = $tbody.find('tr').first().clone()
+        $cloneRow = $tbody.find('tr').first().clone();
 
 
     $table.on('click', 'button.addRow', (e) => {
@@ -88,25 +122,25 @@ $(document).ready(() => {
             hours: $(".hours").last().val()
         }
         if (data.project_id === "undefined") {
-            errors.push({ text: "Please define a project ID" })
+            errors.push({ text: "Please define a project ID" });
         };
         if (!data.imp_or_ann) {
-            errors.push({ text: "Please select an option for implementation or annual" })
+            errors.push({ text: "Please select an option for implementation or annual" });
         };
         if (!data.category) {
-            errors.push({ text: "Please select an option for category" })
+            errors.push({ text: "Please select an option for category" });
         };
         if (!data.cost) {
-            errors.push({ text: "Please enter a value for cost (if value is unknown, enter 0)" })
+            errors.push({ text: "Please enter a value for cost (if value is unknown, enter 0)" });
         };
         if (!data.hours) {
-            errors.push({ text: "Please enter a value for hours (id values is unkown, enter 0)" })
+            errors.push({ text: "Please enter a value for hours (id values is unkown, enter 0)" });
         };
 
         if (errors.length > 0) {
             for (var item in errors) {
-                $("#errors").append("<p style=\"border: 1px solid black; font-weight: bold\">" + errors[item].text + '</p>')
-            }
+                $("#errors").append("<p style=\"border: 1px solid black; font-weight: bold\">" + errors[item].text + '</p>');
+            };
         } else {
             $.ajax({
                 url: '/costs_hours',

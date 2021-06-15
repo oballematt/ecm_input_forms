@@ -1,14 +1,14 @@
-<div class="row">
+<div class="row margin">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">Costs and Hours</li>
         </ol>
     </nav>
-    <form action='/costs_hours' id="formData" method="POST">
-        <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
-            <h5 style="background-color: #bf5700;" class="card-header">Costs &amp; Hours</h5>
-            <div class="card-body w-100 text-end">
+    <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
+        <h5 style="background-color: #bf5700;" class="card-header">Costs &amp; Hours</h5>
+        <div class="card-body w-100 text-end">
+            <form action='/costs_hours' id="formData" method="POST">
                 <div id="errors" class="text-start"></div>
                 <table id="tableData" class="table text-light text-center mt-3">
                     <thead>
@@ -69,14 +69,14 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-            <div class="row text-center my-3">
-                <div class="col-11 text-end">
-                    <button disabled id="next" type="button" class='btn btn-success'><a id="link"
-                            class="text-white">Next</a>
-                    </button>
+                <div class="row text-center my-3">
+                    <div class="col-11 text-end">
+                        <button disabled id="next" type="button" class='btn btn-success'><a id="link"
+                                class="text-white">Next</a>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>

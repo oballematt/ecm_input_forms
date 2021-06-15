@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Prjt_baseline',
-    tableName: 'prjt_baseline_test',
+    tableName: 'prjt_baseline',
     timestamps: false
   });
   return Prjt_baseline;
