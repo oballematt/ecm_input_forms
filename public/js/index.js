@@ -18,16 +18,9 @@ $(document).ready(() => {
 
     const dateInput_2 = $('input[name="reporting_period_start_date"]');
 
-    const options = {
-        format: 'mm/dd/yyyy',
-        todayHighlight: true,
-        autoclose: true,
-        todayBtn: true
-    };
+    dateInput_1.datepicker();
 
-    dateInput_1.datepicker(options);
-
-    dateInput_2.datepicker(options);
+    dateInput_2.datepicker();
 
     const ids = ['building', 'measure_type', 'status', 'staff_lead', 'staff_colead', 'analyst', 'addImpAnn', 'addCategory',
         'addBaseCommodity', 'addSource', 'addPhase', 'addSavingsCommodity'];
