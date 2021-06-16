@@ -69,7 +69,7 @@ $(document).ready(() => {
         });
 
         $(".years").text(function (i, curr) {
-            return parseFloat(curr * 100).toFixed(2);
+            return parseFloat(curr).toFixed(2);
         });
 
         $(".whole").text(function (i, curr) {
