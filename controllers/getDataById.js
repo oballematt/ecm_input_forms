@@ -84,7 +84,7 @@ module.exports = {
                     ]
                 });
 
-                const chw = await Prjt_source_percent_each.findAll({
+                const chw = await Prjt_source_percent_each.findOne({
                     where: {
                         project_id,
                         commodity: 'CHW',
@@ -501,9 +501,7 @@ module.exports = {
                     }
                 });
 
-                // test.getData(req, res, project_id)
-
-                const p_chw = await Prjt_source_percent_each.findAll({
+                const p_chw = await Prjt_source_percent_each.findOne({
                     where: {
                         project_id,
                         commodity: 'CHW',
@@ -1067,7 +1065,8 @@ module.exports = {
         const { project_id } = req.params;
 
         try {
-            await Prjt_metadata.destroy({
+
+            await Prjt_baseline.destroy({
                 where: {
                     project_id
                 }
@@ -1079,6 +1078,11 @@ module.exports = {
                 }
             });
 
+            await Prjt_metadata.destroy({
+                where: {
+                    project_id
+                }
+            });
 
             await Prjt_funding.destroy({
                 where: {
@@ -1086,20 +1090,11 @@ module.exports = {
                 }
             });
 
-
-            await Prjt_baseline.destroy({
-                where: {
-                    project_id
-                }
-            });
-
-
             await Prjt_savings.destroy({
                 where: {
                     project_id
                 }
             });
-
 
             return res.redirect('/find')
 
