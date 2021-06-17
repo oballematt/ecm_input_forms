@@ -181,7 +181,7 @@
                                     <tr class="text-end">
                                         <td class="text-start">{{imp_or_ann}}</td>
                                         <td class="text-start">{{category}}</td>
-                                        <td class="text-end">{{cost}}</td>
+                                        <td class="text-end commas">{{cost}}</td>
                                         <td class="text-end">{{hours}}</td>
                                         <td>
                                             <a href="/find/costs_hours/{{id}}">
@@ -230,8 +230,8 @@
                                     {{#each funding}}
                                     <tr class="text-end">
                                         <td class="text-start">{{source}}</td>
-                                        <td>{{implementation}}</td>
-                                        <td>{{annual}}</td>
+                                        <td class="commas">{{implementation}}</td>
+                                        <td class="commas">{{annual}}</td>
                                         <td>
                                             <a href="/find/funding/{{id}}" class='btn btn-warning'>
                                                 <i class="fas fa-edit"></i>
@@ -278,8 +278,8 @@
                                 <tbody>
                                     {{#each baseline}}
                                     <tr class="text-end">
-                                        <td class="text-start">{{commodity}}</td>
-                                        <td>{{value}}</td>
+                                        <td class="text-start title">{{commodity}}</td>
+                                        <td class='commas'>{{value}}</td>
                                         <td>
                                             <a href="/find/baseline/{{id}}" class='btn btn-warning'>
                                                 <i class="fas fa-edit"></i>
@@ -324,8 +324,8 @@
                                     {{#each savings}}
                                     <tr class="text-end">
                                         <td class="text-start">{{phase}}</td>
-                                        <td class="text-start">{{commodity}}</td>
-                                        <td>{{value}}</td>
+                                        <td class="text-start title">{{commodity}}</td>
+                                        <td class="commas">{{value}}</td>
                                         <td>
                                             <a href="/find/savings/{{id}}" class='btn btn-warning'>
                                                 <i class="fas fa-edit"></i>
@@ -402,6 +402,14 @@
                     {{/with}}
                 </section>
                 <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{> predictedPartial}}
+                    </div>
+                    <div class="col-md-12">
+                        {{> mvPartial}}
+                    </div>
+                </div>
                 {{#with metadata}}
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
@@ -441,14 +449,6 @@
             </div>
             {{/with}}
         </form>
-        <div class="row">
-            <div class="col-md-12">5
-                {{> predictedPartial}}
-            </div>
-            <div class="col-md-12">
-                {{> mvPartial}}
-            </div>
-        </div>
     </div>
     {{#with metadata}}
     <div class="mb-3 text-center">

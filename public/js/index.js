@@ -14,6 +14,12 @@ $(document).ready(() => {
         });
 	});
 
+    const numberWithCommas = (number) => {
+        var parts = number.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return parts.join(".");
+    }
+
     const dateInput_1 = $('input[name="baseline_start_date"]');
 
     const dateInput_2 = $('input[name="reporting_period_start_date"]');
@@ -38,7 +44,7 @@ $(document).ready(() => {
 
     $('#searchData').on('submit', () => {
         sessionStorage.setItem("search", $("#search").val());
-    });
+    })
 
     const getPid = sessionStorage.getItem('pid');
 
@@ -51,10 +57,6 @@ $(document).ready(() => {
             if (curr === "peak_CHW"){
                 $(this).text('Peak CHW');
             };
-
-            if (curr === 'labor'){
-                $(this).text("Maintenance");
-            };
         });
 
         $(".percent").text(function (i, curr) {
@@ -65,13 +67,23 @@ $(document).ready(() => {
             return parseFloat(curr).toFixed(2);
         });
 
-        $(".whole").text(function (i, curr) {
-            return parseFloat(curr).toFixed(0);
+        $(".whole").each(function() {
+            let num = parseFloat($(this).text()).toFixed(0);
+            let commaNum = numberWithCommas(num);
+            $(this).text(commaNum)
         });
 
-        $(".whole_dollar").text(function (i, curr) {
-            return "$" + parseFloat(curr).toFixed(0);
+        $(".whole_dollar").each(function() {
+            let num = "$" + parseFloat($(this).text()).toFixed(0);
+            let commaNum = numberWithCommas(num);
+            $(this).text(commaNum)
         });
+
+        $(".commas").each(function() {
+            let num = $(this).text();
+            let commaNum = numberWithCommas(num);
+            $(this).text(commaNum);
+          });
 
         if (storedVals) {
             dataObj = JSON.parse(storedVals);
@@ -113,7 +125,10 @@ $(document).ready(() => {
             category: $(".category").last().val(),
             cost: $(".cost").last().val(),
             hours: $(".hours").last().val()
-        }
+        };
+
+        $("#errors").text('');
+
         if (data.project_id === "undefined") {
             errors.push({ text: "Please define a project ID" });
         };
@@ -159,6 +174,9 @@ $(document).ready(() => {
             implementation: $(".implementation").last().val(),
             annual: $(".annual").last().val(),
         }
+
+        $("#errors").text('');
+
         if (data.project_id === "undefined") {
             errors.push({ text: "Please define a project ID" })
         };
@@ -201,6 +219,8 @@ $(document).ready(() => {
             value: $(".value").last().val(),
         }
 
+        $("#errors").text('');
+
         if (data.project_id === "undefined") {
             errors.push({ text: "Please define a project ID" })
         };
@@ -240,6 +260,8 @@ $(document).ready(() => {
             commodity: $(".commodity").last().val(),
             value: $(".value").last().val()
         }
+
+        $("#errors").text('');
 
         if (data.project_id === "undefined") {
             errors.push({ text: "Please define a project ID" })
