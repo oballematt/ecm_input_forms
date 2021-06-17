@@ -402,14 +402,6 @@
                     {{/with}}
                 </section>
                 <hr>
-                <div class="row">
-                    <div class="col-md-12">
-                        {{> predictedPartial}}
-                    </div>
-                    <div class="col-md-12">
-                        {{> mvPartial}}
-                    </div>
-                </div>
                 {{#with metadata}}
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
@@ -449,6 +441,14 @@
             </div>
             {{/with}}
         </form>
+        <div class="row">
+            <div class="col-md-12">5
+                {{> predictedPartial}}
+            </div>
+            <div class="col-md-12">
+                {{> mvPartial}}
+            </div>
+        </div>
     </div>
     {{#with metadata}}
     <div class="mb-3 text-center">

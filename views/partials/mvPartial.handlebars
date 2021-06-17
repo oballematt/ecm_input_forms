@@ -92,6 +92,8 @@
                         {{/with}}
                         {{#with percentTotal}}
                         <td class="percent bordered">{{percent_total}}</td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                     </tr>
                     <tr>
@@ -129,7 +131,7 @@
                         {{/with}}
                     </tr>
                     <tr>
-                        <th class="bordered" scope="row">CTWater kgal
+                        <th class="bordered" scope="row">CTWater
                             <span class="units">[kgal]</span>
                         </th>
                         {{#with chw2_1}}
