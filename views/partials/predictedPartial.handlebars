@@ -92,6 +92,8 @@
                         {{/with}}
                         {{#with p_percentTotal}}
                         <td class="percent bordered">{{percent_total}}</td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                     </tr>
                     <tr>
@@ -125,7 +127,7 @@
                         {{#with p_plantTotal}}
                         <td class="whole bordered">{{plant_savings_sum}}</td>
                             {{else}}
-                            <td></td>
+                            <td class="bordered"></td>
                         {{/with}}
                     </tr>
                     <tr>
@@ -147,7 +149,7 @@
                         {{#with p_chw2_1}}
                         <td class="whole bordered">{{plant_savings}}</td>
                             {{else}}
-                            <td></td>
+                            <td class="bordered"></td>
                         {{/with}}
                     </tr>
                     <tr>
