@@ -10,15 +10,8 @@
     <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
         <h5 style="background-color: #bf5700;" class="card-header">Costs &amp; Hours</h5>
         <div class="card-body w-100">
-            {{/with}}
-            {{#each errors}}
-            <div class="my-2 text-start" style="border: 1px solid black;">
-                <p>{{text}}</p>
-            </div>
-            {{/each}}
-            {{#with costHours}}
             <form action='/add/costs_hours/{{project_id}}' id="formData" method="POST">
-                {{/with}}
+            <div id="errors" class="text-start"></div>
                 <table id="tableData" class="table text-light text-center mt-3">
                     <thead>
                         <tr>
@@ -32,9 +25,8 @@
                         <tr>
                             <td style="display: none">
                                 <div class="input-group mb-3">
-                                    {{#with costHours}}
                                     <input id="validationCustom03" value="{{project_id}}" name="project_id" type="text"
-                                        {{/with}} class="form-control">
+                                        class="form-control">
                                 </div>
                             </td>
                             <td>
@@ -81,10 +73,11 @@
                 </table>
 
                 <div class="card-footer text-end">
-                    <button type="submit" class="btn btn-success text-light clear">Submit
+                    <button id={{id}} type="button" class="btn btn-success text-light noCommasCostsAdd">Submit
                     </button>
                 </div>
             </form>
+            {{/with}}
         </div>
     </div>
 </div>

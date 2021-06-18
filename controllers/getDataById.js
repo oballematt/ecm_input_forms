@@ -1078,11 +1078,6 @@ module.exports = {
                 }
             });
 
-            await Prjt_metadata.destroy({
-                where: {
-                    project_id
-                }
-            });
 
             await Prjt_funding.destroy({
                 where: {
@@ -1091,6 +1086,18 @@ module.exports = {
             });
 
             await Prjt_savings.destroy({
+                where: {
+                    project_id
+                }
+            });
+
+            await Prjt_misc_savings.destroy({
+                where: {
+                    project_id
+                }
+            })
+
+            await Prjt_metadata.destroy({
                 where: {
                     project_id
                 }

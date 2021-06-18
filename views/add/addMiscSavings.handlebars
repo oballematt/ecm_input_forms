@@ -1,72 +1,71 @@
-<div class="row margin">
-    {{#with miscSavings}}
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item"><a href="/find">Find</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Add {{project_id}}</li>
-        </ol>
-    </nav>
-    <form action='/add/miscsavings/{{project_id}}' id="formData" method="POST">
-        <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
-            <h5 style="background-color: #bf5700;" class="card-header">Savings</h5>
-            <div class="card-body w-100 text-end">
-                {{/with}}
-                {{#each errors}}
-                <div class="my-2 text-start" style="border: 1px solid black;">
-                    <p>{{text}}</p>
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="row margin">
+        {{#with miscSavings}}
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/find">Find</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add {{project_id}}</li>
+            </ol>
+        </nav>
+        <form action='/add/miscsavings/{{project_id}}' id="formData" method="POST">
+            <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
+                <h5 style="background-color: #bf5700;" class="card-header">Savings</h5>
+                <div class="card-body w-100 text-end">
+                    <div id="errors" class="text-start"></div>
+                    <table id="tableData" class="table text-light text-center mt-3">
+                        <thead>
+                            <tr>
+                                <th scope="col">Phase</th>
+                                <th scope="col">Owner</th>
+                                <th scope="col">Misc Savings</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="display: none">
+                                    <div class="input-group mb-3">
+                                        <input id="validationCustom03" value="{{project_id}}" name="project_id"
+                                            type="text" class="form-control">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group mb-3">
+                                        <select id="addMiscPhase" name="phase" class="form-select phase"
+                                            id="inputGroupSelect01">
+                                            <option disabled selected>Choose</option>
+                                            <option value='mv'>MV</option>
+                                            <option vale='predicted'>Predicted</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group mb-3">
+                                        <select id="addOwner" name="misc_owner" class="form-select misc_owner"
+                                            id="inputGroupSelect01">
+                                            <option disabled selected>Choose...</option>
+                                            <option value='uem'>UEM</option>
+                                            <option value='nonuem'>NON-UEM</option>
+                                            <option value='aux'>AUX</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group mb-3">
+                                        <input value="{{misc_savings}}" name="misc_savings" type="text"
+                                            class="form-control misc_savings">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                {{/each}}
-                {{#with miscSavings}}
-                <table id="tableData" class="table text-light text-center mt-3">
-                    <thead>
-                        <tr>
-                            <th scope="col">Phase</th>
-                            <th scope="col">Owner</th>
-                            <th scope="col">Misc Savings</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="display: none">
-                                <div class="input-group mb-3">
-                                    <input id="validationCustom03" value="{{project_id}}" name="project_id" type="text"
-                                        class="form-control">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-group mb-3">
-                                    <select id="addMiscPhase" name="phase" class="form-select phase" id="inputGroupSelect01">
-                                        <option disabled selected>Choose</option>
-                                        <option value='mv'>MV</option>
-                                        <option vale='predicted'>Predicted</option>
-                                    </select>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-group mb-3">
-                                    <select id="addOwner" name="misc_owner" class="form-select misc_owner" id="inputGroupSelect01">
-                                        <option disabled selected>Choose...</option>
-                                        <option value='uem'>UEM</option>
-                                        <option value='nonuem'>NON-UEM</option>
-                                        <option value='aux'>AUX</option>
-                                    </select>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-group mb-3">
-                                    <input value="{{misc_savings}}" name="misc_savings" type="text" class="form-control misc_savings">
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="card-footer text-end">
+                    <button id={{id}} type="button" class="btn btn-success text-light noCommasMiscAdd">Submit
+                    </button>
+                </div>
             </div>
-            <div class="card-footer text-end">
-                <button type="submit" class="btn btn-success text-light clear">Submit
-                </button>
-            </div>
-        </div>
-    </form>
-    {{/with}}
+        </form>
+        {{/with}}
+    </div>
 </div>

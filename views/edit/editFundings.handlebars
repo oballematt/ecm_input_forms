@@ -1,54 +1,57 @@
-<div class="row">
-    {{#with funding}}
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item"><a href="/find">Find</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Edit {{project_id}}</li>
-        </ol>
-    </nav>
-    <form action="/find/funding/{{id}}" method="POST">
-        <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
-            <h5 style="background-color: #bf5700;" class="card-header">Fundings</h5>
-            <div class="card-body w-100 text-end">
-                <table id="tableData" class="table text-light text-center mt-3">
-                    <thead>
-                        <tr>
-                            <th scope="col">Source</th>
-                            <th scope="col">Implementation</th>
-                            <th scope="col">Annual</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="display: none;">
-                                <div class="input-group mb-3">
-                                    <input disabled value="{{project_id}}" name="project_id" type="text"
-                                        class="form-control">
-                                </div>
-                            </td>
-                            <td>
-                                <select name="source" class="form-select" id="inputGroupSelect01">
-                                    <option disabled selected>{{source}}</option>
-                                    <option value='green_fund'>Green Fund</option>
-                                    <option value='facilities'>Facilities</option>
-                                    <option value='repair_replacement'>R and R</option>
-                                    <option value='uem'>UEM</option>
-                                    <option value='aux'>AUX</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input name="implementation" value="{{implementation}}" type="text"
-                                    class="form-control">
-                            </td>
-                            <td>
-                                <input name="annual" value="{{annual}}" type="text" class="form-control">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button type="submit" class="btn btn-success text-light">Submit</button>
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="row margin">
+        {{#with funding}}
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/find">Find</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit {{project_id}}</li>
+            </ol>
+        </nav>
+        <form action="/find/funding/{{id}}" id="formData" method="POST">
+            <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
+                <h5 style="background-color: #bf5700;" class="card-header">Fundings</h5>
+                <div class="card-body w-100 text-end">
+                    <div id="errors" class="text-start"></div>
+                    <table id="tableData" class="table text-light text-center mt-3">
+                        <thead>
+                            <tr>
+                                <th scope="col">Source</th>
+                                <th scope="col">Implementation</th>
+                                <th scope="col">Annual</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="display: none;">
+                                    <div class="input-group mb-3">
+                                        <input disabled value="{{project_id}}" name="project_id" type="text"
+                                            class="form-control">
+                                    </div>
+                                </td>
+                                <td>
+                                    <select name="source" class="form-select source" id="inputGroupSelect01">
+                                        <option disabled selected>{{source}}</option>
+                                        <option value='green_fund'>Green Fund</option>
+                                        <option value='facilities'>Facilities</option>
+                                        <option value='repair_replacement'>R and R</option>
+                                        <option value='uem'>UEM</option>
+                                        <option value='aux'>AUX</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input name="implementation" value="{{implementation}}" type="text"
+                                        class="form-control implementation">
+                                </td>
+                                <td>
+                                    <input name="annual" value="{{annual}}" type="text" class="form-control annual">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button id={{id}} type="button" class="btn btn-success text-light noCommasFunding">Submit</button>
+                </div>
             </div>
-        </div>
-        {{/with}}
+            {{/with}}
+    </div>
 </div>

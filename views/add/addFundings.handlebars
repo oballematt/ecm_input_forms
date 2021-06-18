@@ -1,69 +1,64 @@
-<div class="row margin">
-    {{#with fundings}}
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item"><a href="/find">Find</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Add {{project_id}}</li>
-        </ol>
-    </nav>
-    <form action='/add/fundings/{{project_id}}' id="formData" method="POST">
-        <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
-            <h5 style="background-color: #bf5700;" class="card-header">Fundings</h5>
-            <div class="card-body w-100">
-                {{/with}}
-                {{#each errors}}
-                <div class="my-2 text-start" style="border: 1px solid black;">
-                    <p>{{text}}</p>
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="row margin">
+        {{#with fundings}}
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/find">Find</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add {{project_id}}</li>
+            </ol>
+        </nav>
+        <form action='/add/fundings/{{project_id}}' id="formData" method="POST">
+            <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
+                <h5 style="background-color: #bf5700;" class="card-header">Fundings</h5>
+                <div class="card-body w-100">
+                    <div id="errors" class="text-start"></div>
+                    <table id="tableData" class="table text-light text-center mt-3">
+                        <thead>
+                            <tr>
+                                <th scope="col">Source</th>
+                                <th scope="col">$ Implem</th>
+                                <th scope="col">$ Annual</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="display: none">
+                                    <div class="input-group mb-3">
+                                        <input id="validationCustom03" value="{{project_id}}" name="project_id"
+                                            type="text" class="form-control">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group mb-3">
+                                        <select id="addSource" name="source" class="form-select source"
+                                            id="inputGroupSelect01">
+                                            <option disabled selected>Choose...</option>
+                                            <option value='green_fund'>Green Fund</option>
+                                            <option value='facilities'>Facilities</option>
+                                            <option value='repair_replacement'>R and R</option>
+                                            <option value='uem'>UEM</option>
+                                            <option value='aux'>AUX</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input value="{{implementation}}" name="implementation" type="text"
+                                        class="form-control implementation">
+                                </td>
+                                <td>
+                                    <input value="{{annual}}" name="annual" type="text" class="form-control annual">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                {{/each}}
-                {{#with fundings}}
-                <div id="errors" class="text-start"></div>
-                <table id="tableData" class="table text-light text-center mt-3">
-                    <thead>
-                        <tr>
-                            <th scope="col">Source</th>
-                            <th scope="col">$ Implem</th>
-                            <th scope="col">$ Annual</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="display: none">
-                                <div class="input-group mb-3">
-                                    <input id="validationCustom03" value="{{project_id}}" name="project_id" type="text"
-                                        class="form-control">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-group mb-3">
-                                    <select id="addSource" name="source" class="form-select source"
-                                        id="inputGroupSelect01">
-                                        <option disabled selected>Choose...</option>
-                                        <option value='green_fund'>Green Fund</option>
-                                        <option value='facilities'>Facilities</option>
-                                        <option value='repair_replacement'>R and R</option>
-                                        <option value='uem'>UEM</option>
-                                        <option value='aux'>AUX</option>
-                                    </select>
-                                </div>
-                            </td>
-                            <td>
-                                <input value="{{implementation}}" name="implementation" type="text"
-                                    class="form-control implementation">
-                            </td>
-                            <td>
-                                <input value="{{annual}}" name="annual" type="text" class="form-control annual">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="card-footer text-end">
+                    <button id={{id}} type="button" class="btn btn-success text-light noCommasFundingAdd">Submit
+                    </button>
+                </div>
             </div>
-            <div class="card-footer text-end">
-                <button type="submit" class="btn btn-success text-light clear">Submit
-                </button>
-            </div>
-        </div>
-    </form>
-    {{/with}}
+        </form>
+        {{/with}}
+    </div>
 </div>
