@@ -1,54 +1,58 @@
-<div class="row">
-    {{#with baseline}}
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item"><a href="/find">Find</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Edit {{project_id}}</li>
-        </ol>
-    </nav>
-    <form action='/find/baseline/{{id}}' method="POST">
-        <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
-            <h5 style="background-color: #bf5700;" class="card-header">Baseline</h5>
-            <div class="card-body w-100 text-end">
-                <table id="tableData" class="table text-light text-center mt-3">
-                    <thead>
-                        <tr>
-                            <th scope="col">Commodity</th>
-                            <th scope="col">Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="display: none;">
-                                <input disabled value="{{project_id}}" name="project_id" type="text" class="form-control">
-                            </td>
-                            <td>
-                                <div class="input-group mb-3">
-                                    <select name="commodity" class="form-select" id="inputGroupSelect01">
-                                        <option disabled selected>{{commodity}}</option>
-                                        <option>CHW</option>
-                                        <option>ELE</option>
-                                        <option>STM</option>
-                                        <option>HHW</option>
-                                        <option>GAS</option>
-                                        <option>WTR</option>
-                                        <option value='peack_CHW'>Peak CHW</option>
-                                        <option value="labor">Labor</option>
-                                    </select>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-group mb-3">
-                                    <input value="{{value}}" name="value" type="text" class="form-control">
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button type="submit" class="btn btn-success text-light">Submit</button>
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="row margin">
+        {{#with baseline}}
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/find">Find</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit {{project_id}}</li>
+            </ol>
+        </nav>
+        <form action='/find/baseline/{{id}}' id="formData" method="POST">
+            <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
+                <h5 style="background-color: #bf5700;" class="card-header">Baseline</h5>
+                <div class="card-body w-100 text-end">
+                    <div id="errors" class="text-start"></div>
+                    <table id="tableData" class="table text-light text-center mt-3">
+                        <thead>
+                            <tr>
+                                <th scope="col">Commodity</th>
+                                <th scope="col">Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="display: none;">
+                                    <input disabled value="{{project_id}}" name="project_id" type="text"
+                                        class="form-control">
+                                </td>
+                                <td>
+                                    <div class="input-group mb-3">
+                                        <select name="commodity" class="form-select" id="inputGroupSelect01 commodity">
+                                            <option disabled selected>{{commodity}}</option>
+                                            <option>CHW</option>
+                                            <option>ELE</option>
+                                            <option>STM</option>
+                                            <option>HHW</option>
+                                            <option>GAS</option>
+                                            <option>WTR</option>
+                                            <option value='peack_CHW'>Peak CHW</option>
+                                            <option value="labor">Labor</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group mb-3">
+                                        <input value="{{value}}" name="value" type="text" class="form-control value">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button id={{id}} type="button" class="btn btn-success text-light noCommasBase">Submit</button>
+                </div>
             </div>
-        </div>
-    </form>
-    {{/with}}
+        </form>
+        {{/with}}
+    </div>
 </div>

@@ -13,7 +13,7 @@
         </nav>
         <form id="searchData" action="/find" method="POST">
             {{#each errors}}
-            <p>{{text}}</p>
+            <p style="color: red">{{text}}</p>
             {{/each}}
             <div class="input-group">
                 <select name="project_id" class="form-select" id="search" aria-label="Example select with button addon">
@@ -170,7 +170,7 @@
                                     <tr class="text-end">
                                         <th class="text-start" scope="col">Implementation or Annual</th>
                                         <th class="text-start" scope="col">Category</th>
-                                        <th scope="col">Cost</th>
+                                        <th scope="col">Cost ($)</th>
                                         <th scope="col">Hours</th>
                                         <th scope="col">Edit</th>
                                         <th scope="col">Delete</th>
@@ -181,11 +181,11 @@
                                     <tr class="text-end">
                                         <td class="text-start">{{imp_or_ann}}</td>
                                         <td class="text-start">{{category}}</td>
-                                        <td class="text-end commas">{{cost}}</td>
+                                        <td class="text-end sum commas">{{cost}}</td>
                                         <td class="text-end">{{hours}}</td>
                                         <td>
                                             <a href="/find/costs_hours/{{id}}">
-                                                <button type="button" class='btn btn-warning'><i
+                                                <button id={{id}} type="button" class='btn btn-warning getId'><i
                                                         class="fas fa-edit"></i></button>
                                             </a>
                                         </td>
@@ -220,8 +220,8 @@
                                 <thead>
                                     <tr class="text-end">
                                         <th class="text-start" scope="col">Source</th>
-                                        <th scope="col">$ Implem</th>
-                                        <th scope="col">$ Annual</th>
+                                        <th scope="col">Implem ($)</th>
+                                        <th scope="col">Annual ($)</th>
                                         <th scope="col">Edit</th>
                                         <th scope="col">Delete</th>
                                     </tr>
@@ -374,7 +374,7 @@
                                     <tr class="text-end">
                                         <td class="text-start">{{phase}}</td>
                                         <td class="text-start">{{misc_owner}}</td>
-                                        <td>{{misc_savings}}</td>
+                                        <td class='commas'>{{misc_savings}}</td>
                                         <td>
                                             <a href="/find/miscsavings/{{id}}" class='btn btn-warning'>
                                                 <i class="fas fa-edit"></i>
