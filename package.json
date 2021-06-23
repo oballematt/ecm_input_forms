@@ -1,7 +1,7 @@
 {
-  "name": "notes-board",
+  "name": "ecm-input-form",
   "version": "0.1.0",
-  "description": "Example Node.js MVC Application",
+  "description": "Input form",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jameskolce/notes-board.git"
+    "url": "https://github.com/oballematt/ecm_input_forms"
   },
-  "author": "James Kolce <contact@jameskolce.com>",
+  "author": "Matt Oballe",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jameskolce/notes-board/issues"
+    "url": "https://github.com/oballematt/ecm_input_forms"
   },
-  "homepage": "https://github.com/jameskolce/notes-board#readme",
+  "homepage": "https://ecm-input-form.herokuapp.com/",
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
