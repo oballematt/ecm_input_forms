@@ -131,11 +131,13 @@ $(document).ready(() => {
         const annCommaNum = numberWithCommas(totalAnnSum);
 
         if (totalImpSum > 1) {
-            $('.alert').removeAttr('style').text(`Warning - Total Implem Fundings is less than Total Implem Costs by: $${impCommaNum} `)
+            $('.warning').removeAttr('style')
+            $('.display').text(`Warning - Total Implem Fundings is less than Total Implem Costs by: $${impCommaNum} `)
         };
 
         if (totalAnnSum > 1) {
-            $('.alert').removeAttr('style').text(`Warning - Total Annual Fundings is less than Total Annual Costs by: $${annCommaNum} `)
+            $('.warning').removeAttr('style')
+            $('.display').text(`Warning - Total Annual Fundings is less than Total Annual Costs by: $${annCommaNum} `)
         };
     };
 
