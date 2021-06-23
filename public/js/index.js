@@ -53,8 +53,6 @@ $(document).ready(() => {
     const searchedVal = sessionStorage.getItem('search');
 
     window.onload = () => {
-        
-        console.log($('.sum').text())
         if (storedVals) {
             dataObj = JSON.parse(storedVals);
             ids.forEach(id => $('#' + id).val(dataObj[id] || 'Choose...'));
@@ -98,6 +96,47 @@ $(document).ready(() => {
             $(this).text(commaNum);
         });
 
+    
+        let impFundsArray = [];
+        let annFundsArray = [];
+
+        let costImpValues = $('.costPhase:contains("implementation")').map((i, el) => parseInt($(el).siblings('.sumCosts').text().trim().replace(/,/g, ''), 10)).get();
+        
+        let costAnnValues = $('.costPhase:contains("annual")').map((i, el) => parseInt($(el).siblings('.sumCosts').text().trim().replace(/,/g, ''), 10)).get();
+
+        let costImpTotal = costImpValues.reduce((a, b) => a + b, 0);
+
+        let costAnnTotal = costAnnValues.reduce((a, b) => a + b, 0);
+        
+
+        $(".impFunds").each(function () {
+            let values = parseInt($(this).text().replace(/,/g, ''));
+            impFundsArray.push(values);
+        });
+
+        $(".annFunds").each(function () {
+            let values = parseInt($(this).text().replace(/,/g, ''));
+            annFundsArray.push(values);
+        });
+
+        let fundImpTotal = impFundsArray.reduce((a, b) => a + b, 0);
+
+        let fundAnnTotal = annFundsArray.reduce((a, b) => a + b, 0);
+
+        const totalImpSum = costImpTotal - fundImpTotal;
+
+        const totalAnnSum = costAnnTotal - fundAnnTotal;
+
+        const impCommaNum = numberWithCommas(totalImpSum);
+        const annCommaNum = numberWithCommas(totalAnnSum);
+
+        if (totalImpSum > 1) {
+            $('.alert').removeAttr('style').text(`Warning - Total Implem Fundings is less than Total Implem Costs by: $${impCommaNum} `)
+        };
+
+        if (totalAnnSum > 1) {
+            $('.alert').removeAttr('style').text(`Warning - Total Annual Fundings is less than Total Annual Costs by: $${annCommaNum} `)
+        };
     };
 
     $("#formData").on("change", ["#building", "#measure_type"], () => {
@@ -285,7 +324,6 @@ $(document).ready(() => {
             });
         }
     });
-    
 
     //ajax calls for adding a new record to a table on an existing project ID, ajax call necessary so that if a user
     //inputs a number with comma separators, the ajax call will remove the commas when submitted to the database to avoid NaN errors.
@@ -299,8 +337,8 @@ $(document).ready(() => {
             value: $('.value').val().replace(/,/g, '')
         }
 
-        if (!data.commodity){
-            errors.push({ text: "Please select an option for commodity"})
+        if (!data.commodity) {
+            errors.push({ text: "Please select an option for commodity" })
         }
 
         if (!data.value) {
@@ -404,7 +442,6 @@ $(document).ready(() => {
         }
     });
 
-    
     $('#formData').on('click', 'button.noCommasSavingsAdd', function (e) {
         e.preventDefault()
         const id = $(this).attr('id')
@@ -481,8 +518,6 @@ $(document).ready(() => {
         }
     });
 
-
-   
     const $table = $("#tableData"),
         $tbody = $table.find('tbody'),
         $cloneRow = $tbody.find('tr').first().clone();

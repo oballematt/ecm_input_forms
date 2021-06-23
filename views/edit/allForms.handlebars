@@ -66,7 +66,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 mt-5">
+                        <div class="col-md-4 mt-2">
+                            <div class="row mb-3 ">
+                                <div class="col-md-6 text-end">
+                                    Baseline
+                                </div>
+                                <div class="col-md-6 text-center">
+                                    Reporting
+                                </div>
+                            </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroup-sizing-default">Start Date:</span>
@@ -161,6 +169,10 @@
             </div>
             <hr>
             <div class="row responsive">
+                <div class="col-md-12">
+                    <div style="display: none;" class="alert alert-danger" role="alert">
+                    </div>
+                </div>
                 <section class="col-md-6">
                     <div class="card border-secondary w-100 h-100 text-light mb-3" style="background-color: #333f48;">
                         <h5 style="background-color: #bf5700;" class="card-header">Costs &amp; Hours</h5>
@@ -179,9 +191,9 @@
                                 <tbody>
                                     {{#each costsHours}}
                                     <tr class="text-end">
-                                        <td class="text-start">{{imp_or_ann}}</td>
+                                        <td class="text-start costPhase">{{imp_or_ann}}</td>
                                         <td class="text-start">{{category}}</td>
-                                        <td class="text-end sum commas">{{cost}}</td>
+                                        <td class="text-end sumCosts commas">{{cost}}</td>
                                         <td class="text-end">{{hours}}</td>
                                         <td>
                                             <a href="/find/costs_hours/{{id}}">
@@ -196,8 +208,8 @@
                                             </a>
                                         </td>
                                     </tr>
+                                    {{/each}}
                                 </tbody>
-                                {{/each}}
                             </table>
                         </div>
                         {{#with metadata}}
@@ -230,8 +242,8 @@
                                     {{#each funding}}
                                     <tr class="text-end">
                                         <td class="text-start">{{source}}</td>
-                                        <td class="commas">{{implementation}}</td>
-                                        <td class="commas">{{annual}}</td>
+                                        <td class="commas impFunds">{{implementation}}</td>
+                                        <td class="commas annFunds">{{annual}}</td>
                                         <td>
                                             <a href="/find/funding/{{id}}" class='btn btn-warning'>
                                                 <i class="fas fa-edit"></i>
