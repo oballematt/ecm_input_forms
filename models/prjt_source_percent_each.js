@@ -18,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     phase: DataTypes.STRING,
     commodity: DataTypes.STRING,
     comm_type: DataTypes.STRING,
-    source_energy_baseline: DataTypes.REAL,
-    source_energy_savings: DataTypes.REAL,
+    source_ui_baseline: DataTypes.REAL,
+    source_ui_savings: DataTypes.REAL,
     savings_percent: DataTypes.DOUBLE
   }, {
     sequelize,
