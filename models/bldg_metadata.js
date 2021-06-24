@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Bldg_metadata.init({
-    acronym: {type: 
-      DataTypes.STRING,
+    building: {
+      type: DataTypes.STRING,
       primaryKey: true
     },
   }, {
