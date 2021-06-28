@@ -48,7 +48,7 @@ $(document).ready(() => {
 
     $('#searchData').on('submit', () => {
         sessionStorage.setItem("search", $("#search").val());
-    })
+    });
 
     const searchedVal = sessionStorage.getItem('search');
 
