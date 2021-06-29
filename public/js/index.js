@@ -539,7 +539,7 @@ $(document).ready(() => {
 
         $("#errors").text('');
 
-        if (data.project_id === "undefined") {
+        if (data.project_id === "undefined" || !data.project_id) {
             errors.push({ text: "Please define a project ID" });
         };
         if (!data.imp_or_ann) {
@@ -569,7 +569,8 @@ $(document).ready(() => {
                 $tbody.append($cloneRow.clone()),
                 $("#next").removeAttr('disabled'),
                 $("#link").attr('href', '/fundings'),
-                $('#errors').text('')
+                $('#errors').text(''),
+                $('#skip').attr('disabled', 'disabled')
             )
         }
     });
@@ -587,7 +588,7 @@ $(document).ready(() => {
 
         $("#errors").text('');
 
-        if (data.project_id === "undefined") {
+        if (data.project_id === "undefined" || !data.project_id) {
             errors.push({ text: "Please define a project ID" })
         };
         if (!data.source) {
@@ -614,7 +615,8 @@ $(document).ready(() => {
                 $tbody.append($cloneRow.clone()),
                 $("#next").removeAttr('disabled'),
                 $("#link").attr('href', '/baseline'),
-                $('#errors').text('')
+                $('#errors').text(''),
+                $('#skip').attr('disabled', 'disabled')
             );
         }
     });
@@ -631,7 +633,7 @@ $(document).ready(() => {
 
         $("#errors").text('');
 
-        if (data.project_id === "undefined") {
+        if (data.project_id === "undefined" || !data.project_id) {
             errors.push({ text: "Please define a project ID" })
         };
         if (!data.commodity) {
@@ -656,7 +658,8 @@ $(document).ready(() => {
                 $tbody.append($cloneRow.clone()),
                 $("#next").removeAttr('disabled'),
                 $("#link").attr('href', '/savings'),
-                $('#errors').text('')
+                $('#errors').text(''),
+                $('#skip').attr('disabled', 'disabled')
             )
         }
     });
@@ -673,7 +676,7 @@ $(document).ready(() => {
 
         $("#errors").text('');
 
-        if (data.project_id === "undefined") {
+        if (data.project_id === "undefined" || !data.project_id) {
             errors.push({ text: "Please define a project ID" })
         };
         if (!data.phase) {
@@ -701,13 +704,14 @@ $(document).ready(() => {
                 $tbody.append($cloneRow.clone()),
                 $("#finish").removeAttr('disabled'),
                 $("#link").attr('href', '/'),
-                $('#errors').text('')
+                $('#errors').text(''),
+                $('#skip').attr('disabled', 'disabled')
             )
         }
     });
 
     // clears project ID stored in session storage when user is creating a new project.
-    $("#finish").on("click", () => {
+    $(".finish").on("click", () => {
         sessionStorage.clear();
     });
 
