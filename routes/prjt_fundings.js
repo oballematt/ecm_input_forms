@@ -2,10 +2,6 @@ const router = require('express').Router();
 
 const fundingController = require('../controllers/prjt_fundings');
 
-router.post('/fundings', fundingController.createFunding);
-
-router.get('/fundings', fundingController.getForm);
-
 router.post('/find/funding/:id', fundingController.updateFunding);
 
 router.get('/delete/funding/:id', fundingController.deleteFunding);

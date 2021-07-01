@@ -2,28 +2,6 @@ const { Prjt_funding, Prjt_metadata } = require('../models');
 
 module.exports = {
 
-    createFunding: async (req, res) => {
-
-        let { project_id, implementation, source, annual } = req.body;
-
-
-        try {
-
-            const funding = await Prjt_funding.create({
-                project_id, implementation, source, annual
-            });
-
-            return res.redirect('/find')
-
-        } catch (error) {
-
-            console.error(error.message);
-            return res.status(500).json(error);
-
-        }
-
-    },
-
     createFundingByProjectId: async (req, res) => {
 
         let { project_id, implementation, source, annual } = req.body;
@@ -61,7 +39,7 @@ module.exports = {
                     project_id, implementation, source, annual
                 });
 
-                return res.redirect('/find')
+                return res.redirect('/')
 
             };
 
@@ -72,10 +50,6 @@ module.exports = {
 
         }
 
-    },
-
-    getForm: (req, res) => {
-        return res.render('create/fundings')
     },
 
     getOneFunding: async (req, res) => {
@@ -117,7 +91,7 @@ module.exports = {
                     }
                 });
 
-            return res.redirect('/find')
+            return res.redirect('/')
 
         } catch (error) {
 
@@ -161,7 +135,7 @@ module.exports = {
                 }
             });
 
-            return res.redirect('/find')
+            return res.redirect('/')
 
         } catch (error) {
 

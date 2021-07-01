@@ -5,16 +5,13 @@ const { Prjt_metadata, Prjt_costs_hours, Prjt_baseline, Prjt_funding, Prjt_savin
 const test = require('./m_v')
 
 module.exports = {
-    //All of the below controllers render onto the /find route of the project so when a user searches for a specific project ID
-    //all of the relevant data for that ID is displayed and then the user can choose what they want to accomplish for each individual data record
+  
     findData: async (req, res) => {
         try {
             const { project_id } = req.body
 
             let errors = []
 
-            //These controllers are for finding all exisiting records in these tables based on project_id so the user can view the information
-            //and either update or delete the information if they need too. 
             const projectId = await Prjt_metadata.findAll({
                 order: [
                     ['project_id', 'ASC']
@@ -1103,7 +1100,7 @@ module.exports = {
                 }
             });
 
-            return res.redirect('/find')
+            return res.redirect('/')
 
         } catch (error) {
 

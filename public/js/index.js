@@ -48,20 +48,31 @@ $(document).ready(() => {
 
     $('#searchData').on('submit', () => {
         sessionStorage.setItem("search", $("#search").val());
-    });
+        sessionStorage.removeItem('pid')
+    })
 
     const searchedVal = sessionStorage.getItem('search');
 
+    $("#create").on('click', () => {
+        sessionStorage.removeItem('values')
+    })
+    $("#delete").on('click', () => {
+        sessionStorage.removeItem('search')
+    })
+
     window.onload = () => {
+
         if (storedVals) {
             dataObj = JSON.parse(storedVals);
             ids.forEach(id => $('#' + id).val(dataObj[id] || 'Choose...'));
         };
 
-        $("#search").val(searchedVal);
-
-        if (!searchedVal || searchedVal === 'null') {
-            $("#search").val('Project ID');
+        if (getPid) {
+            $("#search").val(getPid);
+        } else if (!searchedVal && !getPid) {
+            $('#search').val('Project ID');
+        } else {
+            $('#search').val(searchedVal);
         };
 
         $(".title").text(function (i, curr) {
@@ -96,49 +107,6 @@ $(document).ready(() => {
             $(this).text(commaNum);
         });
 
-    
-        let impFundsArray = [];
-        let annFundsArray = [];
-
-        let costImpValues = $('.costPhase:contains("implementation")').map((i, el) => parseInt($(el).siblings('.sumCosts').text().trim().replace(/,/g, ''), 10)).get();
-        
-        let costAnnValues = $('.costPhase:contains("annual")').map((i, el) => parseInt($(el).siblings('.sumCosts').text().trim().replace(/,/g, ''), 10)).get();
-
-        let costImpTotal = costImpValues.reduce((a, b) => a + b, 0);
-
-        let costAnnTotal = costAnnValues.reduce((a, b) => a + b, 0);
-        
-
-        $(".impFunds").each(function () {
-            let values = parseInt($(this).text().replace(/,/g, ''));
-            impFundsArray.push(values);
-        });
-
-        $(".annFunds").each(function () {
-            let values = parseInt($(this).text().replace(/,/g, ''));
-            annFundsArray.push(values);
-        });
-
-        let fundImpTotal = impFundsArray.reduce((a, b) => a + b, 0);
-
-        let fundAnnTotal = annFundsArray.reduce((a, b) => a + b, 0);
-
-        const totalImpSum = costImpTotal - fundImpTotal;
-
-        const totalAnnSum = costAnnTotal - fundAnnTotal;
-
-        const impCommaNum = numberWithCommas(totalImpSum);
-        const annCommaNum = numberWithCommas(totalAnnSum);
-
-        if (totalImpSum > 1) {
-            $('.warning').removeAttr('style')
-            $('.display').text(`Warning - Total Implem Fundings is less than Total Implem Costs by: $${impCommaNum} `)
-        };
-
-        if (totalAnnSum > 1) {
-            $('.warning').removeAttr('style')
-            $('.display').text(`Warning - Total Annual Fundings is less than Total Annual Costs by: $${annCommaNum} `)
-        };
     };
 
     $("#formData").on("change", ["#building", "#measure_type"], () => {
@@ -153,6 +121,556 @@ $(document).ready(() => {
         } else {
             $(".pid").val($("#building").val() + ' ' + new Date().getFullYear() + ' ' + $("#measure_type").val());
         };
+    });
+
+    $("#findB_SValues").on('click', '#chwValue', (e) => {
+        e.preventDefault();
+        $('.message').text('')
+        console.log('works')
+        let chw_value = prompt("Please enter a value for CHW.");
+        let replacedValue = chw_value.replace(/,/g, '');
+        $(".message").text()
+        $('.chwValue').append(`<p>[${chw_value}]</p>`);
+        let data = {
+            project_id: searchedVal,
+            commodity: 'CHW',
+            value: replacedValue
+        };
+        $.ajax({
+            url: '/find_b_s_values',
+            method: 'POST',
+            data: data,
+            success: function () {
+                $(".message").append(`<p>Your value of ${chw_value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+            Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        });
+    });
+
+    $("#findB_SValues").on('click', '#eleValue', (e) => {
+        e.preventDefault();
+        $('.message').text('')
+        let ele_value = prompt("Please enter a value for ELE.")
+        let replacedValue = ele_value.replace(/,/g, '')
+        $('.eleValue').append(`<p>[${ele_value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            commodity: 'ELE',
+            value: replacedValue,
+            success: function () {
+                $(".message").append(`<p>Your value of ${ele_value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_b_s_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+    $("#findB_SValues").on('click', '#stmValue', (e) => {
+        e.preventDefault();
+        $('.message').text('')
+        let stm_value = prompt("Please enter a value for STM.")
+        let replacedValue = stm_value.replace(/,/g, '')
+        $('.stmValue').append(`<p>[${stm_value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            commodity: 'STM',
+            value: replacedValue,
+            success: function () {
+                $(".message").append(`<p>Your value of ${stm_value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_b_s_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+
+    $("#findB_SValues").on('click', '#hhwValue', (e) => {
+        e.preventDefault();
+        $('.message').text('')
+        let hhw_value = prompt("Please enter a value for HHW.")
+        let replacedValue = hhw_value.replace(/,/g, '')
+        $('.hhwValue').append(`<p>[${hhw_value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            commodity: 'HHW',
+            value: replacedValue,
+            success: function () {
+                $(".message").append(`<p>Your value of ${hhw_value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_b_s_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+
+    $("#findB_SValues").on('click', '#gasValue', (e) => {
+        e.preventDefault();
+        $('.message').text('')
+        let gas_value = prompt("Please enter a value for GAS.")
+        let replacedValue = gas_value.replace(/,/g, '')
+        $('.gasValue').append(`<p>[${gas_value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            commodity: 'GAS',
+            value: replacedValue,
+            success: function () {
+                $(".message").append(`<p>Your value of ${gas_value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_b_s_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+    $("#findB_SValues").on('click', '#wtrValue', (e) => {
+        e.preventDefault();
+        $('.message').text('')
+        let wtr_value = prompt("Please enter a value for WTR.")
+        let replacedValue = wtr_value.replace(/,/g, '')
+        $('.wtrValue').append(`<p>[${wtr_value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            commodity: 'WTR',
+            value: replacedValue,
+            success: function () {
+                $(".message").append(`<p>Your value of ${wtr_value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_b_s_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+    $("#findB_SValues").on('click', '#peakChwValue', (e) => {
+        e.preventDefault();
+        $('.message').text('')
+        let peakChw_value = prompt("Please enter a value for Peak CHW.")
+        let replacedValue = peakChw_value.replace(/,/g, '')
+        $('.peakChwValue').append(`<p>[${peakChw_value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            commodity: 'peak_CHW',
+            value: replacedValue,
+            success: function () {
+                $(".message").append(`<p>Your value of ${peakChw_value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_b_s_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+    $("#findB_SValues").on('click', '#laborValue', (e) => {
+        e.preventDefault();
+        $('.message').text('')
+        let labor_value = prompt("Please enter a value for Labor.")
+        let replacedValue = labor_value.replace(/,/g, '')
+        $('.laborValue').append(`<p>[${labor_value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            commodity: 'labor',
+            value: replacedValue,
+            success: function () {
+                $(".message").append(`<p>Your value of ${labor_value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_b_s_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+    //Ajax calls to create predicted savings
+    $("#findSavingsValues").on('click', '#predictedChw', (e) => {
+        e.preventDefault();
+        $('.predictedMessage').text('')
+        let value = prompt("Please enter a value for CHW.")
+        let replacedValue = value.replace(/,/g, '')
+        $('.predictedChw').append(`<p>[${value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            phase: 'predicted',
+            commodity: 'CHW',
+            value: replacedValue,
+            success: function () {
+                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+    $("#findSavingsValues").on('click', '#predictedEle', (e) => {
+        e.preventDefault();
+        $('.predictedMessage').text('')
+        let value = prompt("Please enter a value for ELE.")
+        let replacedValue = value.replace(/,/g, '')
+        $('.predictedEle').append(`<p>[${value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            phase: 'predicted',
+            commodity: 'ELE',
+            value: replacedValue,
+            success: function () {
+                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+    $("#findSavingsValues").on('click', '#predictedStm', (e) => {
+        e.preventDefault();
+        $('.predictedMessage').text('')
+        let value = prompt("Please enter a value for STM.")
+        let replacedValue = value.replace(/,/g, '')
+        $('.predictedStm').append(`<p>[${value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            phase: 'predicted',
+            commodity: 'STM',
+            value: replacedValue,
+            success: function () {
+                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+    $("#findSavingsValues").on('click', '#predictedHhw', (e) => {
+        e.preventDefault();
+        $('.predictedMessage').text('')
+        let value = prompt("Please enter a value for HHW.")
+        let replacedValue = value.replace(/,/g, '')
+        $('.predictedHhw').append(`<p>[${value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            phase: 'predicted',
+            commodity: 'HHW',
+            value: replacedValue,
+            success: function () {
+                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+    $("#findSavingsValues").on('click', '#predictedGas', (e) => {
+        e.preventDefault();
+        $('.predictedMessage').text('')
+        let value = prompt("Please enter a value for GAS.")
+        let replacedValue = value.replace(/,/g, '')
+        $('.predictedGas').append(`<p>[${value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            phase: 'predicted',
+            commodity: 'GAS',
+            value: replacedValue,
+            success: function () {
+                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+    $("#findSavingsValues").on('click', '#predictedWtr', (e) => {
+        e.preventDefault();
+        $('.predictedMessage').text('')
+        let value = prompt("Please enter a value for WTR.")
+        let replacedValue = value.replace(/,/g, '')
+        $('.predictedWtr').append(`<p>[${value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            phase: 'predicted',
+            commodity: 'WTR',
+            value: replacedValue,
+            success: function () {
+                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+    $("#findSavingsValues").on('click', '#predictedPeak', (e) => {
+        e.preventDefault();
+        $('.predictedMessage').text('')
+        let value = prompt("Please enter a value for Peak CHW.")
+        let replacedValue = value.replace(/,/g, '')
+        $('.predictedPeak').append(`<p>[${value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            phase: 'predicted',
+            commodity: 'peak_CHW',
+            value: replacedValue,
+            success: function () {
+                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+    $("#findSavingsValues").on('click', '#predictedLabor', (e) => {
+        e.preventDefault();
+        $('.predictedMessage').text('')
+        let value = prompt("Please enter a value for Labor.")
+        let replacedValue = value.replace(/,/g, '')
+        $('.predictedLabor').append(`<p>[${value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            phase: 'predicted',
+            commodity: 'labor',
+            value: replacedValue,
+            success: function () {
+                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+    //Ajax calls to create MV savings
+    $("#findSavingsValues").on('click', '#mvChw', (e) => {
+        e.preventDefault();
+        $('.mvMessage').text('')
+        let value = prompt("Please enter a value for CHW.")
+        let replacedValue = value.replace(/,/g, '')
+        $('.mvChw').append(`<p>[${value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            phase: 'mv',
+            commodity: 'CHW',
+            value: replacedValue,
+            success: function () {
+                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+    $("#findSavingsValues").on('click', '#mvEle', (e) => {
+        e.preventDefault();
+        $('.mvMessage').text('')
+        let value = prompt("Please enter a value for ELE.")
+        let replacedValue = value.replace(/,/g, '')
+        $('.mvEle').append(`<p>[${value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            phase: 'mv',
+            commodity: 'ELE',
+            value: replacedValue,
+            success: function () {
+                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+    $("#findSavingsValues").on('click', '#mvStm', (e) => {
+        e.preventDefault();
+        $('.mvMessage').text('')
+        let value = prompt("Please enter a value for STM.")
+        let replacedValue = value.replace(/,/g, '')
+        $('.mvStm').append(`<p>[${value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            phase: 'mv',
+            commodity: 'STM',
+            value: replacedValue,
+            success: function () {
+                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+    $("#findSavingsValues").on('click', '#mvHhw', (e) => {
+        e.preventDefault();
+        $('.mvMessage').text('')
+        let value = prompt("Please enter a value for HHW.")
+        let replacedValue = value.replace(/,/g, '')
+        $('.mvHhw').append(`<p>[${value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            phase: 'mv',
+            commodity: 'HHW',
+            value: replacedValue,
+            success: function () {
+                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+    $("#findSavingsValues").on('click', '#mvGas', (e) => {
+        e.preventDefault();
+        $('.mvMessage').text('')
+        let value = prompt("Please enter a value for GAS.")
+        let replacedValue = value.replace(/,/g, '')
+        $('.mvGas').append(`<p>[${value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            phase: 'mv',
+            commodity: 'GAS',
+            value: replacedValue,
+            success: function () {
+                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+    $("#findSavingsValues").on('click', '#mvWtr', (e) => {
+        e.preventDefault();
+        $('.mvMessage').text('')
+        let value = prompt("Please enter a value for WTR.")
+        let replacedValue = value.replace(/,/g, '')
+        $('.mvWtr').append(`<p>[${value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            phase: 'mv',
+            commodity: 'WTR',
+            value: replacedValue,
+            success: function () {
+                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+    $("#findSavingsValues").on('click', '#mvPeak', (e) => {
+        e.preventDefault();
+        $('.mvMessage').text('')
+        let value = prompt("Please enter a value for Peak CHW.")
+        let replacedValue = value.replace(/,/g, '')
+        $('.mvPeak').append(`<p>[${value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            phase: 'mv',
+            commodity: 'peak_CHW',
+            value: replacedValue,
+            success: function () {
+                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        })
+    });
+
+    $("#findSavingsValues").on('click', '#mvLabor', (e) => {
+        e.preventDefault();
+        $('.mvMessage').text('')
+        let value = prompt("Please enter a value for Labor.")
+        let replacedValue = value.replace(/,/g, '')
+        $('.mvLabor').append(`<p>[${value}]</p>`)
+        let data = {
+            project_id: searchedVal,
+            phase: 'mv',
+            commodity: 'labor',
+            value: replacedValue,
+            success: function () {
+                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+        Otherwise, continue adding values to the other commodities.</p>`)
+            }
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        })
     });
 
 
@@ -189,7 +707,7 @@ $(document).ready(() => {
                 type: 'POST',
                 data: data,
                 success: function () {
-                    window.location = "/find";
+                    window.location = "/";
                 }
             });
         }
@@ -220,7 +738,7 @@ $(document).ready(() => {
                 type: 'POST',
                 data: data,
                 success: function () {
-                    window.location = "/find";
+                    window.location = "/";
                 }
             });
         }
@@ -256,7 +774,7 @@ $(document).ready(() => {
                 type: 'POST',
                 data: data,
                 success: function () {
-                    window.location = "/find";
+                    window.location = "/";
                 }
             });
         }
@@ -289,7 +807,7 @@ $(document).ready(() => {
                 type: 'POST',
                 data: data,
                 success: function () {
-                    window.location = "/find";
+                    window.location = "/";
                 }
             });
         }
@@ -321,61 +839,35 @@ $(document).ready(() => {
                 type: 'POST',
                 data: data,
                 success: function () {
-                    window.location = "/find";
+                    window.location = "/";
                 }
             });
         }
     });
 
-    //ajax calls for adding a new record to a table on an existing project ID, ajax call necessary so that if a user
-    //inputs a number with comma separators, the ajax call will remove the commas when submitted to the database to avoid NaN errors.
-    $('#formData').on('click', 'button.noCommasBaseAdd', function (e) {
-        e.preventDefault()
+    const $table = $("#tableData"),
+        $tbody = $table.find('tbody'),
+        $cloneRow = $tbody.find('tr').first().clone();
+
+    // ajax calls used to create a new project, ajax call necessary to add multiple rows of data at once.
+    //also removes comma separators if user inputs a value with commas.
+    $table.on('click', 'button.addRow', function (e) {
         const id = $(this).attr('id')
-        let errors = []
+        e.preventDefault();
+        let errors = [];
         let data = {
             project_id: searchedVal,
-            commodity: $('.commodity').val(),
-            value: $('.value').val().replace(/,/g, '')
-        }
-
-        if (!data.commodity) {
-            errors.push({ text: "Please select an option for commodity" })
-        }
-
-        if (!data.value) {
-            errors.push({ text: "Please enter a value for value field" });
+            imp_or_ann: $(".imp_or_ann").last().val(),
+            category: $(".category").last().val(),
+            cost: $(".cost").last().val().replace(/,/g, ''),
+            hours: $(".hours").last().val()
         };
 
-        if (errors.length > 0) {
-            for (var item in errors) {
-                $("#errors").append("<p style=\"border: 1px solid black; font-weight: bold\">" + errors[item].text + '</p>');
-            };
-        } else {
+        $("#errors").text('');
 
-            $.ajax({
-                url: '/add/baseline/' + id,
-                type: 'POST',
-                data: data,
-                success: function () {
-                    window.location = "/find";
-                }
-            });
-        }
-    });
-
-    $('#formData').on('click', 'button.noCommasCostsAdd', function (e) {
-        e.preventDefault()
-        const id = $(this).attr('id')
-        let errors = []
-        let data = {
-            project_id: searchedVal,
-            imp_or_ann: $('.imp_or_ann').val(),
-            category: $('.category').val(),
-            cost: $('.cost').val().replace(/,/g, ''),
-            hours: $('.hours').val().replace(/,/g, '')
-        }
-
+        if (data.project_id === "undefined") {
+            errors.push({ text: "Please define a project ID" });
+        };
         if (!data.imp_or_ann) {
             errors.push({ text: "Please select an option for implementation or annual" });
         };
@@ -386,7 +878,7 @@ $(document).ready(() => {
             errors.push({ text: "Please enter a value for cost (if value is unknown, enter 0)" });
         };
         if (!data.hours) {
-            errors.push({ text: "Please enter a value for hours (if value is unknown, enter 0)" });
+            errors.push({ text: "Please enter a value for hours (if value is unkown, enter 0)" });
         };
 
         if (errors.length > 0) {
@@ -394,95 +886,67 @@ $(document).ready(() => {
                 $("#errors").append("<p style=\"border: 1px solid black; font-weight: bold\">" + errors[item].text + '</p>');
             };
         } else {
-
             $.ajax({
                 url: '/add/costs_hours/' + id,
                 type: 'POST',
-                data: data,
-                success: function () {
-                    window.location = "/find";
-                }
-            });
+                data: data
+            }).then(
+                $tbody.find(':input').prop('disabled', true).css("background-color", "green"),
+                $tbody.append($cloneRow.clone()),
+                $("#next").removeAttr('disabled'),
+                $("#link").attr('href', '/fundings'),
+                $('#errors').text('')
+            )
         }
     });
 
-    $('#formData').on('click', 'button.noCommasFundingAdd', function (e) {
-        e.preventDefault()
+
+    $table.on('click', 'button.addRowF', (e) => {
         const id = $(this).attr('id')
+        e.preventDefault();
         let errors = []
         let data = {
             project_id: searchedVal,
-            source: $('.source').val(),
-            implementation: $('.implementation').val().replace(/,/g, ''),
-            annual: $('.annual').val().replace(/,/g, ''),
+            source: $(".source").last().val(),
+            implementation: $(".implementation").last().val().replace(/,/g, ''),
+            annual: $(".annual").last().val().replace(/,/g, ''),
         }
 
+        $("#errors").text('');
+
+        if (data.project_id === "undefined") {
+            errors.push({ text: "Please define a project ID" })
+        };
         if (!data.source) {
-            errors.push({ text: "Please select an option for source" });
+            errors.push({ text: "Please select an option for source" })
         };
         if (!data.implementation) {
-            errors.push({ text: "Please enter a value for implementation (if value is unknown, enter 0)" });
+            errors.push({ text: "Please enter a value for implementation (if value is unknown, enter 0)" })
         };
         if (!data.annual) {
-            errors.push({ text: "Please enter a value for annual (if value is unknown, enter 0)" });
+            errors.push({ text: "Please enter a value for annual (if value is unknown, enter 0)" })
         };
 
         if (errors.length > 0) {
             for (var item in errors) {
-                $("#errors").append("<p style=\"border: 1px solid black; font-weight: bold\">" + errors[item].text + '</p>');
-            };
+                $("#errors").append("<p style=\"border: 1px solid black; font-weight: bold\">" + errors[item].text + '</p>')
+            }
         } else {
-
             $.ajax({
                 url: '/add/fundings/' + id,
                 type: 'POST',
-                data: data,
-                success: function () {
-                    window.location = "/find";
-                }
-            });
+                data: data
+            }).then(
+                $tbody.find(':input').prop('disabled', true).css("background-color", "green"),
+                $tbody.append($cloneRow.clone()),
+                $("#next").removeAttr('disabled'),
+                $("#link").attr('href', '/baseline'),
+                $('#errors').text('')
+            );
         }
     });
 
-    $('#formData').on('click', 'button.noCommasSavingsAdd', function (e) {
-        e.preventDefault()
-        const id = $(this).attr('id')
-        let errors = []
-        let data = {
-            project_id: searchedVal,
-            phase: $('.phase').val(),
-            commodity: $('.commodity').val(),
-            value: $('.value').val().replace(/,/g, ''),
-        }
-
-        if (!data.phase) {
-            errors.push({ text: "Please select an option for phase" });
-        };
-        if (!data.commodity) {
-            errors.push({ text: "Please select an option for commodity" });
-        };
-        if (!data.value) {
-            errors.push({ text: "Please enter a value for value field (if value is unknown, enter 0)" });
-        };
-
-        if (errors.length > 0) {
-            for (var item in errors) {
-                $("#errors").append("<p style=\"border: 1px solid black; font-weight: bold\">" + errors[item].text + '</p>');
-            };
-        } else {
-
-            $.ajax({
-                url: '/add/savings/' + id,
-                type: 'POST',
-                data: data,
-                success: function () {
-                    window.location = "/find";
-                }
-            });
-        }
-    });
-
-    $('#formData').on('click', 'button.noCommasMiscAdd', function (e) {
+    $table.on('click', 'button.addRowM', function (e) {
         e.preventDefault()
         const id = $(this).attr('id')
         let errors = []
@@ -513,205 +977,18 @@ $(document).ready(() => {
                 url: '/add/miscsavings/' + id,
                 type: 'POST',
                 data: data,
-                success: function () {
-                    window.location = "/find";
-                }
-            });
-        }
-    });
-
-    const $table = $("#tableData"),
-        $tbody = $table.find('tbody'),
-        $cloneRow = $tbody.find('tr').first().clone();
-
-    // ajax calls used to create a new project, ajax call necessary to add multiple rows of data at once.
-    //also removes comma separators if user inputs a value with commas.
-    $table.on('click', 'button.addRow', (e) => {
-        e.preventDefault();
-        let errors = [];
-        let data = {
-            project_id: getPid,
-            imp_or_ann: $(".imp_or_ann").last().val(),
-            category: $(".category").last().val(),
-            cost: $(".cost").last().val().replace(/,/g, ''),
-            hours: $(".hours").last().val()
-        };
-
-        $("#errors").text('');
-
-        if (data.project_id === "undefined" || !data.project_id) {
-            errors.push({ text: "Please define a project ID" });
-        };
-        if (!data.imp_or_ann) {
-            errors.push({ text: "Please select an option for implementation or annual" });
-        };
-        if (!data.category) {
-            errors.push({ text: "Please select an option for category" });
-        };
-        if (!data.cost) {
-            errors.push({ text: "Please enter a value for cost (if value is unknown, enter 0)" });
-        };
-        if (!data.hours) {
-            errors.push({ text: "Please enter a value for hours (if value is unkown, enter 0)" });
-        };
-
-        if (errors.length > 0) {
-            for (var item in errors) {
-                $("#errors").append("<p style=\"border: 1px solid black; font-weight: bold\">" + errors[item].text + '</p>');
-            };
-        } else {
-            $.ajax({
-                url: '/costs_hours',
-                type: 'POST',
-                data: data
-            }).then(
-                $tbody.find(':input').prop('disabled', true).css("background-color", "green"),
-                $tbody.append($cloneRow.clone()),
-                $("#next").removeAttr('disabled'),
-                $("#link").attr('href', '/fundings'),
-                $('#errors').text(''),
-                $('#skip').attr('disabled', 'disabled')
-            )
-        }
-    });
-
-
-    $table.on('click', 'button.addRowF', (e) => {
-        e.preventDefault();
-        let errors = []
-        let data = {
-            project_id: getPid,
-            source: $(".source").last().val(),
-            implementation: $(".implementation").last().val().replace(/,/g, ''),
-            annual: $(".annual").last().val().replace(/,/g, ''),
-        }
-
-        $("#errors").text('');
-
-        if (data.project_id === "undefined" || !data.project_id) {
-            errors.push({ text: "Please define a project ID" })
-        };
-        if (!data.source) {
-            errors.push({ text: "Please select an option for source" })
-        };
-        if (!data.implementation) {
-            errors.push({ text: "Please enter a value for implementation (if value is unknown, enter 0)" })
-        };
-        if (!data.annual) {
-            errors.push({ text: "Please enter a value for annual (if value is unknown, enter 0)" })
-        };
-
-        if (errors.length > 0) {
-            for (var item in errors) {
-                $("#errors").append("<p style=\"border: 1px solid black; font-weight: bold\">" + errors[item].text + '</p>')
-            }
-        } else {
-            $.ajax({
-                url: '/fundings',
-                type: 'POST',
-                data: data
             }).then(
                 $tbody.find(':input').prop('disabled', true).css("background-color", "green"),
                 $tbody.append($cloneRow.clone()),
                 $("#next").removeAttr('disabled'),
                 $("#link").attr('href', '/baseline'),
-                $('#errors').text(''),
-                $('#skip').attr('disabled', 'disabled')
+                $('#errors').text('')
             );
         }
     });
 
-    $table.on('click', 'button.addRowB', (e) => {
-
-        e.preventDefault();
-        let errors = []
-        let data = {
-            project_id: getPid,
-            commodity: $(".commodity").last().val(),
-            value: $(".value").last().val().replace(/,/g, ''),
-        }
-
-        $("#errors").text('');
-
-        if (data.project_id === "undefined" || !data.project_id) {
-            errors.push({ text: "Please define a project ID" })
-        };
-        if (!data.commodity) {
-            errors.push({ text: "Please select an option for commodity" })
-        };
-        if (!data.value) {
-            errors.push({ text: "Please enter a value for value field (if value is unknown, enter 0)" })
-        }
-
-        if (errors.length > 0) {
-            for (var item in errors) {
-                $("#errors").append("<p style=\"border: 1px solid black; font-weight: bold\">" + errors[item].text + '</p>')
-            }
-        } else {
-
-            $.ajax({
-                url: '/baseline',
-                type: 'POST',
-                data: data
-            }).then(
-                $tbody.find(':input').prop('disabled', true).css("background-color", "green"),
-                $tbody.append($cloneRow.clone()),
-                $("#next").removeAttr('disabled'),
-                $("#link").attr('href', '/savings'),
-                $('#errors').text(''),
-                $('#skip').attr('disabled', 'disabled')
-            )
-        }
-    });
-
-    $table.on('click', 'button.addRowS', (e) => {
-        e.preventDefault();
-        let errors = []
-        let data = {
-            project_id: getPid,
-            phase: $(".phase").last().val(),
-            commodity: $(".commodity").last().val(),
-            value: $(".value").last().val().replace(/,/g, '')
-        }
-
-        $("#errors").text('');
-
-        if (data.project_id === "undefined" || !data.project_id) {
-            errors.push({ text: "Please define a project ID" })
-        };
-        if (!data.phase) {
-            errors.push({ text: "Please select an option for phase" })
-        };
-        if (!data.commodity) {
-            errors.push({ text: "Please select an option for commodity" })
-        };
-        if (!data.value) {
-            errors.push({ text: "Please enter a value for value field (if value is unknown, enter 0)" })
-        };
-
-        if (errors.length > 0) {
-            for (var item in errors) {
-                $("#errors").append("<p style=\"border: 1px solid black; font-weight: bold\">" + errors[item].text + '</p>')
-            }
-        } else {
-
-            $.ajax({
-                url: '/savings',
-                type: 'POST',
-                data: data
-            }).then(
-                $tbody.find(':input').prop('disabled', true).css("background-color", "green"),
-                $tbody.append($cloneRow.clone()),
-                $("#finish").removeAttr('disabled'),
-                $("#link").attr('href', '/'),
-                $('#errors').text(''),
-                $('#skip').attr('disabled', 'disabled')
-            )
-        }
-    });
-
-    // clears project ID stored in session storage when user is creating a new project.
-    $(".finish").on("click", () => {
+    // clears project ID stored in session storage.
+    $("#finish").on("click", () => {
         sessionStorage.clear();
     });
 

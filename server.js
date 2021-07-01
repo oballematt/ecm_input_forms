@@ -29,8 +29,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => res.render('home'));
-
 //Express Route
 app.use('/', require("./routes/prjt_metadata"));
 app.use('/', require('./routes/prjt_costs_hours'));
@@ -39,8 +37,6 @@ app.use('/', require('./routes/prjt_fundings'));
 app.use('/', require('./routes/prjt_baseline'));
 app.use('/', require('./routes/getDataById'));
 app.use('/', require('./routes/prjt_misc_savings'))
-app.use('/', require('./routes/predicted'))
-app.use('/', require('./routes/m_v'))
 
 app.listen(port, async () => {
   console.log(`Server started on port ${port}`);

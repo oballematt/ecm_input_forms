@@ -3,30 +3,8 @@ const { Prjt_costs_hours, Prjt_metadata } = require('../models');
 module.exports = {
 
     // Add costs and hours to database
-    createCostsHours: async (req, res) => {
-
-        let { project_id, imp_or_ann, category, cost, hours } = req.body;
-
-        try {
-
-            const costHours = await Prjt_costs_hours.create({
-               project_id, imp_or_ann, category, cost, hours,
-            });
-
-            return res.json(costHours)
-
-        
-
-        } catch (error) {
-
-            console.error(error.message);
-            return res.status(500).json(error);
-
-        }
-    },
 
     createByProjectId: async (req, res) => {
-
 
         let { project_id, imp_or_ann, category, cost, hours } = req.body;
 
@@ -67,7 +45,7 @@ module.exports = {
                project_id, imp_or_ann, category, cost, hours,
             });
 
-            return res.redirect('/find')
+            return res.redirect('/')
 
         }
 
@@ -77,11 +55,6 @@ module.exports = {
             return res.status(500).json(error);
 
         }
-    },
-
-    // Renders the form to add data to costs_hours table onto the /costs_hours route
-    getForm: (req, res) => {
-        return res.render('create/cost_hours')
     },
 
     getOneCostsHours: async (req, res) => {
@@ -122,7 +95,7 @@ module.exports = {
                     }
                 });
 
-            return res.redirect('/find')
+            return res.redirect('/')
 
         } catch (error) {
 
@@ -167,7 +140,7 @@ module.exports = {
                 }
             });
 
-            return res.redirect('/find')
+            return res.redirect('/')
 
         } catch (error) {
 

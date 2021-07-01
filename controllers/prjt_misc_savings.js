@@ -38,7 +38,7 @@ module.exports = {
                     project_id, phase, misc_owner, misc_savings
                 });
 
-                return res.redirect('/find');
+                return res.redirect('/');
             }
 
         } catch (error) {
@@ -48,10 +48,6 @@ module.exports = {
 
         }
     },
-
-    // getForm: async (req, res) => {
-    //     return res.render('create/miscSavings')
-    // },
 
     getOneMiscSavings: async (req, res) => {
         const { id } = req.params
@@ -91,7 +87,7 @@ module.exports = {
                     }
                 });
 
-            return res.redirect('/find')
+            return res.redirect('/')
 
         } catch (error) {
 
@@ -135,7 +131,7 @@ module.exports = {
                 }
             });
 
-            return res.redirect('/find')
+            return res.redirect('/')
 
         } catch (error) {
 

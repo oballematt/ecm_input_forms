@@ -4,7 +4,6 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item"><a href="/find">Find</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Add {{project_id}}</li>
             </ol>
         </nav>
@@ -49,13 +48,18 @@
                                 <td>
                                     <input value="{{annual}}" name="annual" type="text" class="form-control annual">
                                 </td>
+                                <td>
+                                    <button id='{{project_id}}' type="button" style="background-color: #bf5700;"
+                                        class="btn btn-warning text-light addRowF"><i
+                                            class="fas fa-plus-circle"></i>&nbsp;Add
+                                    </button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
-                <div class="card-footer text-end">
-                    <button id={{id}} type="button" class="btn btn-success text-light noCommasFundingAdd">Submit
-                    </button>
+                    <div class="card-footer text-end">
+                        <a href="/"><button class='btn btn-success' type="button">Done</button></a>
+                    </div>
                 </div>
             </div>
         </form>

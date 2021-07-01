@@ -3,15 +3,9 @@
     <br />
     Getting data, this will take a few seconds
 </div>
-<div class="row">
+<div class="row margin">
     <div class="col-md-12">
-        <nav class='mt-5' aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a class="clear" href="/" role="button">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Find</li>
-            </ol>
-        </nav>
-        <form id="searchData" action="/find" method="POST">
+        <form id="searchData" action="/" method="POST">
             {{#each errors}}
             <p style="color: red">{{text}}</p>
             {{/each}}
@@ -161,27 +155,56 @@
                         {{/with}}
                     </section>
                     <div class='text-end text-white mt-3'>
+                        <a id="create" href="/metadata"><button type="button" class="btn btn-success">Create</button>
+                        </a>
                         {{#with metadata}}
                         <a href="/find/{{project_id}}"><button type="button" class='btn btn-warning'>Edit</button></a>
                         {{/with}}
                     </div>
                 </div>
             </div>
-            <hr>
-            <div class="row responsive">
-                <div style="display: none;" class="col-md-12 warning">
-                    <div class="alert alert-danger d-flex align-items-center"  role="alert">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                            class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img"
-                            aria-label="Warning:">
-                            <path
-                                d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                        </svg>
-                        <div class='display'>
-                            An example alert with an icon
-                        </div>
-                    </div>
+        </form>
+        <hr>
+        {{#with metadata}}
+        <div class="row text-center">
+            <div class="col">
+                <button style="background-color: #bf5700;" class="btn btn-primary mb-3" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseBaseline" aria-expanded="false"
+                    aria-controls="collapseExample">
+                    Add Baseline Values
+                </button>
+                <button style="background-color: #bf5700;" class="btn btn-primary mb-3" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapsePredicted" aria-expanded="false"
+                    aria-controls="collapseExample">
+                    Add Predicted Savings
+                </button>
+                <button style="background-color: #bf5700;" class="btn btn-primary mb-3" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseMV" aria-expanded="false"
+                    aria-controls="collapseExample">
+                    Add MV Savings
+                </button>
+            </div>
+        </div>
+        {{/with}}
+        <form action='/find_b_s_values' id="findB_SValues" method="POST">
+            <div class="row">
+                <div class="col-md-12">
+                    {{> baselinePartial}}
                 </div>
+            </div>
+        </form>
+        <form action="/find_savings_values" id="findSavingsValues" method="POST">
+            <div class="row">
+                <div class="col-md-12">
+                    {{> predictedSavings}}
+                </div>
+                <div class="col-md-12">
+                    {{> mvSavings}}
+                </div>
+            </div>
+        </form>
+        <form action='/' method='POST' id="searchData">
+            <div class="row responsive">
                 <section class="col-md-6">
                     <div class="card border-secondary w-100 h-100 text-light mb-3" style="background-color: #333f48;">
                         <h5 style="background-color: #bf5700;" class="card-header">Costs &amp; Hours</h5>
@@ -200,9 +223,9 @@
                                 <tbody>
                                     {{#each costsHours}}
                                     <tr class="text-end">
-                                        <td class="text-start costPhase">{{imp_or_ann}}</td>
+                                        <td class="text-start">{{imp_or_ann}}</td>
                                         <td class="text-start">{{category}}</td>
-                                        <td class="text-end sumCosts commas">{{cost}}</td>
+                                        <td class="text-end sum commas">{{cost}}</td>
                                         <td class="text-end">{{hours}}</td>
                                         <td>
                                             <a href="/find/costs_hours/{{id}}">
@@ -217,8 +240,8 @@
                                             </a>
                                         </td>
                                     </tr>
-                                    {{/each}}
                                 </tbody>
+                                {{/each}}
                             </table>
                         </div>
                         {{#with metadata}}
@@ -251,8 +274,8 @@
                                     {{#each funding}}
                                     <tr class="text-end">
                                         <td class="text-start">{{source}}</td>
-                                        <td class="commas impFunds">{{implementation}}</td>
-                                        <td class="commas annFunds">{{annual}}</td>
+                                        <td class="commas">{{implementation}}</td>
+                                        <td class="commas">{{annual}}</td>
                                         <td>
                                             <a href="/find/funding/{{id}}" class='btn btn-warning'>
                                                 <i class="fas fa-edit"></i>
@@ -315,16 +338,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{#with metadata}}
-                        <div class="card-footer text-end">
-                            <a href="/add/baseline/{{project_id}}">
-                                <button type="button" class='btn btn-success clear'><i
-                                        class="fas fa-plus-circle">&nbsp;Add
-                                        Record</i>
-                                </button>
-                            </a>
-                        </div>
-                        {{/with}}
                     </div>
                 </section>
                 <section class="col-md-6">
@@ -361,17 +374,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{#with metadata}}
-                        <div class="card-footer text-end">
-                            <a href="/add/savings/{{project_id}}">
-                                <button type="button" class='btn btn-success clear'><i
-                                        class="fas fa-plus-circle">&nbsp;Add
-                                        Record</i>
-                                </button>
-                            </a>
-                        </div>
                     </div>
-                    {{/with}}
                 </section>
             </div>
             <hr>
@@ -422,61 +425,60 @@
                     </div>
                     {{/with}}
                 </section>
-                <hr>
-                <div class="row">
-                    <div class="col-md-12">
-                        {{> predictedPartial}}
-                    </div>
-                    <div class="col-md-12">
-                        {{> mvPartial}}
-                    </div>
-                </div>
-                {{#with metadata}}
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
-                                <h5 style="background-color: #bf5700;" class="card-header">Attention</h5>
-                                <div class="card-body">
-                                    <div class="modal-body mt-1">
-                                        <h5 style="line-h-100: 35px">Continuing with this action will delete
-                                            <strong><u>ALL</u></strong>
-                                            data records from:
-                                            <ul>
-                                                <li>Project Info</li>
-                                                <li>Costs &amp; Hours</li>
-                                                <li>Fundings</li>
-                                                <li>Baseline</li>
-                                                <li>Savings</li>
-                                                <li>Misc Savings</li>
-                                            </ul>Associated with Project ID:
-                                            <ul>
-                                                <li><strong>{{project_id}}</strong></li>
-                                            </ul>
-                                        </h5>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Go
-                                            Back</button>
-                                        <a href="/delete/all/{{project_id}}"><button type="button"
-                                                class="btn btn-danger">Delete</button></a>
-                                    </div>
-                                </div>
-                            </div>
+            </div>
+        </form>
+    </div>
+    <hr>
+    <form action="/" id="formData" method="POST">
+        <div class="row">
+            <div class="col-md-12">
+                {{> predictedPartial}}
+            </div>
+            <div class="col-md-12">
+                {{> mvPartial}}
+            </div>
+        </div>
+    </form>
+    {{#with metadata}}
+    <div class="mb-3 text-center">
+        <button id="delete" title="This will delete all data related to project ID: {{project_id}}"
+            data-toggle="tooltip" data-placement="top" type="button" class="btn btn-danger" <span data-bs-toggle="modal"
+            data-bs-target="#exampleModal">Delete Project</span>
+        </button>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
+                    <h5 style="background-color: #bf5700;" class="card-header">Attention</h5>
+                    <div class="card-body">
+                        <div class="modal-body mt-1">
+                            <h5 style="line-h-100: 35px">Continuing with this action will delete
+                                <strong><u>ALL</u></strong>
+                                data records from:
+                                <ul>
+                                    <li>Project Info</li>
+                                    <li>Costs &amp; Hours</li>
+                                    <li>Fundings</li>
+                                    <li>Baseline</li>
+                                    <li>Savings</li>
+                                    <li>Misc Savings</li>
+                                </ul>Associated with Project ID:
+                                <ul>
+                                    <li><strong>{{project_id}}</strong></li>
+                                </ul>
+                            </h5>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Go
+                                Back</button>
+                            <a href="/delete/all/{{project_id}}"><button type="button"
+                                    class="btn btn-danger">Delete</button></a>
                         </div>
                     </div>
                 </div>
             </div>
-            {{/with}}
-        </form>
-    </div>
-    {{#with metadata}}
-    <div class="mb-3 text-center">
-        <button title="This will delete all data related to project ID: {{project_id}}" data-toggle="tooltip"
-            data-placement="top" type="button" class="btn btn-danger" <span data-bs-toggle="modal"
-            data-bs-target="#exampleModal">Delete Project</span>
-        </button>
+        </div>
     </div>
     {{/with}}
 </div>

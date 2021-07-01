@@ -1,83 +1,91 @@
-<div class="row margin">
-    {{#with costHours}}
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item"><a href="/find">Find</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Add {{project_id}}</li>
-        </ol>
-    </nav>
-    <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
-        <h5 style="background-color: #bf5700;" class="card-header">Costs &amp; Hours</h5>
-        <div class="card-body w-100">
-            <form action='/add/costs_hours/{{project_id}}' id="formData" method="POST">
-            <div id="errors" class="text-start"></div>
-                <table id="tableData" class="table text-light text-center mt-3">
-                    <thead>
-                        <tr>
-                            <th scope="col">Implementation or Annual</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Costs</th>
-                            <th scope="col">Hours</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="display: none">
-                                <div class="input-group mb-3">
-                                    <input id="validationCustom03" value="{{project_id}}" name="project_id" type="text"
-                                        class="form-control">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-group mb-3">
-                                    <select value='{{imp_or_ann}}' id="addImpAnn" name="imp_or_ann"
-                                        class="form-select imp_or_ann" id="inputGroupSelect01">
-                                        <option selected disabled>Choose...</option>
-                                        <option value='implementation'>Implementation</option>
-                                        <option value='annual'>Annual</option>
-                                    </select>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-group mb-3">
-                                    <div class="input-group mb-3">
-                                        <select value='{{category}}' id="addCategory" name="category"
-                                            class="form-select category" id="inputGroupSelect01">
-                                            <option disabled selected>Choose...</option>
-                                            <option value='emo'>EMO</option>
-                                            <option value='analysts'>Analysts</option>
-                                            <option value='maintenance'>Maintenance</option>
-                                            <option value='ets'>ETS</option>
-                                            <option value='bot'>BOT</option>
-                                            <option value='other_ut'>OtherUT</option>
-                                            <option value='materials'>Materials</option>
-                                            <option value='non_ut'>Non-UT Contract</option>
-                                            <option value='contingency'>Contingency</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-group mb-3">
-                                    <input value='{{cost}}' name="cost" type="text" class="cost form-control">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-group mb-3">
-                                    <input value='{{hours}}' name="hours" type="text" class="hours form-control">
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="card-footer text-end">
-                    <button id={{id}} type="button" class="btn btn-success text-light noCommasCostsAdd">Submit
-                    </button>
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="row margin">
+        <div class="col-md-12">
+            {{#with costHours}}
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Add {{project_id}}</li>
+                </ol>
+            </nav>
+            <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
+                <h5 style="background-color: #bf5700;" class="card-header">Costs &amp; Hours</h5>
+                <div class="card-body w-100">
+                    <form action='/add/costs_hours/{{project_id}}' id="formData" method="POST">
+                        <div id="errors" class="text-start"></div>
+                        <table id="tableData" class="table text-light text-center mt-3">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Implementation or Annual</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Costs</th>
+                                    <th scope="col">Hours</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="display: none">
+                                        <div class="input-group mb-3">
+                                            <input id="validationCustom03" value="{{project_id}}" name="project_id"
+                                                type="text" class="form-control">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group mb-3">
+                                            <select value='{{imp_or_ann}}' id="addImpAnn" name="imp_or_ann"
+                                                class="form-select imp_or_ann" id="inputGroupSelect01">
+                                                <option selected disabled>Choose...</option>
+                                                <option value='implementation'>Implementation</option>
+                                                <option value='annual'>Annual</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group mb-3">
+                                                <select value='{{category}}' id="addCategory" name="category"
+                                                    class="form-select category" id="inputGroupSelect01">
+                                                    <option disabled selected>Choose...</option>
+                                                    <option value='emo'>EMO</option>
+                                                    <option value='analysts'>Analysts</option>
+                                                    <option value='maintenance'>Maintenance</option>
+                                                    <option value='ets'>ETS</option>
+                                                    <option value='bot'>BOT</option>
+                                                    <option value='other_ut'>OtherUT</option>
+                                                    <option value='materials'>Materials</option>
+                                                    <option value='non_ut'>Non-UT Contract</option>
+                                                    <option value='contingency'>Contingency</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group mb-3">
+                                            <input value='{{cost}}' name="cost" type="text" class="cost form-control">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group mb-3">
+                                            <input value='{{hours}}' name="hours" type="text"
+                                                class="hours form-control">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button id='{{project_id}}' type="button" style="background-color: #bf5700;"
+                                            class="btn btn-warning text-light addRow"><i
+                                                class="fas fa-plus-circle"></i>&nbsp;Add
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                    {{/with}}
+                    <div class="card-footer text-end">
+                        <a href="/"><button class='btn btn-success' type="button">Done</button></a>
+                    </div>
                 </div>
-            </form>
-            {{/with}}
+            </div>
         </div>
     </div>
 </div>

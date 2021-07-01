@@ -5,41 +5,14 @@ module.exports = {
     createSavings: async (req, res) => {
         let { project_id, phase, commodity, value } = req.body;
 
-        let errors = []
-
         try {
 
-            const savings = await Prjt_metadata.findOne({
-                where: {
-                    project_id
-                }
+            const savings = await Prjt_savings.create({
+                project_id, phase, commodity, value
             });
 
-            if (!phase) {
-                errors.push({ text: "please select an option for phase" })
-            };
+            return res.redirect('/');
 
-            if (!commodity) {
-                errors.push({ text: "please select an option for commodity" })
-            };
-
-            if (!value) {
-                errors.push({ text: "please enter a value for value field " })
-            };
-
-            if (errors.length > 0) {
-                res.render('add/addSavings', {
-                    errors, phase, commodity, value, savings
-                })
-
-            } else {
-
-                const savings = await Prjt_savings.create({
-                    project_id, phase, commodity, value
-                });
-
-                return res.redirect('/find');
-            }
 
         } catch (error) {
 
@@ -49,9 +22,6 @@ module.exports = {
         }
     },
 
-    getForm: async (req, res) => {
-        return res.render('create/savings')
-    },
 
     getOneSavings: async (req, res) => {
         const { id } = req.params
@@ -91,7 +61,7 @@ module.exports = {
                     }
                 });
 
-            return res.redirect('/find')
+            return res.redirect('/')
 
         } catch (error) {
 
@@ -135,7 +105,7 @@ module.exports = {
                 }
             });
 
-            return res.redirect('/find')
+            return res.redirect('/')
 
         } catch (error) {
 
