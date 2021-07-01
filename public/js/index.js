@@ -141,7 +141,7 @@ $(document).ready(() => {
             method: 'POST',
             data: data,
             success: function () {
-                $(".message").append(`<p>Your value of ${chw_value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".message").append(`<p>Your value of ${chw_value} for ${data.commodity} has been added. Please search for your project again to view the value below.
             Otherwise, continue adding values to the other commodities.</p>`)
             }
         });
@@ -158,7 +158,7 @@ $(document).ready(() => {
             commodity: 'ELE',
             value: replacedValue,
             success: function () {
-                $(".message").append(`<p>Your value of ${ele_value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".message").append(`<p>Your value of ${ele_value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -180,7 +180,7 @@ $(document).ready(() => {
             commodity: 'STM',
             value: replacedValue,
             success: function () {
-                $(".message").append(`<p>Your value of ${stm_value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".message").append(`<p>Your value of ${stm_value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -203,7 +203,7 @@ $(document).ready(() => {
             commodity: 'HHW',
             value: replacedValue,
             success: function () {
-                $(".message").append(`<p>Your value of ${hhw_value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".message").append(`<p>Your value of ${hhw_value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -226,7 +226,7 @@ $(document).ready(() => {
             commodity: 'GAS',
             value: replacedValue,
             success: function () {
-                $(".message").append(`<p>Your value of ${gas_value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".message").append(`<p>Your value of ${gas_value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -248,7 +248,7 @@ $(document).ready(() => {
             commodity: 'WTR',
             value: replacedValue,
             success: function () {
-                $(".message").append(`<p>Your value of ${wtr_value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".message").append(`<p>Your value of ${wtr_value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -270,7 +270,7 @@ $(document).ready(() => {
             commodity: 'peak_CHW',
             value: replacedValue,
             success: function () {
-                $(".message").append(`<p>Your value of ${peakChw_value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".message").append(`<p>Your value of ${peakChw_value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -292,7 +292,7 @@ $(document).ready(() => {
             commodity: 'labor',
             value: replacedValue,
             success: function () {
-                $(".message").append(`<p>Your value of ${labor_value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".message").append(`<p>Your value of ${labor_value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -316,7 +316,7 @@ $(document).ready(() => {
             commodity: 'CHW',
             value: replacedValue,
             success: function () {
-                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -339,7 +339,7 @@ $(document).ready(() => {
             commodity: 'ELE',
             value: replacedValue,
             success: function () {
-                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -362,7 +362,7 @@ $(document).ready(() => {
             commodity: 'STM',
             value: replacedValue,
             success: function () {
-                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -385,7 +385,7 @@ $(document).ready(() => {
             commodity: 'HHW',
             value: replacedValue,
             success: function () {
-                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -408,7 +408,7 @@ $(document).ready(() => {
             commodity: 'GAS',
             value: replacedValue,
             success: function () {
-                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -431,7 +431,7 @@ $(document).ready(() => {
             commodity: 'WTR',
             value: replacedValue,
             success: function () {
-                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -454,7 +454,7 @@ $(document).ready(() => {
             commodity: 'peak_CHW',
             value: replacedValue,
             success: function () {
-                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -477,7 +477,7 @@ $(document).ready(() => {
             commodity: 'labor',
             value: replacedValue,
             success: function () {
-                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -501,7 +501,7 @@ $(document).ready(() => {
             commodity: 'CHW',
             value: replacedValue,
             success: function () {
-                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -524,7 +524,7 @@ $(document).ready(() => {
             commodity: 'ELE',
             value: replacedValue,
             success: function () {
-                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -547,7 +547,7 @@ $(document).ready(() => {
             commodity: 'STM',
             value: replacedValue,
             success: function () {
-                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -570,7 +570,7 @@ $(document).ready(() => {
             commodity: 'HHW',
             value: replacedValue,
             success: function () {
-                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -593,7 +593,7 @@ $(document).ready(() => {
             commodity: 'GAS',
             value: replacedValue,
             success: function () {
-                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -616,7 +616,7 @@ $(document).ready(() => {
             commodity: 'WTR',
             value: replacedValue,
             success: function () {
-                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -639,7 +639,7 @@ $(document).ready(() => {
             commodity: 'peak_CHW',
             value: replacedValue,
             success: function () {
-                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
@@ -662,7 +662,7 @@ $(document).ready(() => {
             commodity: 'labor',
             value: replacedValue,
             success: function () {
-                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value above.
+                $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value below.
         Otherwise, continue adding values to the other commodities.</p>`)
             }
         }
