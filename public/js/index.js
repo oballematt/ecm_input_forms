@@ -853,7 +853,6 @@ $(document).ready(() => {
         $cloneRow = $tbody.find('tr').first().clone();
     
     $table.on('click', 'button.addRow', function (e) {
-        const id = $(this).attr('id')
         e.preventDefault();
         let errors = [];
         let data = {
@@ -888,7 +887,7 @@ $(document).ready(() => {
             };
         } else {
             $.ajax({
-                url: '/add/costs_hours/' + id,
+                url: '/add_costs_hours',
                 type: 'POST',
                 data: data
             }).then(
@@ -901,9 +900,10 @@ $(document).ready(() => {
         }
     });
 
-
-    $table.on('click', 'button.addRowF', (e) => {
-        const id = $(this).attr('id')
+    const $tableF = $("#tableDataF"),
+    $tbodyF = $tableF.find('tbody'),
+    $cloneRowF = $tbodyF.find('tr').first().clone();
+    $tableF.on('click', 'button.addRowF', (e) => {
         e.preventDefault();
         let errors = []
         let data = {
@@ -934,12 +934,12 @@ $(document).ready(() => {
             }
         } else {
             $.ajax({
-                url: '/add/fundings/' + id,
+                url: '/add_fundings',
                 type: 'POST',
                 data: data
             }).then(
-                $tbody.find(':input').prop('disabled', true).css("background-color", "green"),
-                $tbody.append($cloneRow.clone()),
+                $tbodyF.find(':input').prop('disabled', true).css("background-color", "green"),
+                $tbodyF.append($cloneRowF.clone()),
                 $("#next").removeAttr('disabled'),
                 $("#link").attr('href', '/baseline'),
                 $('#errors').text('')

@@ -1,0 +1,61 @@
+<div class="modal fade" id="fundingsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
+                <h5 style="background-color: #bf5700;" class="card-header">Fundings</h5>
+                <div class="card-body w-100">
+                    <div id="errorsF" class="text-start"></div>
+                    <table id="tableDataF" class="table text-light text-center mt-3">
+                        <thead>
+                            <tr>
+                                <th scope="col">Source</th>
+                                <th scope="col">$ Implem</th>
+                                <th scope="col">$ Annual</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="display: none">
+                                    <div class="input-group mb-3">
+                                        <input id="validationCustom03" value="{{project_id}}" name="project_id"
+                                            type="text" class="form-control">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group mb-3">
+                                        <select id="addSource" name="source" class="form-select source"
+                                            id="inputGroupSelect01">
+                                            <option disabled selected>Choose...</option>
+                                            <option value='Green Fund'>Green Fund</option>
+                                            <option value='Facilities'>Facilities</option>
+                                            <option value='R&R'>R and R</option>
+                                            <option value='UEM'>UEM</option>
+                                            <option value='AUX'>AUX</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input autocomplete="off" value="{{implementation}}" name="implementation"
+                                        type="text" class="form-control implementation">
+                                </td>
+                                <td>
+                                    <input autocomplete="off" value="{{annual}}" name="annual" type="text"
+                                        class="form-control annual">
+                                </td>
+                                <td>
+                                    <button id='{{project_id}}' type="button" style="background-color: #bf5700;"
+                                        class="btn btn-warning text-light addRowF"><i
+                                            class="fas fa-plus-circle"></i>&nbsp;Add
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="card-footer text-end">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Done</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

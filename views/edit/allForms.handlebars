@@ -166,6 +166,12 @@
             </div>
         </form>
         <hr>
+        <form action='/add_costs_hours' method="POST">
+            {{> costsHours}}
+        </form>
+        <form action='/add_fundings' method="POST">
+            {{> fundings}}
+        </form>
         {{#with metadata}}
         <div class="row text-center">
             <div class="col">
@@ -235,7 +241,7 @@
                                             </a>
                                         </td>
                                         <td>
-                                             <button type="button" id={{id}} class='btn btn-danger deleteCostsHours'>
+                                            <button type="button" id={{id}} class='btn btn-danger deleteCostsHours'>
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </td>
@@ -244,16 +250,13 @@
                                 {{/each}}
                             </table>
                         </div>
-                        {{#with metadata}}
                         <div class="card-footer text-end">
-                            <a href="/add/costs_hours/{{project_id}}">
-                                <button type="button" class='btn btn-success clear'><i
-                                        class="fas fa-plus-circle">&nbsp;Add
-                                        Record</i>
-                                </button>
-                            </a>
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#costHoursModal">
+                                <i class="fas fa-plus-circle">&nbsp;Add
+                                    Record</i>
+                            </button>
                         </div>
-                        {{/with}}
                     </div>
                 </section>
                 <section class="col-md-6">
@@ -282,7 +285,7 @@
                                             </a>
                                         </td>
                                         <td>
-                                             <button type="button" id={{id}} class='btn btn-danger deleteFundings'>
+                                            <button type="button" id={{id}} class='btn btn-danger deleteFundings'>
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </td>
@@ -291,16 +294,13 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{#with metadata}}
                         <div class="card-footer text-end">
-                            <a href="/add/fundings/{{project_id}}">
-                                <button type="button" class='btn btn-success clear'><i
-                                        class="fas fa-plus-circle">&nbsp;Add
-                                        Record</i>
-                                </button>
-                            </a>
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#fundingsModal">
+                                <i class="fas fa-plus-circle">&nbsp;Add
+                                    Record</i>
+                            </button>
                         </div>
-                        {{/with}}
                     </div>
                 </section>
             </div>
@@ -329,7 +329,7 @@
                                                 <i class="fas fa-edit"></i>
                                         </td>
                                         <td>
-                                             <button type="button" id={{id}} class='btn btn-danger deleteBaseline'>
+                                            <button type="button" id={{id}} class='btn btn-danger deleteBaseline'>
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </td>
@@ -404,7 +404,7 @@
                                                 <i class="fas fa-edit"></i>
                                         </td>
                                         <td>
-                                             <button type="button" id={{id}} class='btn btn-danger deleteMiscSavings'>
+                                            <button type="button" id={{id}} class='btn btn-danger deleteMiscSavings'>
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </td>

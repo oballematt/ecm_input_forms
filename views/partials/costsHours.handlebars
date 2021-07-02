@@ -1,0 +1,82 @@
+<div class="modal fade" id="costHoursModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
+                <h5 style="background-color: #bf5700;" class="card-header">Costs &amp; Hours</h5>
+                <div class="card-body w-100">
+                    <div id="errors" class="text-start"></div>
+                    <table id="tableData" class="table text-light text-center mt-3">
+                        <thead>
+                            <tr>
+                                <th scope="col">Implementation or Annual</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Costs</th>
+                                <th scope="col">Hours</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="display: none">
+                                    <div class="input-group mb-3">
+                                        <input id="validationCustom03" value="{{project_id}}" name="project_id"
+                                            type="text" class="form-control">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group mb-3">
+                                        <select value='{{imp_or_ann}}' id="addImpAnn" name="imp_or_ann"
+                                            class="form-select imp_or_ann" id="inputGroupSelect01">
+                                            <option selected disabled>Choose...</option>
+                                            <option value='Implementation'>Implementation</option>
+                                            <option value='Annual'>Annual</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group mb-3">
+                                            <select value='{{category}}' id="addCategory" name="category"
+                                                class="form-select category" id="inputGroupSelect01">
+                                                <option disabled selected>Choose...</option>
+                                                <option value='EMO'>EMO</option>
+                                                <option value='Analysts'>Analysts</option>
+                                                <option value='Maintenance'>Maintenance</option>
+                                                <option value='ETS'>ETS</option>
+                                                <option value='BOT'>BOT</option>
+                                                <option value='Other UT'>OtherUT</option>
+                                                <option value='Materials'>Materials</option>
+                                                <option value='Non UT'>Non-UT Contract</option>
+                                                <option value='Contingency'>Contingency</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group mb-3">
+                                        <input autocomplete="off" value='{{cost}}' name="cost" type="text"
+                                            class="cost form-control">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group mb-3">
+                                        <input autocomplete="off" value='{{hours}}' name="hours" type="text"
+                                            class="hours form-control">
+                                    </div>
+                                </td>
+                                <td>
+                                    <button id='{{project_id}}' type="button" style="background-color: #bf5700;"
+                                        class="btn btn-warning text-light addRow"><i
+                                            class="fas fa-plus-circle"></i>&nbsp;Add
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="card-footer text-end">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Done</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

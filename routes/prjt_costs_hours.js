@@ -10,6 +10,6 @@ router.get('/find/costs_hours/:id', costsHoursController.getOneCostsHours);
 
 router.get('/add/costs_hours/:project_id', costsHoursController.getOneByProjectId)
 
-router.post('/add/costs_hours/:project_id', costsHoursController.createByProjectId)
+router.post('/add_costs_hours', costsHoursController.createByProjectId)
 
 module.exports = router;

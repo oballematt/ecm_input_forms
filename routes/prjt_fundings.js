@@ -10,6 +10,6 @@ router.get('/find/funding/:id', fundingController.getOneFunding);
 
 router.get('/add/fundings/:project_id', fundingController.getOneByProjectId)
 
-router.post('/add/fundings/:project_id', fundingController.createFundingByProjectId)
+router.post('/add_fundings', fundingController.createFundingByProjectId)
 
 module.exports = router;
