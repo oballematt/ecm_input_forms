@@ -170,6 +170,16 @@
         <div class="row text-center">
             <div class="col">
                 <button style="background-color: #bf5700;" class="btn btn-primary mb-3" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseCostsHours" aria-expanded="false"
+                    aria-controls="collapseExample">
+                    Add Costs &amp; Hours
+                </button>
+                <button style="background-color: #bf5700;" class="btn btn-primary mb-3" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseFundings" aria-expanded="false"
+                    aria-controls="collapseExample">
+                    Add Fundings
+                </button>
+                <button style="background-color: #bf5700;" class="btn btn-primary mb-3" type="button"
                     data-bs-toggle="collapse" data-bs-target="#collapseBaseline" aria-expanded="false"
                     aria-controls="collapseExample">
                     Add Baseline Values
@@ -184,9 +194,24 @@
                     aria-controls="collapseExample">
                     Add MV Savings
                 </button>
+                <button style="background-color: #bf5700;" class="btn btn-primary mb-3" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseMiscSavings" aria-expanded="false"
+                    aria-controls="collapseExample">
+                    Add Miscellaneous Savings
+                </button>
             </div>
         </div>
         {{/with}}
+        <div class="row">
+            <div class="col-md-12">
+                {{> costsHours}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                {{> fundings}}
+            </div>
+        </div>
         <form action='/find_b_s_values' id="findB_SValues" method="POST">
             <div class="row">
                 <div class="col-md-12">
@@ -204,6 +229,11 @@
                 </div>
             </div>
         </form>
+        <div class="row">
+            <div class="col-md-12">
+                {{> miscSavings}}
+            </div>
+        </div>
         <form action='/' method='POST' id="searchData">
             <div class="row responsive">
                 <section class="col-md-6">
