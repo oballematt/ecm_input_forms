@@ -267,7 +267,7 @@ $(document).ready(() => {
         $('.peakChwValue').append(`<p>[${peakChw_value}]</p>`)
         let data = {
             project_id: searchedVal,
-            commodity: 'peak_CHW',
+            commodity: 'Peak CHW',
             value: replacedValue,
             success: function () {
                 $(".message").append(`<p>Your value of ${peakChw_value} for ${data.commodity} has been added. Please search for your project again to view the value below.
@@ -289,7 +289,7 @@ $(document).ready(() => {
         $('.laborValue').append(`<p>[${labor_value}]</p>`)
         let data = {
             project_id: searchedVal,
-            commodity: 'labor',
+            commodity: 'Labor',
             value: replacedValue,
             success: function () {
                 $(".message").append(`<p>Your value of ${labor_value} for ${data.commodity} has been added. Please search for your project again to view the value below.
@@ -312,7 +312,7 @@ $(document).ready(() => {
         $('.predictedChw').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'predicted',
+            phase: 'Predicted',
             commodity: 'CHW',
             value: replacedValue,
             success: function () {
@@ -335,7 +335,7 @@ $(document).ready(() => {
         $('.predictedEle').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'predicted',
+            phase: 'Predicted',
             commodity: 'ELE',
             value: replacedValue,
             success: function () {
@@ -358,7 +358,7 @@ $(document).ready(() => {
         $('.predictedStm').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'predicted',
+            phase: 'Predicted',
             commodity: 'STM',
             value: replacedValue,
             success: function () {
@@ -381,7 +381,7 @@ $(document).ready(() => {
         $('.predictedHhw').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'predicted',
+            phase: 'Predicted',
             commodity: 'HHW',
             value: replacedValue,
             success: function () {
@@ -404,7 +404,7 @@ $(document).ready(() => {
         $('.predictedGas').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'predicted',
+            phase: 'Predicted',
             commodity: 'GAS',
             value: replacedValue,
             success: function () {
@@ -427,7 +427,7 @@ $(document).ready(() => {
         $('.predictedWtr').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'predicted',
+            phase: 'Predicted',
             commodity: 'WTR',
             value: replacedValue,
             success: function () {
@@ -450,8 +450,8 @@ $(document).ready(() => {
         $('.predictedPeak').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'predicted',
-            commodity: 'peak_CHW',
+            phase: 'Predicted',
+            commodity: 'Peak CHW',
             value: replacedValue,
             success: function () {
                 $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value below.
@@ -473,8 +473,8 @@ $(document).ready(() => {
         $('.predictedLabor').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'predicted',
-            commodity: 'labor',
+            phase: 'Predicted',
+            commodity: 'Labor',
             value: replacedValue,
             success: function () {
                 $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value below.
@@ -497,7 +497,7 @@ $(document).ready(() => {
         $('.mvChw').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'mv',
+            phase: 'MV',
             commodity: 'CHW',
             value: replacedValue,
             success: function () {
@@ -520,7 +520,7 @@ $(document).ready(() => {
         $('.mvEle').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'mv',
+            phase: 'MV',
             commodity: 'ELE',
             value: replacedValue,
             success: function () {
@@ -543,7 +543,7 @@ $(document).ready(() => {
         $('.mvStm').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'mv',
+            phase: 'MV',
             commodity: 'STM',
             value: replacedValue,
             success: function () {
@@ -566,7 +566,7 @@ $(document).ready(() => {
         $('.mvHhw').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'mv',
+            phase: 'MV',
             commodity: 'HHW',
             value: replacedValue,
             success: function () {
@@ -589,7 +589,7 @@ $(document).ready(() => {
         $('.mvGas').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'mv',
+            phase: 'MV',
             commodity: 'GAS',
             value: replacedValue,
             success: function () {
@@ -612,7 +612,7 @@ $(document).ready(() => {
         $('.mvWtr').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'mv',
+            phase: 'MV',
             commodity: 'WTR',
             value: replacedValue,
             success: function () {
@@ -635,7 +635,7 @@ $(document).ready(() => {
         $('.mvPeak').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'mv',
+            phase: 'MV',
             commodity: 'peak_CHW',
             value: replacedValue,
             success: function () {
@@ -658,7 +658,7 @@ $(document).ready(() => {
         $('.mvLabor').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'mv',
+            phase: 'MV',
             commodity: 'labor',
             value: replacedValue,
             success: function () {
