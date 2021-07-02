@@ -75,12 +75,6 @@ $(document).ready(() => {
             $('#search').val(searchedVal);
         };
 
-        $(".title").text(function (i, curr) {
-            if (curr === "peak_CHW") {
-                $(this).text('Peak CHW');
-            };
-        });
-
         $(".percent").text(function (i, curr) {
             return parseFloat(curr * 100).toFixed(0) + "%";
         });
@@ -107,6 +101,48 @@ $(document).ready(() => {
             $(this).text(commaNum);
         });
 
+        let impFundsArray = [];
+        let annFundsArray = [];
+
+        let costImpValues = $('.costPhase:contains("Implementation")').map((i, el) => parseInt($(el).siblings('.sumCosts').text().trim().replace(/,/g, ''), 10)).get();
+
+        let costAnnValues = $('.costPhase:contains("Annual")').map((i, el) => parseInt($(el).siblings('.sumCosts').text().trim().replace(/,/g, ''), 10)).get();
+
+        let costImpTotal = costImpValues.reduce((a, b) => a + b, 0);
+
+        let costAnnTotal = costAnnValues.reduce((a, b) => a + b, 0);
+
+
+        $(".impFunds").each(function () {
+            let values = parseInt($(this).text().replace(/,/g, ''));
+            impFundsArray.push(values);
+        });
+
+        $(".annFunds").each(function () {
+            let values = parseInt($(this).text().replace(/,/g, ''));
+            annFundsArray.push(values);
+        });
+
+        let fundImpTotal = impFundsArray.reduce((a, b) => a + b, 0);
+
+        let fundAnnTotal = annFundsArray.reduce((a, b) => a + b, 0);
+
+        const totalImpSum = costImpTotal - fundImpTotal;
+
+        const totalAnnSum = costAnnTotal - fundAnnTotal;
+
+        const impCommaNum = numberWithCommas(totalImpSum);
+        const annCommaNum = numberWithCommas(totalAnnSum);
+
+        if (totalImpSum > 1) {
+            $('.warning').removeAttr('style')
+            $('.display').text(`Warning - Total Implem Fundings is less than Total Implem Costs by: $${impCommaNum} `)
+        };
+
+        if (totalAnnSum > 1) {
+            $('.warning').removeAttr('style')
+            $('.display').text(`Warning - Total Annual Fundings is less than Total Annual Costs by: $${annCommaNum} `)
+        };
     };
 
     $("#formData").on("change", ["#building", "#measure_type"], () => {
@@ -498,7 +534,7 @@ $(document).ready(() => {
         $('.mvChw').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'MV',
+            phase: 'M&V',
             commodity: 'CHW',
             value: replacedValue,
             success: function () {
@@ -521,7 +557,7 @@ $(document).ready(() => {
         $('.mvEle').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'MV',
+            phase: 'M&V',
             commodity: 'ELE',
             value: replacedValue,
             success: function () {
@@ -544,7 +580,7 @@ $(document).ready(() => {
         $('.mvStm').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'MV',
+            phase: 'M&V',
             commodity: 'STM',
             value: replacedValue,
             success: function () {
@@ -567,7 +603,7 @@ $(document).ready(() => {
         $('.mvHhw').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'MV',
+            phase: 'M&V',
             commodity: 'HHW',
             value: replacedValue,
             success: function () {
@@ -590,7 +626,7 @@ $(document).ready(() => {
         $('.mvGas').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'MV',
+            phase: 'M&V',
             commodity: 'GAS',
             value: replacedValue,
             success: function () {
@@ -613,7 +649,7 @@ $(document).ready(() => {
         $('.mvWtr').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'MV',
+            phase: 'M&V',
             commodity: 'WTR',
             value: replacedValue,
             success: function () {
@@ -636,8 +672,8 @@ $(document).ready(() => {
         $('.mvPeak').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'MV',
-            commodity: 'peak_CHW',
+            phase: 'M&V',
+            commodity: 'Peak CHW',
             value: replacedValue,
             success: function () {
                 $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value below.
@@ -659,8 +695,8 @@ $(document).ready(() => {
         $('.mvLabor').append(`<p>[${value}]</p>`)
         let data = {
             project_id: searchedVal,
-            phase: 'MV',
-            commodity: 'labor',
+            phase: 'M&V',
+            commodity: 'Labor',
             value: replacedValue,
             success: function () {
                 $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view the value below.
@@ -851,7 +887,7 @@ $(document).ready(() => {
     const $table = $("#tableData"),
         $tbody = $table.find('tbody'),
         $cloneRow = $tbody.find('tr').first().clone();
-    
+
     $table.on('click', 'button.addRow', function (e) {
         e.preventDefault();
         let errors = [];
@@ -1002,7 +1038,7 @@ $(document).ready(() => {
     $(".deleteCostsHours").on("click", function (e) {
         e.preventDefault();
         const id = $(this).attr('id');
-         $.ajax({
+        $.ajax({
             url: '/delete/costs_hours/' + id,
             method: 'DELETE',
         }).then(
@@ -1013,7 +1049,7 @@ $(document).ready(() => {
     $(".deleteFundings").on("click", function (e) {
         e.preventDefault();
         const id = $(this).attr('id');
-         $.ajax({
+        $.ajax({
             url: '/delete/funding/' + id,
             method: 'DELETE',
         }).then(
@@ -1024,7 +1060,7 @@ $(document).ready(() => {
     $(".deleteBaseline").on("click", function (e) {
         e.preventDefault();
         const id = $(this).attr('id');
-         $.ajax({
+        $.ajax({
             url: '/delete/baseline/' + id,
             method: 'DELETE',
         }).then(
@@ -1035,7 +1071,7 @@ $(document).ready(() => {
     $(".deleteSavings").on("click", function (e) {
         e.preventDefault();
         const id = $(this).attr('id');
-         $.ajax({
+        $.ajax({
             url: '/delete/savings/' + id,
             method: 'DELETE',
         }).then(
@@ -1046,7 +1082,7 @@ $(document).ready(() => {
     $(".deleteMiscSavings").on("click", function (e) {
         e.preventDefault();
         const id = $(this).attr('id');
-         $.ajax({
+        $.ajax({
             url: '/delete/miscsavings/' + id,
             method: 'DELETE',
         }).then(
