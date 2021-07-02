@@ -52,7 +52,7 @@ module.exports = {
             };
 
             if (errors.length > 0) {
-                res.render('create/metadata', {
+                res.render('add/metadata', {
                     errors,
                     bldgs,
                     project_id,
@@ -77,7 +77,7 @@ module.exports = {
                 });
 
 
-                return res.redirect('/costs_hours');
+                return res.redirect('/');
 
             }
 
@@ -96,7 +96,7 @@ module.exports = {
 
             const bldgs = await Bldg_metadata.findAll();
 
-            return res.render('create/metadata', {
+            return res.render('add/metadata', {
                 bldgs
             });
 
@@ -197,7 +197,7 @@ module.exports = {
                         }
                     });
 
-                return res.redirect('/find')
+                return res.redirect('/')
             }
 
         } catch (error) {
@@ -219,7 +219,7 @@ module.exports = {
                 }
             });
 
-            return res.redirect('/find')
+            return res.redirect('/')
 
         } catch (error) {
 

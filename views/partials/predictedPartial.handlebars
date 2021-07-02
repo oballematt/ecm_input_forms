@@ -1,5 +1,5 @@
 <div class="card border-secondary w-100 text-light mb-3" style="background-color: #333f48">
-    <h5 style="background-color: #bf5700;" class="card-header">Predicted</h5>
+    <h5 style="background-color: #bf5700;" class="card-header">Predicted Analysis</h5>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table text-light text-end table-borderless bordered">
@@ -14,19 +14,19 @@
                         </th>
                         <th class="bordered" scope="col">STM
                             <span class='units'>[lb]</span>
-                        </th>                       
+                        </th>
                         <th class="bordered" scope="col">HHW
                             <span class='units'>[mmbtu]</span>
-                        </th>                                    
+                        </th>
                         <th class="bordered" scope="col">GAS
                             <span class='units'>[CCF]</span>
-                        </th>                       
+                        </th>
                         <th class="bordered" scope="col">WTR
                             <span class='units'>[kgal]</span>
-                        </th>                      
+                        </th>
                         <th class="bordered" scope="col">Peak CHW
                             <span class='units'>[ton]</span>
-                        </th>                      
+                        </th>
                         <th class="bordered" scope="col">Labor
                             <span class='units'>[Hours]</span>
                         </th>
@@ -52,43 +52,43 @@
                         <th class="bordered" scope="row">%</th>
                         {{#with p_chw}}
                         <td class="percent bordered">{{savings_percent}}</td>
-                            {{else}}
-                            <td class='bordered'></td>
+                        {{else}}
+                        <td class='bordered'></td>
                         {{/with}}
                         {{#with p_ele}}
                         <td class="percent bordered">{{savings_percent}}</td>
-                            {{else}}
-                            <td class='bordered'></td>
+                        {{else}}
+                        <td class='bordered'></td>
                         {{/with}}
                         {{#with p_stm}}
                         <td class="percent bordered">{{savings_percent}}</td>
-                            {{else}}
-                            <td class='bordered'></td>
+                        {{else}}
+                        <td class='bordered'></td>
                         {{/with}}
                         {{#with p_hhw}}
                         <td class="percent bordered">{{savings_percent}}</td>
-                            {{else}}
-                            <td class='bordered'></td>
+                        {{else}}
+                        <td class='bordered'></td>
                         {{/with}}
                         {{#with p_gas}}
                         <td class="percent bordered">{{savings_percent}}</td>
-                            {{else}}
-                            <td class='bordered'></td>
+                        {{else}}
+                        <td class='bordered'></td>
                         {{/with}}
                         {{#with p_water}}
                         <td class="percent bordered">{{savings_percent}}</td>
-                            {{else}}
-                            <td class='bordered'></td>
+                        {{else}}
+                        <td class='bordered'></td>
                         {{/with}}
                         {{#with p_peakchw}}
                         <td class="percent bordered">{{savings_percent}}</td>
-                            {{else}}
-                            <td class='bordered'></td>
+                        {{else}}
+                        <td class='bordered'></td>
                         {{/with}}
                         {{#with p_labor}}
                         <td class="percent bordered">{{savings_percent}}</td>
-                            {{else}}
-                            <td class='bordered'></td>
+                        {{else}}
+                        <td class='bordered'></td>
                         {{/with}}
                         {{#with p_percentTotal}}
                         <td class="percent bordered">{{percent_total}}</td>
@@ -102,23 +102,23 @@
                         </th>
                         {{#with p_chw2}}
                         <td class="whole bordered">{{plant_savings}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_ele2}}
                         <td class="whole bordered">{{plant_savings}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_stm2}}
                         <td class="whole bordered">{{plant_savings}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_hhw2}}
                         <td class="whole bordered">{{plant_savings}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         <td class="borderTop"></td>
                         <td class="borderTop"></td>
@@ -126,8 +126,8 @@
                         <td class="borderTop"></td>
                         {{#with p_plantTotal}}
                         <td class="whole bordered">{{plant_savings_sum}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                     </tr>
                     <tr>
@@ -136,8 +136,8 @@
                         </th>
                         {{#with p_chw2_1}}
                         <td class="whole bordered">{{plant_savings}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         <td class="borderTop"></td>
                         <td class="borderTop"></td>
@@ -148,200 +148,200 @@
                         <td></td>
                         {{#with p_chw2_1}}
                         <td class="whole bordered">{{plant_savings}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                     </tr>
                     <tr>
                         <th class="bordered" scope="row">UEM</th>
                         {{#with p_chw3}}
                         <td class="whole_dollar bordered">{{fb_plus_fr}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_ele3}}
                         <td class="whole_dollar bordered">{{fb_plus_fr}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_stm3}}
                         <td class="whole_dollar bordered">{{fb_plus_fr}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_hhw3}}
                         <td class='whole_dollar bordered'>{{fb_plus_fr}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_gas3}}
                         <td class="whole_dollar bordered">{{fb_plus_fr}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_water3}}
                         <td class="whole_dollar bordered">{{fb_plus_fr}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         <td></td>
                         {{#with p_labor3}}
                         <td class="whole_dollar bordered">{{fb_plus_fr}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_total1}}
                         <td class='whole_dollar bordered'>{{fb_fr_total}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_misc1}}
                         <td class='whole_dollar bordered'>{{misc_savings}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_ann1}}
                         <td class='whole_dollar bordered'>{{cash_flow}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_payback1}}
                         <td class='years bordered'>{{payback}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_npv1}}
                         <td class='whole_dollar bordered'>{{npv}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                     </tr>
                     <tr>
                         <th class="bordered" scope="row">UT</th>
                         {{#with p_chw4}}
                         <td class="whole_dollar bordered">{{fb_plus_fr}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_ele4}}
                         <td class="whole_dollar bordered">{{fb_plus_fr}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_stm4}}
                         <td class="whole_dollar bordered">{{fb_plus_fr}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_hhw4}}
                         <td class="whole_dollar bordered">{{fb_plus_fr}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_gas4}}
                         <td class="whole_dollar bordered">{{fb_plus_fr}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_water4}}
                         <td class="whole_dollar bordered">{{fb_plus_fr}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         <td></td>
                         {{#with p_labor4}}
                         <td class="whole_dollar bordered">{{fb_plus_fr}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_total2}}
                         <td class='whole_dollar bordered'>{{fb_fr_total}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_misc2}}
                         <td class='whole_dollar bordered'>{{misc_savings}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_ann2}}
                         <td class='whole_dollar bordered'>{{cash_flow}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_payback2}}
                         <td class='years bordered'>{{payback}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_npv2}}
                         <td class='whole_dollar bordered'>{{npv}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                     </tr>
                     <tr>
                         <th class="bordered" scope="row">AUX</th>
                         {{#with p_chw5}}
                         <td class="whole_dollar bordered">{{fb_plus_fr}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_ele5}}
                         <td class="whole_dollar bordered">{{fb_plus_fr}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_stm5}}
                         <td class="whole_dollar bordered">{{fb_plus_fr}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_hhw5}}
                         <td class="whole_dollar bordered">{{fb_plus_fr}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_gas5}}
                         <td class="whole_dollar bordered">{{fb_plus_fr}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_water5}}
                         <td class="whole_dollar bordered">{{fb_plus_fr}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         <td></td>
                         {{#with p_labor5}}
                         <td class="whole_dollar bordered">{{fb_plus_fr}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_total3}}
                         <td class='whole_dollar bordered'>{{fb_fr_total}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_misc3}}
                         <td class='whole_dollar bordered'>{{misc_savings}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_ann3}}
                         <td class='whole_dollar bordered'>{{cash_flow}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_payback3}}
                         <td class='years bordered'>{{payback}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                         {{#with p_npv3}}
                         <td class='whole_dollar bordered'>{{npv}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
+                        {{else}}
+                        <td class="bordered"></td>
                         {{/with}}
                     </tr>
                 </tbody>

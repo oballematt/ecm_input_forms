@@ -3,15 +3,10 @@
     <br />
     Getting data, this will take a few seconds
 </div>
-<div class="row">
+<div class="row mt-5">
     <div class="col-md-12">
-        <nav class='mt-5' aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a class="clear" href="/" role="button">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Find</li>
-            </ol>
-        </nav>
-        <form id="searchData" action="/find" method="POST">
+        <p>Search for a Project ID to edit or add new data.</p>
+        <form id="searchData" action="/" method="POST">
             {{#each errors}}
             <p style="color: red">{{text}}</p>
             {{/each}}
@@ -161,16 +156,67 @@
                         {{/with}}
                     </section>
                     <div class='text-end text-white mt-3'>
+                        <a id="create" href="/metadata"><button type="button" class="btn btn-success">Create</button>
+                        </a>
                         {{#with metadata}}
                         <a href="/find/{{project_id}}"><button type="button" class='btn btn-warning'>Edit</button></a>
                         {{/with}}
                     </div>
                 </div>
             </div>
-            <hr>
+        </form>
+        <hr>
+        <form action='/add_costs_hours' method="POST">
+            {{> costsHours}}
+        </form>
+        <form action='/add_fundings' method="POST">
+            {{> fundings}}
+        </form>
+        <form action='/add_miscsavings' method="POST">
+            {{> miscSavings}}
+        </form>
+        {{#with metadata}}
+        <div class="row text-center">
+            <div class="col">
+                <button style="background-color: #bf5700;" class="btn btn-primary mb-3" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseBaseline" aria-expanded="false"
+                    aria-controls="collapseExample">
+                    Add Baseline Values
+                </button>
+                <button style="background-color: #bf5700;" class="btn btn-primary mb-3" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapsePredicted" aria-expanded="false"
+                    aria-controls="collapseExample">
+                    Add Predicted Savings
+                </button>
+                <button style="background-color: #bf5700;" class="btn btn-primary mb-3" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseMV" aria-expanded="false"
+                    aria-controls="collapseExample">
+                    Add MV Savings
+                </button>
+            </div>
+        </div>
+        {{/with}}
+        <form action='/find_b_s_values' id="baselineValues" method="POST">
+            <div class="row">
+                <div class="col-md-12">
+                    {{> baselinePartial}}
+                </div>
+            </div>
+        </form>
+        <form action="/find_savings_values" id="SavingsValues" method="POST">
+            <div class="row">
+                <div class="col-md-12">
+                    {{> predictedSavings}}
+                </div>
+                <div class="col-md-12">
+                    {{> mvSavings}}
+                </div>
+            </div>
+        </form>
+        <form action='/' method='POST' id="searchData">
             <div class="row responsive">
                 <div style="display: none;" class="col-md-12 warning">
-                    <div class="alert alert-danger d-flex align-items-center"  role="alert">
+                    <div class="alert alert-danger d-flex align-items-center" role="alert">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                             class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img"
                             aria-label="Warning:">
@@ -206,29 +252,27 @@
                                         <td class="text-end">{{hours}}</td>
                                         <td>
                                             <a href="/find/costs_hours/{{id}}">
-                                                <button id={{id}} type="button" class='btn btn-warning getId'><i
-                                                        class="fas fa-edit"></i></button>
+                                                <button id={{id}} type='button' class='btn btn-warning getId'><i
+                                                        class='fas fa-edit'></i></button>
                                             </a>
                                         </td>
                                         <td>
-                                            <a class="deleteId" href="/delete/costs_hours/{{id}}">
-                                                <button type="button" class='btn btn-danger'><i
-                                                        class="fas fa-trash-alt"></i></button>
-                                            </a>
+                                            <button type="button" id={{id}} class='btn btn-danger deleteCostsHours'>
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
                                         </td>
                                     </tr>
-                                    {{/each}}
                                 </tbody>
+                                {{/each}}
                             </table>
                         </div>
                         {{#with metadata}}
                         <div class="card-footer text-end">
-                            <a href="/add/costs_hours/{{project_id}}">
-                                <button type="button" class='btn btn-success clear'><i
-                                        class="fas fa-plus-circle">&nbsp;Add
-                                        Record</i>
-                                </button>
-                            </a>
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#costHoursModal">
+                                <i class="fas fa-plus-circle">&nbsp;Add
+                                    Record</i>
+                            </button>
                         </div>
                         {{/with}}
                     </div>
@@ -259,9 +303,9 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="/delete/funding/{{id}}" class='btn btn-danger'>
+                                            <button type="button" id={{id}} class='btn btn-danger deleteFundings'>
                                                 <i class="fas fa-trash-alt"></i>
-                                            </a>
+                                            </button>
                                         </td>
                                     </tr>
                                     {{/each}}
@@ -270,12 +314,11 @@
                         </div>
                         {{#with metadata}}
                         <div class="card-footer text-end">
-                            <a href="/add/fundings/{{project_id}}">
-                                <button type="button" class='btn btn-success clear'><i
-                                        class="fas fa-plus-circle">&nbsp;Add
-                                        Record</i>
-                                </button>
-                            </a>
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#fundingsModal">
+                                <i class="fas fa-plus-circle">&nbsp;Add
+                                    Record</i>
+                            </button>
                         </div>
                         {{/with}}
                     </div>
@@ -306,25 +349,15 @@
                                                 <i class="fas fa-edit"></i>
                                         </td>
                                         <td>
-                                            <a href="/delete/baseline/{{id}}" class='btn btn-danger'>
+                                            <button type="button" id={{id}} class='btn btn-danger deleteBaseline'>
                                                 <i class="fas fa-trash-alt"></i>
-                                            </a>
+                                            </button>
                                         </td>
                                     </tr>
                                     {{/each}}
                                 </tbody>
                             </table>
                         </div>
-                        {{#with metadata}}
-                        <div class="card-footer text-end">
-                            <a href="/add/baseline/{{project_id}}">
-                                <button type="button" class='btn btn-success clear'><i
-                                        class="fas fa-plus-circle">&nbsp;Add
-                                        Record</i>
-                                </button>
-                            </a>
-                        </div>
-                        {{/with}}
                     </div>
                 </section>
                 <section class="col-md-6">
@@ -352,26 +385,16 @@
                                                 <i class="fas fa-edit"></i>
                                         </td>
                                         <td>
-                                            <a href="/delete/savings/{{id}}" class='btn btn-danger'>
+                                            <button type="button" id={{id}} class='btn btn-danger deleteSavings'>
                                                 <i class="fas fa-trash-alt"></i>
-                                            </a>
+                                            </button>
                                         </td>
                                     </tr>
                                     {{/each}}
                                 </tbody>
                             </table>
                         </div>
-                        {{#with metadata}}
-                        <div class="card-footer text-end">
-                            <a href="/add/savings/{{project_id}}">
-                                <button type="button" class='btn btn-success clear'><i
-                                        class="fas fa-plus-circle">&nbsp;Add
-                                        Record</i>
-                                </button>
-                            </a>
-                        </div>
                     </div>
-                    {{/with}}
                 </section>
             </div>
             <hr>
@@ -401,9 +424,9 @@
                                                 <i class="fas fa-edit"></i>
                                         </td>
                                         <td>
-                                            <a href="/delete/miscsavings/{{id}}" class='btn btn-danger'>
+                                            <button type="button" id={{id}} class='btn btn-danger deleteMiscSavings'>
                                                 <i class="fas fa-trash-alt"></i>
-                                            </a>
+                                            </button>
                                         </td>
                                     </tr>
                                     {{/each}}
@@ -412,71 +435,68 @@
                         </div>
                         {{#with metadata}}
                         <div class="card-footer text-end">
-                            <a href="/add/miscsavings/{{project_id}}">
-                                <button type="button" class='btn btn-success clear'><i
-                                        class="fas fa-plus-circle">&nbsp;Add
-                                        Record</i>
-                                </button>
-                            </a>
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#miscSavingsModal">
+                                <i class="fas fa-plus-circle">&nbsp;Add
+                                    Record</i>
+                            </button>
                         </div>
                     </div>
                     {{/with}}
                 </section>
-                <hr>
-                <div class="row">
-                    <div class="col-md-12">
-                        {{> predictedPartial}}
-                    </div>
-                    <div class="col-md-12">
-                        {{> mvPartial}}
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{> predictedPartial}}
                 </div>
-                {{#with metadata}}
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
-                                <h5 style="background-color: #bf5700;" class="card-header">Attention</h5>
-                                <div class="card-body">
-                                    <div class="modal-body mt-1">
-                                        <h5 style="line-h-100: 35px">Continuing with this action will delete
-                                            <strong><u>ALL</u></strong>
-                                            data records from:
-                                            <ul>
-                                                <li>Project Info</li>
-                                                <li>Costs &amp; Hours</li>
-                                                <li>Fundings</li>
-                                                <li>Baseline</li>
-                                                <li>Savings</li>
-                                                <li>Misc Savings</li>
-                                            </ul>Associated with Project ID:
-                                            <ul>
-                                                <li><strong>{{project_id}}</strong></li>
-                                            </ul>
-                                        </h5>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Go
-                                            Back</button>
-                                        <a href="/delete/all/{{project_id}}"><button type="button"
-                                                class="btn btn-danger">Delete</button></a>
-                                    </div>
-                                </div>
-                            </div>
+                <hr>
+                <div class="col-md-12">
+                    {{> mvPartial}}
+                </div>
+            </div>
+        </form>
+    </div>
+    <hr>
+    {{#with metadata}}
+    <div class="mb-3 text-center">
+        <button id="delete" title="This will delete all data related to project ID: {{project_id}}"
+            data-toggle="tooltip" data-placement="top" type="button" class="btn btn-danger" <span data-bs-toggle="modal"
+            data-bs-target="#exampleModal">Delete Project</span>
+        </button>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
+                    <h5 style="background-color: #bf5700;" class="card-header">Attention</h5>
+                    <div class="card-body">
+                        <div class="modal-body mt-1">
+                            <h5 style="line-h-100: 35px">Continuing with this action will delete
+                                <strong><u>ALL</u></strong>
+                                data records from:
+                                <ul>
+                                    <li>Project Info</li>
+                                    <li>Costs &amp; Hours</li>
+                                    <li>Fundings</li>
+                                    <li>Baseline</li>
+                                    <li>Savings</li>
+                                    <li>Misc Savings</li>
+                                </ul>Associated with Project ID:
+                                <ul>
+                                    <li><strong>{{project_id}}</strong></li>
+                                </ul>
+                            </h5>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Go
+                                Back</button>
+                            <a href="/delete/all/{{project_id}}"><button type="button"
+                                    class="btn btn-danger">Delete</button></a>
                         </div>
                     </div>
                 </div>
             </div>
-            {{/with}}
-        </form>
-    </div>
-    {{#with metadata}}
-    <div class="mb-3 text-center">
-        <button title="This will delete all data related to project ID: {{project_id}}" data-toggle="tooltip"
-            data-placement="top" type="button" class="btn btn-danger" <span data-bs-toggle="modal"
-            data-bs-target="#exampleModal">Delete Project</span>
-        </button>
+        </div>
     </div>
     {{/with}}
 </div>

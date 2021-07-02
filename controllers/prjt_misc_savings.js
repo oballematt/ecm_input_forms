@@ -5,41 +5,14 @@ module.exports = {
     createMiscSavings: async (req, res) => {
         let { project_id, phase, misc_owner, misc_savings } = req.body;
 
-        let errors = []
-
         try {
 
-            const miscSavings = await Prjt_metadata.findOne({
-                where: {
-                    project_id
-                }
+            const miscSavings = await Prjt_misc_savings.create({
+                project_id, phase, misc_owner, misc_savings
             });
 
-            if (!phase) {
-                errors.push({ text: "please select an option for phase" })
-            };
+            return res.json(miscSavings);
 
-            if (!misc_owner) {
-                errors.push({ text: "please select an option for owner" })
-            };
-
-            if (!misc_savings) {
-                errors.push({ text: "please enter a value for savings field " })
-            };
-
-            if (errors.length > 0) {
-                res.render('add/addMiscSavings', {
-                    errors, phase, misc_owner, misc_savings, miscSavings
-                })
-
-            } else {
-
-                const miscSavings = await Prjt_misc_savings.create({
-                    project_id, phase, misc_owner, misc_savings
-                });
-
-                return res.redirect('/find');
-            }
 
         } catch (error) {
 
@@ -48,10 +21,6 @@ module.exports = {
 
         }
     },
-
-    // getForm: async (req, res) => {
-    //     return res.render('create/miscSavings')
-    // },
 
     getOneMiscSavings: async (req, res) => {
         const { id } = req.params
@@ -91,7 +60,7 @@ module.exports = {
                     }
                 });
 
-            return res.redirect('/find')
+            return res.redirect('/')
 
         } catch (error) {
 
@@ -100,29 +69,6 @@ module.exports = {
 
         }
 
-    },
-
-    getOneByProjectId: async (req, res) => {
-        const { project_id } = req.params
-
-        try {
-
-            const miscSavings = await Prjt_metadata.findOne({
-                where: {
-                    project_id
-                }
-            });
-
-            return res.render('add/addMiscSavings', {
-                miscSavings
-            });
-
-        } catch (error) {
-
-            console.error(error.message);
-            return res.status(500).json(error);
-
-        };
     },
 
     deleteMiscSavings: async (req, res) => {
@@ -135,7 +81,7 @@ module.exports = {
                 }
             });
 
-            return res.redirect('/find')
+            res.json("deleted")
 
         } catch (error) {
 

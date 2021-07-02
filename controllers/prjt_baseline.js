@@ -5,37 +5,13 @@ module.exports = {
     createBaseline: async (req, res) => {
         let { project_id, commodity, value } = req.body;
 
-        let errors = [];
-
         try {
-
-            const baseline = await Prjt_metadata.findOne({
-                where: {
-                    project_id
-                }
-            });
-
-            if (!commodity){
-                errors.push({text: "please select an option for commodity"})
-            };
-
-            if (!value){
-                errors.push({text: "please enter a value for value field"})
-            };
-
-            if (errors.length > 0){
-                 res.render('add/addBaseline', {
-                    errors, commodity, value, baseline
-                })
-            
-            } else {
             
             const baseline = await Prjt_baseline.create({
                 project_id, commodity, value
             });
             
-            return res.redirect('/find');
-        };
+            return res.json(baseline);
 
         } catch (error) {
 
@@ -45,9 +21,6 @@ module.exports = {
         };
     },
 
-    getForm:  (req, res) => {
-        return res.render('create/baseline');
-    },
 
     getOneBaseline: async (req, res) => {
         const { id } = req.params
@@ -87,7 +60,7 @@ module.exports = {
                     }
                 });
 
-                return res.redirect('/find')
+                return res.redirect('/')
 
         } catch (error) {
 
@@ -96,29 +69,6 @@ module.exports = {
             
         }
         
-    },
-
-    getOneByProjectId: async (req, res) => {
-        const { project_id } = req.params
-
-        try {
-
-            const baseline = await Prjt_metadata.findOne({
-                where: {
-                    project_id
-                }
-            });
-
-            return res.render('add/addBaseline', {
-                baseline
-            });
-
-        } catch (error) {
-
-            console.error(error.message);
-            return res.status(500).json(error);
-
-        };
     },
 
     deleteBaseline: async (req, res) => {
@@ -131,7 +81,7 @@ module.exports = {
                 }
             });
 
-            return res.redirect('/find')
+            res.json("deleted")
 
         } catch (error) {
             

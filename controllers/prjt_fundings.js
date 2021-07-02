@@ -6,14 +6,12 @@ module.exports = {
 
         let { project_id, implementation, source, annual } = req.body;
 
-
         try {
-
             const funding = await Prjt_funding.create({
                 project_id, implementation, source, annual
             });
 
-            return res.redirect('/find')
+            return res.json(funding);
 
         } catch (error) {
 
@@ -22,60 +20,6 @@ module.exports = {
 
         }
 
-    },
-
-    createFundingByProjectId: async (req, res) => {
-
-        let { project_id, implementation, source, annual } = req.body;
-
-        let errors = []
-
-        try {
-
-            const fundings = await Prjt_metadata.findOne({
-                where: {
-                    project_id
-                }
-            });
-
-            if (!implementation) {
-                errors.push({ text: "please select an option for source" })
-            };
-
-            if (!source) {
-                errors.push({ text: "please enter a value for implementation" })
-            };
-
-            if (!annual) {
-                errors.push({ text: "please enter a value for annual" })
-            };
-
-            if (errors.length > 0) {
-                res.render('add/addFundings', {
-                    errors, implementation, source, annual, fundings
-                })
-
-            } else {
-
-                const funding = await Prjt_funding.create({
-                    project_id, implementation, source, annual
-                });
-
-                return res.redirect('/find')
-
-            };
-
-        } catch (error) {
-
-            console.error(error.message);
-            return res.status(500).json(error);
-
-        }
-
-    },
-
-    getForm: (req, res) => {
-        return res.render('create/fundings')
     },
 
     getOneFunding: async (req, res) => {
@@ -117,7 +61,7 @@ module.exports = {
                     }
                 });
 
-            return res.redirect('/find')
+            return res.redirect('/')
 
         } catch (error) {
 
@@ -126,29 +70,6 @@ module.exports = {
 
         }
 
-    },
-
-    getOneByProjectId: async (req, res) => {
-        const { project_id } = req.params
-
-        try {
-
-            const fundings = await Prjt_metadata.findOne({
-                where: {
-                    project_id
-                }
-            });
-
-            return res.render('add/addFundings', {
-                fundings
-            });
-
-        } catch (error) {
-
-            console.error(error.message);
-            return res.status(500).json(error);
-
-        };
     },
 
     deleteFunding: async (req, res) => {
@@ -161,7 +82,7 @@ module.exports = {
                 }
             });
 
-            return res.redirect('/find')
+            res.json("Deleted")
 
         } catch (error) {
 
