@@ -60,6 +60,10 @@ $(document).ready(() => {
         sessionStorage.removeItem('search')
     })
 
+    $(".message2").on("click", () => {
+       
+    })
+
     window.onload = () => {
 
         if (storedVals) {
@@ -166,7 +170,6 @@ $(document).ready(() => {
         console.log('works')
         let chw_value = prompt("Please enter a value for CHW.");
         let replacedValue = chw_value.replace(/,/g, '');
-        $(".message").text()
         $('.chwValue').append(`<p>[${chw_value}]</p>`);
         let data = {
             project_id: searchedVal,
@@ -932,6 +935,8 @@ $(document).ready(() => {
                 $("#next").removeAttr('disabled'),
                 $("#link").attr('href', '/fundings'),
                 $('#errors').text(''),
+                $(".info").removeAttr('style'),
+                $(".infoMessage").text('Your data was successfully added! Search for your project again to view the data below. Otherwise, continue adding data to the other tables ')
             )
         }
     });
@@ -979,7 +984,9 @@ $(document).ready(() => {
                 $tbodyF.append($cloneRowF.clone()),
                 $("#next").removeAttr('disabled'),
                 $("#link").attr('href', '/baseline'),
-                $('#errorsF').text('')
+                $('#errorsF').text(''),
+                $(".info").removeAttr('style'),
+                $(".infoMessage").text('Your data was successfully added! Search for your project again to view the data below. Otherwise, continue adding data to the other tables ')
             );
         }
     });
@@ -1029,7 +1036,9 @@ $(document).ready(() => {
                 $tbodyM.append($cloneRowM.clone()),
                 $("#next").removeAttr('disabled'),
                 $("#link").attr('href', '/baseline'),
-                $('#errorsM').text('')
+                $('#errorsM').text(''),
+                $(".info").removeAttr('style'),
+                $(".infoMessage").text('Your data was successfully added! Search for your project again to view the data below. Otherwise, continue adding data to the other tables ')
             );
         }
     });
