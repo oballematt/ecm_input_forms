@@ -187,14 +187,14 @@
             </div>
         </div>
         {{/with}}
-        <form action='/find_b_s_values' id="findB_SValues" method="POST">
+        <form action='/find_b_s_values' id="baselineValues" method="POST">
             <div class="row">
                 <div class="col-md-12">
                     {{> baselinePartial}}
                 </div>
             </div>
         </form>
-        <form action="/find_savings_values" id="findSavingsValues" method="POST">
+        <form action="/find_savings_values" id="SavingsValues" method="POST">
             <div class="row">
                 <div class="col-md-12">
                     {{> predictedSavings}}

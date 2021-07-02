@@ -123,7 +123,8 @@ $(document).ready(() => {
         };
     });
 
-    $("#findB_SValues").on('click', '#chwValue', (e) => {
+    //Ajax calls to create baseline values
+    $("#baselineValues").on('click', '#chwValue', (e) => {
         e.preventDefault();
         $('.message').text('')
         console.log('works')
@@ -147,7 +148,7 @@ $(document).ready(() => {
         });
     });
 
-    $("#findB_SValues").on('click', '#eleValue', (e) => {
+    $("#baselineValues").on('click', '#eleValue', (e) => {
         e.preventDefault();
         $('.message').text('')
         let ele_value = prompt("Please enter a value for ELE.")
@@ -169,7 +170,7 @@ $(document).ready(() => {
         })
     });
 
-    $("#findB_SValues").on('click', '#stmValue', (e) => {
+    $("#baselineValues").on('click', '#stmValue', (e) => {
         e.preventDefault();
         $('.message').text('')
         let stm_value = prompt("Please enter a value for STM.")
@@ -192,7 +193,7 @@ $(document).ready(() => {
     });
 
 
-    $("#findB_SValues").on('click', '#hhwValue', (e) => {
+    $("#baselineValues").on('click', '#hhwValue', (e) => {
         e.preventDefault();
         $('.message').text('')
         let hhw_value = prompt("Please enter a value for HHW.")
@@ -215,7 +216,7 @@ $(document).ready(() => {
     });
 
 
-    $("#findB_SValues").on('click', '#gasValue', (e) => {
+    $("#baselineValues").on('click', '#gasValue', (e) => {
         e.preventDefault();
         $('.message').text('')
         let gas_value = prompt("Please enter a value for GAS.")
@@ -237,7 +238,7 @@ $(document).ready(() => {
         })
     });
 
-    $("#findB_SValues").on('click', '#wtrValue', (e) => {
+    $("#baselineValues").on('click', '#wtrValue', (e) => {
         e.preventDefault();
         $('.message').text('')
         let wtr_value = prompt("Please enter a value for WTR.")
@@ -259,7 +260,7 @@ $(document).ready(() => {
         })
     });
 
-    $("#findB_SValues").on('click', '#peakChwValue', (e) => {
+    $("#baselineValues").on('click', '#peakChwValue', (e) => {
         e.preventDefault();
         $('.message').text('')
         let peakChw_value = prompt("Please enter a value for Peak CHW.")
@@ -281,7 +282,7 @@ $(document).ready(() => {
         })
     });
 
-    $("#findB_SValues").on('click', '#laborValue', (e) => {
+    $("#baselineValues").on('click', '#laborValue', (e) => {
         e.preventDefault();
         $('.message').text('')
         let labor_value = prompt("Please enter a value for Labor.")
@@ -304,7 +305,7 @@ $(document).ready(() => {
     });
 
     //Ajax calls to create predicted savings
-    $("#findSavingsValues").on('click', '#predictedChw', (e) => {
+    $("#SavingsValues").on('click', '#predictedChw', (e) => {
         e.preventDefault();
         $('.predictedMessage').text('')
         let value = prompt("Please enter a value for CHW.")
@@ -327,7 +328,7 @@ $(document).ready(() => {
         })
     });
 
-    $("#findSavingsValues").on('click', '#predictedEle', (e) => {
+    $("#SavingsValues").on('click', '#predictedEle', (e) => {
         e.preventDefault();
         $('.predictedMessage').text('')
         let value = prompt("Please enter a value for ELE.")
@@ -350,7 +351,7 @@ $(document).ready(() => {
         })
     });
 
-    $("#findSavingsValues").on('click', '#predictedStm', (e) => {
+    $("#SavingsValues").on('click', '#predictedStm', (e) => {
         e.preventDefault();
         $('.predictedMessage').text('')
         let value = prompt("Please enter a value for STM.")
@@ -373,7 +374,7 @@ $(document).ready(() => {
         })
     });
 
-    $("#findSavingsValues").on('click', '#predictedHhw', (e) => {
+    $("#SavingsValues").on('click', '#predictedHhw', (e) => {
         e.preventDefault();
         $('.predictedMessage').text('')
         let value = prompt("Please enter a value for HHW.")
@@ -396,7 +397,7 @@ $(document).ready(() => {
         })
     });
 
-    $("#findSavingsValues").on('click', '#predictedGas', (e) => {
+    $("#SavingsValues").on('click', '#predictedGas', (e) => {
         e.preventDefault();
         $('.predictedMessage').text('')
         let value = prompt("Please enter a value for GAS.")
@@ -419,7 +420,7 @@ $(document).ready(() => {
         })
     });
 
-    $("#findSavingsValues").on('click', '#predictedWtr', (e) => {
+    $("#SavingsValues").on('click', '#predictedWtr', (e) => {
         e.preventDefault();
         $('.predictedMessage').text('')
         let value = prompt("Please enter a value for WTR.")
@@ -442,7 +443,7 @@ $(document).ready(() => {
         })
     });
 
-    $("#findSavingsValues").on('click', '#predictedPeak', (e) => {
+    $("#SavingsValues").on('click', '#predictedPeak', (e) => {
         e.preventDefault();
         $('.predictedMessage').text('')
         let value = prompt("Please enter a value for Peak CHW.")
@@ -465,7 +466,7 @@ $(document).ready(() => {
         })
     });
 
-    $("#findSavingsValues").on('click', '#predictedLabor', (e) => {
+    $("#SavingsValues").on('click', '#predictedLabor', (e) => {
         e.preventDefault();
         $('.predictedMessage').text('')
         let value = prompt("Please enter a value for Labor.")
@@ -489,7 +490,7 @@ $(document).ready(() => {
     });
 
     //Ajax calls to create MV savings
-    $("#findSavingsValues").on('click', '#mvChw', (e) => {
+    $("#SavingsValues").on('click', '#mvChw', (e) => {
         e.preventDefault();
         $('.mvMessage').text('')
         let value = prompt("Please enter a value for CHW.")
@@ -512,7 +513,7 @@ $(document).ready(() => {
         })
     });
 
-    $("#findSavingsValues").on('click', '#mvEle', (e) => {
+    $("#SavingsValues").on('click', '#mvEle', (e) => {
         e.preventDefault();
         $('.mvMessage').text('')
         let value = prompt("Please enter a value for ELE.")
@@ -535,7 +536,7 @@ $(document).ready(() => {
         })
     });
 
-    $("#findSavingsValues").on('click', '#mvStm', (e) => {
+    $("#SavingsValues").on('click', '#mvStm', (e) => {
         e.preventDefault();
         $('.mvMessage').text('')
         let value = prompt("Please enter a value for STM.")
@@ -558,7 +559,7 @@ $(document).ready(() => {
         })
     });
 
-    $("#findSavingsValues").on('click', '#mvHhw', (e) => {
+    $("#SavingsValues").on('click', '#mvHhw', (e) => {
         e.preventDefault();
         $('.mvMessage').text('')
         let value = prompt("Please enter a value for HHW.")
@@ -581,7 +582,7 @@ $(document).ready(() => {
         })
     });
 
-    $("#findSavingsValues").on('click', '#mvGas', (e) => {
+    $("#SavingsValues").on('click', '#mvGas', (e) => {
         e.preventDefault();
         $('.mvMessage').text('')
         let value = prompt("Please enter a value for GAS.")
@@ -604,7 +605,7 @@ $(document).ready(() => {
         })
     });
 
-    $("#findSavingsValues").on('click', '#mvWtr', (e) => {
+    $("#SavingsValues").on('click', '#mvWtr', (e) => {
         e.preventDefault();
         $('.mvMessage').text('')
         let value = prompt("Please enter a value for WTR.")
@@ -627,7 +628,7 @@ $(document).ready(() => {
         })
     });
 
-    $("#findSavingsValues").on('click', '#mvPeak', (e) => {
+    $("#SavingsValues").on('click', '#mvPeak', (e) => {
         e.preventDefault();
         $('.mvMessage').text('')
         let value = prompt("Please enter a value for Peak CHW.")
@@ -650,7 +651,7 @@ $(document).ready(() => {
         })
     });
 
-    $("#findSavingsValues").on('click', '#mvLabor', (e) => {
+    $("#SavingsValues").on('click', '#mvLabor', (e) => {
         e.preventDefault();
         $('.mvMessage').text('')
         let value = prompt("Please enter a value for Labor.")
@@ -676,7 +677,7 @@ $(document).ready(() => {
 
     // ajax calls for updating a specific table on an existing project ID, ajax call necessary so that if a user
     //inputs a number with comma separators, the ajax call will remove the commas when submitted to the database to avoid NaN errors.
-    $('#formData').on('click', 'button.noCommasCost', function () {
+    $('#formData').on('click', 'button.updateCost', function () {
         const id = $(this).attr('id')
         const imp_or_ann = $('.imp_or_ann').attr('value');
         const category = $('.category').attr('value');
@@ -713,7 +714,7 @@ $(document).ready(() => {
         }
     });
 
-    $('#formData').on('click', 'button.noCommasBase', function () {
+    $('#formData').on('click', 'button.updateBase', function () {
         const id = $(this).attr('id')
         const commodity = $('.commodity').attr('value');
         let errors = []
@@ -744,7 +745,7 @@ $(document).ready(() => {
         }
     });
 
-    $('#formData').on('click', 'button.noCommasFunding', function () {
+    $('#formData').on('click', 'button.updateFunding', function () {
         const id = $(this).attr('id')
         const source = $('.source').attr('value');
         let errors = []
@@ -780,7 +781,7 @@ $(document).ready(() => {
         }
     });
 
-    $('#formData').on('click', 'button.noCommasSavings', function () {
+    $('#formData').on('click', 'button.updateSavings', function () {
         const id = $(this).attr('id')
         const phase = $(".phase").attr('value')
         const commodity = $('.commodity').attr('value');
@@ -813,7 +814,7 @@ $(document).ready(() => {
         }
     });
 
-    $('#formData').on('click', 'button.noCommasMisc', function () {
+    $('#formData').on('click', 'button.updateMisc', function () {
         const id = $(this).attr('id')
         const phase = $(".phase").attr('value')
         const owner = $('.misc_owner').attr('value');
@@ -845,12 +846,12 @@ $(document).ready(() => {
         }
     });
 
+    // ajax calls used to create a new project, ajax call necessary to add multiple rows of data at once.
+    //also removes comma separators if user inputs a value with commas.
     const $table = $("#tableData"),
         $tbody = $table.find('tbody'),
         $cloneRow = $tbody.find('tr').first().clone();
-
-    // ajax calls used to create a new project, ajax call necessary to add multiple rows of data at once.
-    //also removes comma separators if user inputs a value with commas.
+    
     $table.on('click', 'button.addRow', function (e) {
         const id = $(this).attr('id')
         e.preventDefault();
@@ -987,6 +988,7 @@ $(document).ready(() => {
         }
     });
 
+    //Ajax calls to delete data records from tables without page refresh after every delete.
     $(".deleteCostsHours").on("click", function (e) {
         e.preventDefault();
         const id = $(this).attr('id');
