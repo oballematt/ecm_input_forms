@@ -990,7 +990,7 @@ $(document).ready(() => {
     $(".deleteCostsHours").on("click", function (e) {
         e.preventDefault();
         const id = $(this).attr('id');
-        $.ajax({
+         $.ajax({
             url: '/delete/costs_hours/' + id,
             method: 'DELETE',
         }).then(
@@ -1001,7 +1001,7 @@ $(document).ready(() => {
     $(".deleteFundings").on("click", function (e) {
         e.preventDefault();
         const id = $(this).attr('id');
-        $.ajax({
+         $.ajax({
             url: '/delete/funding/' + id,
             method: 'DELETE',
         }).then(
@@ -1012,7 +1012,7 @@ $(document).ready(() => {
     $(".deleteBaseline").on("click", function (e) {
         e.preventDefault();
         const id = $(this).attr('id');
-        $.ajax({
+         $.ajax({
             url: '/delete/baseline/' + id,
             method: 'DELETE',
         }).then(
@@ -1023,7 +1023,7 @@ $(document).ready(() => {
     $(".deleteSavings").on("click", function (e) {
         e.preventDefault();
         const id = $(this).attr('id');
-        $.ajax({
+         $.ajax({
             url: '/delete/savings/' + id,
             method: 'DELETE',
         }).then(
@@ -1034,7 +1034,7 @@ $(document).ready(() => {
     $(".deleteMiscSavings").on("click", function (e) {
         e.preventDefault();
         const id = $(this).attr('id');
-        $.ajax({
+         $.ajax({
             url: '/delete/miscsavings/' + id,
             method: 'DELETE',
         }).then(

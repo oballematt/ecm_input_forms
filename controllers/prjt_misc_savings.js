@@ -131,6 +131,8 @@ module.exports = {
                 }
             });
 
+            res.json("deleted")
+
         } catch (error) {
 
             console.error(error.message);
