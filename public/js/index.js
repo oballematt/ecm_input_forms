@@ -865,7 +865,7 @@ $(document).ready(() => {
 
         $("#errors").text('');
 
-        if (data.project_id === "undefined") {
+        if (data.project_id === "undefined" || !data.project_id) {
             errors.push({ text: "Please define a project ID" });
         };
         if (!data.imp_or_ann) {
@@ -895,14 +895,15 @@ $(document).ready(() => {
                 $tbody.append($cloneRow.clone()),
                 $("#next").removeAttr('disabled'),
                 $("#link").attr('href', '/fundings'),
-                $('#errors').text('')
+                $('#errors').text(''),
             )
         }
     });
 
     const $tableF = $("#tableDataF"),
-    $tbodyF = $tableF.find('tbody'),
-    $cloneRowF = $tbodyF.find('tr').first().clone();
+        $tbodyF = $tableF.find('tbody'),
+        $cloneRowF = $tbodyF.find('tr').first().clone();
+
     $tableF.on('click', 'button.addRowF', (e) => {
         e.preventDefault();
         let errors = []
@@ -913,9 +914,9 @@ $(document).ready(() => {
             annual: $(".annual").last().val().replace(/,/g, ''),
         }
 
-        $("#errors").text('');
+        $("#errorsF").text('');
 
-        if (data.project_id === "undefined") {
+        if (data.project_id === "undefined" || !data.project_id) {
             errors.push({ text: "Please define a project ID" })
         };
         if (!data.source) {
@@ -930,7 +931,7 @@ $(document).ready(() => {
 
         if (errors.length > 0) {
             for (var item in errors) {
-                $("#errors").append("<p style=\"border: 1px solid black; font-weight: bold\">" + errors[item].text + '</p>')
+                $("#errorsF").append("<p style=\"border: 1px solid black; font-weight: bold\">" + errors[item].text + '</p>')
             }
         } else {
             $.ajax({
@@ -942,21 +943,30 @@ $(document).ready(() => {
                 $tbodyF.append($cloneRowF.clone()),
                 $("#next").removeAttr('disabled'),
                 $("#link").attr('href', '/baseline'),
-                $('#errors').text('')
+                $('#errorsF').text('')
             );
         }
     });
 
-    $table.on('click', 'button.addRowM', function (e) {
+    const $tableM = $("#tableDataM"),
+        $tbodyM = $tableM.find('tbody'),
+        $cloneRowM = $tbodyM.find('tr').first().clone();
+
+    $tableM.on('click', 'button.addRowM', function (e) {
         e.preventDefault()
-        const id = $(this).attr('id')
         let errors = []
         let data = {
             project_id: searchedVal,
-            phase: $('.phase').val(),
-            misc_owner: $('.misc_owner').val(),
-            misc_savings: $('.misc_savings').val().replace(/,/g, ''),
+            phase: $('.phase').last().val(),
+            misc_owner: $('.misc_owner').last().val(),
+            misc_savings: $('.misc_savings').last().val().replace(/,/g, ''),
         }
+
+        $("#errorsM").text('');
+
+        if (data.project_id === "undefined" || !data.project_id) {
+            errors.push({ text: "Please define a project ID" });
+        };
 
         if (!data.phase) {
             errors.push({ text: "Please select an option for phase" });
@@ -970,20 +980,20 @@ $(document).ready(() => {
 
         if (errors.length > 0) {
             for (var item in errors) {
-                $("#errors").append("<p style=\"border: 1px solid black; font-weight: bold\">" + errors[item].text + '</p>');
+                $("#errorsM").append("<p style=\"border: 1px solid black; font-weight: bold\">" + errors[item].text + '</p>');
             };
         } else {
 
             $.ajax({
-                url: '/add/miscsavings/' + id,
+                url: '/add_miscsavings',
                 type: 'POST',
                 data: data,
             }).then(
-                $tbody.find(':input').prop('disabled', true).css("background-color", "green"),
-                $tbody.append($cloneRow.clone()),
+                $tbodyM.find(':input').prop('disabled', true).css("background-color", "green"),
+                $tbodyM.append($cloneRowM.clone()),
                 $("#next").removeAttr('disabled'),
                 $("#link").attr('href', '/baseline'),
-                $('#errors').text('')
+                $('#errorsM').text('')
             );
         }
     });

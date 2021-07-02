@@ -8,9 +8,7 @@ router.delete('/delete/miscsavings/:id', miscSavingsController.deleteMiscSavings
 
 router.get('/find/miscsavings/:id', miscSavingsController.getOneMiscSavings);
 
-router.get('/add/miscsavings/:project_id', miscSavingsController.getOneByProjectId)
-
-router.post('/add/miscsavings/:project_id', miscSavingsController.createMiscSavings)
+router.post('/add_miscsavings', miscSavingsController.createMiscSavings);
 
 
 module.exports = router

@@ -8,8 +8,6 @@ router.delete('/delete/costs_hours/:id', costsHoursController.deleteCostsHours);
 
 router.get('/find/costs_hours/:id', costsHoursController.getOneCostsHours);
 
-router.get('/add/costs_hours/:project_id', costsHoursController.getOneByProjectId)
-
-router.post('/add_costs_hours', costsHoursController.createByProjectId)
+router.post('/add_costs_hours', costsHoursController.createCostsHours);
 
 module.exports = router;

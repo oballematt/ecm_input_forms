@@ -5,14 +5,13 @@ module.exports = {
     createBaseline: async (req, res) => {
         let { project_id, commodity, value } = req.body;
 
-
         try {
             
             const baseline = await Prjt_baseline.create({
                 project_id, commodity, value
             });
             
-            return res.redirect('/');
+            return res.json(baseline);
 
         } catch (error) {
 

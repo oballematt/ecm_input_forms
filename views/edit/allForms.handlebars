@@ -172,6 +172,9 @@
         <form action='/add_fundings' method="POST">
             {{> fundings}}
         </form>
+        <form action='/add_miscsavings' method="POST">
+            {{> miscSavings}}
+        </form>
         {{#with metadata}}
         <div class="row text-center">
             <div class="col">
@@ -236,8 +239,8 @@
                                         <td class="text-end">{{hours}}</td>
                                         <td>
                                             <a href="/find/costs_hours/{{id}}">
-                                                <button id={{id}} type="button" class='btn btn-warning getId'><i
-                                                        class="fas fa-edit"></i></button>
+                                                <button id={{id}} type='button' class='btn btn-warning getId'><i
+                                                        class='fas fa-edit'></i></button>
                                             </a>
                                         </td>
                                         <td>
@@ -250,6 +253,7 @@
                                 {{/each}}
                             </table>
                         </div>
+                        {{#with metadata}}
                         <div class="card-footer text-end">
                             <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                 data-bs-target="#costHoursModal">
@@ -257,6 +261,7 @@
                                     Record</i>
                             </button>
                         </div>
+                        {{/with}}
                     </div>
                 </section>
                 <section class="col-md-6">
@@ -294,6 +299,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        {{#with metadata}}
                         <div class="card-footer text-end">
                             <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                 data-bs-target="#fundingsModal">
@@ -301,6 +307,7 @@
                                     Record</i>
                             </button>
                         </div>
+                        {{/with}}
                     </div>
                 </section>
             </div>
@@ -415,12 +422,11 @@
                         </div>
                         {{#with metadata}}
                         <div class="card-footer text-end">
-                            <a href="/add/miscsavings/{{project_id}}">
-                                <button type="button" class='btn btn-success clear'><i
-                                        class="fas fa-plus-circle">&nbsp;Add
-                                        Record</i>
-                                </button>
-                            </a>
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#miscSavingsModal">
+                                <i class="fas fa-plus-circle">&nbsp;Add
+                                    Record</i>
+                            </button>
                         </div>
                     </div>
                     {{/with}}

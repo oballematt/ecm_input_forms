@@ -1,18 +1,11 @@
-<div class="container d-flex justify-content-center align-items-center">
-    <div class="row margin">
-        {{#with miscSavings}}
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Add {{project_id}}</li>
-            </ol>
-        </nav>
-        <form action='/add/miscsavings/{{project_id}}' id="formData" method="POST">
+<div class="modal fade" id="miscSavingsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
             <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
-                <h5 style="background-color: #bf5700;" class="card-header">Savings</h5>
+                <h5 style="background-color: #bf5700;" class="card-header">Misc Savings</h5>
                 <div class="card-body w-100 text-end">
-                    <div id="errors" class="text-start"></div>
-                    <table id="tableData" class="table text-light text-center mt-3">
+                    <div id="errorsM" class="text-start"></div>
+                    <table id="tableDataM" class="table text-light text-center mt-3">
                         <thead>
                             <tr>
                                 <th scope="col">Phase</th>
@@ -33,8 +26,8 @@
                                         <select id="addMiscPhase" name="phase" class="form-select phase"
                                             id="inputGroupSelect01">
                                             <option disabled selected>Choose</option>
-                                            <option value='mv'>MV</option>
-                                            <option vale='predicted'>Predicted</option>
+                                            <option value='MV'>MV</option>
+                                            <option vale='Predicted'>Predicted</option>
                                         </select>
                                     </div>
                                 </td>
@@ -43,20 +36,20 @@
                                         <select id="addOwner" name="misc_owner" class="form-select misc_owner"
                                             id="inputGroupSelect01">
                                             <option disabled selected>Choose...</option>
-                                            <option value='uem'>UEM</option>
-                                            <option value='nonuem'>NON-UEM</option>
-                                            <option value='aux'>AUX</option>
+                                            <option value='UEM'>UEM</option>
+                                            <option value='Non-UEM'>Non-UEM</option>
+                                            <option value='AUX'>AUX</option>
                                         </select>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="input-group mb-3">
-                                        <input autocomplete="off" value="{{misc_savings}}" name="misc_savings" type="text"
-                                            class="form-control misc_savings">
+                                        <input autocomplete="off" value="{{misc_savings}}" name="misc_savings"
+                                            type="text" class="form-control misc_savings">
                                     </div>
                                 </td>
-                                 <td>
-                                    <button id='{{project_id}}' type="button" style="background-color: #bf5700;"
+                                <td>
+                                    <button type="button" style="background-color: #bf5700;"
                                         class="btn btn-warning text-light addRowM"><i
                                             class="fas fa-plus-circle"></i>&nbsp;Add
                                     </button>
@@ -65,11 +58,10 @@
                         </tbody>
                     </table>
                     <div class="card-footer text-end">
-                        <a href="/"><button class='btn btn-success' type="button">Done</button></a>
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Done</button>
                     </div>
                 </div>
             </div>
-        </form>
-        {{/with}}
+        </div>
     </div>
 </div>

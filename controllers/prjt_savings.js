@@ -11,7 +11,7 @@ module.exports = {
                 project_id, phase, commodity, value
             });
 
-            return res.redirect('/');
+            return res.json(savings);
 
 
         } catch (error) {
@@ -70,29 +70,6 @@ module.exports = {
 
         }
 
-    },
-
-    getOneByProjectId: async (req, res) => {
-        const { project_id } = req.params
-
-        try {
-
-            const savings = await Prjt_metadata.findOne({
-                where: {
-                    project_id
-                }
-            });
-
-            return res.render('add/addSavings', {
-                savings
-            });
-
-        } catch (error) {
-
-            console.error(error.message);
-            return res.status(500).json(error);
-
-        };
     },
 
     deleteSavings: async (req, res) => {
