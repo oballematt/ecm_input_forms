@@ -60,10 +60,6 @@ $(document).ready(() => {
         sessionStorage.removeItem('search')
     })
 
-    $(".message2").on("click", () => {
-       
-    })
-
     window.onload = () => {
 
         if (storedVals) {
