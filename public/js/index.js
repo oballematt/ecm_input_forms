@@ -987,6 +987,61 @@ $(document).ready(() => {
         }
     });
 
+    $(".deleteCostsHours").on("click", function (e) {
+        e.preventDefault();
+        const id = $(this).attr('id');
+         $.ajax({
+            url: '/delete/costs_hours/' + id,
+            method: 'DELETE',
+        }).then(
+            $(this).closest('tr').remove()
+        )
+    });
+
+    $(".deleteFundings").on("click", function (e) {
+        e.preventDefault();
+        const id = $(this).attr('id');
+         $.ajax({
+            url: '/delete/funding/' + id,
+            method: 'DELETE',
+        }).then(
+            $(this).closest('tr').remove()
+        )
+    });
+
+    $(".deleteBaseline").on("click", function (e) {
+        e.preventDefault();
+        const id = $(this).attr('id');
+         $.ajax({
+            url: '/delete/baseline/' + id,
+            method: 'DELETE',
+        }).then(
+            $(this).closest('tr').remove()
+        )
+    });
+
+    $(".deleteSavings").on("click", function (e) {
+        e.preventDefault();
+        const id = $(this).attr('id');
+         $.ajax({
+            url: '/delete/savings/' + id,
+            method: 'DELETE',
+        }).then(
+            $(this).closest('tr').remove()
+        )
+    });
+
+    $(".deleteMiscSavings").on("click", function (e) {
+        e.preventDefault();
+        const id = $(this).attr('id');
+         $.ajax({
+            url: '/delete/miscsavings/' + id,
+            method: 'DELETE',
+        }).then(
+            $(this).closest('tr').remove()
+        )
+    });
+
     // clears project ID stored in session storage.
     $("#finish").on("click", () => {
         sessionStorage.clear();

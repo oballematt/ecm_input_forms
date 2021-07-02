@@ -82,7 +82,7 @@ module.exports = {
                 }
             });
 
-            return res.redirect('/')
+            res.json("deleted")
 
         } catch (error) {
             

@@ -135,7 +135,7 @@ module.exports = {
                 }
             });
 
-            return res.redirect('/')
+            res.json("Deleted")
 
         } catch (error) {
 
