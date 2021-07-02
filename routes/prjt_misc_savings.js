@@ -4,7 +4,7 @@ const miscSavingsController = require('../controllers/prjt_misc_savings');
 
 router.post('/find/miscsavings/:id', miscSavingsController.updateMiscSavings);
 
-router.get('/delete/miscsavings/:id', miscSavingsController.deleteMiscSavings);
+router.delete('/delete/miscsavings/:id', miscSavingsController.deleteMiscSavings);
 
 router.get('/find/miscsavings/:id', miscSavingsController.getOneMiscSavings);
 

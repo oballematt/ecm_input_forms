@@ -82,8 +82,6 @@ module.exports = {
                 }
             });
 
-            return res.redirect('/')
-
         } catch (error) {
             
             console.error(error.message);

@@ -6,7 +6,7 @@ router.post('/find_savings_values', savingsController.createSavings);
 
 router.post('/find/savings/:id', savingsController.updateSavings);
 
-router.get('/delete/savings/:id', savingsController.deleteSavings);
+router.delete('/delete/savings/:id', savingsController.deleteSavings);
 
 router.get('/find/savings/:id', savingsController.getOneSavings);
 

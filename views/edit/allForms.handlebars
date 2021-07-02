@@ -235,10 +235,9 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a class="deleteId" href="/delete/costs_hours/{{id}}">
-                                                <button type="button" class='btn btn-danger'><i
-                                                        class="fas fa-trash-alt"></i></button>
-                                            </a>
+                                             <button type="button" id={{id}} class='btn btn-danger deleteCostsHours'>
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -283,9 +282,9 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="/delete/funding/{{id}}" class='btn btn-danger'>
+                                             <button type="button" id={{id}} class='btn btn-danger deleteFundings'>
                                                 <i class="fas fa-trash-alt"></i>
-                                            </a>
+                                            </button>
                                         </td>
                                     </tr>
                                     {{/each}}
@@ -330,9 +329,9 @@
                                                 <i class="fas fa-edit"></i>
                                         </td>
                                         <td>
-                                            <a href="/delete/baseline/{{id}}" class='btn btn-danger'>
+                                             <button type="button" id={{id}} class='btn btn-danger deleteBaseline'>
                                                 <i class="fas fa-trash-alt"></i>
-                                            </a>
+                                            </button>
                                         </td>
                                     </tr>
                                     {{/each}}
@@ -366,9 +365,9 @@
                                                 <i class="fas fa-edit"></i>
                                         </td>
                                         <td>
-                                            <a href="/delete/savings/{{id}}" class='btn btn-danger'>
+                                            <button type="button" id={{id}} class='btn btn-danger deleteSavings'>
                                                 <i class="fas fa-trash-alt"></i>
-                                            </a>
+                                            </button>
                                         </td>
                                     </tr>
                                     {{/each}}
@@ -405,9 +404,9 @@
                                                 <i class="fas fa-edit"></i>
                                         </td>
                                         <td>
-                                            <a href="/delete/miscsavings/{{id}}" class='btn btn-danger'>
+                                             <button type="button" id={{id}} class='btn btn-danger deleteMiscSavings'>
                                                 <i class="fas fa-trash-alt"></i>
-                                            </a>
+                                            </button>
                                         </td>
                                     </tr>
                                     {{/each}}
@@ -435,6 +434,7 @@
             <div class="col-md-12">
                 {{> predictedPartial}}
             </div>
+            <hr>
             <div class="col-md-12">
                 {{> mvPartial}}
             </div>
