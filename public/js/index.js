@@ -28,8 +28,7 @@ $(document).ready(() => {
 
     dateInput_2.datepicker();
 
-    const ids = ['building', 'measure_type', 'status', 'staff_lead', 'staff_colead', 'analyst', 'addImpAnn', 'addCategory',
-        'addBaseCommodity', 'addSource', 'addPhase', 'addSavingsCommodity'];
+    const ids = ['building', 'measure_type', 'status', 'staff_lead', 'staff_colead', 'analyst'];
 
     let dataObj = {};
 
@@ -61,96 +60,92 @@ $(document).ready(() => {
         sessionStorage.removeItem('search')
     });
 
+    if (getPid) {
+        $('#successModal').modal('show');
+        $('.successMessage').text(`Your Project ID has been successfully created!`)
+        $('.successId').text(`${getPid}`)
+    };
 
-    window.onload = () => {
+    if (storedVals) {
+        dataObj = JSON.parse(storedVals);
+        ids.forEach(id => $('#' + id).val(dataObj[id] || 'Choose...'));
+    };
 
-        if (getPid) {
-            $('#successModal').modal('show');
-            $('.successMessage').text(`Your Project ID has been successfully created!`)
-            $('.successId').text(`${getPid}`)
-        };
+    if (getPid) {
+        $("#search").val(getPid);
+    } else if (!searchedVal && !getPid) {
+        $('#search').val('Project ID');
+    } else {
+        $('#search').val(searchedVal);
+    };
 
-        if (storedVals) {
-            dataObj = JSON.parse(storedVals);
-            ids.forEach(id => $('#' + id).val(dataObj[id] || 'Choose...'));
-        };
+    $(".percent").text(function (i, curr) {
+        return parseFloat(curr * 100).toFixed(0) + "%";
+    });
 
-        if (getPid) {
-            $("#search").val(getPid);
-        } else if (!searchedVal && !getPid) {
-            $('#search').val('Project ID');
-        } else {
-            $('#search').val(searchedVal);
-        };
+    $(".years").text(function (i, curr) {
+        return parseFloat(curr).toFixed(2);
+    });
 
-        $(".percent").text(function (i, curr) {
-            return parseFloat(curr * 100).toFixed(0) + "%";
-        });
+    $(".whole").each(function () {
+        let num = parseFloat($(this).text()).toFixed(0);
+        let commaNum = numberWithCommas(num);
+        $(this).text(commaNum)
+    });
 
-        $(".years").text(function (i, curr) {
-            return parseFloat(curr).toFixed(2);
-        });
+    $(".whole_dollar").each(function () {
+        let num = "$" + parseFloat($(this).text()).toFixed(0);
+        let commaNum = numberWithCommas(num);
+        $(this).text(commaNum)
+    });
 
-        $(".whole").each(function () {
-            let num = parseFloat($(this).text()).toFixed(0);
-            let commaNum = numberWithCommas(num);
-            $(this).text(commaNum)
-        });
+    $(".commas").each(function () {
+        let num = $(this).text();
+        let commaNum = numberWithCommas(num);
+        $(this).text(commaNum);
+    });
 
-        $(".whole_dollar").each(function () {
-            let num = "$" + parseFloat($(this).text()).toFixed(0);
-            let commaNum = numberWithCommas(num);
-            $(this).text(commaNum)
-        });
+    let impFundsArray = [];
+    let annFundsArray = [];
 
-        $(".commas").each(function () {
-            let num = $(this).text();
-            let commaNum = numberWithCommas(num);
-            $(this).text(commaNum);
-        });
+    let costImpValues = $('.costPhase:contains("Implementation")').map((i, el) => parseInt($(el).siblings('.sumCosts').text().trim().replace(/,/g, ''), 10)).get();
 
-        let impFundsArray = [];
-        let annFundsArray = [];
+    let costAnnValues = $('.costPhase:contains("Annual")').map((i, el) => parseInt($(el).siblings('.sumCosts').text().trim().replace(/,/g, ''), 10)).get();
 
-        let costImpValues = $('.costPhase:contains("Implementation")').map((i, el) => parseInt($(el).siblings('.sumCosts').text().trim().replace(/,/g, ''), 10)).get();
+    let costImpTotal = costImpValues.reduce((a, b) => a + b, 0);
 
-        let costAnnValues = $('.costPhase:contains("Annual")').map((i, el) => parseInt($(el).siblings('.sumCosts').text().trim().replace(/,/g, ''), 10)).get();
-
-        let costImpTotal = costImpValues.reduce((a, b) => a + b, 0);
-
-        let costAnnTotal = costAnnValues.reduce((a, b) => a + b, 0);
+    let costAnnTotal = costAnnValues.reduce((a, b) => a + b, 0);
 
 
-        $(".impFunds").each(function () {
-            let values = parseInt($(this).text().replace(/,/g, ''));
-            impFundsArray.push(values);
-        });
+    $(".impFunds").each(function () {
+        let values = parseInt($(this).text().replace(/,/g, ''));
+        impFundsArray.push(values);
+    });
 
-        $(".annFunds").each(function () {
-            let values = parseInt($(this).text().replace(/,/g, ''));
-            annFundsArray.push(values);
-        });
+    $(".annFunds").each(function () {
+        let values = parseInt($(this).text().replace(/,/g, ''));
+        annFundsArray.push(values);
+    });
 
-        let fundImpTotal = impFundsArray.reduce((a, b) => a + b, 0);
+    let fundImpTotal = impFundsArray.reduce((a, b) => a + b, 0);
 
-        let fundAnnTotal = annFundsArray.reduce((a, b) => a + b, 0);
+    let fundAnnTotal = annFundsArray.reduce((a, b) => a + b, 0);
 
-        const totalImpSum = costImpTotal - fundImpTotal;
+    const totalImpSum = costImpTotal - fundImpTotal;
 
-        const totalAnnSum = costAnnTotal - fundAnnTotal;
+    const totalAnnSum = costAnnTotal - fundAnnTotal;
 
-        const impCommaNum = numberWithCommas(totalImpSum);
-        const annCommaNum = numberWithCommas(totalAnnSum);
+    const impCommaNum = numberWithCommas(totalImpSum);
+    const annCommaNum = numberWithCommas(totalAnnSum);
 
-        if (totalImpSum > 1) {
-            $('.warning').removeAttr('style')
-            $('.display').text(`Warning - Total Implem Fundings is less than Total Implem Costs by: $${impCommaNum} `)
-        };
+    if (totalImpSum > 1) {
+        $('.warning').removeAttr('style')
+        $('.display').text(`Warning - Total Implem Fundings is less than Total Implem Costs by: $${impCommaNum} `)
+    };
 
-        if (totalAnnSum > 1) {
-            $('.warning').removeAttr('style')
-            $('.display').text(`Warning - Total Annual Fundings is less than Total Annual Costs by: $${annCommaNum} `)
-        };
+    if (totalAnnSum > 1) {
+        $('.warning').removeAttr('style')
+        $('.display').text(`Warning - Total Annual Fundings is less than Total Annual Costs by: $${annCommaNum} `)
     };
 
     $("#formData").on("change", ["#building", "#measure_type"], () => {
