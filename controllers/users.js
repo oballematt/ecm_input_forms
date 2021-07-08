@@ -1,5 +1,6 @@
 const { Users } = require('../models');
 require('dotenv').config();
+const jwtGenerator = require('../utils/jwtGenerator');
 
 module.exports = {
     createUser: async (req, res) => {
@@ -36,8 +37,9 @@ module.exports = {
 
             const newUser = await Users.create({ email, password });
 
-            res.json(newUser);
+            const token = jwtGenerator(newUser.id);
 
+            res.json({ token });
 
         } catch (error) {
 
