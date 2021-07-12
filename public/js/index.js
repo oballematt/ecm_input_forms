@@ -162,6 +162,20 @@ $(document).ready(() => {
         };
     });
 
+    $("#registerData").on("submit", () => {
+        localStorage.setItem('registered', 'yes')
+    });
+
+    const registered = localStorage.getItem('registered')
+
+    if (registered) {
+        alert("Registration successful! Please Login")
+    }
+
+    $("#loginData").on("submit", () => {
+        localStorage.removeItem('registered')
+    });
+
     //Ajax calls to create baseline values
     $("#baselineValues").on('click', '#chwValue', (e) => {
         e.preventDefault();
