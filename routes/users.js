@@ -1,7 +1,11 @@
-const router = require('express').Router();
+// const router = require('express').Router();
+// const authorization = require('../middleware/authorization');
+// const usersController = require("../controllers/users");
 
-const usersController = require("../controllers/users");
+// router.post('/register', usersController.createUser);
 
-router.post('/register', usersController.createUser);
+// // router.post('/login', usersController.loginUser);
 
-module.exports = router
+// router.get('/verify', authorization, usersController.verifyUser);
+
+// module.exports = router
