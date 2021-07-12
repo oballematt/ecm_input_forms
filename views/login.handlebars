@@ -1,5 +1,11 @@
 <div class="container d-flex align-items-center justify-content-center" style="min-height: 80vh;">
-    <form action='/login' method="POST">
+    {{#if error}}
+    {{#each error}}
+    <p>{{this.message}}</p>
+    {{/each}}
+    {{/if}}
+    <form action='/login' id="loginData" method="POST">
+
         <div class="card border-secondary text-light" style="background-color: #333f48">
             <h5 style="background-color: #bf5700;" class="card-header">Login</h5>
             <div class="card-body w-100 text-end mt-3">

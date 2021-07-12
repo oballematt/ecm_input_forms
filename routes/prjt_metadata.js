@@ -1,10 +1,11 @@
 const router = require('express').Router()
+const authorization = require('../middleware/authorization')
 
 const metadataController = require('../controllers/prjt_metadata')
 
 router.post('/metadata', metadataController.createMetadata)
 
-router.get('/metadata', metadataController.getBuildings)
+router.get('/metadata', authorization.checkNotAuthenticated, metadataController.getBuildings)
 
 router.post('/find/:project_id', metadataController.updateMetaData);
 

@@ -3,6 +3,7 @@ const exphbs = require('express-handlebars');
 const path = require('path');
 const bcrypt = require('bcrypt')
 const passport = require("passport");
+const flash = require("express-flash");
 const pool = require('./config/dbConfig')
 const session = require("express-session");
 const authorization = require('./middleware/authorization')
@@ -40,6 +41,7 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'))
@@ -55,7 +57,7 @@ app.get('/login', authorization.checkAuthenticated,(req, res) => res.render('log
 app.get('/register', authorization.checkAuthenticated, (req, res) => res.render('signup'));
 app.get("/logout", (req, res) => {
   req.logout();
-  res.render('logout', { message: "You have logged out successfully" });
+  res.redirect('/login')
 });
 app.use('/', require("./routes/prjt_metadata"));
 app.use('/', require('./routes/prjt_costs_hours'));
@@ -69,7 +71,7 @@ app.use('/', require('./routes/prjt_misc_savings'));
 const userArray = [process.env.USER1, process.env.USER2, process.env.USER3, process.env.USER4, process.env.USER5, process.env.USER6, process.env.USER7, process.env.USER8, process.env.USER9, process.env.USER10, process.env.USER11];
 
 app.post("/register", async (req, res) => {
-  let { email, password } = req.body;
+  let { email, password, password2 } = req.body;
   let errors = []
   const isValid = userArray.includes(email)
 
@@ -88,6 +90,14 @@ app.post("/register", async (req, res) => {
     if (!password) {
       errors.push({ text: "Please enter a password" })
     };
+  
+    if (password.length < 6){
+      errors.push({text: "Password must be atleast than 6 characters"})
+    }
+
+    if (password !== password2){
+      errors.push({text: "Passwords do not match"})
+    }
 
     if (!isValid) {
 
@@ -104,11 +114,10 @@ app.post("/register", async (req, res) => {
         "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *",
         [email, bcryptPassword]
       )
-
       res.redirect('/login')
     }
   } catch (error) {
-    console.error(err.message);
+    console.error(error.message);
 
   }
 });
@@ -118,6 +127,7 @@ app.post(
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login",
+    failureFlash: true
   })
 );
 
