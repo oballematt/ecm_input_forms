@@ -175,7 +175,7 @@ $(document).ready(() => {
     }
 
     $("#loginData").on("submit", () => {
-        localStorage.removeItem('registered')
+        sessionStorage.removeItem('registered')
     });
 
     //Ajax calls to create baseline values
