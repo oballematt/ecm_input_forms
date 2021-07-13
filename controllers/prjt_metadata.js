@@ -14,7 +14,11 @@ module.exports = {
         let errors = [];
 
         try {
-            const bldgs = await Bldg_metadata.findAll();
+            const bldgs = await Bldg_metadata.findAll({
+                order: [
+                    ['building', 'ASC']
+                ]
+            });
 
             const pid = await Prjt_metadata.findAll({
                 where: {
@@ -94,7 +98,11 @@ module.exports = {
     getBuildings: async (req, res) => {
         try {
 
-            const bldgs = await Bldg_metadata.findAll();
+            const bldgs = await Bldg_metadata.findAll({
+                order: [
+                    ['building', 'ASC']
+                ]
+            });
 
             return res.render('add/metadata', {
                 bldgs
