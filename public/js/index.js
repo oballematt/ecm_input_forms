@@ -163,13 +163,15 @@ $(document).ready(() => {
     });
 
     $("#registerData").on("submit", () => {
-        localStorage.setItem('registered', 'yes')
+        sessionStorage.setItem('registered', 'yes')
     });
 
-    const registered = localStorage.getItem('registered')
+    const registered = sessionStorage.getItem('registered')
 
-    if (registered) {
-        alert("Registration successful! Please Login")
+    if (window.location.href.match('/login')) {
+        if (registered) {
+            alert("Registration successful! Please Login")
+        }
     }
 
     $("#loginData").on("submit", () => {
