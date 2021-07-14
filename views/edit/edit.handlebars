@@ -25,42 +25,33 @@
                                 <option disabled selected>{{building}}</option>
                                 {{/with}}
                                 {{#each bldgs}}
-                                <option>{{acronym}}</option>
+                                <option>{{building}}</option>
                                 {{/each}}
                             </select>
                         </div>
-                        {{#with metadata}}
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="inputGroupSelect01">Measure Type:</label>
                             <select name="measure_type" class="form-select" id="inputGroupSelect01">
+                                {{#with metadata}}
                                 <option disabled selected>{{measure_type}}</option>
-                                <option>AHU DDC</option>
-                                <option>AHU DDC &amp; Scheduling</option>
-                                <option>Data Center</option>
-                                <option>EBCx</option>
-                                <option>EMOCx</option>
-                                <option>Exhaust System Optimization</option>
-                                <option>Holiday Scheduling</option>
-                                <option>Lighting</option>
-                                <option>Optimum Energy</option>
-                                <option>Scheduling</option>
-                                <option>Valves</option>
-                                <option>VFD Supply Fan</option>
-                                <option>Water</option>
-                                <option>Other</option>
+                                {{/with}}
+                                {{#each measure_types}}
+                                <option>{{measure_type}}</option>
+                               {{/each}}
                             </select>
                         </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="inputGroupSelect01">Status:</label>
                             <select name="status" class="form-select" id="inputGroupSelect01">
+                                {{#with metadata}}
                                 <option disabled selected>{{status}}</option>
-                                <option>0-Cancelled</option>
-                                <option>1-Planning</option>
-                                <option>2-In Progress</option>
-                                <option>3-In Reporting Period</option>
-                                <option>4-Completed</option>
+                                {{/with}}
+                                {{#each prjt_status}}
+                                <option>{{status}}</option>
+                                {{/each}}
                             </select>
                         </div>
+                        {{#with metadata}}
                         <div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
