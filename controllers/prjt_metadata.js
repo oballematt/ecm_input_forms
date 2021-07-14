@@ -1,5 +1,5 @@
 
-const { Prjt_metadata, Bldg_metadata } = require('../models');
+const { Prjt_metadata, Bldg_metadata, Prjt_status, Measure_types } = require('../models');
 
 
 module.exports = {
@@ -17,6 +17,18 @@ module.exports = {
             const bldgs = await Bldg_metadata.findAll({
                 order: [
                     ['building', 'ASC']
+                ]
+            });
+
+            const prjt_status = await Prjt_status.findAll({
+                order: [
+                    ['status', 'ASC']
+                ]
+            });
+
+            const measure_types = await Measure_types.findAll({
+                order: [
+                    ['measure_type', 'ASC']
                 ]
             });
 
@@ -58,6 +70,8 @@ module.exports = {
             if (errors.length > 0) {
                 res.render('add/metadata', {
                     errors,
+                    prjt_status,
+                    measure_types,
                     bldgs,
                     project_id,
                     building,
@@ -104,8 +118,22 @@ module.exports = {
                 ]
             });
 
+            const prjt_status = await Prjt_status.findAll({
+                order: [
+                    ['status', 'ASC']
+                ]
+            });
+
+            const measure_types = await Measure_types.findAll({
+                order: [
+                    ['measure_type', 'ASC']
+                ]
+            });
+
             return res.render('add/metadata', {
-                bldgs
+                bldgs,
+                prjt_status,
+                measure_types
             });
 
         } catch (error) {
@@ -128,11 +156,29 @@ module.exports = {
                 }
             });
 
-            const bldgs = await Bldg_metadata.findAll();
+            const bldgs = await Bldg_metadata.findAll({
+                order: [
+                    ['building', 'ASC']
+                ]
+            });
+
+            const prjt_status = await Prjt_status.findAll({
+                order: [
+                    ['status', 'ASC']
+                ]
+            });
+
+            const measure_types = await Measure_types.findAll({
+                order: [
+                    ['measure_type', 'ASC']
+                ]
+            });
 
             return res.render('edit/edit', {
                 metadata,
-                bldgs
+                bldgs,
+                prjt_status,
+                measure_types
             });
 
         } catch (error) {
