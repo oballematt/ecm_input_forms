@@ -1,0 +1,205 @@
+<div class="modal fade" id="savingsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="card border-secondary mv w-100 text-light" style="background-color: #333f48;">
+                <h5 style="background-color: #bf5700;" class="card-header">Savings</h5>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="tableData" class="table text-light text-end table-borderless bordered">
+                            <thead>
+                                <tr class='text-center bordered'>
+                                    <th></th>
+                                    <th class="bordered" scope="col">CHW
+                                        <span class='units'>[tonhr]</span>
+                                    </th>
+                                    <th class="bordered" scope="col">ELE
+                                        <span class='units'>[kWh]</span>
+                                    </th>
+                                    <th class="bordered" scope="col">STM
+                                        <span class='units'>[lb]</span>
+                                    </th>
+                                    <th class="bordered" scope="col">HHW
+                                        <span class='units'>[mmbtu]</span>
+                                    </th>
+                                    <th class="bordered" scope="col">GAS
+                                        <span class='units'>[CCF]</span>
+                                    </th>
+                                    <th class="bordered" scope="col">WTR
+                                        <span class='units'>[kgal]</span>
+                                    </th>
+                                    <th class="bordered" scope="col">Peak CHW
+                                        <span class='units'>[ton]</span>
+                                    </th>
+                                    <th class="bordered" scope="col">Labor
+                                        <span class='units'>[Hours]</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th style="width: 100px" class="bordered">Predicted</th>
+                                    <td class="text-center bordered bordered">
+                                        <div class="predictedChw"></div>
+                                        <button title='Add value for CHW' type="button" id="predictedChw"
+                                            class='btn btn-success'>
+                                            <i class="fas fa-plus-circle"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-center bordered">
+                                        <div class="predictedEle"></div>
+                                        <button title='Add value for ELE' type="button" id="predictedEle"
+                                            class='btn btn-success'>
+                                            <i class="fas fa-plus-circle"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-center bordered">
+                                        <div class="predictedStm"></div>
+                                        <button title='Add value for STM' type="button" id="predictedStm"
+                                            class='btn btn-success'>
+                                            <i class="fas fa-plus-circle"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-center bordered">
+                                        <div class="predictedHhw"></div>
+                                        <button title='Add value for HHW' type="button" id="predictedHhw"
+                                            class='btn btn-success'>
+                                            <i class="fas fa-plus-circle"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-center bordered">
+                                        <div class="predictedGas"></div>
+                                        <button title='Add value for GAS' type="button" id="predictedGas"
+                                            class='btn btn-success'>
+                                            <i class="fas fa-plus-circle"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-center bordered">
+                                        <div class="predictedWtr"></div>
+                                        <button title='Add value for WTR' type="button" id="predictedWtr"
+                                            class='btn btn-success'>
+                                            <i class="fas fa-plus-circle"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-center bordered">
+                                        <div class="predictedPeak"></div>
+                                        <button title='Add value for Peak CHW' type="button" id="predictedPeak"
+                                            class='btn btn-success'>
+                                            <i class="fas fa-plus-circle"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-center bordered">
+                                        <div class="predictedLabor"></div>
+                                        <button title='Add value for Labor' type="button" id="predictedLabor"
+                                            class='btn btn-success'>
+                                            <i class="fas fa-plus-circle"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <div class="predictedMessage"></div>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr>
+                    <div class="table-responsive">
+                        <table id="tableData" class="table text-light text-end table-borderless bordered mt-3">
+                            <thead>
+                                <tr class='text-center bordered'>
+                                    <th></th>
+                                    <th class="bordered" scope="col">CHW
+                                        <span class='units'>[tonhr]</span>
+                                    </th>
+                                    <th class="bordered" scope="col">ELE
+                                        <span class='units'>[kWh]</span>
+                                    </th>
+                                    <th class="bordered" scope="col">STM
+                                        <span class='units'>[lb]</span>
+                                    </th>
+                                    <th class="bordered" scope="col">HHW
+                                        <span class='units'>[mmbtu]</span>
+                                    </th>
+                                    <th class="bordered" scope="col">GAS
+                                        <span class='units'>[CCF]</span>
+                                    </th>
+                                    <th class="bordered" scope="col">WTR
+                                        <span class='units'>[kgal]</span>
+                                    </th>
+                                    <th class="bordered" scope="col">Peak CHW
+                                        <span class='units'>[ton]</span>
+                                    </th>
+                                    <th class="bordered" scope="col">Labor
+                                        <span class='units'>[Hours]</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th style="width: 100px" class="bordered">M&amp;V</th>
+                                    <td class="text-center bordered bordered">
+                                        <div class="mvChw"></div>
+                                        <button title='Add value for CHW' type="button" id="mvChw"
+                                            class='btn btn-success'>
+                                            <i class="fas fa-plus-circle"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-center bordered">
+                                        <div class="mvEle"></div>
+                                        <button title='Add value for ELE' type="button" id="mvEle"
+                                            class='btn btn-success'>
+                                            <i class="fas fa-plus-circle"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-center bordered">
+                                        <div class="mvStm"></div>
+                                        <button title='Add value for STM' type="button" id="mvStm"
+                                            class='btn btn-success'>
+                                            <i class="fas fa-plus-circle"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-center bordered">
+                                        <div class="mvHhw"></div>
+                                        <button title='Add value for HHW' type="button" id="mvHhw"
+                                            class='btn btn-success'>
+                                            <i class="fas fa-plus-circle"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-center bordered">
+                                        <div class="mvGas"></div>
+                                        <button title='Add value for GAS' type="button" id="mvGas"
+                                            class='btn btn-success'>
+                                            <i class="fas fa-plus-circle"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-center bordered">
+                                        <div class="mvWtr"></div>
+                                        <button title='Add value for WTR' type="button" id="mvWtr"
+                                            class='btn btn-success'>
+                                            <i class="fas fa-plus-circle"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-center bordered">
+                                        <div class="mvPeak"></div>
+                                        <button title='Add value for Peak CHW' type="button" id="mvPeak"
+                                            class='btn btn-success'>
+                                            <i class="fas fa-plus-circle"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-center bordered">
+                                        <div class="mvLabor"></div>
+                                        <button title='Add value for Labor' type="button" id="mvLabor"
+                                            class='btn btn-success'>
+                                            <i class="fas fa-plus-circle"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <div class="mvMessage"></div>
+                            </tbody>
+                        </table>
+                        <div class="card-footer text-end">
+                            <button type="button" class="btn btn-success message2" data-bs-dismiss="modal">Done</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
