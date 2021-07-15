@@ -178,29 +178,35 @@ $(document).ready(() => {
         sessionStorage.removeItem('registered')
     });
 
-    //Ajax calls to create baseline values
-    $("#baselineValues").on('click', '#chwValue', (e) => {
-        e.preventDefault();
-        $('.message').text('')
-        console.log('works')
-        let chw_value = prompt("Please enter a value for CHW.");
+    $("#displayData").on("click", () => {
+        let chw_value = $("#chwValue").text();
         let replacedValue = chw_value.replace(/,/g, '');
-        $('.chwValue').append(`<p>[${chw_value}]</p>`);
-        let data = {
-            project_id: searchedVal,
-            commodity: 'CHW',
-            value: replacedValue
-        };
-        $.ajax({
-            url: '/find_b_s_values',
-            method: 'POST',
-            data: data,
-            success: function () {
-                $(".message").append(`<p>Your value of ${chw_value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
-            Otherwise, continue adding values to the other commodities.</p>`)
-            }
-        });
-    });
+        console.log(replacedValue)
+    })
+
+    //Ajax calls to create baseline values
+    // $("#baselineValues").on('click', '#chwValue', (e) => {
+    //     e.preventDefault();
+    //     $('.message').text('')
+    //     console.log('works')
+    //     let chw_value = prompt("Please enter a value for CHW.");
+    //     let replacedValue = chw_value.replace(/,/g, '');
+    //     $('.chwValue').append(`<p>[${chw_value}]</p>`);
+    //     let data = {
+    //         project_id: searchedVal,
+    //         commodity: 'CHW',
+    //         value: replacedValue
+    //     };
+    //     $.ajax({
+    //         url: '/find_b_s_values',
+    //         method: 'POST',
+    //         data: data,
+    //         success: function () {
+    //             $(".message").append(`<p>Your value of ${chw_value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
+    //         Otherwise, continue adding values to the other commodities.</p>`)
+    //         }
+    //     });
+    // });
 
     $("#baselineValues").on('click', '#eleValue', (e) => {
         e.preventDefault();
