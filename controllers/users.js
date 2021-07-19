@@ -51,9 +51,15 @@ module.exports = {
               }
           
 
-            const newUser = await Users.create({ email, password });
+              if (errors.length > 0) {
+                return res.render('signup', { errors })
 
-            return res.redirect('/login')
+            } else {
+
+                const newUser = await Users.create({ email, password });
+
+                return res.redirect('/login')
+            }
 
         } catch (error) {
 
