@@ -5,7 +5,7 @@
                 <h5 style="background-color: #bf5700;" class="card-header">Baseline</h5>
                 <div class="card-body w-100">
                     <div class="table-responsive">
-                        <table id="tableData" class="table text-light text-end table-borderless">
+                        <table id="tableData" class="table text-light text-end table-borderless baselineTable">
                             <thead>
                                 <tr class='text-center bordered'>
                                     <th></th>
@@ -38,80 +38,72 @@
                             <tbody>
                                 <tr>
                                     <th style="width: 100px" class="bordered">Baseline</th>
-                                    <td id="chwValue" contenteditable='true' class="text-center bordered bordered">
-                                        <div class="chwValue"></div>
-                                        {{!-- <button title='Add value for CHW' type="button" id="chwValue"
-                                            class='btn btn-success'>
-                                            <i class="fas fa-plus-circle"></i>
-                                        </button> --}}
+                                    <td class="text-center inputBorder">
+                                        <input type="text" id="chwValue">
                                     </td>
-                                    <span></span>
-                                     <td id="eleValue" contenteditable='true' class="text-center bordered bordered">
-                                        <div class="eleValue"></div>
-                                        {{!-- <button title='Add value for ELE' type="button" id="eleValue"
-                                            class='btn btn-success'>
-                                            <i class="fas fa-plus-circle"></i>
-                                        </button> --}}
+                                    <td class="text-center inputBorder">
+                                        <input type="text" id="eleValue">
                                     </td>
-                                     <td id="stmValue" contenteditable='true' class="text-center bordered bordered">
-                                        <div class="stmValue"></div>
-                                        {{!-- <button title='Add value for STM' type="button" id="stmValue"
-                                            class='btn btn-success'>
-                                            <i class="fas fa-plus-circle"></i>
-                                        </button> --}}
+                                    <td class="text-center inputBorder">
+                                        <input type="text" id="stmValue">
                                     </td>
-                                     <td id="hhwValue" contenteditable='true' class="text-center bordered bordered">
-                                        <div class="hhwValue"></div>
-                                        {{!-- <button title='Add value for HHW' type="button" id="hhwValue"
-                                            class='btn btn-success'>
-                                            <i class="fas fa-plus-circle"></i>
-                                        </button> --}}
+                                    <td class="text-center inputBorder">
+                                        <input type="text" id="hhwValue">
                                     </td>
-                                     <td id="gasValue" contenteditable='true' class="text-center bordered bordered">
-                                        <div class="gasValue"></div>
-                                        {{!-- <button title='Add value for GAS' type="button" id="gasValue"
-                                            class='btn btn-success'>
-                                            <i class="fas fa-plus-circle"></i>
-                                        </button> --}}
+                                    <td class="text-center inputBorder">
+                                        <input type="text" id="gasValue">
                                     </td>
-                                     <td id="wtrValue" contenteditable='true' class="text-center bordered bordered">
-                                        <div class="wtrValue"></div>
-                                        {{!-- <button title='Add value for WTR' type="button" id="wtrValue"
-                                            class='btn btn-success'>
-                                            <i class="fas fa-plus-circle"></i>
-                                        </button> --}}
+                                    <td class="text-center inputBorder">
+                                        <input type="text" id="wtrValue">
                                     </td>
-                                     <td id="peakChwValue" contenteditable='true' class="text-center bordered bordered">
-                                        <div class="peakChwValue"></div>
-                                        {{!-- <button title='Add value for Peak CHW' type="button" id="peakChwValue"
-                                            class='btn btn-success'>
-                                            <i class="fas fa-plus-circle"></i>
-                                        </button> --}}
+                                    <td class="text-center inputBorder">
+                                        <input type="text" id="peakChwValue">
                                     </td>
-                                     <td id="laborValue" contenteditable='true' class="text-center bordered bordered">
-                                        <div class="laborValue"></div>
-                                        {{!-- <button title='Add value for Labor' type="button" id="laborValue"
-                                            class='btn btn-success'>
-                                            <i class="fas fa-plus-circle"></i>
-                                        </button> --}}
+                                    <td class="text-center inputBorder">
+                                        <input type="text" id="laborValue">
                                     </td>
                                 </tr>
                                 <tr class='text-center borderTop'>
                                     <td></td>
-                                    <td><i class="fas fa-check-square fa-2x "></i></td>
-                                    <td><i class="fas fa-check-square fa-2x "></i></td>
-                                    <td><i class="fas fa-check-square fa-2x "></i></td>
-                                    <td><i class="fas fa-check-square fa-2x "></i></td>
-                                    <td><i class="fas fa-check-square fa-2x "></i></td>
-                                    <td><i class="fas fa-check-square fa-2x "></i></td>
-                                    <td><i class="fas fa-check-square fa-2x "></i></td>
-                                    <td><i class="fas fa-check-square fa-2x "></i></td>
+                                    <td>
+                                        <i id="addChw" style="display: none"
+                                            class="far fa-check-circle fa-3x checkMark"></i>
+                                    </td>
+                                    <td>
+                                        <i id="addEle" style="display: none"
+                                            class="far fa-check-circle fa-3x checkMark"></i>
+                                    </td>
+                                    <td>
+                                        <i id="addStm" style="display: none"
+                                            class="far fa-check-circle fa-3x checkMark"></i>
+                                    </td>
+                                    <td>
+                                        <i id="addHhw" style="display: none"
+                                            class="far fa-check-circle fa-3x checkMark"></i>
+                                    </td>
+                                    <td>
+                                        <i id="addGas" style="display: none"
+                                            class="far fa-check-circle fa-3x checkMark"></i>
+                                    </td>
+                                    <td>
+                                        <i id="addWtr" style="display: none"
+                                            class="far fa-check-circle fa-3x checkMark"></i>
+                                    </td>
+                                    <td>
+                                        <i id="addPeakChw" style="display: none"
+                                            class="far fa-check-circle fa-3x checkMark"></i>
+                                    </td>
+                                    <td>
+                                        <i id="addLabor" style="display: none"
+                                            class="far fa-check-circle fa-3x checkMark"></i>
+                                    </td>
                                 </tr>
                                 <div class="message"></div>
                             </tbody>
                         </table>
                         <div class="card-footer text-end">
-                            <button type="button" id='displayData' class="btn btn-success message2" data-bs-dismiss="modal">Done</button>
+                            <button type="button" id='displayData' class="btn btn-success message2"
+                                data-bs-dismiss="modal">Done</button>
                         </div>
                     </div>
                 </div>

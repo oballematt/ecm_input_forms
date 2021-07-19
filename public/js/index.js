@@ -178,20 +178,72 @@ $(document).ready(() => {
         sessionStorage.removeItem('registered')
     });
 
-    $("#displayData").on("click", () => {
-        let chw_value = $("#chwValue").text();
-        let replacedValue = chw_value.replace(/,/g, '');
-        console.log(replacedValue)
+    $("#chwValue").on("input", function()  {
+        $("#addChw").removeAttr('style')
+        if ($(this).val() === "") {
+            $('#addChw').hide()
+        }
+    })
+
+    $("#addChw").on('click', function() {
+        $(this).css("color", "green")
+    })
+
+    $("#eleValue").on("input", function () {
+        $("#addEle").removeAttr('style')
+        if ($(this).val() === "") {
+            $('#addEle').hide()
+        }
+    })
+
+    $("#stmValue").on("input", function () {
+        $("#addStm").removeAttr('style')
+        if ($(this).val() === "") {
+            $('#addStm').hide()
+        }
+
+    })
+
+    $("#hhwValue").on("input", function () {
+        $("#addHhw").removeAttr('style')
+        if ($(this).val() === "") {
+            $('#addHhw').hide()
+        }
+    })
+
+    $("#gasValue").on("input", function () {
+        $("#addGas").removeAttr('style')
+        if ($(this).val() === "") {
+            $('#addGas').hide()
+        }
+    })
+
+    $("#wtrValue").on("input", function () {
+        $("#addWtr").removeAttr('style')
+        if ($(this).val() === "") {
+            $('#addWtr').hide()
+        }
+    })
+
+    $("#peakChwValue").on("input", function () {
+        $("#addPeakChw").removeAttr('style')
+        if ($(this).val() === "") {
+            $('#addPeakChw').hide()
+        }
+    })
+
+    $("#laborValue").on("input", function () {
+        $("#addLabor").removeAttr('style')
+        if ($(this).val() === "") {
+            $('#addLabor').hide()
+        }
     })
 
     //Ajax calls to create baseline values
-    // $("#baselineValues").on('click', '#chwValue', (e) => {
+    // $("#baselineValues").on('click', '#addChw', (e) => {
     //     e.preventDefault();
-    //     $('.message').text('')
-    //     console.log('works')
-    //     let chw_value = prompt("Please enter a value for CHW.");
-    //     let replacedValue = chw_value.replace(/,/g, '');
-    //     $('.chwValue').append(`<p>[${chw_value}]</p>`);
+    //     let chwValue = $("#chwValue").val();
+    //     let replacedValue = chwValue.replace(/,/g, '');
     //     let data = {
     //         project_id: searchedVal,
     //         commodity: 'CHW',
@@ -208,161 +260,161 @@ $(document).ready(() => {
     //     });
     // });
 
-    $("#baselineValues").on('click', '#eleValue', (e) => {
-        e.preventDefault();
-        $('.message').text('')
-        let ele_value = prompt("Please enter a value for ELE.")
-        let replacedValue = ele_value.replace(/,/g, '')
-        $('.eleValue').append(`<p>[${ele_value}]</p>`)
-        let data = {
-            project_id: searchedVal,
-            commodity: 'ELE',
-            value: replacedValue,
-            success: function () {
-                $(".message").append(`<p>Your value of ${ele_value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
-        Otherwise, continue adding values to the other commodities.</p>`)
-            }
-        }
-        $.ajax({
-            url: '/find_b_s_values',
-            method: 'POST',
-            data: data
-        })
-    });
+    // $("#baselineValues").on('click', '#eleValue', (e) => {
+    //     e.preventDefault();
+    //     $('.message').text('')
+    //     let ele_value = prompt("Please enter a value for ELE.")
+    //     let replacedValue = ele_value.replace(/,/g, '')
+    //     $('.eleValue').append(`<p>[${ele_value}]</p>`)
+    //     let data = {
+    //         project_id: searchedVal,
+    //         commodity: 'ELE',
+    //         value: replacedValue,
+    //         success: function () {
+    //             $(".message").append(`<p>Your value of ${ele_value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
+    //     Otherwise, continue adding values to the other commodities.</p>`)
+    //         }
+    //     }
+    //     $.ajax({
+    //         url: '/find_b_s_values',
+    //         method: 'POST',
+    //         data: data
+    //     })
+    // });
 
-    $("#baselineValues").on('click', '#stmValue', (e) => {
-        e.preventDefault();
-        $('.message').text('')
-        let stm_value = prompt("Please enter a value for STM.")
-        let replacedValue = stm_value.replace(/,/g, '')
-        $('.stmValue').append(`<p>[${stm_value}]</p>`)
-        let data = {
-            project_id: searchedVal,
-            commodity: 'STM',
-            value: replacedValue,
-            success: function () {
-                $(".message").append(`<p>Your value of ${stm_value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
-        Otherwise, continue adding values to the other commodities.</p>`)
-            }
-        }
-        $.ajax({
-            url: '/find_b_s_values',
-            method: 'POST',
-            data: data
-        })
-    });
-
-
-    $("#baselineValues").on('click', '#hhwValue', (e) => {
-        e.preventDefault();
-        $('.message').text('')
-        let hhw_value = prompt("Please enter a value for HHW.")
-        let replacedValue = hhw_value.replace(/,/g, '')
-        $('.hhwValue').append(`<p>[${hhw_value}]</p>`)
-        let data = {
-            project_id: searchedVal,
-            commodity: 'HHW',
-            value: replacedValue,
-            success: function () {
-                $(".message").append(`<p>Your value of ${hhw_value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
-        Otherwise, continue adding values to the other commodities.</p>`)
-            }
-        }
-        $.ajax({
-            url: '/find_b_s_values',
-            method: 'POST',
-            data: data
-        })
-    });
+    // $("#baselineValues").on('click', '#stmValue', (e) => {
+    //     e.preventDefault();
+    //     $('.message').text('')
+    //     let stm_value = prompt("Please enter a value for STM.")
+    //     let replacedValue = stm_value.replace(/,/g, '')
+    //     $('.stmValue').append(`<p>[${stm_value}]</p>`)
+    //     let data = {
+    //         project_id: searchedVal,
+    //         commodity: 'STM',
+    //         value: replacedValue,
+    //         success: function () {
+    //             $(".message").append(`<p>Your value of ${stm_value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
+    //     Otherwise, continue adding values to the other commodities.</p>`)
+    //         }
+    //     }
+    //     $.ajax({
+    //         url: '/find_b_s_values',
+    //         method: 'POST',
+    //         data: data
+    //     })
+    // });
 
 
-    $("#baselineValues").on('click', '#gasValue', (e) => {
-        e.preventDefault();
-        $('.message').text('')
-        let gas_value = prompt("Please enter a value for GAS.")
-        let replacedValue = gas_value.replace(/,/g, '')
-        $('.gasValue').append(`<p>[${gas_value}]</p>`)
-        let data = {
-            project_id: searchedVal,
-            commodity: 'GAS',
-            value: replacedValue,
-            success: function () {
-                $(".message").append(`<p>Your value of ${gas_value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
-        Otherwise, continue adding values to the other commodities.</p>`)
-            }
-        }
-        $.ajax({
-            url: '/find_b_s_values',
-            method: 'POST',
-            data: data
-        })
-    });
+    // $("#baselineValues").on('click', '#hhwValue', (e) => {
+    //     e.preventDefault();
+    //     $('.message').text('')
+    //     let hhw_value = prompt("Please enter a value for HHW.")
+    //     let replacedValue = hhw_value.replace(/,/g, '')
+    //     $('.hhwValue').append(`<p>[${hhw_value}]</p>`)
+    //     let data = {
+    //         project_id: searchedVal,
+    //         commodity: 'HHW',
+    //         value: replacedValue,
+    //         success: function () {
+    //             $(".message").append(`<p>Your value of ${hhw_value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
+    //     Otherwise, continue adding values to the other commodities.</p>`)
+    //         }
+    //     }
+    //     $.ajax({
+    //         url: '/find_b_s_values',
+    //         method: 'POST',
+    //         data: data
+    //     })
+    // });
 
-    $("#baselineValues").on('click', '#wtrValue', (e) => {
-        e.preventDefault();
-        $('.message').text('')
-        let wtr_value = prompt("Please enter a value for WTR.")
-        let replacedValue = wtr_value.replace(/,/g, '')
-        $('.wtrValue').append(`<p>[${wtr_value}]</p>`)
-        let data = {
-            project_id: searchedVal,
-            commodity: 'WTR',
-            value: replacedValue,
-            success: function () {
-                $(".message").append(`<p>Your value of ${wtr_value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
-        Otherwise, continue adding values to the other commodities.</p>`)
-            }
-        }
-        $.ajax({
-            url: '/find_b_s_values',
-            method: 'POST',
-            data: data
-        })
-    });
 
-    $("#baselineValues").on('click', '#peakChwValue', (e) => {
-        e.preventDefault();
-        $('.message').text('')
-        let peakChw_value = prompt("Please enter a value for Peak CHW.")
-        let replacedValue = peakChw_value.replace(/,/g, '')
-        $('.peakChwValue').append(`<p>[${peakChw_value}]</p>`)
-        let data = {
-            project_id: searchedVal,
-            commodity: 'Peak CHW',
-            value: replacedValue,
-            success: function () {
-                $(".message").append(`<p>Your value of ${peakChw_value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
-        Otherwise, continue adding values to the other commodities.</p>`)
-            }
-        }
-        $.ajax({
-            url: '/find_b_s_values',
-            method: 'POST',
-            data: data
-        })
-    });
+    // $("#baselineValues").on('click', '#gasValue', (e) => {
+    //     e.preventDefault();
+    //     $('.message').text('')
+    //     let gas_value = prompt("Please enter a value for GAS.")
+    //     let replacedValue = gas_value.replace(/,/g, '')
+    //     $('.gasValue').append(`<p>[${gas_value}]</p>`)
+    //     let data = {
+    //         project_id: searchedVal,
+    //         commodity: 'GAS',
+    //         value: replacedValue,
+    //         success: function () {
+    //             $(".message").append(`<p>Your value of ${gas_value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
+    //     Otherwise, continue adding values to the other commodities.</p>`)
+    //         }
+    //     }
+    //     $.ajax({
+    //         url: '/find_b_s_values',
+    //         method: 'POST',
+    //         data: data
+    //     })
+    // });
 
-    $("#baselineValues").on('click', '#laborValue', (e) => {
-        e.preventDefault();
-        $('.message').text('')
-        let labor_value = prompt("Please enter a value for Labor.")
-        let replacedValue = labor_value.replace(/,/g, '')
-        $('.laborValue').append(`<p>[${labor_value}]</p>`)
-        let data = {
-            project_id: searchedVal,
-            commodity: 'Labor',
-            value: replacedValue,
-            success: function () {
-                $(".message").append(`<p>Your value of ${labor_value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
-        Otherwise, continue adding values to the other commodities.</p>`)
-            }
-        }
-        $.ajax({
-            url: '/find_b_s_values',
-            method: 'POST',
-            data: data
-        })
-    });
+    // $("#baselineValues").on('click', '#wtrValue', (e) => {
+    //     e.preventDefault();
+    //     $('.message').text('')
+    //     let wtr_value = prompt("Please enter a value for WTR.")
+    //     let replacedValue = wtr_value.replace(/,/g, '')
+    //     $('.wtrValue').append(`<p>[${wtr_value}]</p>`)
+    //     let data = {
+    //         project_id: searchedVal,
+    //         commodity: 'WTR',
+    //         value: replacedValue,
+    //         success: function () {
+    //             $(".message").append(`<p>Your value of ${wtr_value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
+    //     Otherwise, continue adding values to the other commodities.</p>`)
+    //         }
+    //     }
+    //     $.ajax({
+    //         url: '/find_b_s_values',
+    //         method: 'POST',
+    //         data: data
+    //     })
+    // });
+
+    // $("#baselineValues").on('click', '#peakChwValue', (e) => {
+    //     e.preventDefault();
+    //     $('.message').text('')
+    //     let peakChw_value = prompt("Please enter a value for Peak CHW.")
+    //     let replacedValue = peakChw_value.replace(/,/g, '')
+    //     $('.peakChwValue').append(`<p>[${peakChw_value}]</p>`)
+    //     let data = {
+    //         project_id: searchedVal,
+    //         commodity: 'Peak CHW',
+    //         value: replacedValue,
+    //         success: function () {
+    //             $(".message").append(`<p>Your value of ${peakChw_value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
+    //     Otherwise, continue adding values to the other commodities.</p>`)
+    //         }
+    //     }
+    //     $.ajax({
+    //         url: '/find_b_s_values',
+    //         method: 'POST',
+    //         data: data
+    //     })
+    // });
+
+    // $("#baselineValues").on('click', '#laborValue', (e) => {
+    //     e.preventDefault();
+    //     $('.message').text('')
+    //     let labor_value = prompt("Please enter a value for Labor.")
+    //     let replacedValue = labor_value.replace(/,/g, '')
+    //     $('.laborValue').append(`<p>[${labor_value}]</p>`)
+    //     let data = {
+    //         project_id: searchedVal,
+    //         commodity: 'Labor',
+    //         value: replacedValue,
+    //         success: function () {
+    //             $(".message").append(`<p>Your value of ${labor_value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
+    //     Otherwise, continue adding values to the other commodities.</p>`)
+    //         }
+    //     }
+    //     $.ajax({
+    //         url: '/find_b_s_values',
+    //         method: 'POST',
+    //         data: data
+    //     })
+    // });
 
     //Ajax calls to create predicted savings
     $("#SavingsValues").on('click', '#predictedChw', (e) => {
