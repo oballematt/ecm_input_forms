@@ -31,7 +31,6 @@ module.exports = {
 
                 errors.push({ text: "Invalid Email"});
 
-                return res.status(401).json("Invalid Email");
             };
 
             if (!email) {
