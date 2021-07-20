@@ -542,7 +542,7 @@ module.exports = {
                 const p_peakchw = await Prjt_source_percent_each.findOne({
                     where: {
                         project_id,
-                        commodity: 'peak_CHW',
+                        commodity: 'Peak CHW',
                         phase: 'Predicted'
                     }
                 });
