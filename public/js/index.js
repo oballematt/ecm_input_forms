@@ -196,6 +196,14 @@ $(document).ready(() => {
         '#predWtrValue': '#addPredWtr',
         '#predPeakChwValue': '#addPredPeakChw',
         '#predLaborValue': '#addPredLabor',
+        '#mvChwValue': '#addMvChw',
+        '#mvEleValue': '#addMvEle',
+        '#mvStmValue': '#addMvStm',
+        '#mvHhwValue': '#addMvHhw',
+        '#mvGasValue': '#addMvGas',
+        '#mvWtrValue': '#addMvWtr',
+        '#mvPeakChwValue': '#addMvPeakChw',
+        '#mvLaborValue': '#addMvLabor',
     }
 
     Object.keys(objs).forEach(function (key) {
@@ -446,305 +454,292 @@ $(document).ready(() => {
         )
     });
 
-    // $("#savingsValues").on('click', '#predictedHhw', (e) => {
-    //     e.preventDefault();
-    //     $('.predictedMessage').text('')
-    //     let value = prompt("Please enter a value for HHW.")
-    //     let replacedValue = value.replace(/,/g, '')
-    //     $('.predictedHhw').append(`<p>[${value}]</p>`)
-    //     let data = {
-    //         project_id: searchedVal,
-    //         phase: 'Predicted',
-    //         commodity: 'HHW',
-    //         value: replacedValue,
-    //         success: function () {
-    //             $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
-    //     Otherwise, continue adding values to the other commodities.</p>`)
-    //         }
-    //     }
-    //     $.ajax({
-    //         url: '/find_savings_values',
-    //         method: 'POST',
-    //         data: data
-    //     })
-    // });
+    $("#addPredHhw").on('click', (e) => {
+        e.preventDefault();
+        $("#addPredHhw").css("color", "green")
+        let value = $("#predHhwValue").val()
+        let replacedValue = value.replace(/,/g, '')
+        let data = {
+            project_id: searchedVal,
+            phase: 'Predicted',
+            commodity: 'HHW',
+            value: replacedValue,
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        }).then(
+            $("#addPredHhw").off('click'),
+            $('#addPredHhw').removeClass('checkMark'),
+            $("#predHhwValue").prop('disabled', true).css("color", "white"),
+        )
+    });
 
-    // $("#savingsValues").on('click', '#predictedGas', (e) => {
-    //     e.preventDefault();
-    //     $('.predictedMessage').text('')
-    //     let value = prompt("Please enter a value for GAS.")
-    //     let replacedValue = value.replace(/,/g, '')
-    //     $('.predictedGas').append(`<p>[${value}]</p>`)
-    //     let data = {
-    //         project_id: searchedVal,
-    //         phase: 'Predicted',
-    //         commodity: 'GAS',
-    //         value: replacedValue,
-    //         success: function () {
-    //             $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
-    //     Otherwise, continue adding values to the other commodities.</p>`)
-    //         }
-    //     }
-    //     $.ajax({
-    //         url: '/find_savings_values',
-    //         method: 'POST',
-    //         data: data
-    //     })
-    // });
+    $("#addPredGas").on('click', (e) => {
+        e.preventDefault();
+        $("#addPredGas").css("color", "green")
+        let value = $("#predGasValue").val()
+        let replacedValue = value.replace(/,/g, '')
+        let data = {
+            project_id: searchedVal,
+            phase: 'Predicted',
+            commodity: 'GAS',
+            value: replacedValue,
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        }).then(
+            $("#addPredGas").off('click'),
+            $('#addPredGas').removeClass('checkMark'),
+            $("#predGasValue").prop('disabled', true).css("color", "white"),
+        )
+    });
 
-    // $("#savingsValues").on('click', '#predictedWtr', (e) => {
-    //     e.preventDefault();
-    //     $('.predictedMessage').text('')
-    //     let value = prompt("Please enter a value for WTR.")
-    //     let replacedValue = value.replace(/,/g, '')
-    //     $('.predictedWtr').append(`<p>[${value}]</p>`)
-    //     let data = {
-    //         project_id: searchedVal,
-    //         phase: 'Predicted',
-    //         commodity: 'WTR',
-    //         value: replacedValue,
-    //         success: function () {
-    //             $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view and edit and edit the value below.
-    //     Otherwise, continue adding values to the other commodities.</p>`)
-    //         }
-    //     }
-    //     $.ajax({
-    //         url: '/find_savings_values',
-    //         method: 'POST',
-    //         data: data
-    //     })
-    // });
+    $("#addPredWtr").on('click', (e) => {
+        e.preventDefault();
+        $("#addPredWtr").css("color", "green")
+        let value = $("#predWtrValue").val()
+        let replacedValue = value.replace(/,/g, '')
+        let data = {
+            project_id: searchedVal,
+            phase: 'Predicted',
+            commodity: 'WTR',
+            value: replacedValue,
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        }).then(
+            $("#addPredWtr").off('click'),
+            $('#addPredWtr').removeClass('checkMark'),
+            $("#predWtrValue").prop('disabled', true).css("color", "white"),
+        )
+    });
 
-    // $("#savingsValues").on('click', '#predictedPeak', (e) => {
-    //     e.preventDefault();
-    //     $('.predictedMessage').text('')
-    //     let value = prompt("Please enter a value for Peak CHW.")
-    //     let replacedValue = value.replace(/,/g, '')
-    //     $('.predictedPeak').append(`<p>[${value}]</p>`)
-    //     let data = {
-    //         project_id: searchedVal,
-    //         phase: 'Predicted',
-    //         commodity: 'Peak CHW',
-    //         value: replacedValue,
-    //         success: function () {
-    //             $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
-    //     Otherwise, continue adding values to the other commodities.</p>`)
-    //         }
-    //     }
-    //     $.ajax({
-    //         url: '/find_savings_values',
-    //         method: 'POST',
-    //         data: data
-    //     })
-    // });
+    $("#addPredPeakChw").on('click', (e) => {
+        e.preventDefault();
+        $("#addPredPeakChw").css("color", "green")
+        let value = $("#predPeakChwValue").val()
+        let replacedValue = value.replace(/,/g, '')
+        let data = {
+            project_id: searchedVal,
+            phase: 'Predicted',
+            commodity: 'Peak CHW',
+            value: replacedValue,
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        }).then(
+            $("#addPredPeakChw").off('click'),
+            $('#addPredPeakChw').removeClass('checkMark'),
+            $("#predPeakChwValue").prop('disabled', true).css("color", "white"),
+        )
+    });
 
-    // $("#savingsValues").on('click', '#predictedLabor', (e) => {
-    //     e.preventDefault();
-    //     $('.predictedMessage').text('')
-    //     let value = prompt("Please enter a value for Labor.")
-    //     let replacedValue = value.replace(/,/g, '')
-    //     $('.predictedLabor').append(`<p>[${value}]</p>`)
-    //     let data = {
-    //         project_id: searchedVal,
-    //         phase: 'Predicted',
-    //         commodity: 'Labor',
-    //         value: replacedValue,
-    //         success: function () {
-    //             $(".predictedMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
-    //     Otherwise, continue adding values to the other commodities.</p>`)
-    //         }
-    //     }
-    //     $.ajax({
-    //         url: '/find_savings_values',
-    //         method: 'POST',
-    //         data: data
-    //     })
-    // });
+    $("#addPredLabor").on('click', (e) => {
+        e.preventDefault();
+        $("#addPredLabor").css("color", "green")
+        let value = $("#predLaborValue").val()
+        let replacedValue = value.replace(/,/g, '')
+        let data = {
+            project_id: searchedVal,
+            phase: 'Predicted',
+            commodity: 'Labor',
+            value: replacedValue,
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        }).then(
+            $("#addPredLabor").off('click'),
+            $('#addPredLabor').removeClass('checkMark'),
+            $("#predLaborValue").prop('disabled', true).css("color", "white"),
+        )
+    });;
 
     // //Ajax calls to create MV savings
-    // $("#savingsValues").on('click', '#mvChw', (e) => {
-    //     e.preventDefault();
-    //     $('.mvMessage').text('')
-    //     let value = prompt("Please enter a value for CHW.")
-    //     let replacedValue = value.replace(/,/g, '')
-    //     $('.mvChw').append(`<p>[${value}]</p>`)
-    //     let data = {
-    //         project_id: searchedVal,
-    //         phase: 'M&V',
-    //         commodity: 'CHW',
-    //         value: replacedValue,
-    //         success: function () {
-    //             $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
-    //     Otherwise, continue adding values to the other commodities.</p>`)
-    //         }
-    //     }
-    //     $.ajax({
-    //         url: '/find_savings_values',
-    //         method: 'POST',
-    //         data: data
-    //     })
-    // });
+    $("#addMvChw").on('click', (e) => {
+        e.preventDefault();
+        $("#addMvChw").css("color", "green")
+        let value = $("#mvChwValue").val()
+        let replacedValue = value.replace(/,/g, '')
+        let data = {
+            project_id: searchedVal,
+            phase: 'M&V',
+            commodity: 'CHW',
+            value: replacedValue,
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        }).then(
+            $("#addMvChw").off('click'),
+            $('#addMvChw').removeClass('checkMark'),
+            $("#mvChwValue").prop('disabled', true).css("color", "white"),
+        )
+    });
 
-    // $("#savingsValues").on('click', '#mvEle', (e) => {
-    //     e.preventDefault();
-    //     $('.mvMessage').text('')
-    //     let value = prompt("Please enter a value for ELE.")
-    //     let replacedValue = value.replace(/,/g, '')
-    //     $('.mvEle').append(`<p>[${value}]</p>`)
-    //     let data = {
-    //         project_id: searchedVal,
-    //         phase: 'M&V',
-    //         commodity: 'ELE',
-    //         value: replacedValue,
-    //         success: function () {
-    //             $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
-    //     Otherwise, continue adding values to the other commodities.</p>`)
-    //         }
-    //     }
-    //     $.ajax({
-    //         url: '/find_savings_values',
-    //         method: 'POST',
-    //         data: data
-    //     })
-    // });
+    $("#addMvEle").on('click', (e) => {
+        e.preventDefault();
+        $("#addMvEle").css("color", "green")
+        let value = $("#mvEleValue").val()
+        let replacedValue = value.replace(/,/g, '')
+        let data = {
+            project_id: searchedVal,
+            phase: 'M&V',
+            commodity: 'ELE',
+            value: replacedValue,
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        }).then(
+            $("#addMvEle").off('click'),
+            $('#addMvEle').removeClass('checkMark'),
+            $("#mvEleValue").prop('disabled', true).css("color", "white"),
+        )
+    });
 
-    // $("#savingsValues").on('click', '#mvStm', (e) => {
-    //     e.preventDefault();
-    //     $('.mvMessage').text('')
-    //     let value = prompt("Please enter a value for STM.")
-    //     let replacedValue = value.replace(/,/g, '')
-    //     $('.mvStm').append(`<p>[${value}]</p>`)
-    //     let data = {
-    //         project_id: searchedVal,
-    //         phase: 'M&V',
-    //         commodity: 'STM',
-    //         value: replacedValue,
-    //         success: function () {
-    //             $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
-    //     Otherwise, continue adding values to the other commodities.</p>`)
-    //         }
-    //     }
-    //     $.ajax({
-    //         url: '/find_savings_values',
-    //         method: 'POST',
-    //         data: data
-    //     })
-    // });
+    $("#addMvStm").on('click', (e) => {
+        e.preventDefault();
+        $("#addMvStm").css("color", "green")
+        let value = $("#mvStmValue").val()
+        let replacedValue = value.replace(/,/g, '')
+        let data = {
+            project_id: searchedVal,
+            phase: 'M&V',
+            commodity: 'STM',
+            value: replacedValue,
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        }).then(
+            $("#addMvStm").off('click'),
+            $('#addMvStm').removeClass('checkMark'),
+            $("#mvStmValue").prop('disabled', true).css("color", "white"),
+        )
+    });
 
-    // $("#savingsValues").on('click', '#mvHhw', (e) => {
-    //     e.preventDefault();
-    //     $('.mvMessage').text('')
-    //     let value = prompt("Please enter a value for HHW.")
-    //     let replacedValue = value.replace(/,/g, '')
-    //     $('.mvHhw').append(`<p>[${value}]</p>`)
-    //     let data = {
-    //         project_id: searchedVal,
-    //         phase: 'M&V',
-    //         commodity: 'HHW',
-    //         value: replacedValue,
-    //         success: function () {
-    //             $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
-    //     Otherwise, continue adding values to the other commodities.</p>`)
-    //         }
-    //     }
-    //     $.ajax({
-    //         url: '/find_savings_values',
-    //         method: 'POST',
-    //         data: data
-    //     })
-    // });
+    $("#addMvHhw").on('click', (e) => {
+        e.preventDefault();
+        $("#addMvHhw").css("color", "green")
+        let value = $("#mvHhwValue").val()
+        let replacedValue = value.replace(/,/g, '')
+        let data = {
+            project_id: searchedVal,
+            phase: 'M&V',
+            commodity: 'HHW',
+            value: replacedValue,
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        }).then(
+            $("#addMvHhw").off('click'),
+            $('#addMvHhw').removeClass('checkMark'),
+            $("#mvHhwValue").prop('disabled', true).css("color", "white"),
+        )
+    });
 
-    // $("#savingsValues").on('click', '#mvGas', (e) => {
-    //     e.preventDefault();
-    //     $('.mvMessage').text('')
-    //     let value = prompt("Please enter a value for GAS.")
-    //     let replacedValue = value.replace(/,/g, '')
-    //     $('.mvGas').append(`<p>[${value}]</p>`)
-    //     let data = {
-    //         project_id: searchedVal,
-    //         phase: 'M&V',
-    //         commodity: 'GAS',
-    //         value: replacedValue,
-    //         success: function () {
-    //             $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
-    //     Otherwise, continue adding values to the other commodities.</p>`)
-    //         }
-    //     }
-    //     $.ajax({
-    //         url: '/find_savings_values',
-    //         method: 'POST',
-    //         data: data
-    //     })
-    // });
+    $("#addMvGas").on('click', (e) => {
+        e.preventDefault();
+        $("#addMvGas").css("color", "green")
+        let value = $("#mvGasValue").val()
+        let replacedValue = value.replace(/,/g, '')
+        let data = {
+            project_id: searchedVal,
+            phase: 'M&V',
+            commodity: 'GAS',
+            value: replacedValue,
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        }).then(
+            $("#addMvGas").off('click'),
+            $('#addMvGas').removeClass('checkMark'),
+            $("#mvGasValue").prop('disabled', true).css("color", "white"),
+        )
+    });
 
-    // $("#savingsValues").on('click', '#mvWtr', (e) => {
-    //     e.preventDefault();
-    //     $('.mvMessage').text('')
-    //     let value = prompt("Please enter a value for WTR.")
-    //     let replacedValue = value.replace(/,/g, '')
-    //     $('.mvWtr').append(`<p>[${value}]</p>`)
-    //     let data = {
-    //         project_id: searchedVal,
-    //         phase: 'M&V',
-    //         commodity: 'WTR',
-    //         value: replacedValue,
-    //         success: function () {
-    //             $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
-    //     Otherwise, continue adding values to the other commodities.</p>`)
-    //         }
-    //     }
-    //     $.ajax({
-    //         url: '/find_savings_values',
-    //         method: 'POST',
-    //         data: data
-    //     })
-    // });
+    $("#addMvWtr").on('click', (e) => {
+        e.preventDefault();
+        $("#addMvWtr").css("color", "green")
+        let value = $("#mvWtrValue").val()
+        let replacedValue = value.replace(/,/g, '')
+        let data = {
+            project_id: searchedVal,
+            phase: 'M&V',
+            commodity: 'WTR',
+            value: replacedValue,
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        }).then(
+            $("#addMvWtr").off('click'),
+            $('#addMvWtr').removeClass('checkMark'),
+            $("#mvWtrValue").prop('disabled', true).css("color", "white"),
+        )
+    });
 
-    // $("#savingsValues").on('click', '#mvPeak', (e) => {
-    //     e.preventDefault();
-    //     $('.mvMessage').text('')
-    //     let value = prompt("Please enter a value for Peak CHW.")
-    //     let replacedValue = value.replace(/,/g, '')
-    //     $('.mvPeak').append(`<p>[${value}]</p>`)
-    //     let data = {
-    //         project_id: searchedVal,
-    //         phase: 'M&V',
-    //         commodity: 'Peak CHW',
-    //         value: replacedValue,
-    //         success: function () {
-    //             $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
-    //     Otherwise, continue adding values to the other commodities.</p>`)
-    //         }
-    //     }
-    //     $.ajax({
-    //         url: '/find_savings_values',
-    //         method: 'POST',
-    //         data: data
-    //     })
-    // });
+    $("#addMvPeakChw").on('click', (e) => {
+        e.preventDefault();
+        $("#addMvPeakChw").css("color", "green")
+        let value = $("#mvPeakChwValue").val()
+        let replacedValue = value.replace(/,/g, '')
+        let data = {
+            project_id: searchedVal,
+            phase: 'M&V',
+            commodity: 'Peak CHW',
+            value: replacedValue,
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        }).then(
+            $("#addMvPeakChw").off('click'),
+            $('#addMvPeakChw').removeClass('checkMark'),
+            $("#mvPeakChwValue").prop('disabled', true).css("color", "white"),
+        )
+    });
 
-    // $("#savingsValues").on('click', '#mvLabor', (e) => {
-    //     e.preventDefault();
-    //     $('.mvMessage').text('')
-    //     let value = prompt("Please enter a value for Labor.")
-    //     let replacedValue = value.replace(/,/g, '')
-    //     $('.mvLabor').append(`<p>[${value}]</p>`)
-    //     let data = {
-    //         project_id: searchedVal,
-    //         phase: 'M&V',
-    //         commodity: 'Labor',
-    //         value: replacedValue,
-    //         success: function () {
-    //             $(".mvMessage").append(`<p>Your value of ${value} for ${data.commodity} has been added. Please search for your project again to view and edit the value below.
-    //     Otherwise, continue adding values to the other commodities.</p>`)
-    //         }
-    //     }
-    //     $.ajax({
-    //         url: '/find_savings_values',
-    //         method: 'POST',
-    //         data: data
-    //     })
-    // });
+    $("#addMvLabor").on('click', (e) => {
+        e.preventDefault();
+        $("#addMvLabor").css("color", "green")
+        let value = $("#mvLaborValue").val()
+        let replacedValue = value.replace(/,/g, '')
+        let data = {
+            project_id: searchedVal,
+            phase: 'M&V',
+            commodity: 'Labor',
+            value: replacedValue,
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: 'POST',
+            data: data
+        }).then(
+            $("#addMvLabor").off('click'),
+            $('#addMvLabor').removeClass('checkMark'),
+            $("#mvLaborValue").prop('disabled', true).css("color", "white"),
+        )
+    });;
 
 
     // ajax calls for updating a specific table on an existing project ID, ajax call necessary so that if a user

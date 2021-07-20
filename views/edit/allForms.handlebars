@@ -23,6 +23,10 @@
                 </select>
                 <button class="btn btn-success load" type="submit">Search</button>
             </div>
+            <div class="text-end mt-3">
+                <a id="create" href="/metadata"><button type="button" class="btn btn-success">Create</button>
+                </a>
+            </div>
             {{> successModal}}
             <div class="card border-secondary mt-3 w-100 text-light" style="background-color: #333f48;">
                 <h5 style="background-color: #bf5700;" class="card-header">Project Info</h5>
@@ -161,8 +165,6 @@
                         {{/with}}
                     </section>
                     <div class='text-end text-white mt-3'>
-                        <a id="create" href="/metadata"><button type="button" class="btn btn-success">Create</button>
-                        </a>
                         {{#with metadata}}
                         <a href="/find/{{project_id}}"><button type="button" class='btn btn-warning'>Edit</button></a>
                         {{/with}}
@@ -196,7 +198,6 @@
                 </div>
                 <div style="display: none;" class="col-md-12 info">
                     <div class="alert alert-success infoMessage" role="alert">
-                        A simple warning alert—check it out!
                     </div>
                 </div>
                 <section class="col-md-6">
@@ -365,15 +366,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{#with metadata}}
-                        <div class="card-footer text-end">
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                data-bs-target="#savingsModal">
-                                <i class="fas fa-plus-circle">&nbsp;Add
-                                    Record</i>
-                            </button>
-                        </div>
-                        {{/with}}
                     </div>
                 </section>
             </div>
@@ -426,9 +418,11 @@
                 </section>
             </div>
         </form>
+        {{#with metadata}}
         <form class='mb-3' action='/find_b_s_values' id="baselineValues" method="POST">
             {{> baselinePartial}}
         </form>
+        {{/with}}
         <hr>
         <div class="row">
             <div class="col-md-12">

@@ -48,6 +48,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {{#with metadata}}
                     <form action="find_savings_values" method="POST" id="savingsValues">
                         <tr>
                             <th style="width: 100px">Predicted</th>
@@ -112,6 +113,7 @@
                             </td>
                         </tr>
                     </form>
+                    {{/with}}
                     <form action='/' method='POST' id="searchData">
                         <tr>
                             <th class="bordered" scope="row">%</th>
