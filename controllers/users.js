@@ -24,31 +24,32 @@ module.exports = {
 
                 errors.push({ text: "Email already exists" });
 
-                return res.status(401).send('Email already exists');
             };
 
             if (!isValid) {
 
-                errors.push({ text: "Invalid Email" });
+                errors.push({ text: "Invalid Email"});
+
             };
 
             if (!email) {
                 errors.push({ text: "Please enter an email" })
-            };
-
-            if (!password) {
+              };
+          
+              if (!password) {
                 errors.push({ text: "Please enter a password" })
-            };
+              };
+            
+              if (password.length < 6){
+                errors.push({text: "Password must be atleast 6 characters"})
+              }
+          
+              if (password !== password2){
+                errors.push({text: "Passwords do not match"})
+              }
+          
 
-            if (password.length < 6) {
-                errors.push({ text: "Password must be atleast 6 characters" })
-            }
-
-            if (password !== password2) {
-                errors.push({ text: "Passwords do not match" })
-            }
-
-            if (errors.length > 0) {
+              if (errors.length > 0) {
                 return res.render('signup', { errors })
 
             } else {

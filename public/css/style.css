@@ -67,11 +67,11 @@ h1 {
     transform: scale(1.1)
 }
 
-.baselineTable td {
+.inputTable td {
     position: relative;
   }
 
-.baselineTable td input {
+.inputTable td input {
     position: absolute;
     display: block;
     top:0;

@@ -180,12 +180,6 @@
         <form action='/add_miscsavings' method="POST">
             {{> miscSavings}}
         </form>
-        <form action='/find_b_s_values' id="baselineValues" method="POST">
-            {{> baselinePartial}}
-        </form>
-        <form action="/find_savings_values" id="SavingsValues" method="POST">
-            {{> savingsPartial}}
-        </form>
         <form action='/' method='POST' id="searchData">
             <div class="row responsive">
                 <div style="display: none;" class="col-md-12 warning">
@@ -335,15 +329,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{#with metadata}}
-                        <div class="card-footer text-end">
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                data-bs-target="#baselineModal">
-                                <i class="fas fa-plus-circle">&nbsp;Add
-                                    Record</i>
-                            </button>
-                        </div>
-                        {{/with}}
                     </div>
                 </section>
                 <section class="col-md-6">
@@ -440,16 +425,20 @@
                     {{/with}}
                 </section>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {{> predictedPartial}}
-                </div>
-                <hr>
-                <div class="col-md-12">
-                    {{> mvPartial}}
-                </div>
-            </div>
         </form>
+        <form class='mb-3' action='/find_b_s_values' id="baselineValues" method="POST">
+            {{> baselinePartial}}
+        </form>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                {{> predictedPartial}}
+            </div>
+            <hr>
+            <div class="col-md-12">
+                {{> mvPartial}}
+            </div>
+        </div>
     </div>
     <hr>
     {{#with metadata}}
