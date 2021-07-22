@@ -1,5 +1,8 @@
 <div class="container d-flex justify-content-center align-items-center">
     <div class="row margin">
+        <div class="text-end">
+            <a class="btn btn-danger" href="/logout" role="button">Logout</a>
+        </div>
         {{#with costHours}}
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -32,7 +35,8 @@
                                 <td>
                                     <div class="input-group mb-3">
                                         <div class="input-group mb-3">
-                                            <select name="imp_or_ann" class="form-select imp_or_ann" id="inputGroupSelect01">
+                                            <select name="imp_or_ann" class="form-select imp_or_ann"
+                                                id="inputGroupSelect01">
                                                 <option disabled selected>{{imp_or_ann}}</option>
                                                 <option value='implementation'>Implementation</option>
                                                 <option value='annual'>Annual</option>
@@ -43,7 +47,8 @@
                                 <td>
                                     <div class="input-group mb-3">
                                         <div class="input-group mb-3">
-                                            <select name="category" class="form-select category" id="inputGroupSelect01">
+                                            <select name="category" class="form-select category"
+                                                id="inputGroupSelect01">
                                                 <option disabled selected>{{category}}</option>
                                                 <option value='emo'>EMO</option>
                                                 <option value='analysts'>Analysts</option>

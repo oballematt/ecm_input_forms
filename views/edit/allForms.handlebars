@@ -14,14 +14,10 @@
             {{#each errors}}
             <p style="color: red">{{text}}</p>
             {{/each}}
-            <div class="input-group">
-                <select name="project_id" class="form-select" id="search" aria-label="Example select with button addon">
-                    <option selected disabled>Project ID</option>
-                    {{#each projectId}}
-                    <option>{{project_id}}</option>
-                    {{/each}}
-                </select>
-                <button class="btn btn-success load" type="submit">Search</button>
+            {{> searchData}}
+            <div class="text-end mt-3">
+                <a id="create" href="/metadata"><button type="button" class="btn btn-success">Create</button>
+                </a>
             </div>
             <div class="text-end mt-3">
                 <a id="create" href="/metadata"><button type="button" class="btn btn-success">Create</button></a>
@@ -164,7 +160,6 @@
                         {{/with}}
                     </section>
                     <div class='text-end text-white mt-3'>
-                        </a>
                         {{#with metadata}}
                         <a href="/find/{{project_id}}"><button type="button" class='btn btn-warning'>Edit</button></a>
                         {{/with}}
@@ -182,12 +177,6 @@
         <form action='/add_miscsavings' method="POST">
             {{> miscSavings}}
         </form>
-        <form action='/find_b_s_values' id="baselineValues" method="POST">
-            {{> baselinePartial}}
-        </form>
-        <form action="/find_savings_values" id="SavingsValues" method="POST">
-            {{> savingsPartial}}
-        </form>
         <form action='/' method='POST' id="searchData">
             <div class="row responsive">
                 <div style="display: none;" class="col-md-12 warning">
@@ -204,7 +193,6 @@
                 </div>
                 <div style="display: none;" class="col-md-12 info">
                     <div class="alert alert-success infoMessage" role="alert">
-                        A simple warning alert—check it out!
                     </div>
                 </div>
                 <section class="col-md-6">
@@ -337,15 +325,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{#with metadata}}
-                        <div class="card-footer text-end">
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                data-bs-target="#baselineModal">
-                                <i class="fas fa-plus-circle">&nbsp;Add
-                                    Record</i>
-                            </button>
-                        </div>
-                        {{/with}}
                     </div>
                 </section>
                 <section class="col-md-6">
@@ -382,15 +361,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{#with metadata}}
-                        <div class="card-footer text-end">
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                data-bs-target="#savingsModal">
-                                <i class="fas fa-plus-circle">&nbsp;Add
-                                    Record</i>
-                            </button>
-                        </div>
-                        {{/with}}
                     </div>
                 </section>
             </div>
@@ -442,16 +412,22 @@
                     {{/with}}
                 </section>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {{> predictedPartial}}
-                </div>
-                <hr>
-                <div class="col-md-12">
-                    {{> mvPartial}}
-                </div>
-            </div>
         </form>
+        {{#with metadata}}
+        <form class='mb-3' action='/find_b_s_values' id="baselineValues" method="POST">
+            {{> baselinePartial}}
+        </form>
+        {{/with}}
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                {{> predictedPartial}}
+            </div>
+            <hr>
+            <div class="col-md-12">
+                {{> mvPartial}}
+            </div>
+        </div>
     </div>
     <hr>
     {{#with metadata}}
