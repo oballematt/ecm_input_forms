@@ -216,6 +216,71 @@ $(document).ready(() => {
         });
     });
 
+    let filterObjs = {
+        '#allBtn': '.all',
+        '#adamBtn': '.adam',
+        '#amandaBtn': '.amanda',
+        '#buddyBtn': '.buddy',
+        '#cedricBtn': '.cedric',
+        '#daveBtn': '.dave',
+        '#graceBtn': '.grace',
+        '#johnBtn': '.john',
+        '#mattBtn': '.matt',
+        '#meaganBtn': '.meagan',
+        '#patBtn': '.pat',
+        '#richardBtn': '.richard',
+        '#travisBtn': '.travis',
+    }
+
+    Object.keys(filterObjs).forEach(function (key) {
+        let value = filterObjs[key];
+        let check = $(value).val()
+        $(key).on("click", function () {
+            $(value).removeAttr("style");
+            $('#filterOptions').html(check);
+            if (check === "All") {
+                const elems =  $('.adam, .amanda, .buddy, .cedric, .dave, .grace, .john, .matt, .meagan, .pat, .richard, .travis')
+                elems.hide()
+            } else if (check === "Adam") {
+                const elems = $('.all, .amanda, .buddy, .cedric, .dave, .grace, .john, .matt, .meagan, .pat, .richard, .travis')
+                elems.hide()
+            } else if (check === "Amanda") {
+                const elems = $('.adam, .all, .buddy, .cedric, .dave, .grace, .john, .matt, .meagan, .pat, .richard, .travis')
+                elems.hide()
+            } else if (check === "Buddy") {
+                const elems = $('.adam, .amanda, .all, .cedric, .dave, .grace, .john, .matt, .meagan, .pat, .richard, .travis')
+                elems.hide()
+            } else if (check === "Cedric") {
+                const elems = $('.adam, .amanda, .buddy, .all, .dave, .grace, .john, .matt, .meagan, .pat, .richard, .travis')
+                elems.hide()
+            } else if (check === "Dave") {
+                const elems = $('.adam, .amanda, .buddy, .cedric, .all, .grace, .john, .matt, .meagan, .pat, .richard, .travis')
+                elems.hide()
+            } else if (check === "Grace") {
+                const elems = $('.adam, .amanda, .buddy, .cedric, .dave, .all, .john, .matt, .meagan, .pat, .richard, .travis')
+                elems.hide()
+            } else if (check === "John") {
+                const elems = $('.adam, .amanda, .buddy, .cedric, .dave, .grace, .all, .matt, .meagan, .pat, .richard, .travis')
+                elems.hide()
+            } else if (check === "Matt") {
+                const elems = $('.adam, .amanda, .buddy, .cedric, .dave, .grace, .john, .all, .meagan, .pat, .richard, .travis')
+                elems.hide()
+            } else if (check === "Meagan") {
+                const elems = $('.adam, .amanda, .buddy, .cedric, .dave, .grace, .john, .matt, .all, .pat, .richard, .travis')
+                elems.hide()
+            } else if (check === "Pat") {
+                const elems = $('.adam, .amanda, .buddy, .cedric, .dave, .grace, .john, .matt, .meagan, .all, .richard, .travis')
+                elems.hide()
+            } else if (check === "Richard") {
+                const elems = $('.adam, .amanda, .buddy, .cedric, .dave, .grace, .john, .matt, .meagan, .pat, .all, .travis')
+                elems.hide()
+            } else if (check === "Richard") {
+               const elems = $('.adam, .amanda, .buddy, .cedric, .dave, .grace, .john, .matt, .meagan, .pat, .richard, .all')
+               elems.hide()
+            }
+        });
+    });
+
     //Ajax calls to create baseline values
     $("#baselineValues").on('click', '#addChw', (e) => {
         e.preventDefault();

@@ -14,15 +14,7 @@
             {{#each errors}}
             <p style="color: red">{{text}}</p>
             {{/each}}
-            <div class="input-group">
-                <select name="project_id" class="form-select" id="search" aria-label="Example select with button addon">
-                    <option selected disabled>Project ID</option>
-                    {{#each projectId}}
-                    <option>{{project_id}}</option>
-                    {{/each}}
-                </select>
-                <button class="btn btn-success load" type="submit">Search</button>
-            </div>
+            {{> searchData}}
             <div class="text-end mt-3">
                 <a id="create" href="/metadata"><button type="button" class="btn btn-success">Create</button>
                 </a>
