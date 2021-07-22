@@ -18,6 +18,19 @@ module.exports = {
                 ]
             })
 
+            const staffLead1 = await Prjt_metadata.findAll({
+                where: {
+                    staff_lead: {
+                        [Op.in]:['Adam Keeling', 'Amanda Berens', 'Buddy Bishop', 'Cedric Bouey', 'Dave Cooper', 'Grace Hsieh', 
+                        'John Milton', 'Matt Stevens', 'Meagan Jones', 'Pat Mazur', 'Richard Shearman', 'Travis Isakson'] 
+                    }
+                  },
+                  order: [
+                      ['staff_lead', 'ASC'],
+                      ['project_id', 'ASC']
+                  ]
+            })
+
             if (!project_id) {
                 errors.push({ text: "Please select a project ID" })
             }
@@ -923,6 +936,7 @@ module.exports = {
                     savings,
                     miscSavings,
                     projectId,
+                    staffLead1,
                     chw,
                     ele,
                     stm,

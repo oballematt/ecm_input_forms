@@ -234,7 +234,7 @@ $(document).ready(() => {
 
     Object.keys(filterObjs).forEach(function (key) {
         let value = filterObjs[key];
-        let check = $(value).val()
+        let check = $(value).attr('name')
         $(key).on("click", function () {
             $(value).removeAttr("style");
             $('#filterOptions').html(check);
