@@ -24,6 +24,7 @@ module.exports = {
 
                 errors.push({ text: "Email already exists" });
 
+                return res.status(401).send('Email already exists');
             };
 
             if (!isValid) {

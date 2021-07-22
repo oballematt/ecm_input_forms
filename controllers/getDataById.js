@@ -1,11 +1,9 @@
-const { Prjt_metadata, Prjt_costs_hours, Prjt_baseline, Prjt_funding, Prjt_savings,
-    Prjt_misc_savings, Prjt_source_percent_each, Prjt_source_percent_total, Prjt_plant_each, Prjt_savings_by_comm,
+const { Prjt_metadata, Prjt_costs_hours, Prjt_baseline, Prjt_funding, Prjt_savings, 
+    Prjt_misc_savings, Prjt_source_percent_each, Prjt_source_percent_total, Prjt_plant_each, Prjt_savings_by_comm, 
     Prjt_plant_total, Prjt_savings_fr_fb_totals, Prjt_misc_savings_by_entity, Prjt_financial_analysis } = require('../models');
 
-const { Op } = require("sequelize");
-
 module.exports = {
-
+  
     findData: async (req, res) => {
         try {
             const { project_id } = req.body
@@ -88,7 +86,7 @@ module.exports = {
                         phase: 'M&V'
                     }
                 });
-
+               
                 const ele = await Prjt_source_percent_each.findOne({
                     where: {
                         project_id,
@@ -138,7 +136,7 @@ module.exports = {
                         phase: 'M&V'
                     }
                 });
-
+        
                 const percentTotal = await Prjt_source_percent_total.findOne({
                     where: {
                         project_id,
@@ -146,7 +144,7 @@ module.exports = {
                         comm_type: 'energy'
                     }
                 });
-
+        
                 const chw2 = await Prjt_plant_each.findOne({
                     where: {
                         project_id,
@@ -155,7 +153,7 @@ module.exports = {
                         commodity: 'CHW'
                     }
                 });
-
+    
                 const chw2_1 = await Prjt_plant_each.findOne({
                     where: {
                         project_id,
@@ -164,7 +162,7 @@ module.exports = {
                         commodity: 'CHW'
                     }
                 });
-
+        
                 const ele2 = await Prjt_plant_each.findOne({
                     where: {
                         project_id,
@@ -172,7 +170,7 @@ module.exports = {
                         commodity: 'ELE'
                     }
                 });
-
+        
                 const stm2 = await Prjt_plant_each.findOne({
                     where: {
                         project_id,
@@ -180,7 +178,7 @@ module.exports = {
                         commodity: 'STM'
                     }
                 });
-
+        
                 const hhw2 = await Prjt_plant_each.findOne({
                     where: {
                         project_id,
@@ -188,7 +186,7 @@ module.exports = {
                         commodity: 'HHW'
                     }
                 });
-
+    
                 const plantTotal = await Prjt_plant_total.findOne({
                     where: {
                         project_id,
@@ -196,7 +194,7 @@ module.exports = {
                         plant_commodity: 'Plant gas'
                     }
                 })
-
+        
                 const chw3 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -205,7 +203,7 @@ module.exports = {
                         commodity: 'CHW'
                     }
                 });
-
+        
                 const ele3 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -214,7 +212,7 @@ module.exports = {
                         commodity: 'ELE'
                     }
                 });
-
+        
                 const stm3 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -223,7 +221,7 @@ module.exports = {
                         commodity: 'STM'
                     }
                 });
-
+        
                 const hhw3 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -232,7 +230,7 @@ module.exports = {
                         commodity: 'HHW'
                     }
                 });
-
+        
                 const gas3 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -241,7 +239,7 @@ module.exports = {
                         commodity: 'GAS'
                     }
                 });
-
+        
                 const water3 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -250,8 +248,8 @@ module.exports = {
                         commodity: 'WTR'
                     }
                 });
-
-
+    
+        
                 const chw4 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -260,7 +258,7 @@ module.exports = {
                         commodity: 'CHW'
                     }
                 });
-
+        
                 const ele4 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -269,7 +267,7 @@ module.exports = {
                         commodity: 'ELE'
                     }
                 });
-
+        
                 const stm4 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -278,7 +276,7 @@ module.exports = {
                         commodity: 'STM'
                     }
                 });
-
+        
                 const hhw4 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -287,7 +285,7 @@ module.exports = {
                         commodity: 'HHW'
                     }
                 });
-
+        
                 const gas4 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -296,7 +294,7 @@ module.exports = {
                         commodity: 'GAS'
                     }
                 });
-
+        
                 const water4 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -305,7 +303,7 @@ module.exports = {
                         commodity: 'WTR'
                     }
                 });
-
+        
                 const labor4 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -314,7 +312,7 @@ module.exports = {
                         commodity: 'Labor'
                     }
                 });
-
+        
                 const chw5 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -323,7 +321,7 @@ module.exports = {
                         commodity: 'CHW'
                     }
                 });
-
+        
                 const ele5 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -332,7 +330,7 @@ module.exports = {
                         commodity: 'ELE'
                     }
                 });
-
+        
                 const stm5 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -341,7 +339,7 @@ module.exports = {
                         commodity: 'STM'
                     }
                 });
-
+        
                 const hhw5 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -350,7 +348,7 @@ module.exports = {
                         commodity: 'HHW'
                     }
                 });
-
+        
                 const gas5 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -359,7 +357,7 @@ module.exports = {
                         commodity: 'GAS'
                     }
                 });
-
+        
                 const water5 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -368,7 +366,7 @@ module.exports = {
                         commodity: 'WTR'
                     }
                 });
-
+        
                 const labor5 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -377,7 +375,7 @@ module.exports = {
                         commodity: 'Labor'
                     }
                 });
-
+    
                 const total1 = await Prjt_savings_fr_fb_totals.findOne({
                     where: {
                         project_id,
@@ -385,7 +383,7 @@ module.exports = {
                         entity: 'UEM'
                     }
                 });
-
+    
                 const total2 = await Prjt_savings_fr_fb_totals.findOne({
                     where: {
                         project_id,
@@ -393,7 +391,7 @@ module.exports = {
                         entity: 'Univ'
                     }
                 });
-
+    
                 const total3 = await Prjt_savings_fr_fb_totals.findOne({
                     where: {
                         project_id,
@@ -401,7 +399,7 @@ module.exports = {
                         entity: 'AUX'
                     }
                 });
-
+    
                 const misc1 = await Prjt_misc_savings_by_entity.findOne({
                     where: {
                         project_id,
@@ -409,7 +407,7 @@ module.exports = {
                         entity: 'UEM'
                     }
                 });
-
+    
                 const misc2 = await Prjt_misc_savings_by_entity.findOne({
                     where: {
                         project_id,
@@ -417,7 +415,7 @@ module.exports = {
                         entity: 'Univ'
                     }
                 });
-
+    
                 const misc3 = await Prjt_misc_savings_by_entity.findOne({
                     where: {
                         project_id,
@@ -425,7 +423,7 @@ module.exports = {
                         entity: 'AUX'
                     }
                 });
-
+    
                 const ann1 = await Prjt_financial_analysis.findOne({
                     where: {
                         project_id,
@@ -433,7 +431,7 @@ module.exports = {
                         entity: 'UEM'
                     }
                 });
-
+    
                 const ann2 = await Prjt_financial_analysis.findOne({
                     where: {
                         project_id,
@@ -441,7 +439,7 @@ module.exports = {
                         entity: 'Univ'
                     }
                 });
-
+    
                 const ann3 = await Prjt_financial_analysis.findOne({
                     where: {
                         project_id,
@@ -449,7 +447,7 @@ module.exports = {
                         entity: 'AUX'
                     }
                 });
-
+    
                 const payback1 = await Prjt_financial_analysis.findOne({
                     where: {
                         project_id,
@@ -457,7 +455,7 @@ module.exports = {
                         entity: 'UEM'
                     }
                 });
-
+    
                 const payback2 = await Prjt_financial_analysis.findOne({
                     where: {
                         project_id,
@@ -465,7 +463,7 @@ module.exports = {
                         entity: 'Univ'
                     }
                 });
-
+    
                 const payback3 = await Prjt_financial_analysis.findOne({
                     where: {
                         project_id,
@@ -473,7 +471,7 @@ module.exports = {
                         entity: 'AUX'
                     }
                 });
-
+    
                 const npv1 = await Prjt_financial_analysis.findOne({
                     where: {
                         project_id,
@@ -481,7 +479,7 @@ module.exports = {
                         entity: 'UEM'
                     }
                 });
-
+    
                 const npv2 = await Prjt_financial_analysis.findOne({
                     where: {
                         project_id,
@@ -489,7 +487,7 @@ module.exports = {
                         entity: 'Univ'
                     }
                 });
-
+    
                 const npv3 = await Prjt_financial_analysis.findOne({
                     where: {
                         project_id,
@@ -505,7 +503,7 @@ module.exports = {
                         phase: 'Predicted'
                     }
                 });
-
+               
                 const p_ele = await Prjt_source_percent_each.findOne({
                     where: {
                         project_id,
@@ -555,7 +553,7 @@ module.exports = {
                         phase: 'Predicted'
                     }
                 });
-
+        
                 const p_percentTotal = await Prjt_source_percent_total.findOne({
                     where: {
                         project_id,
@@ -563,7 +561,7 @@ module.exports = {
                         comm_type: 'energy'
                     }
                 });
-
+        
                 const p_chw2 = await Prjt_plant_each.findOne({
                     where: {
                         project_id,
@@ -572,7 +570,7 @@ module.exports = {
                         commodity: 'CHW'
                     }
                 });
-
+    
                 const p_chw2_1 = await Prjt_plant_each.findOne({
                     where: {
                         project_id,
@@ -581,7 +579,7 @@ module.exports = {
                         commodity: 'CHW'
                     }
                 });
-
+        
                 const p_ele2 = await Prjt_plant_each.findOne({
                     where: {
                         project_id,
@@ -589,7 +587,7 @@ module.exports = {
                         commodity: 'ELE'
                     }
                 });
-
+        
                 const p_stm2 = await Prjt_plant_each.findOne({
                     where: {
                         project_id,
@@ -597,7 +595,7 @@ module.exports = {
                         commodity: 'STM'
                     }
                 });
-
+        
                 const p_hhw2 = await Prjt_plant_each.findOne({
                     where: {
                         project_id,
@@ -605,7 +603,7 @@ module.exports = {
                         commodity: 'HHW'
                     }
                 });
-
+    
                 const p_plantTotal = await Prjt_plant_total.findOne({
                     where: {
                         project_id,
@@ -613,7 +611,7 @@ module.exports = {
                         plant_commodity: 'Plant gas'
                     }
                 })
-
+        
                 const p_chw3 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -622,7 +620,7 @@ module.exports = {
                         commodity: 'CHW'
                     }
                 });
-
+        
                 const p_ele3 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -631,7 +629,7 @@ module.exports = {
                         commodity: 'ELE'
                     }
                 });
-
+        
                 const p_stm3 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -640,7 +638,7 @@ module.exports = {
                         commodity: 'STM'
                     }
                 });
-
+        
                 const p_hhw3 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -649,7 +647,7 @@ module.exports = {
                         commodity: 'HHW'
                     }
                 });
-
+        
                 const p_gas3 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -658,7 +656,7 @@ module.exports = {
                         commodity: 'GAS'
                     }
                 });
-
+        
                 const p_water3 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -667,8 +665,8 @@ module.exports = {
                         commodity: 'WTR'
                     }
                 });
-
-
+    
+        
                 const p_chw4 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -677,7 +675,7 @@ module.exports = {
                         commodity: 'CHW'
                     }
                 });
-
+        
                 const p_ele4 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -686,7 +684,7 @@ module.exports = {
                         commodity: 'ELE'
                     }
                 });
-
+        
                 const p_stm4 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -695,7 +693,7 @@ module.exports = {
                         commodity: 'STM'
                     }
                 });
-
+        
                 const p_hhw4 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -704,7 +702,7 @@ module.exports = {
                         commodity: 'HHW'
                     }
                 });
-
+        
                 const p_gas4 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -713,7 +711,7 @@ module.exports = {
                         commodity: 'GAS'
                     }
                 });
-
+        
                 const p_water4 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -722,7 +720,7 @@ module.exports = {
                         commodity: 'WTR'
                     }
                 });
-
+        
                 const p_labor4 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -731,7 +729,7 @@ module.exports = {
                         commodity: 'Labor'
                     }
                 });
-
+        
                 const p_chw5 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -740,7 +738,7 @@ module.exports = {
                         commodity: 'CHW'
                     }
                 });
-
+        
                 const p_ele5 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -749,7 +747,7 @@ module.exports = {
                         commodity: 'ELE'
                     }
                 });
-
+        
                 const p_stm5 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -758,7 +756,7 @@ module.exports = {
                         commodity: 'STM'
                     }
                 });
-
+        
                 const p_hhw5 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -767,7 +765,7 @@ module.exports = {
                         commodity: 'HHW'
                     }
                 });
-
+        
                 const p_gas5 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -776,7 +774,7 @@ module.exports = {
                         commodity: 'GAS'
                     }
                 });
-
+        
                 const p_water5 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -785,7 +783,7 @@ module.exports = {
                         commodity: 'WTR'
                     }
                 });
-
+        
                 const p_labor5 = await Prjt_savings_by_comm.findOne({
                     where: {
                         project_id,
@@ -794,7 +792,7 @@ module.exports = {
                         commodity: 'Labor'
                     }
                 });
-
+    
                 const p_total1 = await Prjt_savings_fr_fb_totals.findOne({
                     where: {
                         project_id,
@@ -802,7 +800,7 @@ module.exports = {
                         entity: 'UEM'
                     }
                 });
-
+    
                 const p_total2 = await Prjt_savings_fr_fb_totals.findOne({
                     where: {
                         project_id,
@@ -810,7 +808,7 @@ module.exports = {
                         entity: 'Univ'
                     }
                 });
-
+    
                 const p_total3 = await Prjt_savings_fr_fb_totals.findOne({
                     where: {
                         project_id,
@@ -818,7 +816,7 @@ module.exports = {
                         entity: 'AUX'
                     }
                 });
-
+    
                 const p_misc1 = await Prjt_misc_savings_by_entity.findOne({
                     where: {
                         project_id,
@@ -826,7 +824,7 @@ module.exports = {
                         entity: 'UEM'
                     }
                 });
-
+    
                 const p_misc2 = await Prjt_misc_savings_by_entity.findOne({
                     where: {
                         project_id,
@@ -834,7 +832,7 @@ module.exports = {
                         entity: 'Univ'
                     }
                 });
-
+    
                 const p_misc3 = await Prjt_misc_savings_by_entity.findOne({
                     where: {
                         project_id,
@@ -842,7 +840,7 @@ module.exports = {
                         entity: 'AUX'
                     }
                 });
-
+    
                 const p_ann1 = await Prjt_financial_analysis.findOne({
                     where: {
                         project_id,
@@ -850,7 +848,7 @@ module.exports = {
                         entity: 'UEM'
                     }
                 });
-
+    
                 const p_ann2 = await Prjt_financial_analysis.findOne({
                     where: {
                         project_id,
@@ -858,7 +856,7 @@ module.exports = {
                         entity: 'Univ'
                     }
                 });
-
+    
                 const p_ann3 = await Prjt_financial_analysis.findOne({
                     where: {
                         project_id,
@@ -866,7 +864,7 @@ module.exports = {
                         entity: 'AUX'
                     }
                 });
-
+    
                 const p_payback1 = await Prjt_financial_analysis.findOne({
                     where: {
                         project_id,
@@ -874,7 +872,7 @@ module.exports = {
                         entity: 'UEM'
                     }
                 });
-
+    
                 const p_payback2 = await Prjt_financial_analysis.findOne({
                     where: {
                         project_id,
@@ -882,7 +880,7 @@ module.exports = {
                         entity: 'Univ'
                     }
                 });
-
+    
                 const p_payback3 = await Prjt_financial_analysis.findOne({
                     where: {
                         project_id,
@@ -890,7 +888,7 @@ module.exports = {
                         entity: 'AUX'
                     }
                 });
-
+    
                 const p_npv1 = await Prjt_financial_analysis.findOne({
                     where: {
                         project_id,
@@ -898,7 +896,7 @@ module.exports = {
                         entity: 'UEM'
                     }
                 });
-
+    
                 const p_npv2 = await Prjt_financial_analysis.findOne({
                     where: {
                         project_id,
@@ -906,7 +904,7 @@ module.exports = {
                         entity: 'Univ'
                     }
                 });
-
+    
                 const p_npv3 = await Prjt_financial_analysis.findOne({
                     where: {
                         project_id,
@@ -1026,7 +1024,7 @@ module.exports = {
                 });
             }
 
-
+          
         } catch (error) {
 
             console.error(error.message);
@@ -1045,22 +1043,8 @@ module.exports = {
                 ]
             })
 
-            const staffLead1 = await Prjt_metadata.findAll({
-                where: {
-                    staff_lead: {
-                        [Op.in]:['Adam Keeling', 'Amanda Berens', 'Buddy Bishop', 'Cedric Bouey', 'Dave Cooper', 'Grace Hsieh', 
-                        'John Milton', 'Matt Stevens', 'Meagan Jones', 'Pat Mazur', 'Richard Shearman', 'Travis Isakson'] 
-                    }
-                  },
-                  order: [
-                      ['staff_lead', 'ASC'],
-                      ['project_id', 'ASC']
-                  ]
-            })
-            
             return res.render('edit/allForms', {
-                projectId,
-                staffLead1,
+                projectId
             });
 
         } catch (error) {
