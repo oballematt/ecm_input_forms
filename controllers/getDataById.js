@@ -1102,8 +1102,7 @@ module.exports = {
                     project_id
                 }
             });
-
-
+            
             await Prjt_funding.destroy({
                 where: {
                     project_id
