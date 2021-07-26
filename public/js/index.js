@@ -254,10 +254,10 @@ $(document).ready(() => {
                 case "Cedric":
                     $('.adam, .amanda, .buddy, .all, .dave, .grace, .john, .matt, .meagan, .pat, .richard, .travis').hide();
                     break
-                case "Dave" :
+                case "Dave":
                     $('.adam, .amanda, .buddy, .cedric, .all, .grace, .john, .matt, .meagan, .pat, .richard, .travis').hide();
                     break;
-                case "Grace": 
+                case "Grace":
                     $('.adam, .amanda, .buddy, .cedric, .dave, .all, .john, .matt, .meagan, .pat, .richard, .travis').hide();
                     break;
                 case "John":
@@ -290,7 +290,44 @@ $(document).ready(() => {
     $("#viewBaselineBtn").on('click', function () {
         $("#baselineValues").hide()
         $('#addBaseline').show()
+    });
+
+    $(".editBaseline").on("click", function (e) {
+        e.preventDefault();
+        let id = $(this).attr('id')
+        let commodity = $(this).attr('name')
+        let value = prompt(`Enter new value for ${commodity}`)
+        let replacedValue = value.replace(/,/g, '')
+        let data = {
+            project_id: searchedVal,
+            commodity: commodity,
+            value: replacedValue
+        }
+        if (commodity === 'PeakChw'){
+            commodity = "Peak CHW"
+        }
+        $.ajax({
+            url: '/find/baseline/' + id,
+            method: 'POST',
+            data: data
+        }).then(
+            $(".num" + commodity).text(value),
+        )
     })
+
+    $(".deleteBaseline").on("click", function (e) {
+        e.preventDefault();
+        const id = $(this).attr('id');
+        let commodity = $(this).attr('name')
+        $.ajax({
+            url: '/delete/baseline/' + id,
+            method: 'DELETE'
+        }).then(
+            $(".num" + commodity).text(''),
+            $(this).hide(),
+            $('#' + id).hide(),
+        )
+    });
 
     //Ajax calls to create baseline values
     $("#baselineValues").on('click', '#addChw', (e) => {
@@ -1170,16 +1207,7 @@ $(document).ready(() => {
         )
     });
 
-    $(".deleteBaseline").on("click", function (e) {
-        e.preventDefault();
-        const id = $(this).attr('id');
-        $.ajax({
-            url: '/delete/baseline/' + id,
-            method: 'DELETE',
-        }).then(
-            $(this).closest('tr').remove()
-        )
-    });
+
 
     $(".deleteSavings").on("click", function (e) {
         e.preventDefault();

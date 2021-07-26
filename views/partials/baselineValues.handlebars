@@ -11,8 +11,7 @@
                 </button>
                 {{/with}}
             </div>
-            <table id="tableData" class="table text-light text-end table-borderless mt-3">
-
+            <table class="table text-light table-borderless mt-3">
                 <thead>
                     <tr class='text-center bordered'>
                         <th></th>
@@ -46,56 +45,56 @@
                     <form action='/' id="searchData" method='POST'>
                         <tr class="text-center">
                             <th style="width: 100px" class="bordered">Baseline</th>
-                            <td class="commas bordered">
+                            <td class="commas bordered numCHW">
                                 {{#each newBaseline}}
                                 {{#ifEquals commodity 'CHW'}}
                                 {{value}}
                                 {{/ifEquals}}
                                 {{/each}}
                             </td>
-                            <td class="commas bordered">
+                            <td class="commas bordered numELE">
                                 {{#each newBaseline}}
                                 {{#ifEquals commodity 'ELE'}}
                                 {{value}}
                                 {{/ifEquals}}
                                 {{/each}}
                             </td>
-                            <td class="commas bordered">
+                            <td class="commas bordered numSTM">
                                 {{#each newBaseline}}
                                 {{#ifEquals commodity 'STM'}}
                                 {{value}}
                                 {{/ifEquals}}
                                 {{/each}}
                             </td>
-                            <td class="commas bordered">
+                            <td class="commas bordered numHHW">
                                 {{#each newBaseline}}
                                 {{#ifEquals commodity 'HHW'}}
                                 {{value}}
                                 {{/ifEquals}}
                                 {{/each}}
                             </td>
-                            <td class="commas bordered">
+                            <td class="commas bordered numGAS">
                                 {{#each newBaseline}}
                                 {{#ifEquals commodity 'GAS'}}
                                 {{value}}
                                 {{/ifEquals}}
                                 {{/each}}
                             </td>
-                            <td class="commas bordered">
+                            <td class="commas bordered numWTR">
                                 {{#each newBaseline}}
                                 {{#ifEquals commodity 'WTR'}}
                                 {{value}}
                                 {{/ifEquals}}
                                 {{/each}}
                             </td>
-                            <td class="commas">
+                            <td class="commas bordered numPeakCHW">
                                 {{#each newBaseline}}
                                 {{#ifEquals commodity 'Peak CHW'}}
                                 {{value}}
                                 {{/ifEquals}}
                                 {{/each}}
                             </td>
-                            <td class="commas bordered">
+                            <td class="commas bordered numLabor">
                                 {{#each newBaseline}}
                                 {{#ifEquals commodity 'Labor'}}
                                 {{value}}
@@ -105,49 +104,105 @@
                         </tr>
                     </form>
                     <tr class='text-center borderTop'>
-                        {{#with metadata}}
                         <td></td>
                         <td>
-                            <button class="btn btn-warning">
+                            {{#each newBaseline}}
+                            {{#ifEquals commodity "CHW"}}
+                            <button id={{id}} name="CHW" class="btn btn-warning editBaseline">
                                 <i class="fas fa-edit"></i>
                             </button>
+                            <span class="units mt-3"><button id={{id}} name="CHW" class="btn btn-danger deleteBaseline">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button></span>
+                            {{/ifEquals}}
+                            {{/each}}
                         </td>
                         <td>
-                            <button class="btn btn-warning">
+                            {{#each newBaseline}}
+                            {{#ifEquals commodity "ELE"}}
+                            <button id={{id}} name="ELE" class="btn btn-warning editBaseline">
                                 <i class="fas fa-edit"></i>
                             </button>
+                            <span class="units mt-3"><button id={{id}} name="ELE" class="btn btn-danger deleteBaseline">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button></span>
+                            {{/ifEquals}}
+                            {{/each}}
                         </td>
                         <td>
-                            <button class="btn btn-warning">
+                            {{#each newBaseline}}
+                            {{#ifEquals commodity "STM"}}
+                            <button id={{id}} name="STM" class="btn btn-warning editBaseline">
                                 <i class="fas fa-edit"></i>
                             </button>
+                            <span class="units mt-3"><button id={{id}} name="STM" class="btn btn-danger deleteBaseline">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button></span>
+                            {{/ifEquals}}
+                            {{/each}}
                         </td>
                         <td>
-                            <button class="btn btn-warning">
+                            {{#each newBaseline}}
+                            {{#ifEquals commodity "HHW"}}
+                            <button id={{id}} name="HHW" class="btn btn-warning editBaseline">
                                 <i class="fas fa-edit"></i>
                             </button>
+                            <span class="units mt-3"><button id={{id}} name="HHW" class="btn btn-danger deleteBaseline">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button></span>
+                            {{/ifEquals}}
+                            {{/each}}
                         </td>
                         <td>
-                            <button class="btn btn-warning">
+                            {{#each newBaseline}}
+                            {{#ifEquals commodity "GAS"}}
+                            <button id={{id}} name="GAS" class="btn btn-warning editBaseline">
                                 <i class="fas fa-edit"></i>
                             </button>
+                            <span class="units mt-3"><button id={{id}} name="GAS" class="btn btn-danger deleteBaseline">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button></span>
+                            {{/ifEquals}}
+                            {{/each}}
                         </td>
                         <td>
-                            <button class="btn btn-warning">
+                            {{#each newBaseline}}
+                            {{#ifEquals commodity "WTR"}}
+                            <button id={{id}} name="WTR" class="btn btn-warning editBaseline">
                                 <i class="fas fa-edit"></i>
                             </button>
+                            <span class="units mt-3"><button id={{id}} name="WTR" class="btn btn-danger deleteBaseline">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button></span>
+                            {{/ifEquals}}
+                            {{/each}}
                         </td>
                         <td>
-                            <button class="btn btn-warning">
+                            {{#each newBaseline}}
+                            {{#ifEquals commodity "Peak CHW"}}
+                            <button id={{id}} name="Peak CHW" class="btn btn-warning editBaseline">
                                 <i class="fas fa-edit"></i>
                             </button>
+                            <span class="units mt-3"><button id={{id}} name="PeakCHW"
+                                    class="btn btn-danger deleteBaseline">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button></span>
+                            {{/ifEquals}}
+                            {{/each}}
                         </td>
                         <td>
-                            <button class="btn btn-warning">
+                            {{#each newBaseline}}
+                            {{#ifEquals commodity "Labor"}}
+                            <button id={{id}} name="Labor" class="btn btn-warning editBaseline">
                                 <i class="fas fa-edit"></i>
                             </button>
+                            <span class="units mt-3"><button id={{id}} name="Labor"
+                                    class="btn btn-danger deleteBaseline">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button></span>
+                            {{/ifEquals}}
+                            {{/each}}
                         </td>
-                        {{/with}}
                     </tr>
                 </tbody>
             </table>
