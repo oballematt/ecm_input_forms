@@ -238,32 +238,46 @@ $(document).ready(() => {
         $(key).on("click", function () {
             $(value).removeAttr("style");
             $('#filterOptions').html(check);
-            if (check === "All") {
-                $('.adam, .amanda, .buddy, .cedric, .dave, .grace, .john, .matt, .meagan, .pat, .richard, .travis').hide()
-            } else if (check === "Adam") {
-                $('.all, .amanda, .buddy, .cedric, .dave, .grace, .john, .matt, .meagan, .pat, .richard, .travis').hide()
-            } else if (check === "Amanda") {
-                $('.adam, .all, .buddy, .cedric, .dave, .grace, .john, .matt, .meagan, .pat, .richard, .travis').hide()
-            } else if (check === "Buddy") {
-                $('.adam, .amanda, .all, .cedric, .dave, .grace, .john, .matt, .meagan, .pat, .richard, .travis').hide()
-            } else if (check === "Cedric") {
-                $('.adam, .amanda, .buddy, .all, .dave, .grace, .john, .matt, .meagan, .pat, .richard, .travis').hide()
-            } else if (check === "Dave") {
-                $('.adam, .amanda, .buddy, .cedric, .all, .grace, .john, .matt, .meagan, .pat, .richard, .travis').hide()
-            } else if (check === "Grace") {
-                $('.adam, .amanda, .buddy, .cedric, .dave, .all, .john, .matt, .meagan, .pat, .richard, .travis').hide()
-            } else if (check === "John") {
-                $('.adam, .amanda, .buddy, .cedric, .dave, .grace, .all, .matt, .meagan, .pat, .richard, .travis').hide()
-            } else if (check === "Matt") {
-                $('.adam, .amanda, .buddy, .cedric, .dave, .grace, .john, .all, .meagan, .pat, .richard, .travis').hide()
-            } else if (check === "Meagan") {
-                $('.adam, .amanda, .buddy, .cedric, .dave, .grace, .john, .matt, .all, .pat, .richard, .travis').hide()
-            } else if (check === "Pat") {
-                $('.adam, .amanda, .buddy, .cedric, .dave, .grace, .john, .matt, .meagan, .all, .richard, .travis').hide()
-            } else if (check === "Richard") {
-                $('.adam, .amanda, .buddy, .cedric, .dave, .grace, .john, .matt, .meagan, .pat, .all, .travis').hide()
-            } else if (check === "Travis") {
-                $('.adam, .amanda, .buddy, .cedric, .dave, .grace, .john, .matt, .meagan, .pat, .richard, .all').hide()
+            switch (check) {
+                case "All":
+                    $('.adam, .amanda, .buddy, .cedric, .dave, .grace, .john, .matt, .meagan, .pat, .richard, .travis').hide();
+                    break;
+                case "Adam":
+                    $('.all, .amanda, .buddy, .cedric, .dave, .grace, .john, .matt, .meagan, .pat, .richard, .travis').hide();
+                    break;
+                case "Amanda":
+                    $('.adam, .all, .buddy, .cedric, .dave, .grace, .john, .matt, .meagan, .pat, .richard, .travis').hide();
+                    break;
+                case "Buddy":
+                    $('.adam, .amanda, .all, .cedric, .dave, .grace, .john, .matt, .meagan, .pat, .richard, .travis').hide();
+                    break;
+                case "Cedric":
+                    $('.adam, .amanda, .buddy, .all, .dave, .grace, .john, .matt, .meagan, .pat, .richard, .travis').hide();
+                    break
+                case "Dave" :
+                    $('.adam, .amanda, .buddy, .cedric, .all, .grace, .john, .matt, .meagan, .pat, .richard, .travis').hide();
+                    break;
+                case "Grace": 
+                    $('.adam, .amanda, .buddy, .cedric, .dave, .all, .john, .matt, .meagan, .pat, .richard, .travis').hide();
+                    break;
+                case "John":
+                    $('.adam, .amanda, .buddy, .cedric, .dave, .grace, .all, .matt, .meagan, .pat, .richard, .travis').hide();
+                    break;
+                case "Matt":
+                    $('.adam, .amanda, .buddy, .cedric, .dave, .grace, .john, .all, .meagan, .pat, .richard, .travis').hide();
+                    break;
+                case "Meagan":
+                    $('.adam, .amanda, .buddy, .cedric, .dave, .grace, .john, .matt, .all, .pat, .richard, .travis').hide();
+                    break;
+                case 'Pat':
+                    $('.adam, .amanda, .buddy, .cedric, .dave, .grace, .john, .matt, .meagan, .all, .richard, .travis').hide();
+                    break;
+                case "Richard":
+                    $('.adam, .amanda, .buddy, .cedric, .dave, .grace, .john, .matt, .meagan, .pat, .all, .travis').hide();
+                    break;
+                case 'Travis':
+                    $('.adam, .amanda, .buddy, .cedric, .dave, .grace, .john, .matt, .meagan, .pat, .richard, .all').hide();
+                    break;
             }
         });
     });
