@@ -409,8 +409,9 @@
                 </section>
             </div>
         </form>
+        {{> baselineValues}}
         {{#with metadata}}
-        <form class='mb-3' action='/find_b_s_values' id="baselineValues" method="POST">
+        <form style="display: none;" class='mb-3' action='/find_b_s_values' id="baselineValues" method="POST">
             {{> baselinePartial}}
         </form>
         {{/with}}

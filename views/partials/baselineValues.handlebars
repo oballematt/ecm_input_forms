@@ -1,0 +1,156 @@
+<div id="addBaseline" class="card border-secondary mv w-100 text-light" style="background-color: #333f48;">
+    <h5 style="background-color: #bf5700;" class="card-header">Baseline</h5>
+    <div class="card-body w-100">
+        <div class="table-responsive">
+            <div class="text-end">
+                {{#with metadata}}
+                <button id="baselineBtn" type="button" class="btn btn-success">
+                    <i class="fas fa-plus-circle">&nbsp;Add
+                        Record
+                    </i>
+                </button>
+                {{/with}}
+            </div>
+            <table id="tableData" class="table text-light text-end table-borderless mt-3">
+
+                <thead>
+                    <tr class='text-center bordered'>
+                        <th></th>
+                        <th class="bordered" scope="col">CHW
+                            <span class='units'>[tonhr]</span>
+                        </th>
+                        <th class="bordered" scope="col">ELE
+                            <span class='units'>[kWh]</span>
+                        </th>
+                        <th class="bordered" scope="col">STM
+                            <span class='units'>[lb]</span>
+                        </th>
+                        <th class="bordered" scope="col">HHW
+                            <span class='units'>[mmbtu]</span>
+                        </th>
+                        <th class="bordered" scope="col">GAS
+                            <span class='units'>[CCF]</span>
+                        </th>
+                        <th class="bordered" scope="col">WTR
+                            <span class='units'>[kgal]</span>
+                        </th>
+                        <th class="bordered" scope="col">Peak CHW
+                            <span class='units'>[ton]</span>
+                        </th>
+                        <th class="bordered" scope="col">Labor
+                            <span class='units'>[Hours]</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <form action='/' id="searchData" method='POST'>
+                        <tr class="text-center">
+                            <th style="width: 100px" class="bordered">Baseline</th>
+                            <td class="commas bordered">
+                                {{#each newBaseline}}
+                                {{#ifEquals commodity 'CHW'}}
+                                {{value}}
+                                {{/ifEquals}}
+                                {{/each}}
+                            </td>
+                            <td class="commas bordered">
+                                {{#each newBaseline}}
+                                {{#ifEquals commodity 'ELE'}}
+                                {{value}}
+                                {{/ifEquals}}
+                                {{/each}}
+                            </td>
+                            <td class="commas bordered">
+                                {{#each newBaseline}}
+                                {{#ifEquals commodity 'STM'}}
+                                {{value}}
+                                {{/ifEquals}}
+                                {{/each}}
+                            </td>
+                            <td class="commas bordered">
+                                {{#each newBaseline}}
+                                {{#ifEquals commodity 'HHW'}}
+                                {{value}}
+                                {{/ifEquals}}
+                                {{/each}}
+                            </td>
+                            <td class="commas bordered">
+                                {{#each newBaseline}}
+                                {{#ifEquals commodity 'GAS'}}
+                                {{value}}
+                                {{/ifEquals}}
+                                {{/each}}
+                            </td>
+                            <td class="commas bordered">
+                                {{#each newBaseline}}
+                                {{#ifEquals commodity 'WTR'}}
+                                {{value}}
+                                {{/ifEquals}}
+                                {{/each}}
+                            </td>
+                            <td class="commas">
+                                {{#each newBaseline}}
+                                {{#ifEquals commodity 'Peak CHW'}}
+                                {{value}}
+                                {{/ifEquals}}
+                                {{/each}}
+                            </td>
+                            <td class="commas bordered">
+                                {{#each newBaseline}}
+                                {{#ifEquals commodity 'Labor'}}
+                                {{value}}
+                                {{/ifEquals}}
+                                {{/each}}
+                            </td>
+                        </tr>
+                    </form>
+                    <tr class='text-center borderTop'>
+                        {{#with metadata}}
+                        <td></td>
+                        <td>
+                            <button class="btn btn-warning">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-warning">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-warning">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-warning">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-warning">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-warning">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-warning">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-warning">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                        {{/with}}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

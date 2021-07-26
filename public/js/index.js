@@ -282,6 +282,16 @@ $(document).ready(() => {
         });
     });
 
+    $("#baselineBtn").on('click', function () {
+        $('#baselineValues').removeAttr("style")
+        $("#addBaseline").hide()
+    });
+
+    $("#viewBaselineBtn").on('click', function () {
+        $("#baselineValues").hide()
+        $('#addBaseline').show()
+    })
+
     //Ajax calls to create baseline values
     $("#baselineValues").on('click', '#addChw', (e) => {
         e.preventDefault();

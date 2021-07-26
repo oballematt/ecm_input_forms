@@ -58,6 +58,15 @@ module.exports = {
                     ]
                 });
 
+                const newBaseline = await Prjt_baseline.findAll({
+                    where: {
+                        project_id,
+                        commodity: {
+                            [Op.in]: ["CHW", "ELE", "STM", "HHW", "GAS", "WTR", "Peak CHW", "Labor"]
+                        }
+                    }
+                })
+
                 const baseline = await Prjt_baseline.findAll({
                     where: {
                         project_id
@@ -928,10 +937,13 @@ module.exports = {
                     }
                 });
 
+                console.log(newBaseline)
+
                 return res.render('edit/allForms', {
                     metadata,
                     costsHours,
                     baseline,
+                    newBaseline,
                     funding,
                     savings,
                     miscSavings,
