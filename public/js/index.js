@@ -180,14 +180,14 @@ $(document).ready(() => {
 
     let objs =
     {
-        '#chwValue': '#addChw',
-        '#eleValue': '#addEle',
-        '#stmValue': '#addStm',
-        '#hhwValue': '#addHhw',
-        '#gasValue': '#addGas',
-        '#wtrValue': '#addWtr',
-        '#peakChwValue': '#addPeakChw',
-        '#laborValue': '#addLabor',
+        '#addCHW': '#showCHW',
+        '#addELE': '#showELE',
+        '#addSTM': '#showSTM',
+        '#addHHW': '#showHHW',
+        '#addGAS': '#showGAS',
+        '#addWTR': '#showWTR',
+        '#addPeakCHW': '#showPeakCHW',
+        '#addLabor': '#showLabor',
         '#predChwValue': '#addPredChw',
         '#predEleValue': '#addPredEle',
         '#predStmValue': '#addPredStm',
@@ -282,6 +282,26 @@ $(document).ready(() => {
         });
     });
 
+
+    let valueObjs = {
+        '#numCHW': '#addCHW',
+        '#numELE': '#addELE',
+        '#numSTM': '#addSTM',
+        '#numHHW': '#addHHW',
+        '#numGAS': '#addGAS',
+        '#numWTR': '#addWTR',
+        '#numPeakCHW': '#addPeakCHW',
+        '#numLabor': '#addLabor',
+    }
+
+    Object.keys(valueObjs).forEach(function (key) {
+        let value = valueObjs[key];
+        console.log(valueObjs)
+        if ($(key).text().trim()) {
+            $(value).css('color', 'white').prop('disabled', true).val($(key).text().trim())
+        }
+    })
+
     $("#baselineBtn").on('click', function () {
         $('#baselineValues').removeAttr("style")
         $("#addBaseline").hide()
@@ -292,10 +312,34 @@ $(document).ready(() => {
         $('#addBaseline').show()
     });
 
+    $(".addBaseline").on('click', function (e) {
+        e.preventDefault();
+        let commodity = $(this).attr('data-comm-name')
+        let name = $(this).attr('name')
+        let value = $('#add' + name).val()
+        let replacedValue = value.replace(/,/g, '')
+        $("#show" + name).css("color", "green")
+        let data = {
+            project_id: searchedVal,
+            commodity: commodity,
+            value: replacedValue
+        }
+        $.ajax({
+            url: '/find_b_s_values',
+            method: 'POST',
+            data: data
+        }).then(
+            $(this).off('click'),
+            $("#show" + name).removeClass('checkMark'),
+            $("#add" + name).prop('disabled', true).css("color", "white")
+        )
+    })
+
     $(".editBaseline").on("click", function (e) {
         e.preventDefault();
         let id = $(this).attr('id')
-        let commodity = $(this).attr('name')
+        let commodity = $(this).attr('data-comm-name')
+        let name = $(this).attr('name')
         let value = prompt(`Enter new value for ${commodity}`)
         let replacedValue = value.replace(/,/g, '')
         let data = {
@@ -303,15 +347,13 @@ $(document).ready(() => {
             commodity: commodity,
             value: replacedValue
         }
-        if (commodity === 'PeakChw'){
-            commodity = "Peak CHW"
-        }
         $.ajax({
             url: '/find/baseline/' + id,
             method: 'POST',
             data: data
         }).then(
-            $(".num" + commodity).text(value),
+            $("#num" + name).text(value),
+            $('#add' + name).val(value)
         )
     })
 
@@ -323,182 +365,14 @@ $(document).ready(() => {
             url: '/delete/baseline/' + id,
             method: 'DELETE'
         }).then(
-            $(".num" + commodity).text(''),
+            $("#num" + commodity).text(''),
             $(this).hide(),
             $('#' + id).hide(),
-        )
-    });
-
-    //Ajax calls to create baseline values
-    $("#baselineValues").on('click', '#addChw', (e) => {
-        e.preventDefault();
-        $("#addChw").css("color", "green")
-        let chwValue = $("#chwValue").val();
-        let replacedValue = chwValue.replace(/,/g, '');
-        let data = {
-            project_id: searchedVal,
-            commodity: 'CHW',
-            value: replacedValue
-        };
-        $.ajax({
-            url: '/find_b_s_values',
-            method: 'POST',
-            data: data
-        }).then(
-            $("#baselineValues").off('click', '#addChw'),
-            $('#addChw').removeClass('checkMark'),
-            $("#chwValue").prop('disabled', true).css("color", "white"),
-        )
-    });
-
-    $("#baselineValues").on('click', '#addEle', (e) => {
-        e.preventDefault();
-        $("#addEle").css("color", "green")
-        let eleValue = $('#eleValue').val()
-        let replacedValue = eleValue.replace(/,/g, '')
-        let data = {
-            project_id: searchedVal,
-            commodity: 'ELE',
-            value: replacedValue
-        }
-        $.ajax({
-            url: '/find_b_s_values',
-            method: 'POST',
-            data: data
-        }).then(
-            $("#baselineValues").off('click', '#addEle'),
-            $('#addEle').removeClass('checkMark'),
-            $("#eleValue").prop('disabled', true).css("color", "white"),
-        )
-    });
-
-    $("#baselineValues").on('click', '#addStm', (e) => {
-        e.preventDefault();
-        $("#addStm").css("color", "green")
-        let stmValue = $('#stmValue').val()
-        let replacedValue = stmValue.replace(/,/g, '')
-        let data = {
-            project_id: searchedVal,
-            commodity: 'STM',
-            value: replacedValue
-        }
-        $.ajax({
-            url: '/find_b_s_values',
-            method: 'POST',
-            data: data
-        }).then(
-            $("#baselineValues").off('click', '#addStm'),
-            $('#addStm').removeClass('checkMark'),
-            $("#stmValue").prop('disabled', true).css("color", "white"),
+            $('#add' + commodity).css('color', 'black').prop('disabled', false).val('')
         )
     });
 
 
-    $("#baselineValues").on('click', '#addHhw', (e) => {
-        e.preventDefault();
-        $("#addHhw").css("color", "green")
-        let hhwValue = $('#hhwValue').val()
-        let replacedValue = hhwValue.replace(/,/g, '')
-        let data = {
-            project_id: searchedVal,
-            commodity: 'HHW',
-            value: replacedValue
-        }
-        $.ajax({
-            url: '/find_b_s_values',
-            method: 'POST',
-            data: data
-        }).then(
-            $("#baselineValues").off('click', '#addHhw'),
-            $('#addHhw').removeClass('checkMark'),
-            $("#hhwValue").prop('disabled', true).css("color", "white"),
-        )
-    });
-
-
-    $("#baselineValues").on('click', '#addGas', (e) => {
-        e.preventDefault();
-        $("#addGas").css("color", "green")
-        let gasValue = $('#gasValue').val()
-        let replacedValue = gasValue.replace(/,/g, '')
-        let data = {
-            project_id: searchedVal,
-            commodity: 'GAS',
-            value: replacedValue
-        }
-        $.ajax({
-            url: '/find_b_s_values',
-            method: 'POST',
-            data: data
-        }).then(
-            $("#baselineValues").off('click', '#addGas'),
-            $('#addGas').removeClass('checkMark'),
-            $("#gasValue").prop('disabled', true).css("color", "white"),
-        )
-    });
-
-    $("#baselineValues").on('click', '#addWtr', (e) => {
-        e.preventDefault();
-        $("#addWtr").css("color", "green")
-        let wtrValue = $('#wtrValue').val()
-        let replacedValue = wtrValue.replace(/,/g, '')
-        let data = {
-            project_id: searchedVal,
-            commodity: 'WTR',
-            value: replacedValue
-        }
-        $.ajax({
-            url: '/find_b_s_values',
-            method: 'POST',
-            data: data
-        }).then(
-            $("#baselineValues").off('click', '#addWtr'),
-            $('#addWtr').removeClass('checkMark'),
-            $("#wtrValue").prop('disabled', true).css("color", "white"),
-        )
-    });
-
-    $("#baselineValues").on('click', '#addPeakChw', (e) => {
-        e.preventDefault();
-        $("#addPeakChw").css("color", "green")
-        let peakChwValue = $('#peakChwValue').val()
-        let replacedValue = peakChwValue.replace(/,/g, '')
-        let data = {
-            project_id: searchedVal,
-            commodity: 'Peak CHW',
-            value: replacedValue
-        }
-        $.ajax({
-            url: '/find_b_s_values',
-            method: 'POST',
-            data: data
-        }).then(
-            $("#baselineValues").off('click', '#addPeakChw'),
-            $('#addPeakChw').removeClass('checkMark'),
-            $("#peakChwValue").prop('disabled', true).css("color", "white"),
-        )
-    });
-
-    $("#baselineValues").on('click', '#addLabor', (e) => {
-        e.preventDefault();
-        $("#addLabor").css("color", "green")
-        let laborValue = $('#laborValue').val()
-        let replacedValue = laborValue.replace(/,/g, '')
-        let data = {
-            project_id: searchedVal,
-            commodity: 'Labor',
-            value: replacedValue
-        }
-        $.ajax({
-            url: '/find_b_s_values',
-            method: 'POST',
-            data: data
-        }).then(
-            $("#baselineValues").off('click', '#addLabor'),
-            $('#addLabor').removeClass('checkMark'),
-            $("#laborValue").prop('disabled', true).css("color", "white"),
-        )
-    });
 
     //Ajax calls to create predicted savings
     $("#addPredChw").on('click', (e) => {
