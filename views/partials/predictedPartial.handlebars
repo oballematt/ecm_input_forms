@@ -2,119 +2,341 @@
     <h5 style="background-color: #bf5700;" class="card-header">Predicted Analysis</h5>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table text-light text-end table-borderless bordered inputTable">
-                <thead>
-                    <tr class='text-center bordered'>
-                        <th></th>
-                        <th class="bordered" scope="col">CHW
-                            <span class='units'>[tonhr]</span>
-                        </th>
-                        <th class="bordered" scope="col">ELE
-                            <span class='units'>[kWh]</span>
-                        </th>
-                        <th class="bordered" scope="col">STM
-                            <span class='units'>[lb]</span>
-                        </th>
-                        <th class="bordered" scope="col">HHW
-                            <span class='units'>[mmbtu]</span>
-                        </th>
-                        <th class="bordered" scope="col">GAS
-                            <span class='units'>[CCF]</span>
-                        </th>
-                        <th class="bordered" scope="col">WTR
-                            <span class='units'>[kgal]</span>
-                        </th>
-                        <th class="bordered" scope="col">Peak CHW
-                            <span class='units'>[ton]</span>
-                        </th>
-                        <th class="bordered" scope="col">Labor
-                            <span class='units'>[Hours]</span>
-                        </th>
-                        <th class="bordered" scope="col">Total
-                            <span class='units'>&nbsp;</span>
-                        </th>
-                        <th class="bordered" scope="col">Miscellaneous
-                            <span class='units'>[$]</span>
-                        </th>
-                        <th class="bordered" scope="col">Annual Cash Flow
-                            <span class='units'>[$]</span>
-                        </th>
-                        <th class="bordered" scope="col">Payback
-                            <span class='units'>[years]</span>
-                        </th>
-                        <th class="bordered" scope="col">NPV
-                            <span class='units'>[$]</span>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#with metadata}}
-                    <form action="find_savings_values" method="POST" id="savingsValues">
-                        <tr>
-                            <th style="width: 100px">Predicted</th>
-                            <td class="text-center inputBorder">
-                                <input autocomplete="off" type="text" id="predChwValue">
+            <form action='/' method='POST' id="searchData">
+                <table class="table text-light text-end table-borderless bordered inputTable">
+                    <thead>
+                        <tr class='text-center bordered'>
+                            <th></th>
+                            <th class="bordered" scope="col">CHW
+                                <span class='units'>[tonhr]</span>
+                            </th>
+                            <th class="bordered" scope="col">ELE
+                                <span class='units'>[kWh]</span>
+                            </th>
+                            <th class="bordered" scope="col">STM
+                                <span class='units'>[lb]</span>
+                            </th>
+                            <th class="bordered" scope="col">HHW
+                                <span class='units'>[mmbtu]</span>
+                            </th>
+                            <th class="bordered" scope="col">GAS
+                                <span class='units'>[CCF]</span>
+                            </th>
+                            <th class="bordered" scope="col">WTR
+                                <span class='units'>[kgal]</span>
+                            </th>
+                            <th class="bordered" scope="col">Peak CHW
+                                <span class='units'>[ton]</span>
+                            </th>
+                            <th class="bordered" scope="col">Labor
+                                <span class='units'>[Hours]</span>
+                            </th>
+                            <th class="bordered" scope="col">Total
+                                <span class='units'>&nbsp;</span>
+                            </th>
+                            <th class="bordered" scope="col">Miscellaneous
+                                <span class='units'>[$]</span>
+                            </th>
+                            <th class="bordered" scope="col">Annual Cash Flow
+                                <span class='units'>[$]</span>
+                            </th>
+                            <th class="bordered" scope="col">Payback
+                                <span class='units'>[years]</span>
+                            </th>
+                            <th class="bordered" scope="col">NPV
+                                <span class='units'>[$]</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='text-center'>
+                            <th class='bordered' style="width: 100px">Predicted</th>
+                            <td class='bordered commas' id='numPredCHW'>
+                                {{#each savingsPred}}
+                                {{#ifEquals commodity 'CHW'}}
+                                {{value}}
+                                {{/ifEquals}}
+                                {{/each}}
                             </td>
-                            <td class="text-center inputBorder">
-                                <input autocomplete="off" type="text" id="predEleValue">
+                            <td class='bordered commas' id='numPredELE'>
+                                {{#each savingsPred}}
+                                {{#ifEquals commodity 'ELE'}}
+                                {{value}}
+                                {{/ifEquals}}
+                                {{/each}}
                             </td>
-                            <td class="text-center inputBorder">
-                                <input autocomplete="off" type="text" id="predStmValue">
+                            <td class='bordered commas' id='numPredSTM'>
+                                {{#each savingsPred}}
+                                {{#ifEquals commodity 'STM'}}
+                                {{value}}
+                                {{/ifEquals}}
+                                {{/each}}
                             </td>
-                            <td class="text-center inputBorder">
-                                <input autocomplete="off" type="text" id="predHhwValue">
+                            <td class='bordered commas' id='numPredHHW'>
+                                {{#each savingsPred}}
+                                {{#ifEquals commodity 'HHW'}}
+                                {{value}}
+                                {{/ifEquals}}
+                                {{/each}}
                             </td>
-                            <td class="text-center inputBorder">
-                                <input autocomplete="off" type="text" id="predGasValue">
+                            <td class='bordered commas' id='numPredGAS'>
+                                {{#each savingsPred}}
+                                {{#ifEquals commodity 'GAS'}}
+                                {{value}}
+                                {{/ifEquals}}
+                                {{/each}}
                             </td>
-                            <td class="text-center inputBorder">
-                                <input autocomplete="off" type="text" id="predWtrValue">
+                            <td class='bordered commas' id='numPredWTR'>
+                                {{#each savingsPred}}
+                                {{#ifEquals commodity 'WTR'}}
+                                {{value}}
+                                {{/ifEquals}}
+                                {{/each}}
                             </td>
-                            <td class="text-center inputBorder">
-                                <input autocomplete="off" type="text" id="predPeakChwValue">
+                            <td class='bordered commas' id='numPredPeakCHW'>
+                                {{#each savingsPred}}
+                                {{#ifEquals commodity 'Peak CHW'}}
+                                {{value}}
+                                {{/ifEquals}}
+                                {{/each}}
                             </td>
-                            <td class="text-center inputBorder">
-                                <input autocomplete="off" type="text" id="predLaborValue">
+                            <td class='bordered commas' id='numPredLabor'>
+                                {{#each savingsPred}}
+                                {{#ifEquals commodity 'Labor'}}
+                                {{value}}
+                                {{/ifEquals}}
+                                {{/each}}
                             </td>
                         </tr>
                         <tr class='text-center'>
-                            <td class="borderTop"></td>
-                            <td>
-                                <i id="addPredChw" style="display: none"
-                                    class="far fa-check-circle fa-2x checkMark"></i>
+                            <td class='borderTop'></td>
+                            <td class='borderTop'>
+                                {{#with metadata}}
+                                <button id="addPredCHW" type="button" data-comm-name="CHW" name="CHW"
+                                    class="btn btn-success addPredicted">
+                                    <i class="fas fa-plus-circle"></i>
+                                </button>
+                                <button style="display: none" id={{id}} data-comm-name="CHW" name="CHW"
+                                    class="btn btn-warning editPredicted showPredBtn mb-3">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <span class="units"><button style="display: none" id={{id}} data-comm-name="CHW"
+                                        name="CHW" class="btn btn-danger deletePredicted showPredBtn">
+                                        <i class="fas fa-trash-alt"></i>
+                                </span>
+                                </button>
+                                {{/with}}
+                                {{#each savingsPred}}
+                                {{#ifEquals commodity "CHW"}}
+                                <button id={{id}} data-comm-name="CHW" name="CHW"
+                                    class="btn btn-warning editPredicted mb-3">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <span class="units"><button id={{id}} name="CHW" class="btn btn-danger deletePredicted">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button></span>
+                                {{/ifEquals}}
+                                {{/each}}
                             </td>
-                            <td>
-                                <i id="addPredEle" style="display: none"
-                                    class="far fa-check-circle fa-2x checkMark"></i>
+                            <td class='borderTop'>
+                                {{#with metadata}}
+                                <button id="addPredELE" type="button" data-comm-name="ELE" name="ELE"
+                                    class="btn btn-success addPredicted">
+                                    <i class="fas fa-plus-circle"></i>
+                                </button>
+                                <button style="display: none" id={{id}} data-comm-name="ELE" name="ELE"
+                                    class="btn btn-warning editPredicted showPredBtn mb-3">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <span class="units"><button style="display: none" id={{id}} data-comm-name="ELE"
+                                        name="ELE" class="btn btn-danger deletePredicted showPredBtn">
+                                        <i class="fas fa-trash-alt"></i>
+                                </span>
+                                </button>
+                                {{/with}}
+                                {{#each savingsPred}}
+                                {{#ifEquals commodity "ELE"}}
+                                <button id={{id}} data-comm-name="ELE" name="ELE"
+                                    class="btn btn-warning editPredicted mb-3">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <span class="units"><button id={{id}} name="ELE" class="btn btn-danger deletePredicted">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button></span>
+                                {{/ifEquals}}
+                                {{/each}}
                             </td>
-                            <td>
-                                <i id="addPredStm" style="display: none"
-                                    class="far fa-check-circle fa-2x checkMark"></i>
+                            <td class='borderTop'>
+                                {{#with metadata}}
+                                <button id="addPredSTM" type="button" data-comm-name="STM" name="STM"
+                                    class="btn btn-success addPredicted">
+                                    <i class="fas fa-plus-circle"></i>
+                                </button>
+                                <button style="display: none" id={{id}} data-comm-name="STM" name="STM"
+                                    class="btn btn-warning editPredicted showPredBtn mb-3">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <span class="units"><button style="display: none" id={{id}} data-comm-name="STM"
+                                        name="STM" class="btn btn-danger deletePredicted showPredBtn">
+                                        <i class="fas fa-trash-alt"></i>
+                                </span>
+                                </button>
+                                {{/with}}
+                                {{#each savingsPred}}
+                                {{#ifEquals commodity "STM"}}
+                                <button id={{id}} data-comm-name="STM" name="STM"
+                                    class="btn btn-warning editPredicted mb-3">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <span class="units"><button id={{id}} name="STM" class="btn btn-danger deletePredicted">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button></span>
+                                {{/ifEquals}}
+                                {{/each}}
                             </td>
-                            <td>
-                                <i id="addPredHhw" style="display: none"
-                                    class="far fa-check-circle fa-2x checkMark"></i>
+                            <td class='borderTop'>
+                                {{#with metadata}}
+                                <button id="addPredHHW" type="button" data-comm-name="HHW" name="HHW"
+                                    class="btn btn-success addPredicted">
+                                    <i class="fas fa-plus-circle"></i>
+                                </button>
+                                <button style="display: none" id={{id}} data-comm-name="HHW" name="HHW"
+                                    class="btn btn-warning editPredicted showPredBtn mb-3">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <span class="units"><button style="display: none" id={{id}} data-comm-name="HHW"
+                                        name="HHW" class="btn btn-danger deletePredicted showPredBtn">
+                                        <i class="fas fa-trash-alt"></i>
+                                </span>
+                                </button>
+                                {{/with}}
+                                {{#each savingsPred}}
+                                {{#ifEquals commodity "HHW"}}
+                                <button id={{id}} data-comm-name="HHW" name="HHW"
+                                    class="btn btn-warning editPredicted mb-3">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <span class="units"><button id={{id}} name="HHW" class="btn btn-danger deletePredicted">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button></span>
+                                {{/ifEquals}}
+                                {{/each}}
                             </td>
-                            <td>
-                                <i id="addPredGas" style="display: none"
-                                    class="far fa-check-circle fa-2x checkMark"></i>
+                            <td class='borderTop'>
+                                {{#with metadata}}
+                                <button id="addPredGAS" type="button" data-comm-name="GAS" name="GAS"
+                                    class="btn btn-success addPredicted">
+                                    <i class="fas fa-plus-circle"></i>
+                                </button>
+                                <button style="display: none" id={{id}} data-comm-name="GAS" name="GAS"
+                                    class="btn btn-warning editPredicted showPredBtn mb-3">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <span class="units"><button style="display: none" id={{id}} data-comm-name="GAS"
+                                        name="GAS" class="btn btn-danger deletePredicted showPredBtn">
+                                        <i class="fas fa-trash-alt"></i>
+                                </span>
+                                </button>
+                                {{/with}}
+                                {{#each savingsPred}}
+                                {{#ifEquals commodity "GAS"}}
+                                <button id={{id}} data-comm-name="GAS" name="GAS"
+                                    class="btn btn-warning editPredicted mb-3">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <span class="units"><button id={{id}} name="GAS" class="btn btn-danger deletePredicted">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button></span>
+                                {{/ifEquals}}
+                                {{/each}}
                             </td>
-                            <td>
-                                <i id="addPredWtr" style="display: none"
-                                    class="far fa-check-circle fa-2x checkMark"></i>
+                            <td class='borderTop'>
+                                {{#with metadata}}
+                                <button id="addPredWTR" type="button" data-comm-name="WTR" name="WTR"
+                                    class="btn btn-success addPredicted">
+                                    <i class="fas fa-plus-circle"></i>
+                                </button>
+                                <button style="display: none" id={{id}} data-comm-name="WTR" name="WTR"
+                                    class="btn btn-warning editPredicted showPredBtn mb-3">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <span class="units"><button style="display: none" id={{id}} data-comm-name="WTR"
+                                        name="WTR" class="btn btn-danger deletePredicted showPredBtn">
+                                        <i class="fas fa-trash-alt"></i>
+                                </span>
+                                </button>
+                                {{/with}}
+                                {{#each savingsPred}}
+                                {{#ifEquals commodity "WTR"}}
+                                <button id={{id}} data-comm-name="WTR" name="WTR"
+                                    class="btn btn-warning editPredicted mb-3">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <span class="units"><button id={{id}} name="WTR" class="btn btn-danger deletePredicted">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button></span>
+                                {{/ifEquals}}
+                                {{/each}}
                             </td>
-                            <td>
-                                <i id="addPredPeakChw" style="display: none"
-                                    class="far fa-check-circle fa-2x checkMark"></i>
+                            <td class='borderTop'>
+                                {{#with metadata}}
+                                <button id="addPredPeakCHW" type="button" data-comm-name="Peak CHW" name="PeakCHW"
+                                    class="btn btn-success addPredicted">
+                                    <i class="fas fa-plus-circle"></i>
+                                </button>
+                                <button style="display: none" id={{id}} data-comm-name="Peak CHW" name="PeakCHW"
+                                    class="btn btn-warning editPredicted showPredBtn mb-3">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <span class="units"><button style="display: none" id={{id}} data-comm-name="Peak CHW"
+                                        name="PeakCHW" class="btn btn-danger deletePredicted showPredBtn">
+                                        <i class="fas fa-trash-alt"></i>
+                                </span>
+                                </button>
+                                {{/with}}
+                                {{#each savingsPred}}
+                                {{#ifEquals commodity "Peak CHW"}}
+                                <button id={{id}} data-comm-name="Peak CHW" name="PeakCHW"
+                                    class="btn btn-warning editPredicted mb-3">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <span class="units"><button id={{id}} name="PeakCHW"
+                                        class="btn btn-danger deletePredicted">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button></span>
+                                {{/ifEquals}}
+                                {{/each}}
                             </td>
-                            <td>
-                                <i id="addPredLabor" style="display: none"
-                                    class="far fa-check-circle fa-2x checkMark"></i>
+                            <td class='borderTop'>
+                                {{#with metadata}}
+                                <button id="addPredLabor" type="button" data-comm-name="Labor" name="Labor"
+                                    class="btn btn-success addPredicted">
+                                    <i class="fas fa-plus-circle"></i>
+                                </button>
+                                <button style="display: none" id={{id}} data-comm-name="Labor" name="Labor"
+                                    class="btn btn-warning editPredicted showPredBtn mb-3">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <span class="units"><button style="display: none" id={{id}} data-comm-name="Labor"
+                                        name="Labor" class="btn btn-danger deletePredicted showPredBtn">
+                                        <i class="fas fa-trash-alt"></i>
+                                </span>
+                                </button>
+                                {{/with}}
+                                {{#each savingsPred}}
+                                {{#ifEquals commodity "Labor"}}
+                                <button id={{id}} data-comm-name="Labor" name="Labor"
+                                    class="btn btn-warning editPredicted mb-3">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <span class="units"><button id={{id}} name="Labor"
+                                        class="btn btn-danger deletePredicted">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button></span>
+                                {{/ifEquals}}
+                                {{/each}}
                             </td>
                         </tr>
-                    </form>
-                    {{/with}}
-                    <form action='/' method='POST' id="searchData">
                         <tr>
                             <th class="bordered" scope="row">%</th>
                             {{#with p_chw}}
@@ -411,9 +633,9 @@
                             <td class="bordered"></td>
                             {{/with}}
                         </tr>
-                    </form>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </form>
         </div>
     </div>
 </div>

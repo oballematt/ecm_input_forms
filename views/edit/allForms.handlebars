@@ -288,43 +288,16 @@
                 </section>
             </div>
             <hr>
-            <div class="row responsive">
-                <section class="col-md-6">
-                    <div class="card border-secondary w-100 h-100 text-light mb-3" style="background-color: #333f48" ;>
-                        <h5 style="background-color: #bf5700;" class="card-header">Savings</h5>
-                        <div class="card-body">
-                            <table class="table text-light">
-                                <thead>
-                                    <tr class="text-end">
-                                        <th class="text-start" scope="col">Phase</th>
-                                        <th class="text-start" scope="col">Commodity</th>
-                                        <th scope="col">Value</th>
-                                        <th scope="col">Edit</th>
-                                        <th scope="col">Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{#each savings}}
-                                    <tr class="text-end">
-                                        <td class="text-start">{{phase}}</td>
-                                        <td class="text-start title">{{commodity}}</td>
-                                        <td class="commas">{{value}}</td>
-                                        <td>
-                                            <a href="/find/savings/{{id}}" class='btn btn-warning'>
-                                                <i class="fas fa-edit"></i>
-                                        </td>
-                                        <td>
-                                            <button type="button" id={{id}} class='btn btn-danger deleteSavings'>
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    {{/each}}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
+            {{> baseline}}
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    {{> predictedPartial}}
+                </div>
+                <hr>
+                <div class="col-md-12">
+                    {{> mvPartial}}
+                </div>
             </div>
             <hr>
             <div class="row responsive justify-content-center">
@@ -375,24 +348,7 @@
                 </section>
             </div>
         </form>
-        {{> baselineValues}}
-        {{#with metadata}}
-        <form style="display: none;" class='mb-3' action='/find_b_s_values' id="baselineValues" method="POST">
-            {{> baselinePartial}}
-        </form>
-        {{/with}}
-        <hr>
-        <div class="row">
-            <div class="col-md-12">
-                {{> predictedPartial}}
-            </div>
-            <hr>
-            <div class="col-md-12">
-                {{> mvPartial}}
-            </div>
-        </div>
     </div>
-    <hr>
     {{#with metadata}}
     <div class="mb-3 text-center">
         <button id="delete" title="This will delete all data related to project ID: {{project_id}}"

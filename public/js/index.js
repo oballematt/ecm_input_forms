@@ -178,44 +178,6 @@ $(document).ready(() => {
         sessionStorage.removeItem('registered')
     });
 
-    let objs =
-    {
-        '#addCHW': '#showCHW',
-        '#addELE': '#showELE',
-        '#addSTM': '#showSTM',
-        '#addHHW': '#showHHW',
-        '#addGAS': '#showGAS',
-        '#addWTR': '#showWTR',
-        '#addPeakCHW': '#showPeakCHW',
-        '#addLabor': '#showLabor',
-        '#predChwValue': '#addPredChw',
-        '#predEleValue': '#addPredEle',
-        '#predStmValue': '#addPredStm',
-        '#predHhwValue': '#addPredHhw',
-        '#predGasValue': '#addPredGas',
-        '#predWtrValue': '#addPredWtr',
-        '#predPeakChwValue': '#addPredPeakChw',
-        '#predLaborValue': '#addPredLabor',
-        '#mvChwValue': '#addMvChw',
-        '#mvEleValue': '#addMvEle',
-        '#mvStmValue': '#addMvStm',
-        '#mvHhwValue': '#addMvHhw',
-        '#mvGasValue': '#addMvGas',
-        '#mvWtrValue': '#addMvWtr',
-        '#mvPeakChwValue': '#addMvPeakChw',
-        '#mvLaborValue': '#addMvLabor',
-    }
-
-    Object.keys(objs).forEach(function (key) {
-        let value = objs[key];
-        $(key).on("input", function () {
-            $(value).removeAttr("style");
-            if ($(this).val() === "") {
-                $(value).hide();
-            }
-        });
-    });
-
     let filterObjs = {
         '#allBtn': '.all',
         '#adamBtn': '.adam',
@@ -292,33 +254,37 @@ $(document).ready(() => {
         '#numWTR': '#addWTR',
         '#numPeakCHW': '#addPeakCHW',
         '#numLabor': '#addLabor',
+        '#numPredCHW': '#addPredCHW',
+        '#numPredELE': '#addPredELE',
+        '#numPredSTM': '#addPredSTM',
+        '#numPredHHW': '#addPredHHW',
+        '#numPredGAS': '#addPredGAS',
+        '#numPredWTR': '#addPredWTR',
+        '#numPredPeakCHW': '#addPredPeakCHW',
+        '#numPredLabor': '#addPredLabor',
+        '#numMvCHW': '#addMvCHW',
+        '#numMvELE': '#addMvELE',
+        '#numMvSTM': '#addMvSTM',
+        '#numMvHHW': '#addMvHHW',
+        '#numMvGAS': '#addMvGAS',
+        '#numMvWTR': '#addMvWTR',
+        '#numMvPeakCHW': '#addMvPeakCHW',
+        '#numMvLabor': '#addMvLabor',
     }
 
     Object.keys(valueObjs).forEach(function (key) {
         let value = valueObjs[key];
-        console.log(valueObjs)
         if ($(key).text().trim()) {
-            $(value).css('color', 'white').prop('disabled', true).val($(key).text().trim())
+            $(value).hide()
         }
     })
-
-    $("#baselineBtn").on('click', function () {
-        $('#baselineValues').removeAttr("style")
-        $("#addBaseline").hide()
-    });
-
-    $("#viewBaselineBtn").on('click', function () {
-        $("#baselineValues").hide()
-        $('#addBaseline').show()
-    });
 
     $(".addBaseline").on('click', function (e) {
         e.preventDefault();
         let commodity = $(this).attr('data-comm-name')
         let name = $(this).attr('name')
-        let value = $('#add' + name).val()
+        let value = prompt(`Enter Value for ${name} `)
         let replacedValue = value.replace(/,/g, '')
-        $("#show" + name).css("color", "green")
         let data = {
             project_id: searchedVal,
             commodity: commodity,
@@ -326,12 +292,15 @@ $(document).ready(() => {
         }
         $.ajax({
             url: '/find_b_s_values',
-            method: 'POST',
+            method: "POST",
             data: data
-        }).then(
-            $(this).off('click'),
-            $("#show" + name).removeClass('checkMark'),
-            $("#add" + name).prop('disabled', true).css("color", "white")
+        }).then( response => {
+            $(`.editBaseline[name=${name}]`).attr({'id': response.id, 'data-comm-name': commodity})
+            $(`.deleteBaseline[name=${name}]`).attr({'id': response.id, 'data-comm-name': commodity})
+            $(this).hide(),
+            $(`.showBtn[name=${name}]`).show(),
+            $("#num" + name).text(value)
+        }
         )
     })
 
@@ -360,374 +329,145 @@ $(document).ready(() => {
     $(".deleteBaseline").on("click", function (e) {
         e.preventDefault();
         const id = $(this).attr('id');
-        let commodity = $(this).attr('name')
+        let name = $(this).attr('name')
         $.ajax({
             url: '/delete/baseline/' + id,
             method: 'DELETE'
         }).then(
-            $("#num" + commodity).text(''),
+            $("#num" + name).text(''),
             $(this).hide(),
-            $('#' + id).hide(),
-            $('#add' + commodity).css('color', 'black').prop('disabled', false).val('')
+            $(`.editBaseline[name=${name}]`).hide(),
+            $('#add' + name).show()
         )
     });
 
-
-
-    //Ajax calls to create predicted savings
-    $("#addPredChw").on('click', (e) => {
+    $(".addPredicted").on('click', function (e) {
         e.preventDefault();
-        $("#addPredChw").css("color", "green")
-        let value = $("#predChwValue").val()
+        let commodity = $(this).attr('data-comm-name')
+        let name = $(this).attr('name')
+        let value = prompt(`Enter Value for ${name} `)
+        let replacedValue = value.replace(/,/g, '')
+        let data = {
+            project_id: searchedVal,
+            commodity: commodity,
+            phase: 'Predicted',
+            value: replacedValue
+        }
+        $.ajax({
+            url: '/find_savings_values',
+            method: "POST",
+            data: data
+        }).then( response => {
+            $(`.editPredicted[name=${name}]`).attr({'id': response.id, 'data-comm-name': commodity})
+            $(`.deletePredicted[name=${name}]`).attr({'id': response.id, 'data-comm-name': commodity})
+            $(this).hide(),
+            $(`.showPredBtn[name=${name}]`).show(),
+            $("#numPred" + name).text(value)
+        }
+        )
+    })
+
+    $(".editPredicted").on("click", function (e) {
+        e.preventDefault();
+        let id = $(this).attr('id')
+        let commodity = $(this).attr('data-comm-name')
+        let name = $(this).attr('name')
+        let value = prompt(`Enter new value for ${commodity}`)
         let replacedValue = value.replace(/,/g, '')
         let data = {
             project_id: searchedVal,
             phase: 'Predicted',
-            commodity: 'CHW',
-            value: replacedValue,
+            commodity: commodity,
+            value: replacedValue
         }
         $.ajax({
-            url: '/find_savings_values',
+            url: '/find/savings/' + id,
             method: 'POST',
             data: data
         }).then(
-            $("#addPredChw").off('click'),
-            $('#addPredChw').removeClass('checkMark'),
-            $("#predChwValue").prop('disabled', true).css("color", "white"),
+            $("#numPred" + name).text(value),
+            $('#addPred' + name).val(value)
+        )
+    })
+
+    $(".deletePredicted").on("click", function (e) {
+        e.preventDefault();
+        const id = $(this).attr('id');
+        let name = $(this).attr('name')
+        $.ajax({
+            url: '/delete/savings/' + id,
+            method: 'DELETE'
+        }).then(
+            $("#numPred" + name).text(''),
+            $(this).hide(),
+            $(`.editPredicted[name=${name}]`).hide(),
+            $('#addPred' + name).show()
         )
     });
 
-    $("#addPredEle").on('click', (e) => {
+    $(".addMv").on('click', function (e) {
         e.preventDefault();
-        $("#addPredEle").css("color", "green")
-        let value = $("#predEleValue").val()
+        let commodity = $(this).attr('data-comm-name')
+        let name = $(this).attr('name')
+        let value = prompt(`Enter Value for ${name} `)
         let replacedValue = value.replace(/,/g, '')
         let data = {
             project_id: searchedVal,
-            phase: 'Predicted',
-            commodity: 'ELE',
-            value: replacedValue,
+            commodity: commodity,
+            phase: 'M&V',
+            value: replacedValue
         }
         $.ajax({
             url: '/find_savings_values',
-            method: 'POST',
+            method: "POST",
             data: data
-        }).then(
-            $("#addPredEle").off('click'),
-            $('#addPredEle').removeClass('checkMark'),
-            $("#predEleValue").prop('disabled', true).css("color", "white"),
-        )
-    });
-
-    $("#addPredStm").on('click', (e) => {
-        e.preventDefault();
-        $("#addPredStm").css("color", "green")
-        let value = $("#predStmValue").val()
-        let replacedValue = value.replace(/,/g, '')
-        let data = {
-            project_id: searchedVal,
-            phase: 'Predicted',
-            commodity: 'STM',
-            value: replacedValue,
+        }).then( response => {
+            $(`.editMv[name=${name}]`).attr({'id': response.id, 'data-comm-name': commodity})
+            $(`.deleteMv[name=${name}]`).attr({'id': response.id, 'data-comm-name': commodity})
+            $(this).hide(),
+            $(`.showMvBtn[name=${name}]`).show(),
+            $("#numMv" + name).text(value)
         }
-        $.ajax({
-            url: '/find_savings_values',
-            method: 'POST',
-            data: data
-        }).then(
-            $("#addPredStm").off('click'),
-            $('#addPredStm').removeClass('checkMark'),
-            $("#predStmValue").prop('disabled', true).css("color", "white"),
         )
-    });
+    })
 
-    $("#addPredHhw").on('click', (e) => {
+    $(".editMv").on("click", function (e) {
         e.preventDefault();
-        $("#addPredHhw").css("color", "green")
-        let value = $("#predHhwValue").val()
-        let replacedValue = value.replace(/,/g, '')
-        let data = {
-            project_id: searchedVal,
-            phase: 'Predicted',
-            commodity: 'HHW',
-            value: replacedValue,
-        }
-        $.ajax({
-            url: '/find_savings_values',
-            method: 'POST',
-            data: data
-        }).then(
-            $("#addPredHhw").off('click'),
-            $('#addPredHhw').removeClass('checkMark'),
-            $("#predHhwValue").prop('disabled', true).css("color", "white"),
-        )
-    });
-
-    $("#addPredGas").on('click', (e) => {
-        e.preventDefault();
-        $("#addPredGas").css("color", "green")
-        let value = $("#predGasValue").val()
-        let replacedValue = value.replace(/,/g, '')
-        let data = {
-            project_id: searchedVal,
-            phase: 'Predicted',
-            commodity: 'GAS',
-            value: replacedValue,
-        }
-        $.ajax({
-            url: '/find_savings_values',
-            method: 'POST',
-            data: data
-        }).then(
-            $("#addPredGas").off('click'),
-            $('#addPredGas').removeClass('checkMark'),
-            $("#predGasValue").prop('disabled', true).css("color", "white"),
-        )
-    });
-
-    $("#addPredWtr").on('click', (e) => {
-        e.preventDefault();
-        $("#addPredWtr").css("color", "green")
-        let value = $("#predWtrValue").val()
-        let replacedValue = value.replace(/,/g, '')
-        let data = {
-            project_id: searchedVal,
-            phase: 'Predicted',
-            commodity: 'WTR',
-            value: replacedValue,
-        }
-        $.ajax({
-            url: '/find_savings_values',
-            method: 'POST',
-            data: data
-        }).then(
-            $("#addPredWtr").off('click'),
-            $('#addPredWtr').removeClass('checkMark'),
-            $("#predWtrValue").prop('disabled', true).css("color", "white"),
-        )
-    });
-
-    $("#addPredPeakChw").on('click', (e) => {
-        e.preventDefault();
-        $("#addPredPeakChw").css("color", "green")
-        let value = $("#predPeakChwValue").val()
-        let replacedValue = value.replace(/,/g, '')
-        let data = {
-            project_id: searchedVal,
-            phase: 'Predicted',
-            commodity: 'Peak CHW',
-            value: replacedValue,
-        }
-        $.ajax({
-            url: '/find_savings_values',
-            method: 'POST',
-            data: data
-        }).then(
-            $("#addPredPeakChw").off('click'),
-            $('#addPredPeakChw').removeClass('checkMark'),
-            $("#predPeakChwValue").prop('disabled', true).css("color", "white"),
-        )
-    });
-
-    $("#addPredLabor").on('click', (e) => {
-        e.preventDefault();
-        $("#addPredLabor").css("color", "green")
-        let value = $("#predLaborValue").val()
-        let replacedValue = value.replace(/,/g, '')
-        let data = {
-            project_id: searchedVal,
-            phase: 'Predicted',
-            commodity: 'Labor',
-            value: replacedValue,
-        }
-        $.ajax({
-            url: '/find_savings_values',
-            method: 'POST',
-            data: data
-        }).then(
-            $("#addPredLabor").off('click'),
-            $('#addPredLabor').removeClass('checkMark'),
-            $("#predLaborValue").prop('disabled', true).css("color", "white"),
-        )
-    });;
-
-    // //Ajax calls to create MV savings
-    $("#addMvChw").on('click', (e) => {
-        e.preventDefault();
-        $("#addMvChw").css("color", "green")
-        let value = $("#mvChwValue").val()
+        let id = $(this).attr('id')
+        let commodity = $(this).attr('data-comm-name')
+        let name = $(this).attr('name')
+        let value = prompt(`Enter new value for ${commodity}`)
         let replacedValue = value.replace(/,/g, '')
         let data = {
             project_id: searchedVal,
             phase: 'M&V',
-            commodity: 'CHW',
-            value: replacedValue,
+            commodity: commodity,
+            value: replacedValue
         }
         $.ajax({
-            url: '/find_savings_values',
+            url: '/find/savings/' + id,
             method: 'POST',
             data: data
         }).then(
-            $("#addMvChw").off('click'),
-            $('#addMvChw').removeClass('checkMark'),
-            $("#mvChwValue").prop('disabled', true).css("color", "white"),
+            $("#numMv" + name).text(value),
+            $('#addMv' + name).val(value)
+        )
+    })
+
+    $(".deleteMv").on("click", function (e) {
+        e.preventDefault();
+        const id = $(this).attr('id');
+        let name = $(this).attr('name')
+        $.ajax({
+            url: '/delete/savings/' + id,
+            method: 'DELETE'
+        }).then(
+            $("#numMv" + name).text(''),
+            $(this).hide(),
+            $(`.editMv[name=${name}]`).hide(),
+            $('#addMv' + name).show()
         )
     });
-
-    $("#addMvEle").on('click', (e) => {
-        e.preventDefault();
-        $("#addMvEle").css("color", "green")
-        let value = $("#mvEleValue").val()
-        let replacedValue = value.replace(/,/g, '')
-        let data = {
-            project_id: searchedVal,
-            phase: 'M&V',
-            commodity: 'ELE',
-            value: replacedValue,
-        }
-        $.ajax({
-            url: '/find_savings_values',
-            method: 'POST',
-            data: data
-        }).then(
-            $("#addMvEle").off('click'),
-            $('#addMvEle').removeClass('checkMark'),
-            $("#mvEleValue").prop('disabled', true).css("color", "white"),
-        )
-    });
-
-    $("#addMvStm").on('click', (e) => {
-        e.preventDefault();
-        $("#addMvStm").css("color", "green")
-        let value = $("#mvStmValue").val()
-        let replacedValue = value.replace(/,/g, '')
-        let data = {
-            project_id: searchedVal,
-            phase: 'M&V',
-            commodity: 'STM',
-            value: replacedValue,
-        }
-        $.ajax({
-            url: '/find_savings_values',
-            method: 'POST',
-            data: data
-        }).then(
-            $("#addMvStm").off('click'),
-            $('#addMvStm').removeClass('checkMark'),
-            $("#mvStmValue").prop('disabled', true).css("color", "white"),
-        )
-    });
-
-    $("#addMvHhw").on('click', (e) => {
-        e.preventDefault();
-        $("#addMvHhw").css("color", "green")
-        let value = $("#mvHhwValue").val()
-        let replacedValue = value.replace(/,/g, '')
-        let data = {
-            project_id: searchedVal,
-            phase: 'M&V',
-            commodity: 'HHW',
-            value: replacedValue,
-        }
-        $.ajax({
-            url: '/find_savings_values',
-            method: 'POST',
-            data: data
-        }).then(
-            $("#addMvHhw").off('click'),
-            $('#addMvHhw').removeClass('checkMark'),
-            $("#mvHhwValue").prop('disabled', true).css("color", "white"),
-        )
-    });
-
-    $("#addMvGas").on('click', (e) => {
-        e.preventDefault();
-        $("#addMvGas").css("color", "green")
-        let value = $("#mvGasValue").val()
-        let replacedValue = value.replace(/,/g, '')
-        let data = {
-            project_id: searchedVal,
-            phase: 'M&V',
-            commodity: 'GAS',
-            value: replacedValue,
-        }
-        $.ajax({
-            url: '/find_savings_values',
-            method: 'POST',
-            data: data
-        }).then(
-            $("#addMvGas").off('click'),
-            $('#addMvGas').removeClass('checkMark'),
-            $("#mvGasValue").prop('disabled', true).css("color", "white"),
-        )
-    });
-
-    $("#addMvWtr").on('click', (e) => {
-        e.preventDefault();
-        $("#addMvWtr").css("color", "green")
-        let value = $("#mvWtrValue").val()
-        let replacedValue = value.replace(/,/g, '')
-        let data = {
-            project_id: searchedVal,
-            phase: 'M&V',
-            commodity: 'WTR',
-            value: replacedValue,
-        }
-        $.ajax({
-            url: '/find_savings_values',
-            method: 'POST',
-            data: data
-        }).then(
-            $("#addMvWtr").off('click'),
-            $('#addMvWtr').removeClass('checkMark'),
-            $("#mvWtrValue").prop('disabled', true).css("color", "white"),
-        )
-    });
-
-    $("#addMvPeakChw").on('click', (e) => {
-        e.preventDefault();
-        $("#addMvPeakChw").css("color", "green")
-        let value = $("#mvPeakChwValue").val()
-        let replacedValue = value.replace(/,/g, '')
-        let data = {
-            project_id: searchedVal,
-            phase: 'M&V',
-            commodity: 'Peak CHW',
-            value: replacedValue,
-        }
-        $.ajax({
-            url: '/find_savings_values',
-            method: 'POST',
-            data: data
-        }).then(
-            $("#addMvPeakChw").off('click'),
-            $('#addMvPeakChw').removeClass('checkMark'),
-            $("#mvPeakChwValue").prop('disabled', true).css("color", "white"),
-        )
-    });
-
-    $("#addMvLabor").on('click', (e) => {
-        e.preventDefault();
-        $("#addMvLabor").css("color", "green")
-        let value = $("#mvLaborValue").val()
-        let replacedValue = value.replace(/,/g, '')
-        let data = {
-            project_id: searchedVal,
-            phase: 'M&V',
-            commodity: 'Labor',
-            value: replacedValue,
-        }
-        $.ajax({
-            url: '/find_savings_values',
-            method: 'POST',
-            data: data
-        }).then(
-            $("#addMvLabor").off('click'),
-            $('#addMvLabor').removeClass('checkMark'),
-            $("#mvLaborValue").prop('disabled', true).css("color", "white"),
-        )
-    });;
-
 
     // ajax calls for updating a specific table on an existing project ID, ajax call necessary so that if a user
     //inputs a number with comma separators, the ajax call will remove the commas when submitted to the database to avoid NaN errors.
@@ -768,37 +508,6 @@ $(document).ready(() => {
         }
     });
 
-    $('#formData').on('click', 'button.updateBase', function () {
-        const id = $(this).attr('id')
-        const commodity = $('.commodity').attr('value');
-        let errors = []
-        let data = {
-            project_id: searchedVal,
-            commodity: $('.commodity').val() || commodity,
-            value: $('.value').val().replace(/,/g, '')
-        }
-
-        if (!data.value) {
-            errors.push({ text: "Please enter a value for value field" });
-        };
-
-        if (errors.length > 0) {
-            for (var item in errors) {
-                $("#errors").append("<p style=\"border: 1px solid black; font-weight: bold\">" + errors[item].text + '</p>');
-            };
-        } else {
-
-            $.ajax({
-                url: '/find/baseline/' + id,
-                type: 'POST',
-                data: data,
-                success: function () {
-                    window.location = "/";
-                }
-            });
-        }
-    });
-
     $('#formData').on('click', 'button.updateFunding', function () {
         const id = $(this).attr('id')
         const source = $('.source').attr('value');
@@ -826,39 +535,6 @@ $(document).ready(() => {
 
             $.ajax({
                 url: '/find/funding/' + id,
-                type: 'POST',
-                data: data,
-                success: function () {
-                    window.location = "/";
-                }
-            });
-        }
-    });
-
-    $('#formData').on('click', 'button.updateSavings', function () {
-        const id = $(this).attr('id')
-        const phase = $(".phase").attr('value')
-        const commodity = $('.commodity').attr('value');
-        let errors = []
-        let data = {
-            project_id: searchedVal,
-            phase: $('.phase').val() || phase,
-            commodity: $('.commodity').val() || commodity,
-            value: $('.value').val().replace(/,/g, '')
-        }
-
-        if (!data.value) {
-            errors.push({ text: "Please enter a value for value field" });
-        };
-
-        if (errors.length > 0) {
-            for (var item in errors) {
-                $("#errors").append("<p style=\"border: 1px solid black; font-weight: bold\">" + errors[item].text + '</p>');
-            };
-        } else {
-
-            $.ajax({
-                url: '/find/savings/' + id,
                 type: 'POST',
                 data: data,
                 success: function () {
@@ -1075,19 +751,6 @@ $(document).ready(() => {
         const id = $(this).attr('id');
         $.ajax({
             url: '/delete/funding/' + id,
-            method: 'DELETE',
-        }).then(
-            $(this).closest('tr').remove()
-        )
-    });
-
-
-
-    $(".deleteSavings").on("click", function (e) {
-        e.preventDefault();
-        const id = $(this).attr('id');
-        $.ajax({
-            url: '/delete/savings/' + id,
             method: 'DELETE',
         }).then(
             $(this).closest('tr').remove()

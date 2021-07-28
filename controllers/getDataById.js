@@ -58,7 +58,7 @@ module.exports = {
                     ]
                 });
 
-                const newBaseline = await Prjt_baseline.findAll({
+                const baseline = await Prjt_baseline.findAll({
                     where: {
                         project_id,
                         commodity: {
@@ -66,15 +66,6 @@ module.exports = {
                         }
                     }
                 })
-
-                const baseline = await Prjt_baseline.findAll({
-                    where: {
-                        project_id
-                    },
-                    order: [
-                        ['id', 'ASC']
-                    ]
-                });
 
                 const funding = await Prjt_funding.findAll({
                     where: {
@@ -85,13 +76,26 @@ module.exports = {
                     ]
                 });
 
-                const savings = await Prjt_savings.findAll({
+                const savingsPred = await Prjt_savings.findAll({
                     where: {
-                        project_id
-                    },
-                    order: [
-                        ['id', 'ASC']
-                    ]
+                        project_id,
+                        phase: 'Predicted',
+                        commodity: {
+                            [Op.in]: ["CHW", "ELE", "STM", "HHW", "GAS", "WTR", "Peak CHW", "Labor"]
+                        }
+
+                    }
+                });
+
+                const savingsMv = await Prjt_savings.findAll({
+                    where: {
+                        project_id,
+                        phase: 'M&V',
+                        commodity: {
+                            [Op.in]: ["CHW", "ELE", "STM", "HHW", "GAS", "WTR", "Peak CHW", "Labor"]
+                        }
+
+                    }
                 });
 
                 const miscSavings = await Prjt_misc_savings.findAll({
@@ -937,15 +941,13 @@ module.exports = {
                     }
                 });
 
-                console.log(newBaseline)
-
                 return res.render('edit/allForms', {
                     metadata,
                     costsHours,
                     baseline,
-                    newBaseline,
                     funding,
-                    savings,
+                    savingsPred,
+                    savingsMv,
                     miscSavings,
                     projectId,
                     staffLead1,
