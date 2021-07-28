@@ -128,8 +128,7 @@
                                 {{/with}}
                                 {{#each savingsMv}}
                                 {{#ifEquals commodity "CHW"}}
-                                <button id={{id}} data-comm-name="CHW" name="CHW"
-                                    class="btn btn-warning editMv mb-3">
+                                <button id={{id}} data-comm-name="CHW" name="CHW" class="btn btn-warning editMv mb-3">
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <span class="units"><button id={{id}} name="CHW" class="btn btn-danger deleteMv">
@@ -156,8 +155,7 @@
                                 {{/with}}
                                 {{#each savingsMv}}
                                 {{#ifEquals commodity "ELE"}}
-                                <button id={{id}} data-comm-name="ELE" name="ELE"
-                                    class="btn btn-warning editMv mb-3">
+                                <button id={{id}} data-comm-name="ELE" name="ELE" class="btn btn-warning editMv mb-3">
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <span class="units"><button id={{id}} name="ELE" class="btn btn-danger deleteMv">
@@ -184,8 +182,7 @@
                                 {{/with}}
                                 {{#each savingsMv}}
                                 {{#ifEquals commodity "STM"}}
-                                <button id={{id}} data-comm-name="STM" name="STM"
-                                    class="btn btn-warning editMv mb-3">
+                                <button id={{id}} data-comm-name="STM" name="STM" class="btn btn-warning editMv mb-3">
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <span class="units"><button id={{id}} name="STM" class="btn btn-danger deleteMv">
@@ -212,8 +209,7 @@
                                 {{/with}}
                                 {{#each savingsMv}}
                                 {{#ifEquals commodity "HHW"}}
-                                <button id={{id}} data-comm-name="HHW" name="HHW"
-                                    class="btn btn-warning editMv mb-3">
+                                <button id={{id}} data-comm-name="HHW" name="HHW" class="btn btn-warning editMv mb-3">
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <span class="units"><button id={{id}} name="HHW" class="btn btn-danger deleteMv">
@@ -240,8 +236,7 @@
                                 {{/with}}
                                 {{#each savingsMv}}
                                 {{#ifEquals commodity "GAS"}}
-                                <button id={{id}} data-comm-name="GAS" name="GAS"
-                                    class="btn btn-warning editMv mb-3">
+                                <button id={{id}} data-comm-name="GAS" name="GAS" class="btn btn-warning editMv mb-3">
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <span class="units"><button id={{id}} name="GAS" class="btn btn-danger deleteMv">
@@ -268,8 +263,7 @@
                                 {{/with}}
                                 {{#each savingsMv}}
                                 {{#ifEquals commodity "WTR"}}
-                                <button id={{id}} data-comm-name="WTR" name="WTR"
-                                    class="btn btn-warning editMv mb-3">
+                                <button id={{id}} data-comm-name="WTR" name="WTR" class="btn btn-warning editMv mb-3">
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <span class="units"><button id={{id}} name="WTR" class="btn btn-danger deleteMv">
@@ -300,8 +294,7 @@
                                     class="btn btn-warning editMv mb-3">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <span class="units"><button id={{id}} name="PeakCHW"
-                                        class="btn btn-danger deleteMv">
+                                <span class="units"><button id={{id}} name="PeakCHW" class="btn btn-danger deleteMv">
                                         <i class="fas fa-trash-alt"></i>
                                     </button></span>
                                 {{/ifEquals}}
@@ -329,61 +322,57 @@
                                     class="btn btn-warning editMv mb-3">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <span class="units"><button id={{id}} name="Labor"
-                                        class="btn btn-danger deleteMv">
+                                <span class="units"><button id={{id}} name="Labor" class="btn btn-danger deleteMv">
                                         <i class="fas fa-trash-alt"></i>
                                     </button></span>
                                 {{/ifEquals}}
                                 {{/each}}
                             </td>
                         </tr>
-
                         <tr>
                             <th class="bordered" scope="row">%</th>
-                            {{#with chw}}
+                            {{#each savingsPercent}}
+                            {{#ifEquals commodity 'CHW'}}
                             <td class="percent bordered">{{savings_percent}}</td>
-                            {{else}}
-                            <td class='bordered'></td>
-                            {{/with}}
-                            {{#with ele}}
+                            {{/ifEquals}}
+                            {{/each}}
+                            {{#each savingsPercent}}
+                            {{#ifEquals commodity 'ELE'}}
                             <td class="percent bordered">{{savings_percent}}</td>
-                            {{else}}
-                            <td class='bordered'></td>
-                            {{/with}}
-                            {{#with stm}}
+                            {{/ifEquals}}
+                            {{/each}}
+                            {{#each savingsPercent}}
+                            {{#ifEquals commodity 'STM'}}
                             <td class="percent bordered">{{savings_percent}}</td>
-                            {{else}}
-                            <td class='bordered'></td>
-                            {{/with}}
-                            {{#with hhw}}
+                            {{/ifEquals}}
+                            {{/each}}
+                            {{#each savingsPercent}}
+                            {{#ifEquals commodity 'HHW'}}
                             <td class="percent bordered">{{savings_percent}}</td>
-                            {{else}}
-                            <td class='bordered'></td>
-                            {{/with}}
-                            {{#with gas}}
+                            {{/ifEquals}}
+                            {{/each}}
+                            {{#each savingsPercent}}
+                            {{#ifEquals commodity 'GAS'}}
                             <td class="percent bordered">{{savings_percent}}</td>
-                            {{else}}
-                            <td class='bordered'></td>
-                            {{/with}}
-                            {{#with water}}
+                            {{/ifEquals}}
+                            {{/each}}
+                            {{#each savingsPercent}}
+                            {{#ifEquals commodity 'WTR'}}
                             <td class="percent bordered">{{savings_percent}}</td>
-                            {{else}}
-                            <td class='bordered'></td>
-                            {{/with}}
-                            {{#with peakchw}}
+                            {{/ifEquals}}
+                            {{/each}}
+                            {{#each savingsPercent}}
+                            {{#ifEquals commodity 'Peak CHW'}}
                             <td class="percent bordered">{{savings_percent}}</td>
-                            {{else}}
-                            <td class='bordered'></td>
-                            {{/with}}
-                            {{#with labor}}
+                            {{/ifEquals}}
+                            {{/each}}
+                            {{#each savingsPercent}}
+                            {{#ifEquals commodity 'Labor'}}
                             <td class="percent bordered">{{savings_percent}}</td>
-                            {{else}}
-                            <td class='bordered'></td>
-                            {{/with}}
+                            {{/ifEquals}}
+                            {{/each}}
                             {{#with percentTotal}}
                             <td class="percent bordered">{{percent_total}}</td>
-                            {{else}}
-                            <td class="bordered"></td>
                             {{/with}}
                         </tr>
                         <tr>

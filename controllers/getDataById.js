@@ -21,14 +21,14 @@ module.exports = {
             const staffLead1 = await Prjt_metadata.findAll({
                 where: {
                     staff_lead: {
-                        [Op.in]:['Adam Keeling', 'Amanda Berens', 'Buddy Bishop', 'Cedric Bouey', 'Dave Cooper', 'Grace Hsieh', 
-                        'John Milton', 'Matt Stevens', 'Meagan Jones', 'Pat Mazur', 'Richard Shearman', 'Travis Isakson'] 
+                        [Op.in]: ['Adam Keeling', 'Amanda Berens', 'Buddy Bishop', 'Cedric Bouey', 'Dave Cooper', 'Grace Hsieh',
+                            'John Milton', 'Matt Stevens', 'Meagan Jones', 'Pat Mazur', 'Richard Shearman', 'Travis Isakson']
                     }
-                  },
-                  order: [
-                      ['staff_lead', 'ASC'],
-                      ['project_id', 'ASC']
-                  ]
+                },
+                order: [
+                    ['staff_lead', 'ASC'],
+                    ['project_id', 'ASC']
+                ]
             })
 
             if (!project_id) {
@@ -107,63 +107,74 @@ module.exports = {
                     ]
                 });
 
-                const chw = await Prjt_source_percent_each.findOne({
+                const percentEach = await Prjt_source_percent_each.findAll({
                     where: {
                         project_id,
-                        commodity: 'CHW',
-                        phase: 'M&V'
-                    }
-                });
+                        phase: 'M&V',
+                        commodity: {
+                            [Op.in]: ["CHW", "ELE", "STM", "HHW", "GAS", "WTR", "Peak CHW", "Labor"]
+                        }
 
-                const ele = await Prjt_source_percent_each.findOne({
-                    where: {
-                        project_id,
-                        commodity: 'ELE',
-                        phase: 'M&V'
                     }
-                });
-                const stm = await Prjt_source_percent_each.findOne({
-                    where: {
-                        project_id,
-                        commodity: 'STM',
-                        phase: 'M&V'
-                    }
-                });
-                const hhw = await Prjt_source_percent_each.findOne({
-                    where: {
-                        project_id,
-                        commodity: 'HHW',
-                        phase: 'M&V'
-                    }
-                });
-                const gas = await Prjt_source_percent_each.findOne({
-                    where: {
-                        project_id,
-                        commodity: 'GAS',
-                        phase: 'M&V'
-                    }
-                });
-                const water = await Prjt_source_percent_each.findOne({
-                    where: {
-                        project_id,
-                        commodity: 'WTR',
-                        phase: 'M&V'
-                    }
-                });
-                const peakchw = await Prjt_source_percent_each.findOne({
-                    where: {
-                        project_id,
-                        commodity: 'Peak CHW',
-                        phase: 'M&V'
-                    }
-                });
-                const labor = await Prjt_source_percent_each.findOne({
-                    where: {
-                        project_id,
-                        commodity: 'Labor',
-                        phase: 'M&V'
-                    }
-                });
+                })
+
+                // const chw = await Prjt_source_percent_each.findOne({
+                //     where: {
+                //         project_id,
+                //         commodity: 'CHW',
+                //         phase: 'M&V'
+                //     }
+                // });
+
+                // const ele = await Prjt_source_percent_each.findOne({
+                //     where: {
+                //         project_id,
+                //         commodity: 'ELE',
+                //         phase: 'M&V'
+                //     }
+                // });
+                // const stm = await Prjt_source_percent_each.findOne({
+                //     where: {
+                //         project_id,
+                //         commodity: 'STM',
+                //         phase: 'M&V'
+                //     }
+                // });
+                // const hhw = await Prjt_source_percent_each.findOne({
+                //     where: {
+                //         project_id,
+                //         commodity: 'HHW',
+                //         phase: 'M&V'
+                //     }
+                // });
+                // const gas = await Prjt_source_percent_each.findOne({
+                //     where: {
+                //         project_id,
+                //         commodity: 'GAS',
+                //         phase: 'M&V'
+                //     }
+                // });
+                // const water = await Prjt_source_percent_each.findOne({
+                //     where: {
+                //         project_id,
+                //         commodity: 'WTR',
+                //         phase: 'M&V'
+                //     }
+                // });
+                // const peakchw = await Prjt_source_percent_each.findOne({
+                //     where: {
+                //         project_id,
+                //         commodity: 'Peak CHW',
+                //         phase: 'M&V'
+                //     }
+                // });
+                // const labor = await Prjt_source_percent_each.findOne({
+                //     where: {
+                //         project_id,
+                //         commodity: 'Labor',
+                //         phase: 'M&V'
+                //     }
+                // });
 
                 const percentTotal = await Prjt_source_percent_total.findOne({
                     where: {
@@ -951,14 +962,15 @@ module.exports = {
                     miscSavings,
                     projectId,
                     staffLead1,
-                    chw,
-                    ele,
-                    stm,
-                    hhw,
-                    gas,
-                    water,
-                    peakchw,
-                    labor,
+                    percentEach,
+                    // chw,
+                    // ele,
+                    // stm,
+                    // hhw,
+                    // gas,
+                    // water,
+                    // peakchw,
+                    // labor,
                     percentTotal,
                     chw2,
                     chw2_1,
@@ -1076,16 +1088,16 @@ module.exports = {
             const staffLead1 = await Prjt_metadata.findAll({
                 where: {
                     staff_lead: {
-                        [Op.in]:['Adam Keeling', 'Amanda Berens', 'Buddy Bishop', 'Cedric Bouey', 'Dave Cooper', 'Grace Hsieh', 
-                        'John Milton', 'Matt Stevens', 'Meagan Jones', 'Pat Mazur', 'Richard Shearman', 'Travis Isakson'] 
+                        [Op.in]: ['Adam Keeling', 'Amanda Berens', 'Buddy Bishop', 'Cedric Bouey', 'Dave Cooper', 'Grace Hsieh',
+                            'John Milton', 'Matt Stevens', 'Meagan Jones', 'Pat Mazur', 'Richard Shearman', 'Travis Isakson']
                     }
-                  },
-                  order: [
-                      ['staff_lead', 'ASC'],
-                      ['project_id', 'ASC']
-                  ]
+                },
+                order: [
+                    ['staff_lead', 'ASC'],
+                    ['project_id', 'ASC']
+                ]
             })
-            
+
             return res.render('edit/allForms', {
                 projectId,
                 staffLead1,
@@ -1116,7 +1128,7 @@ module.exports = {
                     project_id
                 }
             });
-            
+
             await Prjt_funding.destroy({
                 where: {
                     project_id
