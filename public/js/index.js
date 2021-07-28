@@ -80,7 +80,11 @@ $(document).ready(() => {
     };
 
     $(".percent").text(function (i, curr) {
-        return parseFloat(curr * 100).toFixed(0) + "%";
+        if (!$(this).text().trim()) {
+            $(this).text('')
+        } else {
+            return parseFloat(curr * 100).toFixed(0) + "%";
+        }
     });
 
     $(".years").text(function (i, curr) {
@@ -88,15 +92,23 @@ $(document).ready(() => {
     });
 
     $(".whole").each(function () {
-        let num = parseFloat($(this).text()).toFixed(0);
-        let commaNum = numberWithCommas(num);
-        $(this).text(commaNum)
+        if (!$(this).text().trim()) {
+            $(this).text('')
+        } else {
+            let num = parseFloat($(this).text()).toFixed(0);
+            let commaNum = numberWithCommas(num);
+            $(this).text(commaNum)
+        }
     });
 
     $(".whole_dollar").each(function () {
-        let num = "$" + parseFloat($(this).text()).toFixed(0);
-        let commaNum = numberWithCommas(num);
-        $(this).text(commaNum)
+        if (!$(this).text().trim()) {
+            $(this).text('')
+        } else {
+            let num = "$" + parseFloat($(this).text()).toFixed(0);
+            let commaNum = numberWithCommas(num);
+            $(this).text(commaNum)
+        }
     });
 
     $(".commas").each(function () {
@@ -294,12 +306,12 @@ $(document).ready(() => {
             url: '/find_b_s_values',
             method: "POST",
             data: data
-        }).then( response => {
-            $(`.editBaseline[name=${name}]`).attr({'id': response.id, 'data-comm-name': commodity})
-            $(`.deleteBaseline[name=${name}]`).attr({'id': response.id, 'data-comm-name': commodity})
+        }).then(response => {
+            $(`.editBaseline[name=${name}]`).attr({ 'id': response.id, 'data-comm-name': commodity })
+            $(`.deleteBaseline[name=${name}]`).attr({ 'id': response.id, 'data-comm-name': commodity })
             $(this).hide(),
-            $(`.showBtn[name=${name}]`).show(),
-            $("#num" + name).text(value)
+                $(`.showBtn[name=${name}]`).show(),
+                $("#num" + name).text(value)
         }
         )
     })
@@ -357,12 +369,12 @@ $(document).ready(() => {
             url: '/find_savings_values',
             method: "POST",
             data: data
-        }).then( response => {
-            $(`.editPredicted[name=${name}]`).attr({'id': response.id, 'data-comm-name': commodity})
-            $(`.deletePredicted[name=${name}]`).attr({'id': response.id, 'data-comm-name': commodity})
+        }).then(response => {
+            $(`.editPredicted[name=${name}]`).attr({ 'id': response.id, 'data-comm-name': commodity })
+            $(`.deletePredicted[name=${name}]`).attr({ 'id': response.id, 'data-comm-name': commodity })
             $(this).hide(),
-            $(`.showPredBtn[name=${name}]`).show(),
-            $("#numPred" + name).text(value)
+                $(`.showPredBtn[name=${name}]`).show(),
+                $("#numPred" + name).text(value)
         }
         )
     })
@@ -421,12 +433,12 @@ $(document).ready(() => {
             url: '/find_savings_values',
             method: "POST",
             data: data
-        }).then( response => {
-            $(`.editMv[name=${name}]`).attr({'id': response.id, 'data-comm-name': commodity})
-            $(`.deleteMv[name=${name}]`).attr({'id': response.id, 'data-comm-name': commodity})
+        }).then(response => {
+            $(`.editMv[name=${name}]`).attr({ 'id': response.id, 'data-comm-name': commodity })
+            $(`.deleteMv[name=${name}]`).attr({ 'id': response.id, 'data-comm-name': commodity })
             $(this).hide(),
-            $(`.showMvBtn[name=${name}]`).show(),
-            $("#numMv" + name).text(value)
+                $(`.showMvBtn[name=${name}]`).show(),
+                $("#numMv" + name).text(value)
         }
         )
     })

@@ -35,6 +35,14 @@ hbs.handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
   return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
 });
 
+hbs.handlebars.registerHelper('ifEqualsView', function(arg1, arg2, arg3, arg4, options) {
+  return (arg1 == arg2 && arg3 == arg4) ? options.fn(this) : options.inverse(this);
+});
+
+hbs.handlebars.registerHelper('ifEqualsView2', function(arg1, arg2, arg3, arg4, arg5, arg6, options) {
+  return (arg1 == arg2 && arg3 == arg4 && arg5 == arg6) ? options.fn(this) : options.inverse(this);
+});
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
