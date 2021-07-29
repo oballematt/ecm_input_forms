@@ -1,0 +1,44 @@
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+    <form action='/reset' method="POST">
+        <div class="card border-secondary text-light" style="background-color: #333f48">
+            <h5 style="background-color: #bf5700;" class="card-header">Reset Password</h5>
+            <div class="card-body w-100 text-end mt-3">
+                {{#each errors}}
+                <div class="mb-3 text-start" style="color:red; font-size: 20px">
+                    <p>{{text}}</p>
+                </div>
+                {{/each}}
+                {{#each success}}
+                <div class="mb-3 text-center" style="font-size: 20px">
+                    <p style="color: green">{{text}}</a></p>
+                    <p>Return To <a href="/login">Log In</a></p>
+                </div>
+                {{/each}}
+                <div class="row mb-3">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Email:</label>
+                    <div class="col-sm-10">
+                        <input type="email" value='{{email}}' name="email" class="form-control registerEmail" id="inputEmail3">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputPassword1" class="col-sm-2 col-form-label">Password:</label>
+                    <div class="col-sm-10">
+                        <input type="password" name="password" class="form-control registerPassword"
+                            id="inputPassword1">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputPassword2" class="col-sm-2 col-form-label">Confirm Password:</label>
+                    <div class="col-sm-10">
+                        <input type="password" name="password2" class="form-control registerPassword2"
+                            id="inputPassword2">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success mb-2 register">Reset</button>
+                <div class="card-footer text-center">
+                    <a href="/login">Log In</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

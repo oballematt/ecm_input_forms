@@ -28,28 +28,28 @@ module.exports = {
 
             if (!isValid) {
 
-                errors.push({ text: "Invalid Email"});
+                errors.push({ text: "Invalid Email" });
 
             };
 
             if (!email) {
                 errors.push({ text: "Please enter an email" })
-              };
-          
-              if (!password) {
-                errors.push({ text: "Please enter a password" })
-              };
-            
-              if (password.length < 6){
-                errors.push({text: "Password must be atleast 6 characters"})
-              }
-          
-              if (password !== password2){
-                errors.push({text: "Passwords do not match"})
-              }
-          
+            };
 
-              if (errors.length > 0) {
+            if (!password) {
+                errors.push({ text: "Please enter a password" })
+            };
+
+            if (password.length < 6) {
+                errors.push({ text: "Password must be at least 6 characters" })
+            }
+
+            if (password !== password2) {
+                errors.push({ text: "Passwords do not match" })
+            }
+
+
+            if (errors.length > 0) {
                 return res.render('signup', { errors })
 
             } else {
@@ -66,4 +66,65 @@ module.exports = {
 
         };
     },
+
+    resetPassword: async (req, res) => {
+        const { password, password2, email } = req.body;
+
+        let errors = []
+
+        let success = []
+        try {
+
+            const user = await Users.findAll({
+                where: {
+                    email
+                }
+            })
+
+            if (!email || user.length === 0) {
+                errors.push({ text: "Please enter a valid email" })
+            }
+
+            if (!password) {
+                errors.push({ text: "Please enter a password" })
+            };
+
+            if (password.length < 6) {
+                errors.push({ text: "Password must be at least 6 characters" })
+            }
+
+            if (password !== password2) {
+                errors.push({ text: "Passwords do not match" })
+            }
+
+            if (errors.length > 0) {
+                return res.render('reset', {
+                    errors,
+                    email
+                })
+
+            } else {
+
+                await Users.update({
+                    password
+                },
+                    {
+                        where: {
+                            email
+                        }
+                    }).then(() => {
+                        success.push({ text: 'Password updated!' })
+                    }).catch(error => {
+                        console.error(error)
+                    })
+
+                return res.render('reset', {
+                    success
+                })
+            }
+        } catch (error) {
+            console.error(error.message);
+            return res.status(500).json(error);
+        }
+    }
 }
