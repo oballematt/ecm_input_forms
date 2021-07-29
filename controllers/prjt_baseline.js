@@ -21,30 +21,6 @@ module.exports = {
         };
     },
 
-
-    getOneBaseline: async (req, res) => {
-        const { id } = req.params
-
-        try {
-
-            const baseline = await Prjt_baseline.findOne({
-                where: {
-                    id
-                }
-            });
-
-            return res.render('edit/editBaseline', {
-                baseline
-            });
-
-        } catch (error) {
-
-            console.error(error.message);
-            return res.status(500).json(error);
-
-        };
-    },
-
     updateBaseline: async (req, res) => {
         try {
             

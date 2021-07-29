@@ -14,15 +14,7 @@
             {{#each errors}}
             <p style="color: red">{{text}}</p>
             {{/each}}
-            <div class="input-group">
-                <select name="project_id" class="form-select" id="search" aria-label="Example select with button addon">
-                    <option selected disabled>Project ID</option>
-                    {{#each projectId}}
-                    <option>{{project_id}}</option>
-                    {{/each}}
-                </select>
-                <button class="btn btn-success load" type="submit">Search</button>
-            </div>
+            {{> searchData}}
             <div class="text-end mt-3">
                 <a id="create" href="/metadata"><button type="button" class="btn btn-success">Create</button></a>
             </div>
@@ -304,95 +296,16 @@
                 </section>
             </div>
             <hr>
-            <div class="row responsive">
-                <section class="col-md-6">
-                    <div class="card border-secondary w-100 h-100 mb-3 text-light" style="background-color: #333f48">
-                        <h5 style="background-color: #bf5700;" class="card-header">Baseline</h5>
-                        <div class="card-body">
-                            <table class="table text-light">
-                                <thead>
-                                    <tr class="text-end">
-                                        <th class="text-start" scope="col">Commodity</th>
-                                        <th scope="col">Value</th>
-                                        <th scope="col">Edit</th>
-                                        <th scope="col">Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{#each baseline}}
-                                    <tr class="text-end">
-                                        <td class="text-start title">{{commodity}}</td>
-                                        <td class='commas'>{{value}}</td>
-                                        <td>
-                                            <a href="/find/baseline/{{id}}" class='btn btn-warning'>
-                                                <i class="fas fa-edit"></i>
-                                        </td>
-                                        <td>
-                                            <button type="button" id={{id}} class='btn btn-danger deleteBaseline'>
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    {{/each}}
-                                </tbody>
-                            </table>
-                        </div>
-                        {{#with metadata}}
-                        <div class="card-footer text-end">
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                data-bs-target="#baselineModal">
-                                <i class="fas fa-plus-circle">&nbsp;Add
-                                    Record</i>
-                            </button>
-                        </div>
-                        {{/with}}
-                    </div>
-                </section>
-                <section class="col-md-6">
-                    <div class="card border-secondary w-100 h-100 text-light mb-3" style="background-color: #333f48" ;>
-                        <h5 style="background-color: #bf5700;" class="card-header">Savings</h5>
-                        <div class="card-body">
-                            <table class="table text-light">
-                                <thead>
-                                    <tr class="text-end">
-                                        <th class="text-start" scope="col">Phase</th>
-                                        <th class="text-start" scope="col">Commodity</th>
-                                        <th scope="col">Value</th>
-                                        <th scope="col">Edit</th>
-                                        <th scope="col">Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{#each savings}}
-                                    <tr class="text-end">
-                                        <td class="text-start">{{phase}}</td>
-                                        <td class="text-start title">{{commodity}}</td>
-                                        <td class="commas">{{value}}</td>
-                                        <td>
-                                            <a href="/find/savings/{{id}}" class='btn btn-warning'>
-                                                <i class="fas fa-edit"></i>
-                                        </td>
-                                        <td>
-                                            <button type="button" id={{id}} class='btn btn-danger deleteSavings'>
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    {{/each}}
-                                </tbody>
-                            </table>
-                        </div>
-                        {{#with metadata}}
-                        <div class="card-footer text-end">
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                data-bs-target="#savingsModal">
-                                <i class="fas fa-plus-circle">&nbsp;Add
-                                    Record</i>
-                            </button>
-                        </div>
-                        {{/with}}
-                    </div>
-                </section>
+            {{> baseline}}
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    {{> predictedPartial}}
+                </div>
+                <hr>
+                <div class="col-md-12">
+                    {{> mvPartial}}
+                </div>
             </div>
             <hr>
             <div class="row responsive justify-content-center">
@@ -442,18 +355,8 @@
                     {{/with}}
                 </section>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {{> predictedPartial}}
-                </div>
-                <hr>
-                <div class="col-md-12">
-                    {{> mvPartial}}
-                </div>
-            </div>
         </form>
     </div>
-    <hr>
     {{#with metadata}}
     <div class="mb-3 text-center">
         <button id="delete" title="This will delete all data related to project ID: {{project_id}}"

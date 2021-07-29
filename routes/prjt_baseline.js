@@ -9,7 +9,4 @@ router.post('/find/baseline/:id', baselineController.updateBaseline);
 
 router.delete('/delete/baseline/:id', baselineController.deleteBaseline);
 
-router.get('/find/baseline/:id',  authorization.checkNotAuthenticated, baselineController.getOneBaseline);
-
-
 module.exports = router
