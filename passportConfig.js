@@ -1,5 +1,4 @@
 const LocalStrategy = require("passport-local").Strategy;
-const  pool  = require("./config/dbConfig");
 const bcrypt = require("bcryptjs");
 const { Users } = require("./models")
 
@@ -7,36 +6,30 @@ function initialize(passport) {
   console.log("Initialized");
 
   const authenticateUser = (email, password, done) => {
-    pool.query(
-      `SELECT * FROM users WHERE email = $1`,
-      [email],
-      (err, results) => {
-        if (err) {
-          throw err;
-        }
-
-        if (results.rows.length > 0) {
-          const user = results.rows[0];
-
-          bcrypt.compare(password, user.password, (err, isMatch) => {
-            if (err) {
-              console.log(err);
-            }
-            if (isMatch) {
-              return done(null, user);
-            } else {
-              //password is incorrect
-              return done(null, false, { message: "Password is incorrect" });
-            }
-          });
-        } else {
-          // No user
-          return done(null, false, {
-            message: "No user with that email address"
-          });
-        }
+    Users.findOne({
+      where: {
+        email
       }
-    );
+    }).then(function (user) {
+      if (user) {
+        bcrypt.compare(password, user.password, (err, isMatch) => {
+          if (err) {
+            console.log(err);
+          }
+          if (isMatch) {
+            return done(null, user);
+          } else {
+            //password is incorrect
+            return done(null, false, { message: "Password is incorrect" });
+          }
+        });
+      } else {
+        // No user
+        return done(null, false, {
+          message: "No user with that email address"
+        });
+      }
+    })
   };
 
   passport.use(
@@ -47,14 +40,22 @@ function initialize(passport) {
   );
   passport.serializeUser((user, done) => done(null, user.id));
 
-  passport.deserializeUser((id, done) => {
-    pool.query(`SELECT * FROM users WHERE id = $1`, [id], (err, results) => {
-      if (err) {
-        return done(err);
+  passport.deserializeUser(function (id, done) {
+
+    Users.findByPk(id).then(function (user) {
+
+      if (user) {
+
+        done(null, user.get());
+
+      } else {
+
+        done(user.errors, null);
+
       }
-      console.log(`ID is ${results.rows[0].id}`);
-      return done(null, results.rows[0]);
+
     });
+
   });
 }
 
