@@ -81,12 +81,8 @@ module.exports = {
                 }
             })
 
-            if (!user) {
+            if (!email || user.length === 0) {
                 errors.push({ text: "Please enter a valid email" })
-            }
-
-            if (user.length === 0) {
-                errors.push({ text: "Email does not exist" })
             }
 
             if (!password) {
