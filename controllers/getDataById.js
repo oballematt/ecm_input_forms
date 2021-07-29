@@ -18,7 +18,7 @@ module.exports = {
                 ]
             })
 
-            const staffLead1 = await Prjt_metadata.findAll({
+            const staffLead = await Prjt_metadata.findAll({
                 where: {
                     staff_lead: {
                         [Op.in]: ['Adam Keeling', 'Amanda Berens', 'Buddy Bishop', 'Cedric Bouey', 'Dave Cooper', 'Grace Hsieh',
@@ -216,7 +216,7 @@ module.exports = {
                     savingsMv,
                     miscSavings,
                     projectId,
-                    staffLead1,
+                    staffLead,
                     percentEach,
                     percentTotal,
                     plantEach,
@@ -247,7 +247,7 @@ module.exports = {
                 ]
             })
 
-            const staffLead1 = await Prjt_metadata.findAll({
+            const staffLead = await Prjt_metadata.findAll({
                 where: {
                     staff_lead: {
                         [Op.in]: ['Adam Keeling', 'Amanda Berens', 'Buddy Bishop', 'Cedric Bouey', 'Dave Cooper', 'Grace Hsieh',
@@ -261,7 +261,8 @@ module.exports = {
             })
 
             return res.render('edit/allForms', {
-                projectId
+                projectId,
+                staffLead
             });
 
         } catch (error) {
