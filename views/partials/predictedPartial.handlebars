@@ -341,58 +341,58 @@
                             <th class="bordered" scope="row">%</th>
                             <td class="bordered percent">
                                 {{#each percentEach}}
-                                {{#ifEqualsView commodity 'CHW' phase 'Predicted'}}
+                                {{#ifEqualsTwo commodity 'CHW' phase 'Predicted'}}
                                 {{savings_percent}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class="bordered percent">
                                 {{#each percentEach}}
-                                {{#ifEqualsView commodity 'ELE' phase 'Predicted'}}
+                                {{#ifEqualsTwo commodity 'ELE' phase 'Predicted'}}
                                 {{savings_percent}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class="bordered percent">
                                 {{#each percentEach}}
-                                {{#ifEqualsView commodity 'STM' phase 'Predicted'}}
+                                {{#ifEqualsTwo commodity 'STM' phase 'Predicted'}}
                                 {{savings_percent}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class="bordered percent">
                                 {{#each percentEach}}
-                                {{#ifEqualsView commodity 'HHW' phase 'Predicted'}}
+                                {{#ifEqualsTwo commodity 'HHW' phase 'Predicted'}}
                                 {{savings_percent}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class="bordered percent">
                                 {{#each percentEach}}
-                                {{#ifEqualsView commodity 'GAS' phase 'Predicted'}}
+                                {{#ifEqualsTwo commodity 'GAS' phase 'Predicted'}}
                                 {{savings_percent}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class="bordered percent">
                                 {{#each percentEach}}
-                                {{#ifEqualsView commodity 'WTR' phase 'Predicted'}}
+                                {{#ifEqualsTwo commodity 'WTR' phase 'Predicted'}}
                                 {{savings_percent}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class="bordered percent">
                                 {{#each percentEach}}
-                                {{#ifEqualsView commodity 'Peak CHW' phase 'Predicted'}}
+                                {{#ifEqualsTwo commodity 'Peak CHW' phase 'Predicted'}}
                                 {{savings_percent}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class="bordered percent">
                                 {{#each percentEach}}
-                                {{#ifEqualsView commodity 'Labor' phase 'Predicted'}}
+                                {{#ifEqualsTwo commodity 'Labor' phase 'Predicted'}}
                                 {{savings_percent}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class="percent bordered">
@@ -409,30 +409,30 @@
                             </th>
                             <td class="bordered whole">
                                 {{#each plantEach}}
-                                {{#ifEqualsView2 commodity 'CHW' plant_commodity 'Plant gas' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'CHW' plant_commodity 'Plant gas' phase 'Predicted'}}
                                 {{plant_savings}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class="bordered whole">
                                 {{#each plantEach}}
-                                {{#ifEqualsView2 commodity 'ELE' plant_commodity 'Plant gas' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'ELE' plant_commodity 'Plant gas' phase 'Predicted'}}
                                 {{plant_savings}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class="bordered whole">
                                 {{#each plantEach}}
-                                {{#ifEqualsView2 commodity 'STM' plant_commodity 'Plant gas' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'STM' plant_commodity 'Plant gas' phase 'Predicted'}}
                                 {{plant_savings}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class="bordered whole">
                                 {{#each plantEach}}
-                                {{#ifEqualsView2 commodity 'HHW' plant_commodity 'Plant gas' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'HHW' plant_commodity 'Plant gas' phase 'Predicted'}}
                                 {{plant_savings}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class="borderTop"></td>
@@ -453,9 +453,9 @@
                             </th>
                             <td class="bordered whole">
                                 {{#each plantEach}}
-                                {{#ifEqualsView2 commodity 'CHW' plant_commodity 'CT water' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'CHW' plant_commodity 'CT water' phase 'Predicted'}}
                                 {{plant_savings}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class="borderTop"></td>
@@ -467,9 +467,9 @@
                             <td></td>
                             <td class="bordered whole">
                                 {{#each plantEach}}
-                                {{#ifEqualsView2 commodity 'CHW' plant_commodity 'CT water' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'CHW' plant_commodity 'CT water' phase 'Predicted'}}
                                 {{plant_savings}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                         </tr>
@@ -477,87 +477,87 @@
                             <th class="bordered" scope="row">UEM</th>
                             <td class="bordered whole_dollar">
                                 {{#each commSavings}}
-                                {{#ifEqualsView2 commodity 'CHW' entity 'UEM' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'CHW' entity 'UEM' phase 'Predicted'}}
                                 {{fb_plus_fr}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class="bordered whole_dollar">
                                 {{#each commSavings}}
-                                {{#ifEqualsView2 commodity 'ELE' entity 'UEM' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'ELE' entity 'UEM' phase 'Predicted'}}
                                 {{fb_plus_fr}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class="bordered whole_dollar">
                                 {{#each commSavings}}
-                                {{#ifEqualsView2 commodity 'STM' entity 'UEM' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'STM' entity 'UEM' phase 'Predicted'}}
                                 {{fb_plus_fr}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class="bordered whole_dollar">
                                 {{#each commSavings}}
-                                {{#ifEqualsView2 commodity 'HHW' entity 'UEM' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'HHW' entity 'UEM' phase 'Predicted'}}
                                 {{fb_plus_fr}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class="bordered whole_dollar">
                                 {{#each commSavings}}
-                                {{#ifEqualsView2 commodity 'GAS' entity 'UEM' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'GAS' entity 'UEM' phase 'Predicted'}}
                                 {{fb_plus_fr}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class="bordered whole_dollar">
                                 {{#each commSavings}}
-                                {{#ifEqualsView2 commodity 'WTR' entity 'UEM' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'WTR' entity 'UEM' phase 'Predicted'}}
                                 {{fb_plus_fr}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td></td>
                             <td class="bordered whole_dollar">
                                 {{#each commSavings}}
-                                {{#ifEqualsView2 commodity 'Labor' entity 'UEM' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'Labor' entity 'UEM' phase 'Predicted'}}
                                 {{fb_plus_fr}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class='whole_dollar bordered'>
                                 {{#each commSavingsTotal}}
-                                {{#ifEqualsView entity 'UEM' phase 'Predicted'}}
+                                {{#ifEqualsTwo entity 'UEM' phase 'Predicted'}}
                                 {{fb_fr_total}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='whole_dollar bordered'>
                                 {{#each misc}}
-                                {{#ifEqualsView entity 'UEM' phase 'Predicted'}}
+                                {{#ifEqualsTwo entity 'UEM' phase 'Predicted'}}
                                 {{misc_savings}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='whole_dollar bordered'>
                                 {{#each financialAnalysis}}
-                                {{#ifEqualsView entity 'UEM' phase 'Predicted'}}
+                                {{#ifEqualsTwo entity 'UEM' phase 'Predicted'}}
                                 {{cash_flow}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='years bordered'>
                                 {{#each financialAnalysis}}
-                                {{#ifEqualsView entity 'UEM' phase 'Predicted'}}
+                                {{#ifEqualsTwo entity 'UEM' phase 'Predicted'}}
                                 {{payback}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='whole_dollar bordered'>
                                 {{#each financialAnalysis}}
-                                {{#ifEqualsView entity 'UEM' phase 'Predicted'}}
+                                {{#ifEqualsTwo entity 'UEM' phase 'Predicted'}}
                                 {{npv}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                         </tr>
@@ -565,87 +565,87 @@
                             <th class="bordered" scope="row">UT</th>
                            <td class="bordered whole_dollar">
                                 {{#each commSavings}}
-                                {{#ifEqualsView2 commodity 'CHW' entity 'Univ' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'CHW' entity 'Univ' phase 'Predicted'}}
                                 {{fb_plus_fr}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class="bordered whole_dollar">
                                 {{#each commSavings}}
-                                {{#ifEqualsView2 commodity 'ELE' entity 'Univ' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'ELE' entity 'Univ' phase 'Predicted'}}
                                 {{fb_plus_fr}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class="bordered whole_dollar">
                                 {{#each commSavings}}
-                                {{#ifEqualsView2 commodity 'STM' entity 'Univ' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'STM' entity 'Univ' phase 'Predicted'}}
                                 {{fb_plus_fr}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class="bordered whole_dollar">
                                 {{#each commSavings}}
-                                {{#ifEqualsView2 commodity 'HHW' entity 'Univ' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'HHW' entity 'Univ' phase 'Predicted'}}
                                 {{fb_plus_fr}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class="bordered whole_dollar">
                                 {{#each commSavings}}
-                                {{#ifEqualsView2 commodity 'GAS' entity 'Univ' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'GAS' entity 'Univ' phase 'Predicted'}}
                                 {{fb_plus_fr}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class="bordered whole_dollar">
                                 {{#each commSavings}}
-                                {{#ifEqualsView2 commodity 'WTR' entity 'Univ' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'WTR' entity 'Univ' phase 'Predicted'}}
                                 {{fb_plus_fr}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td></td>
                             <td class="bordered whole_dollar">
                                 {{#each commSavings}}
-                                {{#ifEqualsView2 commodity 'Labor' entity 'Univ' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'Labor' entity 'Univ' phase 'Predicted'}}
                                 {{fb_plus_fr}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class='whole_dollar bordered'>
                                 {{#each commSavingsTotal}}
-                                {{#ifEqualsView entity 'Univ' phase 'Predicted'}}
+                                {{#ifEqualsTwo entity 'Univ' phase 'Predicted'}}
                                 {{fb_fr_total}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='whole_dollar bordered'>
                                 {{#each misc}}
-                                {{#ifEqualsView entity 'Univ' phase 'Predicted'}}
+                                {{#ifEqualsTwo entity 'Univ' phase 'Predicted'}}
                                 {{misc_savings}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='whole_dollar bordered'>
                                 {{#each financialAnalysis}}
-                                {{#ifEqualsView entity 'Univ' phase 'Predicted'}}
+                                {{#ifEqualsTwo entity 'Univ' phase 'Predicted'}}
                                 {{cash_flow}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='years bordered'>
                                 {{#each financialAnalysis}}
-                                {{#ifEqualsView entity 'Univ' phase 'Predicted'}}
+                                {{#ifEqualsTwo entity 'Univ' phase 'Predicted'}}
                                 {{payback}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='whole_dollar bordered'>
                                 {{#each financialAnalysis}}
-                                {{#ifEqualsView entity 'Univ' phase 'Predicted'}}
+                                {{#ifEqualsTwo entity 'Univ' phase 'Predicted'}}
                                 {{npv}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                         </tr>
@@ -653,87 +653,87 @@
                             <th class="bordered" scope="row">AUX</th>
                             <td class="bordered whole_dollar">
                                 {{#each commSavings}}
-                                {{#ifEqualsView2 commodity 'CHW' entity 'AUX' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'CHW' entity 'AUX' phase 'Predicted'}}
                                 {{fb_plus_fr}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class="bordered whole_dollar">
                                 {{#each commSavings}}
-                                {{#ifEqualsView2 commodity 'ELE' entity 'AUX' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'ELE' entity 'AUX' phase 'Predicted'}}
                                 {{fb_plus_fr}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class="bordered whole_dollar">
                                 {{#each commSavings}}
-                                {{#ifEqualsView2 commodity 'STM' entity 'AUX' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'STM' entity 'AUX' phase 'Predicted'}}
                                 {{fb_plus_fr}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class="bordered whole_dollar">
                                 {{#each commSavings}}
-                                {{#ifEqualsView2 commodity 'HHW' entity 'AUX' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'HHW' entity 'AUX' phase 'Predicted'}}
                                 {{fb_plus_fr}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class="bordered whole_dollar">
                                 {{#each commSavings}}
-                                {{#ifEqualsView2 commodity 'GAS' entity 'AUX' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'GAS' entity 'AUX' phase 'Predicted'}}
                                 {{fb_plus_fr}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class="bordered whole_dollar">
                                 {{#each commSavings}}
-                                {{#ifEqualsView2 commodity 'WTR' entity 'AUX' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'WTR' entity 'AUX' phase 'Predicted'}}
                                 {{fb_plus_fr}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td></td>
                             <td class="bordered whole_dollar">
                                 {{#each commSavings}}
-                                {{#ifEqualsView2 commodity 'Labor' entity 'AUX' phase 'Predicted'}}
+                                {{#ifEqualsThree commodity 'Labor' entity 'AUX' phase 'Predicted'}}
                                 {{fb_plus_fr}}
-                                {{/ifEqualsView2}}
+                                {{/ifEqualsThree}}
                                 {{/each}}
                             </td>
                             <td class='whole_dollar bordered'>
                                 {{#each commSavingsTotal}}
-                                {{#ifEqualsView entity 'AUX' phase 'Predicted'}}
+                                {{#ifEqualsTwo entity 'AUX' phase 'Predicted'}}
                                 {{fb_fr_total}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='whole_dollar bordered'>
                                 {{#each misc}}
-                                {{#ifEqualsView entity 'AUX' phase 'Predicted'}}
+                                {{#ifEqualsTwo entity 'AUX' phase 'Predicted'}}
                                 {{misc_savings}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='whole_dollar bordered'>
                                 {{#each financialAnalysis}}
-                                {{#ifEqualsView entity 'AUX' phase 'Predicted'}}
+                                {{#ifEqualsTwo entity 'AUX' phase 'Predicted'}}
                                 {{cash_flow}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='years bordered'>
                                 {{#each financialAnalysis}}
-                                {{#ifEqualsView entity 'AUX' phase 'Predicted'}}
+                                {{#ifEqualsTwo entity 'AUX' phase 'Predicted'}}
                                 {{payback}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='whole_dollar bordered'>
                                 {{#each financialAnalysis}}
-                                {{#ifEqualsView entity 'AUX' phase 'Predicted'}}
+                                {{#ifEqualsTwo entity 'AUX' phase 'Predicted'}}
                                 {{npv}}
-                                {{/ifEqualsView}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                         </tr>

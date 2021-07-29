@@ -1,11 +1,11 @@
 $(document).ready(() => {
 
+    //Tooltip information for delete button. Gives general idea to user when the hover over the delete project button at the bottom of the page
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
 
-    $(".pid").prop("readonly", true);
-
+    // Click event listener for the spinner when loading data
     $('.load').click(function () {
         $('#overlay').fadeIn().delay(8000).fadeOut();
         $('html, body').css({
@@ -14,6 +14,7 @@ $(document).ready(() => {
         });
     });
 
+    //function to take whole numbers and add comma separators when displayed on the page
     const numberWithCommas = (number) => {
         var parts = number.toString().split(".");
         parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -88,7 +89,11 @@ $(document).ready(() => {
     });
 
     $(".years").text(function (i, curr) {
-        return parseFloat(curr).toFixed(2);
+        if (!$(this).text().trim()) {
+            $(this).text('')
+        } else {
+            return parseFloat(curr).toFixed(2);
+        }
     });
 
     $(".whole").each(function () {
