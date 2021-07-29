@@ -507,10 +507,10 @@ $(document).ready(() => {
         };
 
         if (!data.cost) {
-            errors.push({ text: "Please enter a value for costs" });
+            errors.push({ text: "Please enter a value for costs (if value is unknown, enter 0)" });
         };
         if (!data.hours) {
-            errors.push({ text: "Please enter a value for hours" });
+            errors.push({ text: "Please enter a value for hours (if value is unknown, enter 0)" });
         };
 
         if (errors.length > 0) {
@@ -542,11 +542,11 @@ $(document).ready(() => {
         }
 
         if (!data.implementation) {
-            errors.push({ text: "Please enter a value for implementation" });
+            errors.push({ text: "Please enter a value for implementation (if value is unknown, enter 0)" });
         };
 
         if (!data.annual) {
-            errors.push({ text: "Please enter a value for annual" });
+            errors.push({ text: "Please enter a value for annual (if value is unknown, enter 0)" });
         };
 
         if (errors.length > 0) {
@@ -579,7 +579,7 @@ $(document).ready(() => {
         }
 
         if (!data.misc_savings) {
-            errors.push({ text: "Please enter a value for Misc Savings" });
+            errors.push({ text: "Please enter a value for Misc Savings (if value is unknown, enter 0)" });
         };
 
         if (errors.length > 0) {
