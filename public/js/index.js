@@ -180,9 +180,7 @@ $(document).ready(() => {
     });
 
     $("#registerData").on("submit", () => {
-        console.log($('#registerErrors').text())
-        sessionStorage.setItem('registered', 'yes')
-        
+        sessionStorage.setItem('registered', 'yes')     
     });
 
     const registered = sessionStorage.getItem('registered')
