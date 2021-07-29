@@ -103,7 +103,8 @@ module.exports = {
 
             if (errors.length > 0) {
                 return res.render('reset', {
-                    errors
+                    errors,
+                    email
                 })
 
             } else {
@@ -117,6 +118,8 @@ module.exports = {
                         }
                     }).then(() => {
                         success.push({ text: 'Password updated!' })
+                    }).catch(error => {
+                        console.error(error)
                     })
 
                 return res.render('reset', {
