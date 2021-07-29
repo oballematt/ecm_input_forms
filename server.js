@@ -65,7 +65,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //Express Route
-app.get('/login', authorization.checkAuthenticated,(req, res) => res.render('login'));
+app.get('/login', authorization.checkAuthenticated,(req, res) => res.render('login', {error: req.flash('error')}));
 app.get('/register', authorization.checkAuthenticated, (req, res) => res.render('signup'));
 app.get("/logout", (req, res) => {
   req.logout();
