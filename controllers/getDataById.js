@@ -38,7 +38,8 @@ module.exports = {
             if (errors.length > 0) {
                 res.render('edit/allForms', {
                     errors,
-                    projectId
+                    projectId,
+                    staffLead
                 })
 
             } else {

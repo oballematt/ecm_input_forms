@@ -74,7 +74,7 @@ $(document).ready(() => {
 
     if (getPid) {
         $("#search").val(getPid);
-    } else if (!searchedVal && !getPid) {
+    } else if (!searchedVal && !getPid || searchedVal === 'null') {
         $('#search').val('Project ID');
     } else {
         $('#search').val(searchedVal);
@@ -180,7 +180,9 @@ $(document).ready(() => {
     });
 
     $("#registerData").on("submit", () => {
+        console.log($('#registerErrors').text())
         sessionStorage.setItem('registered', 'yes')
+        
     });
 
     const registered = sessionStorage.getItem('registered')
