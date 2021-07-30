@@ -179,22 +179,6 @@ $(document).ready(() => {
         };
     });
 
-    $("#registerData").on("submit", () => {
-        sessionStorage.setItem('registered', 'yes')     
-    });
-
-    const registered = sessionStorage.getItem('registered')
-
-    if (window.location.href.match('/login')) {
-        if (registered) {
-            alert("Registration successful! Please Login")
-        }
-    }
-
-    $("#loginData").on("submit", () => {
-        sessionStorage.removeItem('registered')
-    });
-
     let filterObjs = {
         '#allBtn': '.all',
         '#adamBtn': '.adam',
@@ -445,9 +429,9 @@ $(document).ready(() => {
         }).then(response => {
             $(`.editMv[name=${name}]`).attr({ 'id': response.id, 'data-comm-name': commodity })
             $(`.deleteMv[name=${name}]`).attr({ 'id': response.id, 'data-comm-name': commodity })
-            $(this).hide(),
-                $(`.showMvBtn[name=${name}]`).show(),
-                $("#numMv" + name).text(value)
+            $(this).hide()
+            $(`.showMvBtn[name=${name}]`).show()
+            $("#numMv" + name).text(value)
         }
         )
     })
@@ -526,7 +510,7 @@ $(document).ready(() => {
                 success: function () {
                     window.location = "/";
                 }
-            });
+            })
         }
     });
 
