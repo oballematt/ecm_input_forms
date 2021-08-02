@@ -52,59 +52,59 @@
                         <tr class='text-center'>
                             <th class='bordered' style="width: 100px">Predicted</th>
                             <td class='bordered commas' id='numPredCHW'>
-                                {{#each savingsPred}}
-                                {{#ifEquals commodity 'CHW'}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity 'CHW' phase 'Predicted'}}
                                 {{value}}
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='bordered commas' id='numPredELE'>
-                                {{#each savingsPred}}
-                                {{#ifEquals commodity 'ELE'}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity 'ELE' phase 'Predicted'}}
                                 {{value}}
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='bordered commas' id='numPredSTM'>
-                                {{#each savingsPred}}
-                                {{#ifEquals commodity 'STM'}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity 'STM' phase 'Predicted'}}
                                 {{value}}
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='bordered commas' id='numPredHHW'>
-                                {{#each savingsPred}}
-                                {{#ifEquals commodity 'HHW'}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity 'HHW' phase 'Predicted'}}
                                 {{value}}
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='bordered commas' id='numPredGAS'>
-                                {{#each savingsPred}}
-                                {{#ifEquals commodity 'GAS'}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity 'GAS' phase 'Predicted'}}
                                 {{value}}
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='bordered commas' id='numPredWTR'>
-                                {{#each savingsPred}}
-                                {{#ifEquals commodity 'WTR'}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity 'WTR' phase 'Predicted'}}
                                 {{value}}
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='bordered commas' id='numPredPeakCHW'>
-                                {{#each savingsPred}}
-                                {{#ifEquals commodity 'Peak CHW'}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity 'Peak CHW' phase 'Predicted'}}
                                 {{value}}
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='bordered commas' id='numPredLabor'>
-                                {{#each savingsPred}}
-                                {{#ifEquals commodity 'Labor'}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity 'Labor' phase 'Predicted'}}
                                 {{value}}
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                         </tr>
@@ -126,8 +126,8 @@
                                 </span>
                                 </button>
                                 {{/with}}
-                                {{#each savingsPred}}
-                                {{#ifEquals commodity "CHW"}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity "CHW" phase 'Predicted'}}
                                 <button id={{id}} data-comm-name="CHW" name="CHW"
                                     class="btn btn-warning editPredicted mb-3">
                                     <i class="fas fa-edit"></i>
@@ -135,7 +135,7 @@
                                 <span class="units"><button id={{id}} name="CHW" class="btn btn-danger deletePredicted">
                                         <i class="fas fa-trash-alt"></i>
                                     </button></span>
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='borderTop'>
@@ -154,8 +154,8 @@
                                 </span>
                                 </button>
                                 {{/with}}
-                                {{#each savingsPred}}
-                                {{#ifEquals commodity "ELE"}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity "ELE" phase 'Predicted'}}
                                 <button id={{id}} data-comm-name="ELE" name="ELE"
                                     class="btn btn-warning editPredicted mb-3">
                                     <i class="fas fa-edit"></i>
@@ -163,7 +163,7 @@
                                 <span class="units"><button id={{id}} name="ELE" class="btn btn-danger deletePredicted">
                                         <i class="fas fa-trash-alt"></i>
                                     </button></span>
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='borderTop'>
@@ -182,8 +182,8 @@
                                 </span>
                                 </button>
                                 {{/with}}
-                                {{#each savingsPred}}
-                                {{#ifEquals commodity "STM"}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity "STM" phase 'Predicted'}}
                                 <button id={{id}} data-comm-name="STM" name="STM"
                                     class="btn btn-warning editPredicted mb-3">
                                     <i class="fas fa-edit"></i>
@@ -191,7 +191,7 @@
                                 <span class="units"><button id={{id}} name="STM" class="btn btn-danger deletePredicted">
                                         <i class="fas fa-trash-alt"></i>
                                     </button></span>
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='borderTop'>
@@ -210,8 +210,8 @@
                                 </span>
                                 </button>
                                 {{/with}}
-                                {{#each savingsPred}}
-                                {{#ifEquals commodity "HHW"}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity "HHW" phase 'Predicted'}}
                                 <button id={{id}} data-comm-name="HHW" name="HHW"
                                     class="btn btn-warning editPredicted mb-3">
                                     <i class="fas fa-edit"></i>
@@ -219,7 +219,7 @@
                                 <span class="units"><button id={{id}} name="HHW" class="btn btn-danger deletePredicted">
                                         <i class="fas fa-trash-alt"></i>
                                     </button></span>
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='borderTop'>
@@ -238,8 +238,8 @@
                                 </span>
                                 </button>
                                 {{/with}}
-                                {{#each savingsPred}}
-                                {{#ifEquals commodity "GAS"}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity "GAS" phase 'Predicted'}}
                                 <button id={{id}} data-comm-name="GAS" name="GAS"
                                     class="btn btn-warning editPredicted mb-3">
                                     <i class="fas fa-edit"></i>
@@ -247,7 +247,7 @@
                                 <span class="units"><button id={{id}} name="GAS" class="btn btn-danger deletePredicted">
                                         <i class="fas fa-trash-alt"></i>
                                     </button></span>
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='borderTop'>
@@ -266,8 +266,8 @@
                                 </span>
                                 </button>
                                 {{/with}}
-                                {{#each savingsPred}}
-                                {{#ifEquals commodity "WTR"}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity "WTR" phase 'Predicted'}}
                                 <button id={{id}} data-comm-name="WTR" name="WTR"
                                     class="btn btn-warning editPredicted mb-3">
                                     <i class="fas fa-edit"></i>
@@ -275,7 +275,7 @@
                                 <span class="units"><button id={{id}} name="WTR" class="btn btn-danger deletePredicted">
                                         <i class="fas fa-trash-alt"></i>
                                     </button></span>
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='borderTop'>
@@ -294,8 +294,8 @@
                                 </span>
                                 </button>
                                 {{/with}}
-                                {{#each savingsPred}}
-                                {{#ifEquals commodity "Peak CHW"}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity "Peak CHW" phase 'Predicted'}}
                                 <button id={{id}} data-comm-name="Peak CHW" name="PeakCHW"
                                     class="btn btn-warning editPredicted mb-3">
                                     <i class="fas fa-edit"></i>
@@ -304,7 +304,7 @@
                                         class="btn btn-danger deletePredicted">
                                         <i class="fas fa-trash-alt"></i>
                                     </button></span>
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='borderTop'>
@@ -323,8 +323,8 @@
                                 </span>
                                 </button>
                                 {{/with}}
-                                {{#each savingsPred}}
-                                {{#ifEquals commodity "Labor"}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity "Labor" phase 'Predicted'}}
                                 <button id={{id}} data-comm-name="Labor" name="Labor"
                                     class="btn btn-warning editPredicted mb-3">
                                     <i class="fas fa-edit"></i>
@@ -333,7 +333,7 @@
                                         class="btn btn-danger deletePredicted">
                                         <i class="fas fa-trash-alt"></i>
                                     </button></span>
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                         </tr>

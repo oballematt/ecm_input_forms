@@ -65,6 +65,11 @@ $(document).ready(() => {
         $('#successModal').modal('show');
         $('.successMessage').text(`Your Project ID has been successfully created!`)
         $('.successId').text(`${getPid}`)
+        $("#search").val(getPid);
+    } else if (!searchedVal && !getPid || searchedVal === 'null') {
+        $('#search').val('Project ID');
+    } else {
+        $('#search').val(searchedVal);
     };
 
     if (storedVals) {
@@ -72,13 +77,6 @@ $(document).ready(() => {
         ids.forEach(id => $('#' + id).val(dataObj[id] || 'Choose...'));
     };
 
-    if (getPid) {
-        $("#search").val(getPid);
-    } else if (!searchedVal && !getPid || searchedVal === 'null') {
-        $('#search').val('Project ID');
-    } else {
-        $('#search').val(searchedVal);
-    };
 
     $(".percent").text(function (i, curr) {
         if (!$(this).text().trim()) {
@@ -429,9 +427,9 @@ $(document).ready(() => {
         }).then(response => {
             $(`.editMv[name=${name}]`).attr({ 'id': response.id, 'data-comm-name': commodity })
             $(`.deleteMv[name=${name}]`).attr({ 'id': response.id, 'data-comm-name': commodity })
-            $(this).hide()
-            $(`.showMvBtn[name=${name}]`).show()
-            $("#numMv" + name).text(value)
+            $(this).hide(),
+                $(`.showMvBtn[name=${name}]`).show(),
+                $("#numMv" + name).text(value)
         }
         )
     })
@@ -510,7 +508,7 @@ $(document).ready(() => {
                 success: function () {
                     window.location = "/";
                 }
-            })
+            });
         }
     });
 

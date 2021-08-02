@@ -88,7 +88,7 @@ module.exports = {
                     length_reporting_period_days
                 });
             } else {
-                const metadata = await Prjt_metadata.create({
+                await Prjt_metadata.create({
                     project_id, building, measure_type, status, staff_lead, staff_colead, analyst,
                     project_description, nonenergy_benefits, baseline_start_date, reporting_period_start_date, length_baseline_period_days,
                     length_reporting_period_days

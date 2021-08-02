@@ -77,21 +77,12 @@ module.exports = {
                     ]
                 });
 
-                const savingsPred = await Prjt_savings.findAll({
+                const savings = await Prjt_savings.findAll({
                     where: {
                         project_id,
-                        phase: 'Predicted',
-                        commodity: {
-                            [Op.in]: ["CHW", "ELE", "STM", "HHW", "GAS", "WTR", "Peak CHW", "Labor"]
-                        }
-
-                    }
-                });
-
-                const savingsMv = await Prjt_savings.findAll({
-                    where: {
-                        project_id,
-                        phase: 'M&V',
+                        phase: {
+                            [Op.in]: ['Predicted', 'M&V']
+                        },
                         commodity: {
                             [Op.in]: ["CHW", "ELE", "STM", "HHW", "GAS", "WTR", "Peak CHW", "Labor"]
                         }
@@ -213,8 +204,7 @@ module.exports = {
                     costsHours,
                     baseline,
                     funding,
-                    savingsPred,
-                    savingsMv,
+                    savings,
                     miscSavings,
                     projectId,
                     staffLead,

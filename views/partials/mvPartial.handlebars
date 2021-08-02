@@ -52,59 +52,59 @@
                         <tr class='text-center'>
                             <th class='bordered' style="width: 100px">M&amp;V</th>
                             <td class='bordered commas' id='numMvCHW'>
-                                {{#each savingsMv}}
-                                {{#ifEquals commodity 'CHW'}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity 'CHW' phase 'M&V'}}
                                 {{value}}
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='bordered commas' id='numMvELE'>
-                                {{#each savingsMv}}
-                                {{#ifEquals commodity 'ELE'}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity 'ELE' phase 'M&V'}}
                                 {{value}}
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='bordered commas' id='numMvSTM'>
-                                {{#each savingsMv}}
-                                {{#ifEquals commodity 'STM'}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity 'STM' phase 'M&V'}}
                                 {{value}}
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='bordered commas' id='numMvHHW'>
-                                {{#each savingsMv}}
-                                {{#ifEquals commodity 'HHW'}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity 'HHW' phase 'M&V'}}
                                 {{value}}
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='bordered commas' id='numMvGAS'>
-                                {{#each savingsMv}}
-                                {{#ifEquals commodity 'GAS'}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity 'GAS' phase 'M&V'}}
                                 {{value}}
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='bordered commas' id='numMvWTR'>
-                                {{#each savingsMv}}
-                                {{#ifEquals commodity 'WTR'}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity 'WTR' phase 'M&V'}}
                                 {{value}}
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='bordered commas' id='numMvPeakCHW'>
-                                {{#each savingsMv}}
-                                {{#ifEquals commodity 'Peak CHW'}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity 'Peak CHW' phase 'M&V'}}
                                 {{value}}
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='bordered commas' id='numMvLabor'>
-                                {{#each savingsMv}}
-                                {{#ifEquals commodity 'Labor'}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity 'Labor' phase 'M&V'}}
                                 {{value}}
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                         </tr>
@@ -126,15 +126,15 @@
                                 </span>
                                 </button>
                                 {{/with}}
-                                {{#each savingsMv}}
-                                {{#ifEquals commodity "CHW"}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity "CHW" phase 'M&V'}}
                                 <button id={{id}} data-comm-name="CHW" name="CHW" class="btn btn-warning editMv mb-3">
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <span class="units"><button id={{id}} name="CHW" class="btn btn-danger deleteMv">
                                         <i class="fas fa-trash-alt"></i>
                                     </button></span>
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='borderTop'>
@@ -153,15 +153,15 @@
                                 </span>
                                 </button>
                                 {{/with}}
-                                {{#each savingsMv}}
-                                {{#ifEquals commodity "ELE"}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity "ELE" phase 'M&V'}}
                                 <button id={{id}} data-comm-name="ELE" name="ELE" class="btn btn-warning editMv mb-3">
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <span class="units"><button id={{id}} name="ELE" class="btn btn-danger deleteMv">
                                         <i class="fas fa-trash-alt"></i>
                                     </button></span>
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='borderTop'>
@@ -180,15 +180,15 @@
                                 </span>
                                 </button>
                                 {{/with}}
-                                {{#each savingsMv}}
-                                {{#ifEquals commodity "STM"}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity "STM" phase 'M&V'}}
                                 <button id={{id}} data-comm-name="STM" name="STM" class="btn btn-warning editMv mb-3">
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <span class="units"><button id={{id}} name="STM" class="btn btn-danger deleteMv">
                                         <i class="fas fa-trash-alt"></i>
                                     </button></span>
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='borderTop'>
@@ -207,15 +207,15 @@
                                 </span>
                                 </button>
                                 {{/with}}
-                                {{#each savingsMv}}
-                                {{#ifEquals commodity "HHW"}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity "HHW" phase 'M&V'}}
                                 <button id={{id}} data-comm-name="HHW" name="HHW" class="btn btn-warning editMv mb-3">
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <span class="units"><button id={{id}} name="HHW" class="btn btn-danger deleteMv">
                                         <i class="fas fa-trash-alt"></i>
                                     </button></span>
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='borderTop'>
@@ -234,15 +234,15 @@
                                 </span>
                                 </button>
                                 {{/with}}
-                                {{#each savingsMv}}
-                                {{#ifEquals commodity "GAS"}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity "GAS" phase 'M&V'}}
                                 <button id={{id}} data-comm-name="GAS" name="GAS" class="btn btn-warning editMv mb-3">
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <span class="units"><button id={{id}} name="GAS" class="btn btn-danger deleteMv">
                                         <i class="fas fa-trash-alt"></i>
                                     </button></span>
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='borderTop'>
@@ -261,15 +261,15 @@
                                 </span>
                                 </button>
                                 {{/with}}
-                                {{#each savingsMv}}
-                                {{#ifEquals commodity "WTR"}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity "WTR" phase 'M&V'}}
                                 <button id={{id}} data-comm-name="WTR" name="WTR" class="btn btn-warning editMv mb-3">
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <span class="units"><button id={{id}} name="WTR" class="btn btn-danger deleteMv">
                                         <i class="fas fa-trash-alt"></i>
                                     </button></span>
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='borderTop'>
@@ -288,8 +288,8 @@
                                 </span>
                                 </button>
                                 {{/with}}
-                                {{#each savingsMv}}
-                                {{#ifEquals commodity "Peak CHW"}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity "Peak CHW" phase 'M&V'}}
                                 <button id={{id}} data-comm-name="Peak CHW" name="PeakCHW"
                                     class="btn btn-warning editMv mb-3">
                                     <i class="fas fa-edit"></i>
@@ -297,7 +297,7 @@
                                 <span class="units"><button id={{id}} name="PeakCHW" class="btn btn-danger deleteMv">
                                         <i class="fas fa-trash-alt"></i>
                                     </button></span>
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                             <td class='borderTop'>
@@ -316,8 +316,8 @@
                                 </span>
                                 </button>
                                 {{/with}}
-                                {{#each savingsMv}}
-                                {{#ifEquals commodity "Labor"}}
+                                {{#each savings}}
+                                {{#ifEqualsTwo commodity "Labor" phase 'M&V'}}
                                 <button id={{id}} data-comm-name="Labor" name="Labor"
                                     class="btn btn-warning editMv mb-3">
                                     <i class="fas fa-edit"></i>
@@ -325,7 +325,7 @@
                                 <span class="units"><button id={{id}} name="Labor" class="btn btn-danger deleteMv">
                                         <i class="fas fa-trash-alt"></i>
                                     </button></span>
-                                {{/ifEquals}}
+                                {{/ifEqualsTwo}}
                                 {{/each}}
                             </td>
                         </tr>
