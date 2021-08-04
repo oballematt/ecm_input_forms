@@ -200,22 +200,22 @@ module.exports = {
                 });
 
                 return res.render('edit/allForms', {
-                    metadata,
-                    costsHours,
-                    baseline,
-                    funding,
-                    savings,
-                    miscSavings,
-                    projectId,
-                    staffLead,
-                    percentEach,
-                    percentTotal,
-                    plantEach,
-                    plantTotal,
-                    commSavings,
-                    commSavingsTotal,
-                    misc,
-                    financialAnalysis
+                    metadata,                                                                           
+                    costsHours,                                                                           
+                    baseline,                                                                           
+                    funding,                                                                           
+                    savings,                                                                           
+                    miscSavings,                                                                           
+                    projectId,                                                                           
+                    staffLead,                                                                           
+                    percentEach,                                                                           
+                    percentTotal,                                                                           
+                    plantEach,                                                                           
+                    plantTotal,                                                                           
+                    commSavings,                                                                           
+                    commSavingsTotal,                                                                           
+                    misc,                                                                           
+                    financialAnalysis                                                              
                 });
             }
 

@@ -1,12 +1,11 @@
 $(document).ready(() => {
-
     //Tooltip information for delete button. Gives general idea to user when the hover over the delete project button at the bottom of the page
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
 
     // Click event listener for the spinner when loading data
-    $('.load').click(function () {
+    $('.load').on('click', function () {
         $('#overlay').fadeIn().delay(8000).fadeOut();
         $('html, body').css({
             overflow: 'hidden',
@@ -30,33 +29,22 @@ $(document).ready(() => {
     dateInput_2.datepicker();
 
     const ids = ['building', 'measure_type', 'status', 'staff_lead', 'staff_colead', 'analyst'];
-
     let dataObj = {};
-
     $("#formData").on('submit', () => {
         ids.forEach(id => dataObj[id] = $('#' + id).val());
-
         sessionStorage.setItem('values', JSON.stringify(dataObj));
-
         sessionStorage.setItem('pid', $(".pid").val());
-
     });
-
     const getPid = sessionStorage.getItem('pid');
-
     const storedVals = sessionStorage.getItem('values');
-
     $('#searchData').on('submit', () => {
         sessionStorage.setItem("search", $("#search").val());
         sessionStorage.removeItem('pid')
     })
-
     const searchedVal = sessionStorage.getItem('search');
-
     $("#create").on('click', () => {
         sessionStorage.removeItem('values')
     });
-
     $("#delete").on('click', () => {
         sessionStorage.removeItem('search')
     });
@@ -163,7 +151,11 @@ $(document).ready(() => {
         $('.display').text(`Warning - Total Annual Fundings is less than Total Annual Costs by: $${annCommaNum} `)
     };
 
+
+
     $("#formData").on("change", ["#building", "#measure_type"], () => {
+        const pidYear = parseInt($('#reporting').val().slice(6), 10)
+        const pidYear2 = pidYear + 1
         if ($("#measure_type").val() === null) {
 
             $("#measure_type").val('');
@@ -172,9 +164,11 @@ $(document).ready(() => {
 
             $("#building").val('');
 
+        } else if ($('#reporting').val().slice(1, 2) > 8) {
+            $(".pid").val($("#building").val() + ' ' + pidYear2 + ' ' + $("#measure_type").val());
         } else {
-            $(".pid").val($("#building").val() + ' ' + new Date().getFullYear() + ' ' + $("#measure_type").val());
-        };
+            $(".pid").val($("#building").val() + ' ' + pidYear + ' ' + $("#measure_type").val());
+        }
     });
 
     let filterObjs = {
@@ -777,4 +771,5 @@ $(document).ready(() => {
         sessionStorage.clear();
     });
 
-});
+})
+
