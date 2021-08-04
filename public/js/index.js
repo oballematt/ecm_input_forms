@@ -159,14 +159,22 @@ $(document).ready(() => {
         if ($("#measure_type").val() === null) {
 
             $("#measure_type").val('');
+            $('#reporting').val('')
 
         } else if ($("#building").val() === null) {
 
             $("#building").val('');
 
+        } else if (!pidYear) {
+            
+            $('#reporting').val('')
+
         } else if ($('#reporting').val().slice(1, 2) > 8) {
+
             $(".pid").val($("#building").val() + ' ' + pidYear2 + ' ' + $("#measure_type").val());
+
         } else {
+
             $(".pid").val($("#building").val() + ' ' + pidYear + ' ' + $("#measure_type").val());
         }
     });
