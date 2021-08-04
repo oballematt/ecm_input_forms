@@ -29,25 +29,25 @@ $(document).ready(() => {
     dateInput_2.datepicker();
 
     const ids = ['building', 'measure_type', 'status', 'staff_lead', 'staff_colead', 'analyst'];
+
     let dataObj = {};
+
     $("#formData").on('submit', () => {
         ids.forEach(id => dataObj[id] = $('#' + id).val());
         sessionStorage.setItem('values', JSON.stringify(dataObj));
         sessionStorage.setItem('pid', $(".pid").val());
     });
+
     const getPid = sessionStorage.getItem('pid');
+
     const storedVals = sessionStorage.getItem('values');
+
     $('#searchData').on('submit', () => {
         sessionStorage.setItem("search", $("#search").val());
         sessionStorage.removeItem('pid')
     })
+
     const searchedVal = sessionStorage.getItem('search');
-    $("#create").on('click', () => {
-        sessionStorage.removeItem('values')
-    });
-    $("#delete").on('click', () => {
-        sessionStorage.removeItem('search')
-    });
 
     if (getPid) {
         $('#successModal').modal('show');
@@ -64,7 +64,6 @@ $(document).ready(() => {
         dataObj = JSON.parse(storedVals);
         ids.forEach(id => $('#' + id).val(dataObj[id] || 'Choose...'));
     };
-
 
     $(".percent").text(function (i, curr) {
         if (!$(this).text().trim()) {
@@ -774,9 +773,17 @@ $(document).ready(() => {
         )
     });
 
-    // clears project ID stored in session storage.
-    $("#finish").on("click", () => {
-        sessionStorage.clear();
+    // clears items stored in session storage.
+    $("#back").on("click", () => {
+        sessionStorage.removeItem('pid');
+    });
+
+    $("#create").on('click', () => {
+        sessionStorage.removeItem('values')
+    });
+    
+    $("#delete").on('click', () => {
+        sessionStorage.removeItem('search')
     });
 
 })
