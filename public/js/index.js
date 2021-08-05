@@ -168,7 +168,7 @@ $(document).ready(() => {
             
             $('#reporting').val('')
 
-        } else if ($('#reporting').val().slice(1, 2) > 8) {
+        } else if ($('#reporting').val().slice(0, 2) > 8) {
 
             $(".pid").val($("#building").val() + ' ' + pidYear2 + ' ' + $("#measure_type").val());
 
