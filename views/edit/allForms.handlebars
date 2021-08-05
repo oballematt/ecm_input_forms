@@ -10,13 +10,13 @@
     </div>
     <div class="col-md-12">
         <p>Search for a Project ID to edit or add new data.</p>
-        <form id="searchData" action="/" method="POST">
+        <form id="searchData" action="/ecmprojectsform" method="POST">
             {{#each errors}}
             <p style="color: red">{{text}}</p>
             {{/each}}
             {{> searchData}}
             <div class="text-end mt-3">
-                <a id="create" href="/metadata"><button type="button" class="btn btn-success">Create</button></a>
+                <a id="create" href="/ecmprojectsform/metadata"><button type="button" class="btn btn-success">Create</button></a>
             </div>
             {{> successModal}}
             <div class="card border-secondary mt-3 w-100 text-light" style="background-color: #333f48;">
@@ -158,23 +158,23 @@
                     <div class='text-end text-white mt-3'>
                         </a>
                         {{#with metadata}}
-                        <a href="/find/{{project_id}}"><button type="button" class='btn btn-warning'>Edit</button></a>
+                        <a href="/ecmprojectsform/{{project_id}}"><button type="button" class='btn btn-warning'>Edit</button></a>
                         {{/with}}
                     </div>
                 </div>
             </div>
         </form>
         <hr>
-        <form action='/add_costs_hours' method="POST">
+        <form action='/ecmprojectsform/add/costs_hours' method="POST">
             {{> costsHours}}
         </form>
-        <form action='/add_fundings' method="POST">
+        <form action='/ecmprojectsform/funding' method="POST">
             {{> fundings}}
         </form>
-        <form action="/add_miscsavings" method="POST">
+        <form action="/ecmprojectsform/miscsavings" method="POST">
         {{> miscSavings}}
         </form>
-        <form action='/' method='POST' id="searchData">
+        <form action='/ecmprojectsform' method='POST' id="searchData">
             <div class="row responsive">
                 <div style="display: none;" class="col-md-12 warning">
                     <div class="alert alert-danger d-flex align-items-center" role="alert">
@@ -216,7 +216,7 @@
                                         <td class="text-end sumCosts commas">{{cost}}</td>
                                         <td class="text-end">{{hours}}</td>
                                         <td>
-                                            <a href="/find/costs_hours/{{id}}">
+                                            <a href="/ecmprojectsform/costs_hours/{{id}}">
                                                 <button id={{id}} type='button' class='btn btn-warning getId'><i
                                                         class='fas fa-edit'></i></button>
                                             </a>
@@ -263,7 +263,7 @@
                                         <td class="commas impFunds">{{implementation}}</td>
                                         <td class="commas annFunds">{{annual}}</td>
                                         <td>
-                                            <a href="/find/funding/{{id}}" class='btn btn-warning'>
+                                            <a href="/ecmprojectsform/funding/{{id}}" class='btn btn-warning'>
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                         </td>
@@ -324,7 +324,7 @@
                                         <td class="text-start">{{misc_owner}}</td>
                                         <td class='commas'>{{misc_savings}}</td>
                                         <td>
-                                            <a href="/find/miscsavings/{{id}}" class='btn btn-warning'>
+                                            <a href="/ecmprojectsform/miscsavings/{{id}}" class='btn btn-warning'>
                                                 <i class="fas fa-edit"></i>
                                         </td>
                                         <td>

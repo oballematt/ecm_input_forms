@@ -95,7 +95,7 @@ module.exports = {
                 });
 
 
-                return res.redirect('/');
+                return res.redirect('/ecmprojectsform');
 
             }
 
@@ -251,7 +251,7 @@ module.exports = {
                         }
                     });
 
-                return res.redirect('/')
+                return res.redirect('/ecmprojectsform')
             }
 
         } catch (error) {

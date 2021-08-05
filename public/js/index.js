@@ -291,7 +291,7 @@ $(document).ready(() => {
             value: replacedValue
         }
         $.ajax({
-            url: '/find_b_s_values',
+            url: '/ecmprojectsform/baseline',
             method: "POST",
             data: data
         }).then(response => {
@@ -318,7 +318,7 @@ $(document).ready(() => {
             value: replacedValue
         }
         $.ajax({
-            url: '/find/baseline/' + id,
+            url: '/ecmprojectsform/baseline/' + id,
             method: 'POST',
             data: data
         }).then(
@@ -356,7 +356,7 @@ $(document).ready(() => {
             value: replacedValue
         }
         $.ajax({
-            url: '/find_savings_values',
+            url: '/ecmprojectsform/savings',
             method: "POST",
             data: data
         }).then(response => {
@@ -384,7 +384,7 @@ $(document).ready(() => {
             value: replacedValue
         }
         $.ajax({
-            url: '/find/savings/' + id,
+            url: '/ecmprojectsform/savings/' + id,
             method: 'POST',
             data: data
         }).then(
@@ -422,7 +422,7 @@ $(document).ready(() => {
             value: replacedValue
         }
         $.ajax({
-            url: '/find_savings_values',
+            url: '/ecmprojectsform/savings',
             method: "POST",
             data: data
         }).then(response => {
@@ -450,7 +450,7 @@ $(document).ready(() => {
             value: replacedValue
         }
         $.ajax({
-            url: '/find/savings/' + id,
+            url: '/ecmprojectsform/savings/' + id,
             method: 'POST',
             data: data
         }).then(
@@ -503,11 +503,11 @@ $(document).ready(() => {
         } else {
 
             $.ajax({
-                url: '/find/costs_hours/' + id,
+                url: '/ecmprojectsform/costs_hours/' + id,
                 type: 'POST',
                 data: data,
                 success: function () {
-                    window.location = "/";
+                    window.location = "/ecmprojectsform";
                 }
             });
         }
@@ -539,11 +539,11 @@ $(document).ready(() => {
         } else {
 
             $.ajax({
-                url: '/find/funding/' + id,
+                url: '/ecmprojectsform/funding/' + id,
                 type: 'POST',
                 data: data,
                 success: function () {
-                    window.location = "/";
+                    window.location = '/ecmprojectsform';
                 }
             });
         }
@@ -571,11 +571,11 @@ $(document).ready(() => {
             };
         } else {
             $.ajax({
-                url: '/find/miscsavings/' + id,
+                url: '/ecmprojectsform/miscsavings/' + id,
                 type: 'POST',
                 data: data,
                 success: function () {
-                    window.location = "/";
+                    window.location = "/ecmprojectsform";
                 }
             });
         }
@@ -622,14 +622,12 @@ $(document).ready(() => {
             };
         } else {
             $.ajax({
-                url: '/add_costs_hours',
+                url: '/ecmprojectsform/add/costs_hours',
                 type: 'POST',
                 data: data
             }).then(
                 $tbody.find(':input').prop('disabled', true).css("background-color", "green"),
                 $tbody.append($cloneRow.clone()),
-                $("#next").removeAttr('disabled'),
-                $("#link").attr('href', '/fundings'),
                 $('#errors').text(''),
                 $(".info").removeAttr('style'),
                 $(".infoMessage").text('Your data was successfully added! Search for your project again to view and edit the data below. Otherwise, continue adding data to the other tables ')
@@ -672,15 +670,13 @@ $(document).ready(() => {
             }
         } else {
             $.ajax({
-                url: '/add_fundings',
+                url: '/ecmprojectsform/fundings',
                 type: 'POST',
                 data: data
             }).then(
                 $tbodyF.find(':input').prop('disabled', true).css("background-color", "green"),
                 $tbodyF.append($cloneRowF.clone()),
                 $("#next").removeAttr('disabled'),
-                $("#link").attr('href', '/baseline'),
-                $('#errorsF').text(''),
                 $(".info").removeAttr('style'),
                 $(".infoMessage").text('Your data was successfully added! Search for your project again to view and edit the data below. Otherwise, continue adding data to the other tables ')
             );
@@ -724,14 +720,12 @@ $(document).ready(() => {
         } else {
 
             $.ajax({
-                url: '/add_miscsavings',
+                url: '/ecmprojectsform/miscsavings',
                 type: 'POST',
                 data: data,
             }).then(
                 $tbodyM.find(':input').prop('disabled', true).css("background-color", "green"),
                 $tbodyM.append($cloneRowM.clone()),
-                $("#next").removeAttr('disabled'),
-                $("#link").attr('href', '/baseline'),
                 $('#errorsM').text(''),
                 $(".info").removeAttr('style'),
                 $(".infoMessage").text('Your data was successfully added! Search for your project again to view and edit the data below. Otherwise, continue adding data to the other tables ')
