@@ -1,25 +1,42 @@
 require('dotenv').config()
 
 const AthenaExpress = require("athena-express"),
-	aws = require("aws-sdk"),
-	awsCredentials = { 
-		region: process.env.REGION,
-		accessKeyId: process.env.ACCESSKEY,
-		secretAccessKey: process.env.SECRETACCESSKEY
-	};
+    aws = require("aws-sdk"),
+    awsCredentials = {
+        region: process.env.REGION,
+        accessKeyId: process.env.ACCESSKEY,
+        secretAccessKey: process.env.SECRETACCESSKEY
+    };
 
 aws.config.update(awsCredentials);
 
 //AthenaExpress config object
 const athenaExpressConfig = {
-	aws, /* required */
-	s3: process.env.S3BUCKET, /* optional */
+    aws, /* required */
+    // s3: process.env.S3BUCKET, /* optional */
     db: process.env.ATHENADB, /* optional */
-	formatJson: BOOLEAN, /* optional default=true */
-	retry: Integer, /* optional default=200 */
-    getStats: BOOLEAN /* optional default=false */
+    formatJson: true, /* optional default=true */
+    retry: 200, /* optional default=200 */
+    getStats: false /* optional default=false */
 }
 
 
 //Initializing AthenaExpress
- const athenaExpress = new AthenaExpress(athenaExpressConfig);
+const athenaExpress = new AthenaExpress(athenaExpressConfig);
+
+module.exports = {
+
+    getData: async (req, res) => {
+        const { building_abbreviation } = req.body
+        try {
+            let results = await athenaExpress.query(`SELECT * FROM building_meter_metadata WHERE building_abbreviation = '${building_abbreviation}' ORDER BY building_abbreviation`)
+            console.log(results)
+            return res.render('cleaning', {
+                layout: 'datacleaning',
+                results
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}

@@ -71,7 +71,8 @@ app.get('/reset', authorization.checkAuthenticated, (req, res) => res.render('re
 app.get("/logout", (req, res) => {                                             
   req.logout();                                             
   res.redirect('/login')                                             
-});                                             
+});  
+app.get('/datacleaning', (req, res) => { res.render('cleaning', {layout: 'datacleaning'})})                                           
                                              
 app.post(                                             
   "/login",                                             
@@ -89,7 +90,8 @@ app.use('/', require('./routes/prjt_fundings'));
 app.use('/', require('./routes/prjt_baseline'));                                             
 app.use('/', require('./routes/getDataById'));                                             
 app.use('/', require('./routes/prjt_misc_savings'));                                             
-app.use('/', require('./routes/users'));                                             
+app.use('/', require('./routes/users'));         
+app.use('/', require('./routes/athenaData'))                                    
                                              
 app.listen(port, async () => {                                             
   console.log(`Server started on port ${port}`);                                             

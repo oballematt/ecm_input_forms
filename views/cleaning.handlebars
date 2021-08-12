@@ -1,0 +1,38 @@
+<form action="/datacleaning" method="POST">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                <select name="building_abbreviation" class="form-select building" id="inputGroupSelect01">
+                    <option selected>Choose...</option>
+                    <option>ACB</option>
+                    <option>ADH</option>
+                    <option>AHG</option>
+                </select>
+                <button class="btn btn-outline-secondary search" type="submit">Search</button>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <table id="tbl-1" class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Building</th>
+                        <th class="text-end" scope="col">Meter Number</th>
+                        <th class="text-end" scope="col">Building Number</th>
+                        <th class="text-end" scope="col">Commodity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each results.Items}}
+                    <tr class="data">
+                        <td class="abbreviation">{{building_abbreviation}}</td>
+                        <td class="text-end meter">{{meter}}</td>
+                        <td class="text-end number">{{building_number}}</td>
+                        <td class="text-end commodity">{{commodity_tag}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
