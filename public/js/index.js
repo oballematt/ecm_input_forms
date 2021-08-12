@@ -24,9 +24,13 @@ $(document).ready(() => {
 
     const dateInput_2 = $('input[name="reporting_period_start_date"]');
 
-    dateInput_1.datepicker();
+    dateInput_1.datepicker({
+        changeYear: true,
+    });
 
-    dateInput_2.datepicker();
+    dateInput_2.datepicker({
+        changeYear: true,
+    });
 
     const ids = ['building', 'measure_type', 'status', 'staff_lead', 'staff_colead', 'analyst'];
 
