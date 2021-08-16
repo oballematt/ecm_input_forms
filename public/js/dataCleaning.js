@@ -13,11 +13,14 @@ $(document).ready(() => {
     //         console.log(response);
     //     })
     // })
+    
 
     $(".data").on("click", function () {
+        let data = []
         let $tds = $(this).find("td")
         $.each($tds, function () {
-            console.log($(this).text())
+            data.push($(this).text())
         })
+        console.log(data)
     })
 })
