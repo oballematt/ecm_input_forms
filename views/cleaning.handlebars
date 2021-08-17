@@ -2,16 +2,43 @@
     <div class="row">
         <div class="col-md-12">
             <div class="input-group mb-3">
-                <label class="input-group-text" for="inputGroupSelect01">Options</label>
-                <select name="building_abbreviation" class="form-select building" id="inputGroupSelect01">
+                <label class="input-group-text" for="inputGroupSelect01">Steward</label>
+                <select name="steward" class="form-select" id="inputGroupSelect01">
                     <option selected>Choose...</option>
-                    <option>ACB</option>
-                    <option>ADH</option>
-                    <option>AHG</option>
+                    <option>Grace Hsieh</option> 
+                    <option>Meagan Jones</option> 
+                    <option>Matt Stevens</option> 
+                    <option>Travis Isakson</option> 
                 </select>
-                <button class="btn btn-outline-secondary search" type="submit">Search</button>
+                <button type="submit" class="btn btn-success">Search</button>
             </div>
         </div>
+        <div class="col-md-12">
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">Building</label>
+                <select name="building_abbreviation" class="form-select" id="inputGroupSelect01">
+                    <option selected>Choose...</option>
+                    {{#each steward}}
+                    <option>{{building}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+            <div class="col-md-12">
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect02">Commodity</label>
+                <select name="commodity_tag" class="form-select" id="inputGroupSelect02">
+                    <option selected>Choose...</option>
+                    <option>A</option>
+                    <option>E</option>
+                    <option>H</option>
+                    <option>L</option>
+                    <option>S</option>
+                    <option>W</option>
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Search</button>
         <div class="col-md-12">
             <table id="tbl-1" class="table table-dark table-hover">
                 <thead>

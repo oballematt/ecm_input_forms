@@ -27,9 +27,9 @@ const athenaExpress = new AthenaExpress(athenaExpressConfig);
 module.exports = {
 
     getData: async (req, res) => {
-        const { building_abbreviation } = req.body
+        const { building_abbreviation, commodity_tag } = req.body
         try {
-            let results = await athenaExpress.query(`SELECT * FROM building_meter_metadata WHERE building_abbreviation = '${building_abbreviation}' ORDER BY building_abbreviation`)
+            let results = await athenaExpress.query(`SELECT * FROM building_meter_metadata WHERE building_abbreviation = '${building_abbreviation}' AND commodity_tag = '${commodity_tag}' ORDER BY building_abbreviation`)
             console.log(results)
             return res.render('cleaning', {
                 layout: 'datacleaning',
