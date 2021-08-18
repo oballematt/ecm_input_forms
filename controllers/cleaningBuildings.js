@@ -8,13 +8,14 @@ module.exports = {
             const findBuilding = await Bldg_metadata.findAll({
                 where: {
                     steward
-                }
+                },
+                order: [
+                    ['building', 'ASC']
+                ]
             })
 
-            return res.render('cleaning',{
-                layout: 'datacleaning', 
-                findBuilding
-            })
+            return res.json(findBuilding)
+            
             
         } catch (error) {
             console.error(error.message)

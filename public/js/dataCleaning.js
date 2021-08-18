@@ -13,7 +13,30 @@ $(document).ready(() => {
     //         console.log(response);
     //     })
     // })
-    
+
+    $(".searchBuildings").on("click", function (e) {
+        e.preventDefault();
+        $('#options').find('option').remove()
+        let data = {
+            steward: $('.steward').val()
+        }
+        $.ajax({
+            url: '/building',
+            method: 'POST',
+            data: data
+        }).then(response => {
+            console.log(response)
+            $("#options").append(
+                response.map(function (data) {
+                    return $('<option/>', {
+                        value: data.building,
+                        text: data.building
+                    })
+                })
+            )
+        })
+    })
+
 
     $(".data").on("click", function () {
         let data = []

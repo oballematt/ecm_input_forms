@@ -3,24 +3,21 @@
         <div class="col-md-12">
             <div class="input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect01">Steward</label>
-                <select name="steward" class="form-select" id="inputGroupSelect01">
+                <select name="steward" class="form-select steward" id="inputGroupSelect01">
                     <option selected>Choose...</option>
                     <option>Grace Hsieh</option> 
                     <option>Meagan Jones</option> 
                     <option>Matt Stevens</option> 
                     <option>Travis Isakson</option> 
                 </select>
-                <button type="submit" class="btn btn-success">Search</button>
+                <button type="button" class="btn btn-success searchBuildings">Search</button>
             </div>
         </div>
         <div class="col-md-12">
             <div class="input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect01">Building</label>
-                <select name="building_abbreviation" class="form-select" id="inputGroupSelect01">
+                <select id="options" name="building_abbreviation" class="form-select" id="inputGroupSelect01">
                     <option selected>Choose...</option>
-                    {{#each steward}}
-                    <option>{{building}}</option>
-                    {{/each}}
                 </select>
             </div>
         </div>
