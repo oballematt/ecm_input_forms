@@ -1,6 +1,9 @@
 <form action="/datacleaning" method="POST">
     <div class="row">
         <div class="col-md-12">
+            {{#each errors}}
+            <div>{{text}}</div>
+            {{/each}}
             <div class="input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect01">Steward</label>
                 <select name="steward" class="form-select steward" id="inputGroupSelect01">
