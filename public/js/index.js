@@ -154,6 +154,11 @@ $(document).ready(() => {
         $('.display').text(`Warning - Total Annual Fundings is less than Total Annual Costs by: $${annCommaNum} `)
     };
 
+    if (totalAnnSum > 1 && totalAnnSum > 1 ){
+        $('.warning').removeAttr('style')
+        $('.display').text(`Warning - Total Annual Fundings is less than Total Annual Costs by: $${annCommaNum} & Total Implem Fundings is less than Total Implem Costs by: $${impCommaNum}`)
+    }
+
 
 
     $("#formData").on("change", ["#building", "#measure_type"], () => {
