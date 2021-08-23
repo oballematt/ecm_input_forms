@@ -1,6 +1,6 @@
-<form action="/datacleaning" method="POST">
-    <div class="row">
-        <div class="col-md-12">
+<div class="row">
+    <form action="/datacleaning" method="POST">
+        <div class="col-md-12 mt-5">
             {{#each errors}}
             <div>{{text}}</div>
             {{/each}}
@@ -8,10 +8,10 @@
                 <label class="input-group-text" for="inputGroupSelect01">Steward</label>
                 <select name="steward" class="form-select steward" id="inputGroupSelect01">
                     <option selected>Choose...</option>
-                    <option>Grace Hsieh</option> 
-                    <option>Meagan Jones</option> 
-                    <option>Matt Stevens</option> 
-                    <option>Travis Isakson</option> 
+                    <option>Grace Hsieh</option>
+                    <option>Meagan Jones</option>
+                    <option>Matt Stevens</option>
+                    <option>Travis Isakson</option>
                 </select>
                 <button type="button" class="btn btn-success searchBuildings">Search</button>
             </div>
@@ -19,15 +19,15 @@
         <div class="col-md-12">
             <div class="input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect01">Building</label>
-                <select id="options" name="building_abbreviation" class="form-select" id="inputGroupSelect01">
+                <select id="options" name="building_abbreviation" class="form-select buildings" id="inputGroupSelect01">
                     <option selected>Choose...</option>
                 </select>
             </div>
         </div>
-            <div class="col-md-12">
+        <div class="col-md-12">
             <div class="input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect02">Commodity</label>
-                <select name="commodity_tag" class="form-select" id="inputGroupSelect02">
+                <select name="commodity_tag" class="form-select commodity" id="inputGroupSelect02">
                     <option selected>Choose...</option>
                     <option>A</option>
                     <option>E</option>
@@ -38,8 +38,8 @@
                 </select>
             </div>
         </div>
-        <button type="submit" class="btn btn-success">Search</button>
-        <div class="col-md-12">
+        <button type="button" class="btn btn-success search">Search</button>
+        <div class="col-md-12 mt-4">
             <table id="tbl-1" class="table table-dark table-hover">
                 <thead>
                     <tr>
@@ -49,17 +49,18 @@
                         <th class="text-end" scope="col">Commodity</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {{#each results.Items}}
-                    <tr class="data">
-                        <td class="abbreviation">{{building_abbreviation}}</td>
-                        <td class="text-end meter">{{meter}}</td>
-                        <td class="text-end number">{{building_number}}</td>
-                        <td class="text-end commodity">{{commodity_tag}}</td>
-                    </tr>
-                    {{/each}}
+                <tbody id="bodyData">
                 </tbody>
             </table>
         </div>
+    </form>
+    <button type="button" class="apiGateway btn btn-success">Search API</button>
+    <div class="row mt-5 mb-5">
+        <div class="col-md-6">
+            <canvas id="myChart" width="100" height="100"></canvas>
+        </div>
+        <div class="col-md-6">
+            <canvas id="myChart2" width="100" height="100"></canvas>
+        </div>
     </div>
-</form>
+</div>
