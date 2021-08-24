@@ -1,5 +1,16 @@
 $(document).ready(() => {
 
+    const dateInput_1 = $('.datepicker');
+
+    dateInput_1.datepicker({
+        changeYear: true,
+        dateFormat: 'yy-mm-dd',
+        // onSelect: function(dateText, inst){
+            
+        //     $('.modelEnd').datepicker('setDate', dateText '+364d');
+        // }
+    });
+    
     let ctx = document.getElementById('myChart').getContext('2d');
     let myChart = new Chart(ctx, {
         type: 'scatter',
@@ -84,17 +95,34 @@ $(document).ready(() => {
                 });
 
                 $(".rowData").on("click", function () {
-                    let data = []
-                    let $tds = $(this).find("td")
+                    const data = []
+                    const $tds = $(this).find("td")
+                    const modelStart = $('.modelStart').val()
+                    const modelEnd = $('.modelEnd').val()
+                    const analysisStart = $('.analysisStart').val()
+                    const analysisEnd = $('.analysisEnd').val()
                     $.each($tds, function () {
                         data.push($(this).text())
+                        $(this).css('background-color', 'green')
                     })
                     $(".apiGateway").on("click", function () {
                         $.ajax({
-                            url: `https://mvx8fq0n9l.execute-api.us-east-1.amazonaws.com/model?building_number=${data[2]}&commodity_tag=${data[3]}&meter=${data[1]}&train_start=2020-01-01&train_end=2020-12-31&analysis_start=2021-01-01&analysis_end=2021-01-31`,
+                            url: `https://mvx8fq0n9l.execute-api.us-east-1.amazonaws.com/model?building_number=${data[2]}&commodity_tag=${data[3]}&meter=${data[1]}&train_start=${modelStart}&train_end=${modelEnd}&analysis_start=${analysisStart}&analysis_end=${analysisEnd}`,
                             method: 'GET'
                         }).then( response => {
+                            const autoIgnored = parseFloat(response.model.auto_ignored_percentage).toFixed(0);
+                            const slope = parseFloat(response.model.slope).toFixed(2);
+                            const intercept = parseFloat(response.model.intercept).toFixed(2)
+                            const r2 = parseFloat(response.model.max_train_r2).toFixed(2)
+                            const stdDev = parseFloat(response.model.std.train).toFixed(2)
                             console.log(response)
+                            $('.baseTemp').html(response.model.base_temperature)
+                            $('.autoIgnored').html(autoIgnored + '%')
+                            $('.slope').html(slope)
+                            $('.intercept').html(intercept)
+                            $('.r2').html(r2)
+                            $('.stdDev').html(stdDev)
+                            $tds.css('background-color', 'white')
                         })
                     })
                 })

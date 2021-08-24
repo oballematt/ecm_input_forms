@@ -1,60 +1,113 @@
 <div class="row">
     <form action="/datacleaning" method="POST">
-        <div class="col-md-12 mt-5">
-            {{#each errors}}
-            <div>{{text}}</div>
-            {{/each}}
-            <div class="input-group mb-3">
-                <label class="input-group-text" for="inputGroupSelect01">Steward</label>
-                <select name="steward" class="form-select steward" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option>Grace Hsieh</option>
-                    <option>Meagan Jones</option>
-                    <option>Matt Stevens</option>
-                    <option>Travis Isakson</option>
-                </select>
-                <button type="button" class="btn btn-success searchBuildings">Search</button>
+        <div class="row">
+            <div class="col-md-4 mt-5">
+                {{#each errors}}
+                <div>{{text}}</div>
+                {{/each}}
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01">Steward</label>
+                    <select name="steward" class="form-select steward" id="inputGroupSelect01">
+                        <option selected>Choose...</option>
+                        <option>Grace Hsieh</option>
+                        <option>Meagan Jones</option>
+                        <option>Matt Stevens</option>
+                        <option>Travis Isakson</option>
+                    </select>
+                    <button type="button" class="btn btn-success searchBuildings">Search</button>
+                </div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01">Building</label>
+                    <select id="options" name="building_abbreviation" class="form-select buildings"
+                        id="inputGroupSelect01">
+                        <option selected>Choose...</option>
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect02">Commodity</label>
+                    <select name="commodity_tag" class="form-select commodity" id="inputGroupSelect02">
+                        <option selected>Choose...</option>
+                        <option>A</option>
+                        <option>E</option>
+                        <option>H</option>
+                        <option>L</option>
+                        <option>S</option>
+                        <option>W</option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-success search">Search</button>
+                <div class="col-md-12 mt-4">
+                    <table id="tbl-1" class="table table-bordered border-secondary table-hover">
+                        <thead>
+                            <tr class="text-center">
+                                <th scope="col">Building</th>
+                                <th scope="col">Meter Name</th>
+                                <th scope="col">Building Number</th>
+                                <th scope="col">Commodity</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyData">
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-        <div class="col-md-12">
-            <div class="input-group mb-3">
-                <label class="input-group-text" for="inputGroupSelect01">Building</label>
-                <select id="options" name="building_abbreviation" class="form-select buildings" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                </select>
+            <div class="col-md-4 mt-5">
+                <div class="input-group flex-nowrap">
+                    <span class="input-group-text" id="addon-wrapping">Model Start Date:</span>
+                    <input type="text" class="form-control datepicker modelStart" placeholder="yyyy/mm/dd"
+                        aria-label="Model Start Date" aria-describedby="addon-wrapping">
+                </div>
+                <div class="input-group flex-nowrap mt-3">
+                    <span class="input-group-text" id="addon-wrapping">Model End Date:</span>
+                    <input type="text" class="form-control datepicker modelEnd" placeholder="yyyy/mm/dd"
+                        aria-label="Model End Date" aria-describedby="addon-wrapping">
+                </div>
+                <div class="col-md-6">
+                    <table class="table mt-4 table-bordered border-secondary">
+                        <tbody class='text-end'>
+                            <tr>
+                                <td>Base Temp:</td>
+                                <td class="baseTemp"></td>
+                            </tr>
+                            <tr>
+                                <td>% Auto-Ignored:</td>
+                                <td class="autoIgnored"></td>
+                            </tr>
+                            <tr>
+                                <td>Slope:</td>
+                                <td class='slope'></td>
+                            </tr>
+                            <tr>
+                                <td>Intercept:</td>
+                                <td class='intercept'></td>
+                            </tr>
+                            <tr>
+                                <td>R-squared:</td>
+                                <td class='r2'></td>
+                            </tr>
+                            <tr>
+                                <td>Std Dev:</td>
+                                <td class="stdDev"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-        <div class="col-md-12">
-            <div class="input-group mb-3">
-                <label class="input-group-text" for="inputGroupSelect02">Commodity</label>
-                <select name="commodity_tag" class="form-select commodity" id="inputGroupSelect02">
-                    <option selected>Choose...</option>
-                    <option>A</option>
-                    <option>E</option>
-                    <option>H</option>
-                    <option>L</option>
-                    <option>S</option>
-                    <option>W</option>
-                </select>
+            <div class="col-md-4 mt-5">
+                <div class="input-group flex-nowrap">
+                    <span class="input-group-text" id="addon-wrapping">Analysis Start Date:</span>
+                    <input type="text" class="form-control datepicker analysisStart" placeholder="yyyy/mm/dd"
+                        aria-label="Analysis Start Date" aria-describedby="addon-wrapping">
+                </div>
+                <div class="input-group flex-nowrap mt-3">
+                    <span class="input-group-text" id="addon-wrapping">Analysis End Date:</span>
+                    <input type="text" class="form-control datepicker analysisEnd" placeholder="yyyy/mm/dd"
+                        aria-label="Analysis End Date" aria-describedby="addon-wrapping">
+                </div>
             </div>
-        </div>
-        <button type="button" class="btn btn-success search">Search</button>
-        <div class="col-md-12 mt-4">
-            <table id="tbl-1" class="table table-dark table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Building</th>
-                        <th class="text-end" scope="col">Meter Number</th>
-                        <th class="text-end" scope="col">Building Number</th>
-                        <th class="text-end" scope="col">Commodity</th>
-                    </tr>
-                </thead>
-                <tbody id="bodyData">
-                </tbody>
-            </table>
+            <button type="button" class="apiGateway btn btn-primary">Run Model</button>
         </div>
     </form>
-    <button type="button" class="apiGateway btn btn-success">Search API</button>
     <div class="row mt-5 mb-5">
         <div class="col-md-6">
             <canvas id="myChart" width="100" height="100"></canvas>
