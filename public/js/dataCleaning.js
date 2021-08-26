@@ -1,3 +1,5 @@
+
+const data = []
 $(document).ready(() => {
 
     const dateInput_1 = $('.datepicker');
@@ -5,12 +7,17 @@ $(document).ready(() => {
     dateInput_1.datepicker({
         changeYear: true,
         dateFormat: 'yy-mm-dd',
-        // onSelect: function(dateText, inst){
-            
-        //     $('.modelEnd').datepicker('setDate', dateText '+364d');
-        // }
     });
-    
+
+    $('.modelStart').on('change', function () {
+        let date2 = $(this).datepicker('getDate')
+        date2.setDate(date2.getDate() + 364)
+        let date3 = new Date()
+        let date4 = date3.setMonth(date2.getMonth() + 1, 1)
+        $('.analysisStart').datepicker('setDate', date4)
+        $('.modelEnd').datepicker('setDate', date2)
+    })
+
     let ctx = document.getElementById('myChart').getContext('2d');
     let myChart = new Chart(ctx, {
         type: 'scatter',
@@ -75,6 +82,7 @@ $(document).ready(() => {
 
     $('.search').on('click', function (e) {
         e.preventDefault();
+        $('#overlay').fadeIn()
         $(".rowData").find('td').remove();
         $.ajax({
             url: '/athenaData',
@@ -85,6 +93,8 @@ $(document).ready(() => {
             }
         }).then(response => {
             $(function () {
+                $('#overlay').fadeOut()
+                $("#tbl-1").removeAttr('style')
                 $.each(response.Items, function (i, item) {
                     $('<tr class="rowData">').append(
                         $('<td>').text(item.building_abbreviation),
@@ -95,41 +105,57 @@ $(document).ready(() => {
                 });
 
                 $(".rowData").on("click", function () {
-                    const data = []
+
                     const $tds = $(this).find("td")
-                    const modelStart = $('.modelStart').val()
-                    const modelEnd = $('.modelEnd').val()
-                    const analysisStart = $('.analysisStart').val()
-                    const analysisEnd = $('.analysisEnd').val()
                     $.each($tds, function () {
                         data.push($(this).text())
                         $(this).css('background-color', 'green')
-                    })
-                    $(".apiGateway").on("click", function () {
-                        $.ajax({
-                            url: `https://mvx8fq0n9l.execute-api.us-east-1.amazonaws.com/model?building_number=${data[2]}&commodity_tag=${data[3]}&meter=${data[1]}&train_start=${modelStart}&train_end=${modelEnd}&analysis_start=${analysisStart}&analysis_end=${analysisEnd}`,
-                            method: 'GET'
-                        }).then( response => {
-                            const autoIgnored = parseFloat(response.model.auto_ignored_percentage).toFixed(0);
-                            const slope = parseFloat(response.model.slope).toFixed(2);
-                            const intercept = parseFloat(response.model.intercept).toFixed(2)
-                            const r2 = parseFloat(response.model.max_train_r2).toFixed(2)
-                            const stdDev = parseFloat(response.model.std.train).toFixed(2)
-                            console.log(response)
-                            $('.baseTemp').html(response.model.base_temperature)
-                            $('.autoIgnored').html(autoIgnored + '%')
-                            $('.slope').html(slope)
-                            $('.intercept').html(intercept)
-                            $('.r2').html(r2)
-                            $('.stdDev').html(stdDev)
-                            $tds.css('background-color', 'white')
-                        })
                     })
                 })
 
             });
 
         })
+    })
+
+    $(".apiGateway").on("click", function (e) {
+        let maxAttempts = 5 
+        countAttempts = 0
+        e.preventDefault();
+        const modelStart = $('.modelStart').val()
+        const modelEnd = $('.modelEnd').val()
+        const analysisStart = $('.analysisStart').val()
+        const analysisEnd = $('.analysisEnd').val()
+        console.log(modelStart)
+        if (!modelStart) {
+            $('.modelStart').css('border', '1.5px solid red').text('Please enter a date for Model Start')
+        } else {
+            $.ajax({
+                url: `https://mvx8fq0n9l.execute-api.us-east-1.amazonaws.com/model?building_number=${data[2]}&commodity_tag=${data[3]}&meter=${data[1]}&train_start=${modelStart}&train_end=${modelEnd}&analysis_start=${analysisStart}&analysis_end=${analysisEnd}`,
+                method: 'GET',
+                error: function (xhr) {
+                   if (xhr.status === 503 && countAttempts < maxAttempts) {
+                       ++countAttempts
+                       $.ajax(this)
+                   }
+                }
+            }).then(response => {
+                const autoIgnored = parseFloat(response.model.auto_ignored_percentage).toFixed(0);
+                const slope = parseFloat(response.model.slope).toFixed(2);
+                const intercept = parseFloat(response.model.intercept).toFixed(2)
+                const r2 = parseFloat(response.model.max_train_r2).toFixed(2)
+                const stdDev = parseFloat(response.model.std.train).toFixed(2)
+                console.log(response)
+                $('.baseTemp').html(response.model.base_temperature)
+                $('.autoIgnored').html(autoIgnored + '%')
+                $('.slope').html(slope)
+                $('.intercept').html(intercept)
+                $('.r2').html(r2)
+                $('.stdDev').html(stdDev)
+                $('.modelData').show()
+            })
+        }
+
     })
 
 
