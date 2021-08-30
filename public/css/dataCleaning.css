@@ -26,6 +26,22 @@
       border-right-color: transparent;
       border-radius: 50%;
   }
+
+  .header {
+    position: sticky;
+    top: 0;
+}
+.tableContainer {
+    height: 400px;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.bordered {
+    border: 1px solid
+}
+
+  
   @keyframes rotate {
       0% {
           transform: rotate(0deg);

@@ -35,5 +35,21 @@ module.exports = {
         } catch (error) {
             console.log(error)
         }
+    },
+
+    getAllMeters: async (req, res) => {
+        try {
+
+            let allResults = await athenaExpress.query('SELECT * FROM building_meter_metadata ORDER BY building_abbreviation')
+
+            return res.render('cleaning', {
+                allResults,
+                layout: 'datacleaning'
+            })
+            
+        } catch (error) {
+            console.error(error.message)
+        }
+        
     }
 }

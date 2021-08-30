@@ -6,4 +6,6 @@ router.post('/athenaData', athenaController.getData)
 
 router.post('/building', buildingController.buildingsBySteward)
 
+router.get('/datacleaning', athenaController.getAllMeters)
+
 module.exports = router
