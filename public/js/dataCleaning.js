@@ -12,10 +12,15 @@ $(document).ready(() => {
     $('.modelStart').on('change', function () {
         let date2 = $(this).datepicker('getDate')
         date2.setDate(date2.getDate() + 364)
-        let date3 = new Date()
-        let date4 = date3.setMonth(date2.getMonth() + 1, 1)
-        $('.analysisStart').datepicker('setDate', date4)
         $('.modelEnd').datepicker('setDate', date2)
+        let date3 = new Date()
+        date3.setDate(1);
+        date3.setMonth(date3.getMonth() - 1);
+        $('.analysisStart').datepicker('setDate', date3)
+        let date4 = new Date()
+        date4.setDate(0)
+        date4.setMonth(date4.getMonth())
+        $('.analysisEnd').datepicker('setDate', date4)
     })
 
     let ctx = document.getElementById('myChart').getContext('2d');
@@ -119,8 +124,7 @@ $(document).ready(() => {
     })
 
     $(".apiGateway").on("click", function (e) {
-        let maxAttempts = 5 
-        countAttempts = 0
+
         e.preventDefault();
         const modelStart = $('.modelStart').val()
         const modelEnd = $('.modelEnd').val()
@@ -134,10 +138,10 @@ $(document).ready(() => {
                 url: `https://mvx8fq0n9l.execute-api.us-east-1.amazonaws.com/model?building_number=${data[2]}&commodity_tag=${data[3]}&meter=${data[1]}&train_start=${modelStart}&train_end=${modelEnd}&analysis_start=${analysisStart}&analysis_end=${analysisEnd}`,
                 method: 'GET',
                 error: function (xhr) {
-                   if (xhr.status === 503 && countAttempts < maxAttempts) {
-                       ++countAttempts
-                       $.ajax(this)
-                   }
+                    if (xhr.status === 503) {
+
+                        $.ajax(this)
+                    }
                 }
             }).then(response => {
                 const autoIgnored = parseFloat(response.model.auto_ignored_percentage).toFixed(0);
