@@ -11,28 +11,28 @@
                 <div>{{text}}</div>
                 {{/each}}
                 <div class="tableContainer">
-                    <table class="table table-hover">
+                    <table class="table table-hover table-bordered border-secondary">
                         <thead class='table-dark'>
-                            <tr class="text-center">
+                            <tr>
                                 <th class="header" scope="col">Building</th>
-                                <th class="header" scope="col">Meter Name</th>
-                                <th class="header" scope="col">Building Number</th>
-                                <th class="header" scope="col">Commodity</th>
+                                <th class="header text-end" scope="col">Meter Name</th>
+                                <th class="header text-end" scope="col">Building Number</th>
+                                <th class="header text-end" scope="col">Commodity</th>
                             </tr>
                         </thead>
                         <tbody>
                             {{#each allResults.Items}}
-                            <tr class="bordered">
-                                <td class="bordered">
+                            <tr class='rowData'>
+                                <td>
                                     {{building_abbreviation}}
                                 </td>
-                                <td class="text-end bordered">
+                                <td class="text-end">
                                     {{meter}}
                                 </td>
-                                <td class="text-end bordered">
+                                <td class="text-end">
                                     {{building_number}}
                                 </td>
-                                <td class="text-end bordered">
+                                <td class="text-end">
                                     {{commodity_tag}}
                                 </td>
                             </tr>
@@ -43,7 +43,6 @@
             </div>
             <div class="col-md-4 mt-5">
                 <div class="input-group flex-nowrap">
-                    {{!-- <label for="modelStart">hello</label> --}}
                     <span class="input-group-text" id="addon-wrapping">Model Start Date:</span>
                     <input id="modelStart" type="text" class="form-control datepicker modelStart"
                         placeholder="yyyy/mm/dd" aria-label="Model Start Date" aria-describedby="addon-wrapping">
@@ -63,122 +62,92 @@
                     <input type="text" class="form-control datepicker analysisEnd" placeholder="yyyy/mm/dd"
                         aria-label="Analysis End Date" aria-describedby="addon-wrapping">
                 </div>
+                <ul class="list-group mt-5">
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Meter Description:</div>
+                            <div class="meterVariable">--</div>
+                        </div>
+                    </li>
+                </ul>
             </div>
             <div class="col-md-4 mt-5">
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">Base Temp:</div>
-                            Cras justo odio
+                            <div class="baseTemp">--</div>
                         </div>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">% Auto-Ignored:</div>
-                            Cras justo odio
+                            <div class="autoIgnored">--</div>
                         </div>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">Slope:</div>
-                            Cras justo odio
+                            <div class="slope">--</div>
                         </div>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">Intercept:</div>
-                            Cras justo odio
+                            <div class="intercept">--</div>
                         </div>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">R-Squared:</div>
-                            Cras justo odio
+                            <div class="r2">--</div>
                         </div>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">Std Dev:</div>
-                            Cras justo odio
+                            <div class="stdDev">--</div>
                         </div>
                     </li>
                 </ul>
 
-                {{!-- <div class="col-md-8">
-                    <table class="table mt-4 table-bordered border-secondary modelData">
-                        <tbody>
-                            <tr style="width: 10px">
-                                <td>Base Temp:</td>
-                                <td class="baseTemp"></td>
-                            </tr>
-                            <tr>
-                                <td>% Auto-Ignored:</td>
-                                <td class="autoIgnored"></td>
-                            </tr>
-                            <tr>
-                                <td>Slope:</td>
-                                <td class='slope'></td>
-                            </tr>
-                            <tr>
-                                <td>Intercept:</td>
-                                <td class='intercept'></td>
-                            </tr>
-                            <tr>
-                                <td>R-squared:</td>
-                                <td class='r2'></td>
-                            </tr>
-                            <tr>
-                                <td>Std Dev:</td>
-                                <td class="stdDev"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div> --}}
             </div>
         </div>
     </form>
     <div class="d-grid gap-2 mt-4">
         <button class="btn btn-primary apiGateway" type="button">Run Model</button>
     </div>
-    <div class="row mt-5 mb-5">
-        <div class="col-md-6">
-            <canvas id="myChart" width="100" height="100"></canvas>
-        </div>
-        <div class="col-md-6">
-            <canvas id="myChart2" width="100" height="100"></canvas>
-        </div>
-    </div>
     <table class="table mt-4 table-bordered border-secondary mb-3">
         <thead>
-        <tr>
-            <th>
-                Date
-            </th>
-            <th>
-                Temperature
-            </th>
-            <th>
-                HDD
-            </th>
-            <th>
-                Meter Reading
-            </th>
-            <th>
-                Expected
-            </th>
-            <th>
-                Copy
-            </th>
-            <th>
-                Replacement
-            </th>
-            <th>
-                Reason
-            </th>
-            <th>
-                Notes
-            </th>
-        </tr>
+            <tr>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Temperature
+                </th>
+                <th>
+                    HDD
+                </th>
+                <th>
+                    Meter Reading
+                </th>
+                <th>
+                    Expected
+                </th>
+                <th>
+                    Copy
+                </th>
+                <th>
+                    Replacement
+                </th>
+                <th>
+                    Reason
+                </th>
+                <th>
+                    Notes
+                </th>
+            </tr>
         </thead>
         <tbody class='text-end'>
             <tr>

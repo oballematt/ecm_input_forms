@@ -1,5 +1,5 @@
 
-const data = []
+let data = []
 $(document).ready(() => {
 
     const dateInput_1 = $('.datepicker');
@@ -85,42 +85,53 @@ $(document).ready(() => {
         }
     });
 
-    $('.search').on('click', function (e) {
-        e.preventDefault();
-        $('#overlay').fadeIn()
-        $(".rowData").find('td').remove();
-        $.ajax({
-            url: '/athenaData',
-            method: 'POST',
-            data: {
-                building_abbreviation: $('.buildings').val(),
-                commodity_tag: $(".commodity").val()
-            }
-        }).then(response => {
-            $(function () {
-                $('#overlay').fadeOut()
-                $("#tbl-1").removeAttr('style')
-                $.each(response.Items, function (i, item) {
-                    $('<tr class="rowData">').append(
-                        $('<td>').text(item.building_abbreviation),
-                        $('<td class="text-end meter">').text(item.meter),
-                        $('<td class="text-end buildingNum">').text(item.building_number),
-                        $('<td class="text-end commTag">').text(item.commodity_tag)
-                    ).appendTo($('#bodyData'));
-                });
+    // $('.search').on('click', function (e) {
+    //     e.preventDefault();
+    //     $('#overlay').fadeIn()
+    //     $(".rowData").find('td').remove();
+    //     $.ajax({
+    //         url: '/athenaData',
+    //         method: 'POST',
+    //         data: {
+    //             building_abbreviation: $('.buildings').val(),
+    //             commodity_tag: $(".commodity").val()
+    //         }
+    //     }).then(response => {
+    //         $(function () {
+    //             $('#overlay').fadeOut()
+    //             $("#tbl-1").removeAttr('style')
+    //             $.each(response.Items, function (i, item) {
+    //                 $('<tr class="rowData">').append(
+    //                     $('<td>').text(item.building_abbreviation),
+    //                     $('<td class="text-end meter">').text(item.meter),
+    //                     $('<td class="text-end buildingNum">').text(item.building_number),
+    //                     $('<td class="text-end commTag">').text(item.commodity_tag)
+    //                 ).appendTo($('#bodyData'));
+    //             });
 
-                $(".rowData").on("click", function () {
+    //             $(".rowData").on("click", function () {
 
-                    const $tds = $(this).find("td")
-                    $.each($tds, function () {
-                        data.push($(this).text())
-                        $(this).css('background-color', 'green')
-                    })
-                })
+    //                 const $tds = $(this).find("td")
+    //                 $.each($tds, function () {
+    //                     data.push($(this).text())
+    //                     $(this).css('background-color', 'green')
+    //                 })
+    //             })
 
-            });
+    //         });
 
+    //     })
+    // })
+
+    $(".rowData").on("click", function () {
+        const $tds = $(this).find("td")
+        data = []
+        $(this).css('background-color', 'white')
+        $.each($tds, function () {
+            data.push($(this).text().trim())
+            $(this).css('background-color', 'green')
         })
+        console.log(data)
     })
 
     $(".apiGateway").on("click", function (e) {
@@ -149,6 +160,7 @@ $(document).ready(() => {
                 const intercept = parseFloat(response.model.intercept).toFixed(2)
                 const r2 = parseFloat(response.model.max_train_r2).toFixed(2)
                 const stdDev = parseFloat(response.model.std.train).toFixed(2)
+                const meterVariable = response.model.x.toUpperCase()
                 console.log(response)
                 $('.baseTemp').html(response.model.base_temperature)
                 $('.autoIgnored').html(autoIgnored + '%')
@@ -157,6 +169,7 @@ $(document).ready(() => {
                 $('.r2').html(r2)
                 $('.stdDev').html(stdDev)
                 $('.modelData').show()
+                $('.meterVariable').html(`Variable: ${meterVariable}`)
             })
         }
 
