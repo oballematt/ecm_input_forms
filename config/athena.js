@@ -42,11 +42,7 @@ module.exports = {
 
             let allResults = await athenaExpress.query('SELECT * FROM building_meter_metadata ORDER BY building_abbreviation')
 
-            return res.render('cleaning', {
-                allResults,
-                layout: 'datacleaning'
-            })
-            
+            return res.json(allResults)
         } catch (error) {
             console.error(error.message)
         }

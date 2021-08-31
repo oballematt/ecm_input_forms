@@ -123,16 +123,38 @@ $(document).ready(() => {
     //     })
     // })
 
-    $(".rowData").on("click", function () {
-        const $tds = $(this).find("td")
-        data = []
-        $(this).css('background-color', 'white')
-        $.each($tds, function () {
-            data.push($(this).text().trim())
-            $(this).css('background-color', 'green')
-        })
-        console.log(data)
-    })
+    $('#table').find('tr').click( function(){
+        var dataIndex = $(this).index();
+     
+        var arrJS = [];
+        $("[data-index="+ dataIndex +"]").children('td').each(function() {
+          arrJS.push( $(this).html() );
+          //alert("Row ["+ dataIndex +"] -> " + $(this).html());
+        });
+        alert( arrJS );
+     });
+
+    // $("#table").on("click", function() {
+    //     let $body = $(this).find('tbody')
+    //     let $row = $body.find('tr')
+
+    //     const all = $('td', $row).map(function() {
+    //       return $(this).text().trim();
+    //     }).get()
+    //     data.push(all);
+    //     console.log(all)
+    //   })
+
+    // $('#table').on('click', function(){
+    //     let $ths = $(this).find("tr");
+    //     var dataIndex = $ths.index();
+     
+    //     var arrJS = [];
+    //     $("[data-index="+ dataIndex +"]").children('td').each(function() {
+    //       arrJS.push( $(this).html() );
+    //     });
+    //     console.log( arrJS );
+    //  });
 
     $(".apiGateway").on("click", function (e) {
 

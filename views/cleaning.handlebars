@@ -6,72 +6,25 @@
 <div class="row">
     <form action="/datacleaning" method="POST">
         <div class="row">
-            <div class="col-md-4 mt-5">
+            <div class="col-md-12 mt-4">
                 {{#each errors}}
                 <div>{{text}}</div>
                 {{/each}}
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <p class="nav-link active" aria-current="page">Filter By:</p>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <p class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" role="button"
-                            aria-expanded="false">Building:</p>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Separated link</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <p class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" role="button"
-                            aria-expanded="false">Commodity:</p>
-                        <ul class="dropdown-menu">
-                            <li class="dropdown-item">A</li>
-                            <li class="dropdown-item">E</li>
-                            <li class="dropdown-item">H</li>
-                            <li class="dropdown-item">L</li>
-                            <li class="dropdown-item">W</li>
-                        </ul>
-                    </li>
-                </ul>
-                <div class="tableContainer">
-                    <table class="table table-hover table-bordered border-secondary">
-
-                        <thead class='table-dark'>
-                            <tr>
-                                <th class="header" scope="col">Building</th>
-                                <th class="header text-end" scope="col">Meter Name</th>
-                                <th class="header text-end" scope="col">Building Number</th>
-                                <th class="header text-end" scope="col">Commodity</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#each allResults.Items}}
-                            <tr class='rowData'>
-                                <td>
-                                    {{building_abbreviation}}
-                                </td>
-                                <td class="text-end">
-                                    {{meter}}
-                                </td>
-                                <td class="text-end">
-                                    {{building_number}}
-                                </td>
-                                <td class="text-end">
-                                    {{commodity_tag}}
-                                </td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                </div>
+                <table id="table" data-toggle="table" data-height="460" data-ajax="ajaxRequest" data-search="true"
+                    data-pagination="true">
+                    <thead>
+                        <tr class="rowData">
+                            <th data-field="building_abbreviation">Building</th>
+                            <th data-field="meter">Meter Name</th>
+                            <th data-field="building_number">Building Number</th>
+                            <th data-field="commodity_tag">Commodity</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
-            <div class="col-md-4 mt-5">
+        </div>
+        <div class="row">
+            <div class="col-md-6 mt-5">
                 <div class="input-group flex-nowrap">
                     <span class="input-group-text" id="addon-wrapping">Model Start Date:</span>
                     <input id="modelStart" type="text" class="form-control datepicker modelStart"
@@ -101,7 +54,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-md-4 mt-5">
+            <div class="col-md-6 mt-5">
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
@@ -140,7 +93,6 @@
                         </div>
                     </li>
                 </ul>
-
             </div>
         </div>
     </form>

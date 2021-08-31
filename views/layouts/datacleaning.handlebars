@@ -25,6 +25,15 @@
 <body class='container d-flex'>
 
     {{{body}}}
+    <script>
+        // your custom ajax request here
+        function ajaxRequest(params) {
+            var url = '/athenaData'
+            $.get(url + '?' + $.param(params.data)).then(function (res) {
+                params.success(res.Items)
+            })
+        }
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
         referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
