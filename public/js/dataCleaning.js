@@ -87,17 +87,37 @@ $(document).ready(() => {
 
     var $table = $('#table')
     var $button = $('#button')
+    var $button2 = $('#button2')
 
     $(function () {
-        $button.click(function () {
-            data.push($table.bootstrapTable('getSelections'))
-            console.log(data[0][0])
-            $('.disabled').attr('disabled', false)
+        let isChecked = false
+        $table.on('change', $('input[name="btSelectItem"]'), function () {
+            isChecked = true;
         })
+        $button.click(function () {
+            if (isChecked === false) {
+                alert('Please select a meter')
+            } else if (data.length > 0) {
+                alert('Please select only one meter')
+            }
+            else {
+                data.push($table.bootstrapTable('getSelections'))
+                console.log(data)
+                $('.disabled').attr('disabled', false)
+                $('.meterSelection').html(data[0][0].meter)
+            }
+        })
+        $button2.click(function () {
+            $table.bootstrapTable('uncheckAll')
+            data = []
+            $('.meterSelection').html('--')
+            $('.disabled').attr('disabled', true)
+            isChecked = false
+        })
+
     })
 
     $(".apiGateway").on("click", function (e) {
-
         e.preventDefault();
         const modelStart = $('.modelStart').val()
         const modelEnd = $('.modelEnd').val()
@@ -108,7 +128,7 @@ $(document).ready(() => {
             $('.modelStart').css('border', '1.5px solid red').text('Please enter a date for Model Start')
         } else {
             $.ajax({
-                url: `https://mvx8fq0n9l.execute-api.us-east-1.amazonaws.com/model?building_number=${data[0][0].building_number}&commodity_tag=${data[0][0].commodity_tag}&meter=${data[0][0].meter}&train_start=${modelStart}&train_end=${modelEnd}&analysis_start=${analysisStart}&analysis_end=${analysisEnd}`,
+                url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/model?building_number=${data[0][0].building_number}&commodity_tag=${data[0][0].commodity_tag}&meter=${data[0][0].meter}&train_start=${modelStart}&train_end=${modelEnd}&analysis_start=${analysisStart}&analysis_end=${analysisEnd}`,
                 method: 'GET',
                 error: function (xhr) {
                     if (xhr.status === 503) {
@@ -137,43 +157,6 @@ $(document).ready(() => {
         }
 
     })
-
-
-
-    $(".searchBuildings").on("click", function (e) {
-        e.preventDefault();
-        // let errors = []
-        // isInvalid = ['hello', 'goodbye']
-        $('#options').find('option').remove()
-        let data = {
-            steward: $('.steward').val()
-        }
-        // if ($(".steward").val().includes('hello')) {
-        //     errors.push({ text: 'Invalid Entry' })
-        // }
-        // if (errors.length > 0) {
-        //     for (var item in errors) {
-        //         $("#errors").append("<p style=\"border: 1px solid black; font-weight: bold\">" + errors[item].text + '</p>');
-        //     };
-        // } else {
-        $.ajax({
-            url: '/building',
-            method: 'POST',
-            data: data
-        }).then(response => {
-            $("#options").append(
-                response.map(function (data) {
-                    return $('<option/>', {
-                        value: data.building,
-                        text: data.building
-                    })
-                })
-            )
-        })
-        // }
-    })
-
-
 
 })
 
