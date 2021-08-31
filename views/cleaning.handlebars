@@ -3,47 +3,54 @@
     <br />
     Getting data, this will take a few seconds
 </div>
+
 <div class="row">
     <form action="/datacleaning" method="POST">
         <div class="row">
             <div class="col-md-12 mt-4">
+                <h4>*Select a meter from the table and click "Confirm Meter Selection" below to begin</h4>
                 {{#each errors}}
                 <div>{{text}}</div>
                 {{/each}}
-                <table id="table" data-toggle="table" data-height="460" data-ajax="ajaxRequest" data-search="true"
-                    data-pagination="true">
+                <div id="toolbar">
+                </div>
+                <table id="table" data-toggle="table" data-toolbar="#toolbar" data-height="460" data-ajax="ajaxRequest"
+                    data-search="true" data-pagination="true">
                     <thead>
                         <tr class="rowData">
+                            <th id="button" data-field="state" data-radio="true"></th>
                             <th data-field="building_abbreviation">Building</th>
                             <th data-field="meter">Meter Name</th>
                             <th data-field="building_number">Building Number</th>
                             <th data-field="commodity_tag">Commodity</th>
+
                         </tr>
                     </thead>
                 </table>
+                <button type="button" id="button" class="btn btn-success mt-3">Confirm Meter Selection</button>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 mt-5">
                 <div class="input-group flex-nowrap">
                     <span class="input-group-text" id="addon-wrapping">Model Start Date:</span>
-                    <input id="modelStart" type="text" class="form-control datepicker modelStart"
+                    <input disabled='true' id="modelStart" type="text" class="form-control datepicker disabled modelStart"
                         placeholder="yyyy/mm/dd" aria-label="Model Start Date" aria-describedby="addon-wrapping">
                 </div>
                 <div class="input-group flex-nowrap mt-3">
                     <span class="input-group-text" id="addon-wrapping">Model End Date:</span>
-                    <input type="text" class="form-control datepicker modelEnd" placeholder="yyyy/mm/dd"
+                    <input disabled="true" type="text" class="form-control datepicker disabled modelEnd" placeholder="yyyy/mm/dd"
                         aria-label="Model End Date" aria-describedby="addon-wrapping">
                 </div>
                 <div class="input-group flex-nowrap mt-5">
                     <span class="input-group-text" id="addon-wrapping">Analysis Start Date:</span>
-                    <input type="text" class="form-control datepicker analysisStart" placeholder="yyyy/mm/dd"
-                        aria-label="Analysis Start Date" aria-describedby="addon-wrapping">
+                    <input disabled="true" type="text" class="form-control datepicker disabled analysisStart"
+                        placeholder="yyyy/mm/dd" aria-label="Analysis Start Date" aria-describedby="addon-wrapping">
                 </div>
                 <div class="input-group flex-nowrap mt-3">
                     <span class="input-group-text" id="addon-wrapping">Analysis End Date:</span>
-                    <input type="text" class="form-control datepicker analysisEnd" placeholder="yyyy/mm/dd"
-                        aria-label="Analysis End Date" aria-describedby="addon-wrapping">
+                    <input disabled="true" type="text" class="form-control datepicker disabled analysisEnd"
+                        placeholder="yyyy/mm/dd" aria-label="Analysis End Date" aria-describedby="addon-wrapping">
                 </div>
                 <ul class="list-group mt-5">
                     <li class="list-group-item d-flex justify-content-between align-items-start">

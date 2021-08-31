@@ -85,76 +85,16 @@ $(document).ready(() => {
         }
     });
 
-    // $('.search').on('click', function (e) {
-    //     e.preventDefault();
-    //     $('#overlay').fadeIn()
-    //     $(".rowData").find('td').remove();
-    //     $.ajax({
-    //         url: '/athenaData',
-    //         method: 'POST',
-    //         data: {
-    //             building_abbreviation: $('.buildings').val(),
-    //             commodity_tag: $(".commodity").val()
-    //         }
-    //     }).then(response => {
-    //         $(function () {
-    //             $('#overlay').fadeOut()
-    //             $("#tbl-1").removeAttr('style')
-    //             $.each(response.Items, function (i, item) {
-    //                 $('<tr class="rowData">').append(
-    //                     $('<td>').text(item.building_abbreviation),
-    //                     $('<td class="text-end meter">').text(item.meter),
-    //                     $('<td class="text-end buildingNum">').text(item.building_number),
-    //                     $('<td class="text-end commTag">').text(item.commodity_tag)
-    //                 ).appendTo($('#bodyData'));
-    //             });
+    var $table = $('#table')
+    var $button = $('#button')
 
-    //             $(".rowData").on("click", function () {
-
-    //                 const $tds = $(this).find("td")
-    //                 $.each($tds, function () {
-    //                     data.push($(this).text())
-    //                     $(this).css('background-color', 'green')
-    //                 })
-    //             })
-
-    //         });
-
-    //     })
-    // })
-
-    $('#table').find('tr').click( function(){
-        var dataIndex = $(this).index();
-     
-        var arrJS = [];
-        $("[data-index="+ dataIndex +"]").children('td').each(function() {
-          arrJS.push( $(this).html() );
-          //alert("Row ["+ dataIndex +"] -> " + $(this).html());
-        });
-        alert( arrJS );
-     });
-
-    // $("#table").on("click", function() {
-    //     let $body = $(this).find('tbody')
-    //     let $row = $body.find('tr')
-
-    //     const all = $('td', $row).map(function() {
-    //       return $(this).text().trim();
-    //     }).get()
-    //     data.push(all);
-    //     console.log(all)
-    //   })
-
-    // $('#table').on('click', function(){
-    //     let $ths = $(this).find("tr");
-    //     var dataIndex = $ths.index();
-     
-    //     var arrJS = [];
-    //     $("[data-index="+ dataIndex +"]").children('td').each(function() {
-    //       arrJS.push( $(this).html() );
-    //     });
-    //     console.log( arrJS );
-    //  });
+    $(function () {
+        $button.click(function () {
+            data.push($table.bootstrapTable('getSelections'))
+            console.log(data[0][0])
+            $('.disabled').attr('disabled', false)
+        })
+    })
 
     $(".apiGateway").on("click", function (e) {
 
@@ -168,7 +108,7 @@ $(document).ready(() => {
             $('.modelStart').css('border', '1.5px solid red').text('Please enter a date for Model Start')
         } else {
             $.ajax({
-                url: `https://mvx8fq0n9l.execute-api.us-east-1.amazonaws.com/model?building_number=${data[2]}&commodity_tag=${data[3]}&meter=${data[1]}&train_start=${modelStart}&train_end=${modelEnd}&analysis_start=${analysisStart}&analysis_end=${analysisEnd}`,
+                url: `https://mvx8fq0n9l.execute-api.us-east-1.amazonaws.com/model?building_number=${data[0][0].building_number}&commodity_tag=${data[0][0].commodity_tag}&meter=${data[0][0].meter}&train_start=${modelStart}&train_end=${modelEnd}&analysis_start=${analysisStart}&analysis_end=${analysisEnd}`,
                 method: 'GET',
                 error: function (xhr) {
                     if (xhr.status === 503) {
@@ -192,6 +132,7 @@ $(document).ready(() => {
                 $('.stdDev').html(stdDev)
                 $('.modelData').show()
                 $('.meterVariable').html(`Variable: ${meterVariable}`)
+                data = []
             })
         }
 
