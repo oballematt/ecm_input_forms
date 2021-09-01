@@ -128,7 +128,7 @@ $(document).ready(() => {
             $('.modelStart').css('border', '1.5px solid red').text('Please enter a date for Model Start')
         } else {
             $.ajax({
-                url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/model?building_number=${data[0][0].building_number}&commodity_tag=${data[0][0].commodity_tag}&meter=${data[0][0].meter}&train_start=${modelStart}&train_end=${modelEnd}&analysis_start=${analysisStart}&analysis_end=${analysisEnd}`,
+                url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/model?building_number=${data[0][0].building_number}&commodity_tag=${data[0][0].commodity_tag}&meter=${data[0][0].meter}&train_start=${modelStart}&train_end=${modelEnd}&analysis_start=${analysisStart}&analysis_end=${analysisEnd}`,
                 method: 'GET',
                 error: function (xhr) {
                     if (xhr.status === 503) {
@@ -137,14 +137,15 @@ $(document).ready(() => {
                     }
                 }
             }).then(response => {
-                const autoIgnored = parseFloat(response.model.auto_ignored_percentage).toFixed(0);
-                const slope = parseFloat(response.model.slope).toFixed(2);
-                const intercept = parseFloat(response.model.intercept).toFixed(2)
-                const r2 = parseFloat(response.model.max_train_r2).toFixed(2)
-                const stdDev = parseFloat(response.model.std.train).toFixed(2)
-                const meterVariable = response.model.x.toUpperCase()
-                console.log(response)
-                $('.baseTemp').html(response.model.base_temperature)
+                const obj = JSON.parse(response.body)
+                console.log(obj)
+                const autoIgnored = parseFloat(obj.model.auto_ignored_percentage).toFixed(0);
+                const slope = parseFloat(obj.model.slope).toFixed(2);
+                const intercept = parseFloat(obj.model.intercept).toFixed(2)
+                const r2 = parseFloat(obj.model.max_train_r2).toFixed(2)
+                const stdDev = parseFloat(obj.model.std.train).toFixed(2)
+                const meterVariable = obj.model.x.toUpperCase()
+                $('.baseTemp').html(obj.model.base_temperature)
                 $('.autoIgnored').html(autoIgnored + '%')
                 $('.slope').html(slope)
                 $('.intercept').html(intercept)
