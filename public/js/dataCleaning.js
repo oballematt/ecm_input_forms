@@ -25,25 +25,17 @@ $(document).ready(() => {
 
     let ctx = document.getElementById('myChart').getContext('2d');
     let myChart = new Chart(ctx, {
-        type: 'scatter',
         data: {
             datasets: [{
-                label: 'Scatter Dataset',
-                data: [{
-                    x: -10,
-                    y: 0
-                }, {
-                    x: 0,
-                    y: 10
-                }, {
-                    x: 10,
-                    y: 5
-                }, {
-                    x: 0.5,
-                    y: 5.5
-                }],
-                backgroundColor: 'rgb(255, 99, 132)'
+                type: 'bar',
+                label: 'Bar Dataset',
+                data: [10, 20, 30, 40]
+            }, {
+                type: 'line',
+                label: 'Line Dataset',
+                data: [50, 50, 50, 50],
             }],
+            labels: ['January', 'February', 'March', 'April']
         },
         options: {
             scales: {
@@ -102,7 +94,6 @@ $(document).ready(() => {
             }
             else {
                 data.push($table.bootstrapTable('getSelections'))
-                console.log(data)
                 $('.disabled').attr('disabled', false)
                 $('.meterSelection').html(data[0][0].meter)
             }
@@ -123,39 +114,35 @@ $(document).ready(() => {
         const modelEnd = $('.modelEnd').val()
         const analysisStart = $('.analysisStart').val()
         const analysisEnd = $('.analysisEnd').val()
-        console.log(modelStart)
-        if (!modelStart) {
-            $('.modelStart').css('border', '1.5px solid red').text('Please enter a date for Model Start')
-        } else {
-            $.ajax({
-                url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/model?building_number=${data[0][0].building_number}&commodity_tag=${data[0][0].commodity_tag}&meter=${data[0][0].meter}&train_start=${modelStart}&train_end=${modelEnd}&analysis_start=${analysisStart}&analysis_end=${analysisEnd}`,
-                method: 'GET',
-                error: function (xhr) {
-                    if (xhr.status === 503) {
+        $.ajax({
+            url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/model?building_number=${data[0][0].building_number}&commodity_tag=${data[0][0].commodity_tag}&meter=${data[0][0].meter}&train_start=${modelStart}&train_end=${modelEnd}&analysis_start=${analysisStart}&analysis_end=${analysisEnd}`,
+            method: 'GET',
+            error: function (xhr) {
+                if (xhr.status === 503) {
 
-                        $.ajax(this)
-                    }
+                    $.ajax(this)
                 }
-            }).then(response => {
-                const obj = JSON.parse(response.body)
-                console.log(obj)
-                const autoIgnored = parseFloat(obj.model.auto_ignored_percentage).toFixed(0);
-                const slope = parseFloat(obj.model.slope).toFixed(2);
-                const intercept = parseFloat(obj.model.intercept).toFixed(2)
-                const r2 = parseFloat(obj.model.max_train_r2).toFixed(2)
-                const stdDev = parseFloat(obj.model.std.train).toFixed(2)
-                const meterVariable = obj.model.x.toUpperCase()
-                $('.baseTemp').html(obj.model.base_temperature)
-                $('.autoIgnored').html(autoIgnored + '%')
-                $('.slope').html(slope)
-                $('.intercept').html(intercept)
-                $('.r2').html(r2)
-                $('.stdDev').html(stdDev)
-                $('.modelData').show()
-                $('.meterVariable').html(`Variable: ${meterVariable}`)
-                data = []
-            })
-        }
+            }
+        }).then(response => {
+            const obj = JSON.parse(response.body)
+            console.log(obj)
+            const autoIgnored = parseFloat(obj.model.auto_ignored_percentage).toFixed(0);
+            const slope = parseFloat(obj.model.slope).toFixed(2);
+            const intercept = parseFloat(obj.model.intercept).toFixed(2)
+            const r2 = parseFloat(obj.model.max_train_r2).toFixed(2)
+            const stdDev = parseFloat(obj.model.std.train).toFixed(2)
+            const meterVariable = obj.model.x.toUpperCase()
+            $('.baseTemp').html(obj.model.base_temperature)
+            $('.autoIgnored').html(autoIgnored + '%')
+            $('.slope').html(slope)
+            $('.intercept').html(intercept)
+            $('.r2').html(r2)
+            $('.stdDev').html(stdDev)
+            $('.modelData').show()
+            $('.meterVariable').html(`Variable: ${meterVariable}`)
+            data = []
+            console.log(data)
+        })
 
     })
 

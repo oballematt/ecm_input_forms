@@ -27,7 +27,6 @@
 
     {{{body}}}
     <script>
-        // your custom ajax request here
         function ajaxRequest(params) {
             var url = '/athenaDataMeters'
             $.get(url + '?' + $.param(params.data)).then(function (res) {
