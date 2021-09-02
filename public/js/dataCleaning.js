@@ -9,6 +9,10 @@ $(document).ready(() => {
         dateFormat: 'yy-mm-dd',
     });
 
+    $('.load').on('click', function () {
+        $('#overlay').fadeIn()
+    });
+
     $('.modelStart').on('change', function () {
         let date2 = $(this).datepicker('getDate')
         date2.setDate(date2.getDate() + 364)
@@ -23,59 +27,6 @@ $(document).ready(() => {
         $('.analysisEnd').datepicker('setDate', date4)
     })
 
-    let ctx = document.getElementById('myChart').getContext('2d');
-    let myChart = new Chart(ctx, {
-        data: {
-            datasets: [{
-                type: 'bar',
-                label: 'Bar Dataset',
-                data: [10, 20, 30, 40]
-            }, {
-                type: 'line',
-                label: 'Line Dataset',
-                data: [50, 50, 50, 50],
-            }],
-            labels: ['January', 'February', 'March', 'April']
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-
-    let ctx2 = document.getElementById('myChart2').getContext('2d');
-    let myChart2 = new Chart(ctx2, {
-        type: 'scatter',
-        data: {
-            datasets: [{
-                label: 'Scatter Dataset',
-                data: [{
-                    x: -10,
-                    y: 0
-                }, {
-                    x: 0,
-                    y: 10
-                }, {
-                    x: 10,
-                    y: 5
-                }, {
-                    x: 0.5,
-                    y: 5.5
-                }],
-                backgroundColor: 'rgb(255, 99, 132)'
-            }],
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
 
     var $table = $('#table')
     var $button = $('#button')
@@ -110,22 +61,33 @@ $(document).ready(() => {
 
     $(".apiGateway").on("click", function (e) {
         e.preventDefault();
+        modelApi()
+
+    })
+
+    const modelApi = function () {
         const modelStart = $('.modelStart').val()
         const modelEnd = $('.modelEnd').val()
         const analysisStart = $('.analysisStart').val()
         const analysisEnd = $('.analysisEnd').val()
+
         $.ajax({
             url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/model?building_number=${data[0][0].building_number}&commodity_tag=${data[0][0].commodity_tag}&meter=${data[0][0].meter}&train_start=${modelStart}&train_end=${modelEnd}&analysis_start=${analysisStart}&analysis_end=${analysisEnd}`,
             method: 'GET',
             error: function (xhr) {
-                if (xhr.status === 503) {
-
-                    $.ajax(this)
+                if (xhr.status === 504) {
+                    modelApi()
+                    $('#overlay').text('Server not responding, trying your search again')
+                }
+                if (xhr.status === 502) {
+                    alert('No data was returned for your current search criteria. ')
+                    $('#overlay').fadeOut()
                 }
             }
         }).then(response => {
             const obj = JSON.parse(response.body)
             console.log(obj)
+            $('#overlay').fadeOut()
             const autoIgnored = parseFloat(obj.model.auto_ignored_percentage).toFixed(0);
             const slope = parseFloat(obj.model.slope).toFixed(2);
             const intercept = parseFloat(obj.model.intercept).toFixed(2)
@@ -140,11 +102,87 @@ $(document).ready(() => {
             $('.stdDev').html(stdDev)
             $('.modelData').show()
             $('.meterVariable').html(`Variable: ${meterVariable}`)
+            $('.tableData').removeAttr('style')
             data = []
-            console.log(data)
-        })
 
-    })
+            let ctx = document.getElementById('myChart').getContext('2d');
+            let myChart = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Scatter Dataset',
+                        data: [{
+                            x: 35.0,
+                            y: 0
+                        }, {
+                            x: 45.0,
+                            y: 2000
+                        }, {
+                            x: 55.0,
+                            y: 4000
+                        }, {
+                            x: 65.0,
+                            y: 6000
+                        }, {
+                            x: 75.0,
+                            y: 8000
+                        },
+                        {
+                            x: 85.0,
+                            y: 10000
+                        }, {
+                            x: 95.0,
+                            y: 12000
+                        }, {
+                            y: 14000
+                        }, {
+                            y: 16000
+                        },
+                        ],
+                        backgroundColor: 'rgb(255, 99, 132)'
+                    }],
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            let ctx2 = document.getElementById('myChart2').getContext('2d');
+            let myChart2 = new Chart(ctx2, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Scatter Dataset',
+                        data: [{
+                            x: -10,
+                            y: 0
+                        }, {
+                            x: 0,
+                            y: 10
+                        }, {
+                            x: 10,
+                            y: 5
+                        }, {
+                            x: 0.5,
+                            y: 5.5
+                        }],
+                        backgroundColor: 'rgb(255, 99, 132)'
+                    }],
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        })
+    }
 
 })
 

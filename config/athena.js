@@ -40,7 +40,7 @@ module.exports = {
     getAllMeters: async (req, res) => {
         try {
 
-            let allResults = await athenaExpress.query('SELECT * FROM building_meter_metadata ORDER BY building_abbreviation')
+            let allResults = await athenaExpress.query('SELECT * FROM building_meter_metadata ORDER BY building_abbreviation, commodity_tag')
 
             return res.json(allResults)
             
