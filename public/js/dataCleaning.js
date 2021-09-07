@@ -29,6 +29,7 @@ $(document).ready(() => {
 
 
     var $table = $('#table')
+    var $table2 = $('#table2')
     var $button = $('#button')
     var $button2 = $('#button2')
 
@@ -80,13 +81,16 @@ $(document).ready(() => {
                     $('.overlayMessage').text('Server not responding, trying your search again. Please do not refresh the page')
                 }
                 if (xhr.status === 502) {
-                    alert('No data was returned for your current search criteria. ')
                     $('#overlay').fadeOut()
+                    alert('No data was returned for your current search criteria. Please try selecting a different meter or a different date range')
                 }
             }
         }).then(response => {
             const obj = JSON.parse(response.body)
             console.log(obj)
+            const rawValue = obj.model.data.raw_value.slice(365)
+            const date = obj.model.data.timestamp.slice(365)
+            $('.overlayMessage').text('Getting data, this will take a few seconds')
             $('#overlay').fadeOut()
             const autoIgnored = parseFloat(obj.model.auto_ignored_percentage).toFixed(0);
             const slope = parseFloat(obj.model.slope).toFixed(2);
@@ -110,33 +114,101 @@ $(document).ready(() => {
                 type: 'scatter',
                 data: {
                     datasets: [{
-                        label: 'Scatter Dataset',
+                        label: 'Meter VS. Temp',
                         data: [{
-                            x: 35.0,
-                            y: 0
+                            x: obj.model.data.average_dry_bulb_temperature[365],
+                            y: obj.model.data.raw_value[365]
                         }, {
-                            x: 45.0,
-                            y: 2000
+                            x: obj.model.data.average_dry_bulb_temperature[366],
+                            y: obj.model.data.raw_value[366]
                         }, {
-                            x: 55.0,
-                            y: 4000
+                            x: obj.model.data.average_dry_bulb_temperature[367],
+                            y: obj.model.data.raw_value[367]
                         }, {
-                            x: 65.0,
-                            y: 6000
+                            x: obj.model.data.average_dry_bulb_temperature[368],
+                            y: obj.model.data.raw_value[368]
                         }, {
-                            x: 75.0,
-                            y: 8000
+                            x: obj.model.data.average_dry_bulb_temperature[369],
+                            y: obj.model.data.raw_value[369]
                         },
                         {
-                            x: 85.0,
-                            y: 10000
+                            x: obj.model.data.average_dry_bulb_temperature[370],
+                            y: obj.model.data.raw_value[370]
                         }, {
-                            x: 95.0,
-                            y: 12000
+                            x: obj.model.data.average_dry_bulb_temperature[371],
+                            y: obj.model.data.raw_value[371]
                         }, {
-                            y: 14000
+                            x: obj.model.data.average_dry_bulb_temperature[372],
+                            y: obj.model.data.raw_value[372]
                         }, {
-                            y: 16000
+                            x: obj.model.data.average_dry_bulb_temperature[373],
+                            y: obj.model.data.raw_value[373]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[374],
+                            y: obj.model.data.raw_value[374]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[375],
+                            y: obj.model.data.raw_value[375]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[376],
+                            y: obj.model.data.raw_value[376]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[377],
+                            y: obj.model.data.raw_value[377]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[378],
+                            y: obj.model.data.raw_value[378]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[379],
+                            y: obj.model.data.raw_value[379]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[380],
+                            y: obj.model.data.raw_value[380]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[381],
+                            y: obj.model.data.raw_value[381]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[382],
+                            y: obj.model.data.raw_value[382]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[383],
+                            y: obj.model.data.raw_value[383]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[384],
+                            y: obj.model.data.raw_value[384]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[385],
+                            y: obj.model.data.raw_value[385]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[386],
+                            y: obj.model.data.raw_value[386]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[387],
+                            y: obj.model.data.raw_value[387]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[388],
+                            y: obj.model.data.raw_value[388]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[389],
+                            y: obj.model.data.raw_value[389]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[390],
+                            y: obj.model.data.raw_value[390]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[391],
+                            y: obj.model.data.raw_value[391]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[392],
+                            y: obj.model.data.raw_value[392]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[393],
+                            y: obj.model.data.raw_value[393]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[394],
+                            y: obj.model.data.raw_value[394]
+                        },{
+                            x: obj.model.data.average_dry_bulb_temperature[395],
+                            y: obj.model.data.raw_value[395]
                         },
                         ],
                         backgroundColor: 'rgb(255, 99, 132)'
@@ -156,20 +228,102 @@ $(document).ready(() => {
                 type: 'scatter',
                 data: {
                     datasets: [{
-                        label: 'Scatter Dataset',
+                        label: 'Meter VS. Date',
                         data: [{
-                            x: -10,
-                            y: 0
+                            x: obj.model.data.timestamp[365],
+                            y: obj.model.data.raw_value[365]
                         }, {
-                            x: 0,
-                            y: 10
+                            x: obj.model.data.timestamp[366],
+                            y: obj.model.data.raw_value[366]
                         }, {
-                            x: 10,
-                            y: 5
+                            x: obj.model.data.timestamp[367],
+                            y: obj.model.data.raw_value[367]
                         }, {
-                            x: 0.5,
-                            y: 5.5
-                        }],
+                            x: obj.model.data.timestamp[368],
+                            y: obj.model.data.raw_value[368]
+                        }, {
+                            x: obj.model.data.timestamp[369],
+                            y: obj.model.data.raw_value[369]
+                        },{
+                            x: obj.model.data.timestamp[370],
+                            y: obj.model.data.raw_value[370]
+                        }, {
+                            x: obj.model.data.timestamp[371],
+                            y: obj.model.data.raw_value[371]
+                        }, {
+                            x: obj.model.data.timestamp[372],
+                            y: obj.model.data.raw_value[372]
+                        }, {
+                            x: obj.model.data.timestamp[373],
+                            y: obj.model.data.raw_value[373]
+                        },{
+                            x: obj.model.data.timestamp[374],
+                            y: obj.model.data.raw_value[374]
+                        },{
+                            x: obj.model.data.timestamp[375],
+                            y: obj.model.data.raw_value[375]
+                        },{
+                            x: obj.model.data.timestamp[376],
+                            y: obj.model.data.raw_value[376]
+                        },{
+                            x: obj.model.data.timestamp[377],
+                            y: obj.model.data.raw_value[377]
+                        },{
+                            x: obj.model.data.timestamp[378],
+                            y: obj.model.data.raw_value[378]
+                        },{
+                            x: obj.model.data.timestamp[379],
+                            y: obj.model.data.raw_value[379]
+                        },{
+                            x: obj.model.data.timestamp[380],
+                            y: obj.model.data.raw_value[380]
+                        },{
+                            x: obj.model.data.timestamp[381],
+                            y: obj.model.data.raw_value[381]
+                        },{
+                            x: obj.model.data.timestamp[382],
+                            y: obj.model.data.raw_value[382]
+                        },{
+                            x: obj.model.data.timestamp[383],
+                            y: obj.model.data.raw_value[383]
+                        },{
+                            x: obj.model.data.timestamp[384],
+                            y: obj.model.data.raw_value[384]
+                        },{
+                            x: obj.model.data.timestamp[385],
+                            y: obj.model.data.raw_value[385]
+                        },{
+                            x: obj.model.data.timestamp[386],
+                            y: obj.model.data.raw_value[386]
+                        },{
+                            x: obj.model.data.timestamp[387],
+                            y: obj.model.data.raw_value[387]
+                        },{
+                            x: obj.model.data.timestamp[388],
+                            y: obj.model.data.raw_value[388]
+                        },{
+                            x: obj.model.data.timestamp[389],
+                            y: obj.model.data.raw_value[389]
+                        },{
+                            x: obj.model.data.timestamp[390],
+                            y: obj.model.data.raw_value[390]
+                        },{
+                            x: obj.model.data.timestamp[391],
+                            y: obj.model.data.raw_value[391]
+                        },{
+                            x: obj.model.data.timestamp[392],
+                            y: obj.model.data.raw_value[392]
+                        },{
+                            x: obj.model.data.timestamp[393],
+                            y: obj.model.data.raw_value[393]
+                        },{
+                            x: obj.model.data.timestamp[394],
+                            y: obj.model.data.raw_value[394]
+                        },{
+                            x: obj.model.data.timestamp[395],
+                            y: obj.model.data.raw_value[395]
+                        },
+                        ],
                         backgroundColor: 'rgb(255, 99, 132)'
                     }],
                 },
@@ -181,6 +335,229 @@ $(document).ready(() => {
                     }
                 }
             });
+
+            $(function(){
+                let data = [
+                    {
+                        'date': obj.model.data.timestamp[365],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[365],
+                        'hdd': parseFloat(obj.model.data.degree_day[365]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[365],
+                        'expected': parseFloat(obj.model.data.predicted_value[365]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[366],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[366],
+                        'hdd': parseFloat(obj.model.data.degree_day[366]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[366],
+                        'expected': parseFloat(obj.model.data.predicted_value[366]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[367],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[367],
+                        'hdd': parseFloat(obj.model.data.degree_day[367]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[367],
+                        'expected': parseFloat(obj.model.data.predicted_value[367]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[368],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[368],
+                        'hdd': parseFloat(obj.model.data.degree_day[368]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[368],
+                        'expected': parseFloat(obj.model.data.predicted_value[368]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[369],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[369],
+                        'hdd': parseFloat(obj.model.data.degree_day[369]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[369],
+                        'expected': parseFloat(obj.model.data.predicted_value[369]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[370],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[370],
+                        'hdd': parseFloat(obj.model.data.degree_day[370]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[370],
+                        'expected': parseFloat(obj.model.data.predicted_value[370]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[371],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[371],
+                        'hdd': parseFloat(obj.model.data.degree_day[371]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[371],
+                        'expected': parseFloat(obj.model.data.predicted_value[371]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[372],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[372],
+                        'hdd': parseFloat(obj.model.data.degree_day[372]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[372],
+                        'expected': parseFloat(obj.model.data.predicted_value[372]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[373],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[373],
+                        'hdd': parseFloat(obj.model.data.degree_day[373]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[373],
+                        'expected': parseFloat(obj.model.data.predicted_value[373]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[374],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[374],
+                        'hdd': parseFloat(obj.model.data.degree_day[374]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[374],
+                        'expected': parseFloat(obj.model.data.predicted_value[374]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[375],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[375],
+                        'hdd': parseFloat(obj.model.data.degree_day[375]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[375],
+                        'expected': parseFloat(obj.model.data.predicted_value[375]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[376],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[376],
+                        'hdd': parseFloat(obj.model.data.degree_day[376]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[376],
+                        'expected': parseFloat(obj.model.data.predicted_value[376]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[377],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[377],
+                        'hdd': parseFloat(obj.model.data.degree_day[377]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[377],
+                        'expected': parseFloat(obj.model.data.predicted_value[377]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[378],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[378],
+                        'hdd': parseFloat(obj.model.data.degree_day[378]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[378],
+                        'expected': parseFloat(obj.model.data.predicted_value[378]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[379],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[379],
+                        'hdd': parseFloat(obj.model.data.degree_day[379]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[379],
+                        'expected': parseFloat(obj.model.data.predicted_value[379]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[380],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[380],
+                        'hdd': parseFloat(obj.model.data.degree_day[380]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[380],
+                        'expected': parseFloat(obj.model.data.predicted_value[380]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[381],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[381],
+                        'hdd': parseFloat(obj.model.data.degree_day[381]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[381],
+                        'expected': parseFloat(obj.model.data.predicted_value[381]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[382],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[382],
+                        'hdd': parseFloat(obj.model.data.degree_day[382]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[382],
+                        'expected': parseFloat(obj.model.data.predicted_value[382]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[383],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[383],
+                        'hdd': parseFloat(obj.model.data.degree_day[383]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[383],
+                        'expected': parseFloat(obj.model.data.predicted_value[383]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[384],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[384],
+                        'hdd': parseFloat(obj.model.data.degree_day[384]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[384],
+                        'expected': parseFloat(obj.model.data.predicted_value[384]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[385],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[385],
+                        'hdd': parseFloat(obj.model.data.degree_day[385]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[385],
+                        'expected': parseFloat(obj.model.data.predicted_value[385]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[386],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[386],
+                        'hdd': parseFloat(obj.model.data.degree_day[386]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[386],
+                        'expected': parseFloat(obj.model.data.predicted_value[386]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[387],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[387],
+                        'hdd': parseFloat(obj.model.data.degree_day[387]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[387],
+                        'expected': parseFloat(obj.model.data.predicted_value[387]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[388],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[388],
+                        'hdd': parseFloat(obj.model.data.degree_day[388]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[388],
+                        'expected': parseFloat(obj.model.data.predicted_value[388]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[389],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[389],
+                        'hdd': parseFloat(obj.model.data.degree_day[389]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[389],
+                        'expected': parseFloat(obj.model.data.predicted_value[389]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[390],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[390],
+                        'hdd': parseFloat(obj.model.data.degree_day[390]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[390],
+                        'expected': parseFloat(obj.model.data.predicted_value[390]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[391],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[391],
+                        'hdd': parseFloat(obj.model.data.degree_day[391]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[391],
+                        'expected': parseFloat(obj.model.data.predicted_value[391]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[392],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[392],
+                        'hdd': parseFloat(obj.model.data.degree_day[392]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[392],
+                        'expected': parseFloat(obj.model.data.predicted_value[392]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[393],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[393],
+                        'hdd': parseFloat(obj.model.data.degree_day[393]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[393],
+                        'expected': parseFloat(obj.model.data.predicted_value[393]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[394],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[394],
+                        'hdd': parseFloat(obj.model.data.degree_day[394]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[394],
+                        'expected': parseFloat(obj.model.data.predicted_value[394]).toFixed(0)
+                    },
+                    {
+                        'date': obj.model.data.timestamp[395],
+                        'temperature': obj.model.data.average_dry_bulb_temperature[395],
+                        'hdd': parseFloat(obj.model.data.degree_day[395]).toFixed(0),
+                        'meterReading': obj.model.data.raw_value[395],
+                        'expected': parseFloat(obj.model.data.predicted_value[395]).toFixed(0)
+                    },
+                ]
+                $table2.bootstrapTable({data: data})
+            })
         })
     }
 
