@@ -77,7 +77,7 @@ $(document).ready(() => {
             error: function (xhr) {
                 if (xhr.status === 504) {
                     modelApi()
-                    $('#overlay').text('Server not responding, trying your search again')
+                    $('.overlayMessage').text('Server not responding, trying your search again. Please do not refresh the page')
                 }
                 if (xhr.status === 502) {
                     alert('No data was returned for your current search criteria. ')
