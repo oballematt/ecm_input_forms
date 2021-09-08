@@ -27,10 +27,6 @@
       border-radius: 50%;
   }
 
-  /* .header {
-    position: sticky;
-    top: 0;
-} */
 .tableContainer {
     height: 400px;
     overflow: auto;

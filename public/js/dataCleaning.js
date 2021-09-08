@@ -82,7 +82,7 @@ $(document).ready(() => {
                 }
                 if (xhr.status === 502) {
                     $('#overlay').fadeOut()
-                    alert('No data was returned for your current search criteria. Please try selecting a different meter or a different date range')
+                    alert('No data was returned for your current search criteria. Please try selecting a different meter or date range')
                 }
             }
         }).then(response => {
@@ -213,7 +213,7 @@ $(document).ready(() => {
                     pointRadius: 5
                 }, {
                     type: 'line',
-                    label: 'High Range',
+                    label: 'High Limit',
                     data: [{
                         x: obj.model.data.average_dry_bulb_temperature[365],
                         y: obj.model.data.predicted_value_upper_bound[365]
@@ -309,11 +309,13 @@ $(document).ready(() => {
                         y: obj.model.data.predicted_value_upper_bound[395]
                     }
                     ],
-                    backgroundColor: 'rgb(0, 0, 255)',
-                    pointRadius: 5
+                    fill: false,
+                    pointRadius: 0,
+                    borderColor: 'rgb(0, 0, 255)',
+                    tension: 0.1
                 }, {
                     type: 'line',
-                    label: 'Low Range',
+                    label: 'Low Limit',
                     data: [{
                         x: obj.model.data.average_dry_bulb_temperature[365],
                         y: obj.model.data.predicted_value_lower_bound[365]
@@ -409,361 +411,32 @@ $(document).ready(() => {
                         y: obj.model.data.predicted_value_lower_bound[395]
                     }
                     ],
-                    backgroundColor: 'rgb(0, 128, 0)',
-                    pointRadius: 5
+                    fill: false,
+                    pointRadius: 0,
+                    borderColor: 'rgb(0, 128, 0)',
+                    tension: 0.1
                 }]
             };
 
             var options = {
                 scales: {
                     y: {
-                        beginAtZero: true,
-                        display: true,
-                        text: 'Consumption'
+                        beginAtZero: true
                     },
 
                 }
             }
 
-            // var chartData2 = {
-            //     datasets: [{
-            //         type: "scatter",
-            //         label: "Meter VS. Temp",
-            //         data: [{
-            //             x: obj.model.data.timestamp[365],
-            //             y: obj.model.data.raw_value[365]
-            //         }, {
-            //             x: obj.model.data.timestamp[366],
-            //             y: obj.model.data.raw_value[366]
-            //         }, {
-            //             x: obj.model.data.timestamp[367],
-            //             y: obj.model.data.raw_value[367]
-            //         }, {
-            //             x: obj.model.data.timestamp[368],
-            //             y: obj.model.data.raw_value[368]
-            //         }, {
-            //             x: obj.model.data.timestamp[369],
-            //             y: obj.model.data.raw_value[369]
-            //         }, {
-            //             x: obj.model.data.timestamp[370],
-            //             y: obj.model.data.raw_value[370]
-            //         }, {
-            //             x: obj.model.data.timestamp[371],
-            //             y: obj.model.data.raw_value[371]
-            //         }, {
-            //             x: obj.model.data.timestamp[372],
-            //             y: obj.model.data.raw_value[372]
-            //         }, {
-            //             x: obj.model.data.timestamp[373],
-            //             y: obj.model.data.raw_value[373]
-            //         }, {
-            //             x: obj.model.data.timestamp[374],
-            //             y: obj.model.data.raw_value[374]
-            //         }, {
-            //             x: obj.model.data.timestamp[375],
-            //             y: obj.model.data.raw_value[375]
-            //         }, {
-            //             x: obj.model.data.timestamp[376],
-            //             y: obj.model.data.raw_value[376]
-            //         }, {
-            //             x: obj.model.data.timestamp[377],
-            //             y: obj.model.data.raw_value[377]
-            //         }, {
-            //             x: obj.model.data.timestamp[378],
-            //             y: obj.model.data.raw_value[378]
-            //         }, {
-            //             x: obj.model.data.timestamp[379],
-            //             y: obj.model.data.raw_value[379]
-            //         }, {
-            //             x: obj.model.data.timestamp[380],
-            //             y: obj.model.data.raw_value[380]
-            //         }, {
-            //             x: obj.model.data.timestamp[381],
-            //             y: obj.model.data.raw_value[381]
-            //         }, {
-            //             x: obj.model.data.timestamp[382],
-            //             y: obj.model.data.raw_value[382]
-            //         }, {
-            //             x: obj.model.data.timestamp[383],
-            //             y: obj.model.data.raw_value[383]
-            //         }, {
-            //             x: obj.model.data.timestamp[384],
-            //             y: obj.model.data.raw_value[384]
-            //         }, {
-            //             x: obj.model.data.timestamp[385],
-            //             y: obj.model.data.raw_value[385]
-            //         }, {
-            //             x: obj.model.data.timestamp[386],
-            //             y: obj.model.data.raw_value[386]
-            //         }, {
-            //             x: obj.model.data.timestamp[387],
-            //             y: obj.model.data.raw_value[387]
-            //         }, {
-            //             x: obj.model.data.timestamp[388],
-            //             y: obj.model.data.raw_value[388]
-            //         }, {
-            //             x: obj.model.data.timestamp[389],
-            //             y: obj.model.data.raw_value[389]
-            //         }, {
-            //             x: obj.model.data.timestamp[390],
-            //             y: obj.model.data.raw_value[390]
-            //         }, {
-            //             x: obj.model.data.timestamp[391],
-            //             y: obj.model.data.raw_value[391]
-            //         }, {
-            //             x: obj.model.data.timestamp[392],
-            //             y: obj.model.data.raw_value[392]
-            //         }, {
-            //             x: obj.model.data.timestamp[393],
-            //             y: obj.model.data.raw_value[393]
-            //         }, {
-            //             x: obj.model.data.timestamp[394],
-            //             y: obj.model.data.raw_value[394]
-            //         }, {
-            //             x: obj.model.data.timestamp[395],
-            //             y: obj.model.data.raw_value[395]
-            //         }
-            //         ],
-            //         backgroundColor: 'rgb(255, 0, 0)',
-            //         pointRadius: 5
-            //     }, {
-            //         type: 'line',
-            //         label: 'High Range',
-            //         data: [{
-            //             x: obj.model.data.timestamp[365],
-            //             y: obj.model.data.predicted_value_upper_bound[365]
-            //         }, {
-            //             x: obj.model.data.timestamp[366],
-            //             y: obj.model.data.predicted_value_upper_bound[366]
-            //         }, {
-            //             x: obj.model.data.timestamp[367],
-            //             y: obj.model.data.predicted_value_upper_bound[367]
-            //         }, {
-            //             x: obj.model.data.timestamp[368],
-            //             y: obj.model.data.predicted_value_upper_bound[368]
-            //         }, {
-            //             x: obj.model.data.timestamp[369],
-            //             y: obj.model.data.predicted_value_upper_bound[369]
-            //         }, {
-            //             x: obj.model.data.timestamp[370],
-            //             y: obj.model.data.predicted_value_upper_bound[370]
-            //         }, {
-            //             x: obj.model.data.timestamp[371],
-            //             y: obj.model.data.predicted_value_upper_bound[371]
-            //         }, {
-            //             x: obj.model.data.timestamp[372],
-            //             y: obj.model.data.predicted_value_upper_bound[372]
-            //         }, {
-            //             x: obj.model.data.timestamp[373],
-            //             y: obj.model.data.predicted_value_upper_bound[373]
-            //         }, {
-            //             x: obj.model.data.timestamp[374],
-            //             y: obj.model.data.predicted_value_upper_bound[374]
-            //         }, {
-            //             x: obj.model.data.timestamp[375],
-            //             y: obj.model.data.predicted_value_upper_bound[375]
-            //         }, {
-            //             x: obj.model.data.timestamp[376],
-            //             y: obj.model.data.predicted_value_upper_bound[376]
-            //         }, {
-            //             x: obj.model.data.timestamp[377],
-            //             y: obj.model.data.predicted_value_upper_bound[377]
-            //         }, {
-            //             x: obj.model.data.timestamp[378],
-            //             y: obj.model.data.predicted_value_upper_bound[378]
-            //         }, {
-            //             x: obj.model.data.timestamp[379],
-            //             y: obj.model.data.predicted_value_upper_bound[379]
-            //         }, {
-            //             x: obj.model.data.timestamp[380],
-            //             y: obj.model.data.predicted_value_upper_bound[380]
-            //         }, {
-            //             x: obj.model.data.timestamp[381],
-            //             y: obj.model.data.predicted_value_upper_bound[381]
-            //         }, {
-            //             x: obj.model.data.timestamp[382],
-            //             y: obj.model.data.predicted_value_upper_bound[382]
-            //         }, {
-            //             x: obj.model.data.timestamp[383],
-            //             y: obj.model.data.predicted_value_upper_bound[383]
-            //         }, {
-            //             x: obj.model.data.timestamp[384],
-            //             y: obj.model.data.predicted_value_upper_bound[384]
-            //         }, {
-            //             x: obj.model.data.timestamp[385],
-            //             y: obj.model.data.predicted_value_upper_bound[385]
-            //         }, {
-            //             x: obj.model.data.timestamp[386],
-            //             y: obj.model.data.predicted_value_upper_bound[386]
-            //         }, {
-            //             x: obj.model.data.timestamp[387],
-            //             y: obj.model.data.predicted_value_upper_bound[387]
-            //         }, {
-            //             x: obj.model.data.timestamp[388],
-            //             y: obj.model.data.predicted_value_upper_bound[388]
-            //         }, {
-            //             x: obj.model.data.timestamp[389],
-            //             y: obj.model.data.predicted_value_upper_bound[389]
-            //         }, {
-            //             x: obj.model.data.timestamp[390],
-            //             y: obj.model.data.predicted_value_upper_bound[390]
-            //         }, {
-            //             x: obj.model.data.timestamp[391],
-            //             y: obj.model.data.predicted_value_upper_bound[391]
-            //         }, {
-            //             x: obj.model.data.timestamp[392],
-            //             y: obj.model.data.predicted_value_upper_bound[392]
-            //         }, {
-            //             x: obj.model.data.timestamp[393],
-            //             y: obj.model.data.predicted_value_upper_bound[393]
-            //         }, {
-            //             x: obj.model.data.timestamp[394],
-            //             y: obj.model.data.predicted_value_upper_bound[394]
-            //         }, {
-            //             x: obj.model.data.timestamp[395],
-            //             y: obj.model.data.predicted_value_upper_bound[395]
-            //         }
-            //         ],
-            //         backgroundColor: 'rgb(0, 0, 255)',
-            //         pointRadius: 5
-            //     }, {
-            //         type: 'line',
-            //         label: 'Low Range',
-            //         data: [{
-            //             x: obj.model.data.timestamp[365],
-            //             y: obj.model.data.predicted_value_lower_bound[365]
-            //         }, {
-            //             x: obj.model.data.timestamp[366],
-            //             y: obj.model.data.predicted_value_lower_bound[366]
-            //         }, {
-            //             x: obj.model.data.timestamp[367],
-            //             y: obj.model.data.predicted_value_lower_bound[367]
-            //         }, {
-            //             x: obj.model.data.timestamp[368],
-            //             y: obj.model.data.predicted_value_lower_bound[368]
-            //         }, {
-            //             x: obj.model.data.timestamp[369],
-            //             y: obj.model.data.predicted_value_lower_bound[369]
-            //         }, {
-            //             x: obj.model.data.timestamp[370],
-            //             y: obj.model.data.predicted_value_lower_bound[370]
-            //         }, {
-            //             x: obj.model.data.timestamp[371],
-            //             y: obj.model.data.predicted_value_lower_bound[371]
-            //         }, {
-            //             x: obj.model.data.timestamp[372],
-            //             y: obj.model.data.predicted_value_lower_bound[372]
-            //         }, {
-            //             x: obj.model.data.timestamp[373],
-            //             y: obj.model.data.predicted_value_lower_bound[373]
-            //         }, {
-            //             x: obj.model.data.timestamp[374],
-            //             y: obj.model.data.predicted_value_lower_bound[374]
-            //         }, {
-            //             x: obj.model.data.timestamp[375],
-            //             y: obj.model.data.predicted_value_lower_bound[375]
-            //         }, {
-            //             x: obj.model.data.timestamp[376],
-            //             y: obj.model.data.predicted_value_lower_bound[376]
-            //         }, {
-            //             x: obj.model.data.timestamp[377],
-            //             y: obj.model.data.predicted_value_lower_bound[377]
-            //         }, {
-            //             x: obj.model.data.timestamp[378],
-            //             y: obj.model.data.predicted_value_lower_bound[378]
-            //         }, {
-            //             x: obj.model.data.timestamp[379],
-            //             y: obj.model.data.predicted_value_lower_bound[379]
-            //         }, {
-            //             x: obj.model.data.timestamp[380],
-            //             y: obj.model.data.predicted_value_lower_bound[380]
-            //         }, {
-            //             x: obj.model.data.timestamp[381],
-            //             y: obj.model.data.predicted_value_lower_bound[381]
-            //         }, {
-            //             x: obj.model.data.timestamp[382],
-            //             y: obj.model.data.predicted_value_lower_bound[382]
-            //         }, {
-            //             x: obj.model.data.timestamp[383],
-            //             y: obj.model.data.predicted_value_lower_bound[383]
-            //         }, {
-            //             x: obj.model.data.timestamp[384],
-            //             y: obj.model.data.predicted_value_lower_bound[384]
-            //         }, {
-            //             x: obj.model.data.timestamp[385],
-            //             y: obj.model.data.predicted_value_lower_bound[385]
-            //         }, {
-            //             x: obj.model.data.timestamp[386],
-            //             y: obj.model.data.predicted_value_lower_bound[386]
-            //         }, {
-            //             x: obj.model.data.timestamp[387],
-            //             y: obj.model.data.predicted_value_lower_bound[387]
-            //         }, {
-            //             x: obj.model.data.timestamp[388],
-            //             y: obj.model.data.predicted_value_lower_bound[388]
-            //         }, {
-            //             x: obj.model.data.timestamp[389],
-            //             y: obj.model.data.predicted_value_lower_bound[389]
-            //         }, {
-            //             x: obj.model.data.timestamp[390],
-            //             y: obj.model.data.predicted_value_lower_bound[390]
-            //         }, {
-            //             x: obj.model.data.timestamp[391],
-            //             y: obj.model.data.predicted_value_lower_bound[391]
-            //         }, {
-            //             x: obj.model.data.timestamp[392],
-            //             y: obj.model.data.predicted_value_lower_bound[392]
-            //         }, {
-            //             x: obj.model.data.timestamp[393],
-            //             y: obj.model.data.predicted_value_lower_bound[393]
-            //         }, {
-            //             x: obj.model.data.timestamp[394],
-            //             y: obj.model.data.predicted_value_lower_bound[394]
-            //         }, {
-            //             x: obj.model.data.timestamp[395],
-            //             y: obj.model.data.predicted_value_lower_bound[395]
-            //         }
-            //         ],
-            //         backgroundColor: 'rgb(0, 128, 0)',
-            //         pointRadius: 5
-            //     }]
-            // };
-            // var options2 = {
-            //     responsive: true,
-            //     title: {
-            //         display: true,
-            //         text: "Chart.js Time Scale"
-            //     },
-            //     scales: {
-            //         xAxes: [{
-            //             type: "time",
-            //             time: {
-            //                 format: timeFormat,
-            //                 tooltipFormat: 'll'
-            //             },
-            //             scaleLabel: {
-            //                 display: true,
-            //                 labelString: 'Date'
-            //             }
-            //         }],
-            //         yAxes: [{
-            //             scaleLabel: {
-            //                 display: true,
-            //                 labelString: 'value'
-            //             }
-            //         }]
-            //     }
-            // }
 
             var config = {
-               
+
                 data: {
                     datasets: [
                         {
                             type: 'scatter',
                             label: "Meter VS. Dates",
                             data: [{
-                                x: `'${obj.model.data.timestamp[365]}'`,
+                                x: obj.model.data.timestamp[365],
                                 y: obj.model.data.raw_value[365]
                             }, {
                                 x: obj.model.data.timestamp[366],
@@ -856,51 +529,229 @@ $(document).ready(() => {
                                 x: obj.model.data.timestamp[395],
                                 y: obj.model.data.raw_value[395]
                             }],
-                            fill: false,
+                            pointRadius: 5,
                             backgroundColor: 'rgb(255, 0, 0)',
-                        },
-                        {
+                        }, {
                             type: 'line',
-                            label: "UK Dates",
+                            label: 'High Limit',
                             data: [{
-                                x: "01/04/2014", y: 175
+                                x: obj.model.data.timestamp[365],
+                                y: obj.model.data.predicted_value_upper_bound[365]
                             }, {
-                                x: "01/10/2014", y: 175
+                                x: obj.model.data.timestamp[366],
+                                y: obj.model.data.predicted_value_upper_bound[366]
                             }, {
-                                x: "01/04/2015", y: 178
+                                x: obj.model.data.timestamp[367],
+                                y: obj.model.data.predicted_value_upper_bound[367]
                             }, {
-                                x: "01/10/2015", y: 178
-                            }],
+                                x: obj.model.data.timestamp[368],
+                                y: obj.model.data.predicted_value_upper_bound[368]
+                            }, {
+                                x: obj.model.data.timestamp[369],
+                                y: obj.model.data.predicted_value_upper_bound[369]
+                            }, {
+                                x: obj.model.data.timestamp[370],
+                                y: obj.model.data.predicted_value_upper_bound[370]
+                            }, {
+                                x: obj.model.data.timestamp[371],
+                                y: obj.model.data.predicted_value_upper_bound[371]
+                            }, {
+                                x: obj.model.data.timestamp[372],
+                                y: obj.model.data.predicted_value_upper_bound[372]
+                            }, {
+                                x: obj.model.data.timestamp[373],
+                                y: obj.model.data.predicted_value_upper_bound[373]
+                            }, {
+                                x: obj.model.data.timestamp[374],
+                                y: obj.model.data.predicted_value_upper_bound[374]
+                            }, {
+                                x: obj.model.data.timestamp[375],
+                                y: obj.model.data.predicted_value_upper_bound[375]
+                            }, {
+                                x: obj.model.data.timestamp[376],
+                                y: obj.model.data.predicted_value_upper_bound[376]
+                            }, {
+                                x: obj.model.data.timestamp[377],
+                                y: obj.model.data.predicted_value_upper_bound[377]
+                            }, {
+                                x: obj.model.data.timestamp[378],
+                                y: obj.model.data.predicted_value_upper_bound[378]
+                            }, {
+                                x: obj.model.data.timestamp[379],
+                                y: obj.model.data.predicted_value_upper_bound[379]
+                            }, {
+                                x: obj.model.data.timestamp[380],
+                                y: obj.model.data.predicted_value_upper_bound[380]
+                            }, {
+                                x: obj.model.data.timestamp[381],
+                                y: obj.model.data.predicted_value_upper_bound[381]
+                            }, {
+                                x: obj.model.data.timestamp[382],
+                                y: obj.model.data.predicted_value_upper_bound[382]
+                            }, {
+                                x: obj.model.data.timestamp[383],
+                                y: obj.model.data.predicted_value_upper_bound[383]
+                            }, {
+                                x: obj.model.data.timestamp[384],
+                                y: obj.model.data.predicted_value_upper_bound[384]
+                            }, {
+                                x: obj.model.data.timestamp[385],
+                                y: obj.model.data.predicted_value_upper_bound[385]
+                            }, {
+                                x: obj.model.data.timestamp[386],
+                                y: obj.model.data.predicted_value_upper_bound[386]
+                            }, {
+                                x: obj.model.data.timestamp[387],
+                                y: obj.model.data.predicted_value_upper_bound[387]
+                            }, {
+                                x: obj.model.data.timestamp[388],
+                                y: obj.model.data.predicted_value_upper_bound[388]
+                            }, {
+                                x: obj.model.data.timestamp[389],
+                                y: obj.model.data.predicted_value_upper_bound[389]
+                            }, {
+                                x: obj.model.data.timestamp[390],
+                                y: obj.model.data.predicted_value_upper_bound[390]
+                            }, {
+                                x: obj.model.data.timestamp[391],
+                                y: obj.model.data.predicted_value_upper_bound[391]
+                            }, {
+                                x: obj.model.data.timestamp[392],
+                                y: obj.model.data.predicted_value_upper_bound[392]
+                            }, {
+                                x: obj.model.data.timestamp[393],
+                                y: obj.model.data.predicted_value_upper_bound[393]
+                            }, {
+                                x: obj.model.data.timestamp[394],
+                                y: obj.model.data.predicted_value_upper_bound[394]
+                            }, {
+                                x: obj.model.data.timestamp[395],
+                                y: obj.model.data.predicted_value_upper_bound[395]
+                            }
+                            ],
                             fill: false,
-                            borderColor: 'blue'
+                            pointRadius: 0,
+                            borderColor: 'rgb(0, 0, 255)',
+                            tension: 0.1
+                        }, {
+                            type: 'line',
+                            label: 'Low Limit',
+                            data: [{
+                                x: obj.model.data.timestamp[365],
+                                y: obj.model.data.predicted_value_lower_bound[365]
+                            }, {
+                                x: obj.model.data.timestamp[366],
+                                y: obj.model.data.predicted_value_lower_bound[366]
+                            }, {
+                                x: obj.model.data.timestamp[367],
+                                y: obj.model.data.predicted_value_lower_bound[367]
+                            }, {
+                                x: obj.model.data.timestamp[368],
+                                y: obj.model.data.predicted_value_lower_bound[368]
+                            }, {
+                                x: obj.model.data.timestamp[369],
+                                y: obj.model.data.predicted_value_lower_bound[369]
+                            }, {
+                                x: obj.model.data.timestamp[370],
+                                y: obj.model.data.predicted_value_lower_bound[370]
+                            }, {
+                                x: obj.model.data.timestamp[371],
+                                y: obj.model.data.predicted_value_lower_bound[371]
+                            }, {
+                                x: obj.model.data.timestamp[372],
+                                y: obj.model.data.predicted_value_lower_bound[372]
+                            }, {
+                                x: obj.model.data.timestamp[373],
+                                y: obj.model.data.predicted_value_lower_bound[373]
+                            }, {
+                                x: obj.model.data.timestamp[374],
+                                y: obj.model.data.predicted_value_lower_bound[374]
+                            }, {
+                                x: obj.model.data.timestamp[375],
+                                y: obj.model.data.predicted_value_lower_bound[375]
+                            }, {
+                                x: obj.model.data.timestamp[376],
+                                y: obj.model.data.predicted_value_lower_bound[376]
+                            }, {
+                                x: obj.model.data.timestamp[377],
+                                y: obj.model.data.predicted_value_lower_bound[377]
+                            }, {
+                                x: obj.model.data.timestamp[378],
+                                y: obj.model.data.predicted_value_lower_bound[378]
+                            }, {
+                                x: obj.model.data.timestamp[379],
+                                y: obj.model.data.predicted_value_lower_bound[379]
+                            }, {
+                                x: obj.model.data.timestamp[380],
+                                y: obj.model.data.predicted_value_lower_bound[380]
+                            }, {
+                                x: obj.model.data.timestamp[381],
+                                y: obj.model.data.predicted_value_lower_bound[381]
+                            }, {
+                                x: obj.model.data.timestamp[382],
+                                y: obj.model.data.predicted_value_lower_bound[382]
+                            }, {
+                                x: obj.model.data.timestamp[383],
+                                y: obj.model.data.predicted_value_lower_bound[383]
+                            }, {
+                                x: obj.model.data.timestamp[384],
+                                y: obj.model.data.predicted_value_lower_bound[384]
+                            }, {
+                                x: obj.model.data.timestamp[385],
+                                y: obj.model.data.predicted_value_lower_bound[385]
+                            }, {
+                                x: obj.model.data.timestamp[386],
+                                y: obj.model.data.predicted_value_lower_bound[386]
+                            }, {
+                                x: obj.model.data.timestamp[387],
+                                y: obj.model.data.predicted_value_lower_bound[387]
+                            }, {
+                                x: obj.model.data.timestamp[388],
+                                y: obj.model.data.predicted_value_lower_bound[388]
+                            }, {
+                                x: obj.model.data.timestamp[389],
+                                y: obj.model.data.predicted_value_lower_bound[389]
+                            }, {
+                                x: obj.model.data.timestamp[390],
+                                y: obj.model.data.predicted_value_lower_bound[390]
+                            }, {
+                                x: obj.model.data.timestamp[391],
+                                y: obj.model.data.predicted_value_lower_bound[391]
+                            }, {
+                                x: obj.model.data.timestamp[392],
+                                y: obj.model.data.predicted_value_lower_bound[392]
+                            }, {
+                                x: obj.model.data.timestamp[393],
+                                y: obj.model.data.predicted_value_lower_bound[393]
+                            }, {
+                                x: obj.model.data.timestamp[394],
+                                y: obj.model.data.predicted_value_lower_bound[394]
+                            }, {
+                                x: obj.model.data.timestamp[395],
+                                y: obj.model.data.predicted_value_lower_bound[395]
+                            }
+                            ],
+                            fill: false,
+                            pointRadius: 0,
+                            borderColor: 'rgb(0, 128, 0)',
+                            tension: 0.1
                         }
+
                     ]
                 },
                 options: {
-                    responsive: true,
-                    title: {
-                        display: true,
-                        text: "Chart.js Time Scale"
-                    },
                     scales: {
-                        xAxes: [{
-                            type: "time",
+                        x: {
+                            type: 'time',
                             time: {
-                                format: timeFormat,
-                                tooltipFormat: 'll'
-                            },
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'Date'
+                                unit: 'day'
                             }
-                        }],
-                        yAxes: [{
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'value'
-                            }
-                        }]
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
                     }
+
                 }
             };
 
