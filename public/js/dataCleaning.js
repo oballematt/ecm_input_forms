@@ -42,7 +42,7 @@ $(document).ready(() => {
             if (isChecked === false) {
                 alert('Please select a meter')
             } else if (data.length > 0) {
-                alert('Please select only one meter')
+                alert('Only one meter can be selected at a time. Please hit the "Clear Selection" button to clear your current meter selection')
             }
             else {
                 data.push($table.bootstrapTable('getSelections'))
