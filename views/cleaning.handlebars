@@ -123,19 +123,330 @@
             <canvas id="myChart2" width="1000" height="1000"></canvas>
         </div>
     </div>
-    <table id="table2" class="table tableData mt-2 table-bordered border-secondary mb-4" style="display: none">
+    <table class="tableData table table-bordered border-secondary mb-3" style="display: none">
         <thead>
             <tr>
-                <th data-field="state" data-checkbox="true">Copy</th>
-                <th data-field="date">Date</th>
-                <th data-field="temperature">Temperature</th>
-                <th data-field="hdd">HDD</th>
-                <th data-field="meterReading">Meter Reading</th>
-                <th data-field="expected">Expected</th>
-                <th data-field="replacement">Replacement</th>
-                <th data-field="reason">Reason</th>
-                <th data-field="notes">Notes</th>
+                <th scope="col">Date</th>
+                <th scope="col">Temperature</th>
+                <th scope="col">HDD</th>
+                <th scope="col">Meter Reading</th>
+                <th scope="col">Expected</th>
+                <th scope="col">Replacement</th>
+                <th scope="col">Reason</th>
+                <th scope="col">Notes</th>
             </tr>
         </thead>
+        <tbody>
+             <tr class='text-end'>
+                <td id="date1"></td>
+                <td id="temp1"></td>
+                <td id="hdd1"></td>
+                <td id="meterReading1"></td>
+                <td id="expected1"></td>
+                <td id="replacement1"></td>
+                <td id='reason1'></td>
+                <td id='notes1'></td>
+            </tr>
+             <tr class='text-end'>
+                <td id="date2"></td>
+                <td id="temp2"></td>
+                <td id="hdd2"></td>
+                <td id="meterReading2"></td>
+                <td id="expected2"></td>
+                <td id="replacement2"></td>
+                <td id='reason2'></td>
+                <td id='notes2'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date3"></td>
+                <td id="temp3"></td>
+                <td id="hdd3"></td>
+                <td id="meterReading3"></td>
+                <td id="expected3"></td>
+                <td id="replacement3"></td>
+                <td id='reason3'></td>
+                <td id='notes3'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date4"></td>
+                <td id="temp4"></td>
+                <td id="hdd4"></td>
+                <td id="meterReading4"></td>
+                <td id="expected4"></td>
+                <td id="replacement4"></td>
+                <td id='reason4'></td>
+                <td id='notes4'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date5"></td>
+                <td id="temp5"></td>
+                <td id="hdd5"></td>
+                <td id="meterReading5"></td>
+                <td id="expected5"></td>
+                <td id="replacement5"></td>
+                <td id='reason5'></td>
+                <td id='notes5'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date6"></td>
+                <td id="temp6"></td>
+                <td id="hdd6"></td>
+                <td id="meterReading6"></td>
+                <td id="expected6"></td>
+                <td id="replacement6"></td>
+                <td id='reason6'></td>
+                <td id='notes6'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date7"></td>
+                <td id="temp7"></td>
+                <td id="hdd7"></td>
+                <td id="meterReading7"></td>
+                <td id="expected7"></td>
+                <td id="replacement7"></td>
+                <td id='reason7'></td>
+                <td id='notes7'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date8"></td>
+                <td id="temp8"></td>
+                <td id="hdd8"></td>
+                <td id="meterReading8"></td>
+                <td id="expected8"></td>
+                <td id="replacement8"></td>
+                <td id='reason8'></td>
+                <td id='notes8'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date9"></td>
+                <td id="temp9"></td>
+                <td id="hdd9"></td>
+                <td id="meterReading9"></td>
+                <td id="expected9"></td>
+                <td id="replacement9"></td>
+                <td id='reason9'></td>
+                <td id='notes9'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date10"></td>
+                <td id="temp10"></td>
+                <td id="hdd10"></td>
+                <td id="meterReading10"></td>
+                <td id="expected10"></td>
+                <td id="replacement10"></td>
+                <td id='reason10'></td>
+                <td id='notes10'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date11"></td>
+                <td id="temp11"></td>
+                <td id="hdd11"></td>
+                <td id="meterReading11"></td>
+                <td id="expected11"></td>
+                <td id="replacement11"></td>
+                <td id='reason11'></td>
+                <td id='notes11'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date12"></td>
+                <td id="temp12"></td>
+                <td id="hdd12"></td>
+                <td id="meterReading12"></td>
+                <td id="expected12"></td>
+                <td id="replacement12"></td>
+                <td id='reason12'></td>
+                <td id='notes12'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date13"></td>
+                <td id="temp13"></td>
+                <td id="hdd13"></td>
+                <td id="meterReading13"></td>
+                <td id="expected13"></td>
+                <td id="replacement13"></td>
+                <td id='reason13'></td>
+                <td id='notes13'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date14"></td>
+                <td id="temp14"></td>
+                <td id="hdd14"></td>
+                <td id="meterReading14"></td>
+                <td id="expected14"></td>
+                <td id="replacement14"></td>
+                <td id='reason14'></td>
+                <td id='notes14'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date15"></td>
+                <td id="temp15"></td>
+                <td id="hdd15"></td>
+                <td id="meterReading15"></td>
+                <td id="expected15"></td>
+                <td id="replacement15"></td>
+                <td id='reason15'></td>
+                <td id='notes15'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date16"></td>
+                <td id="temp16"></td>
+                <td id="hdd16"></td>
+                <td id="meterReading16"></td>
+                <td id="expected16"></td>
+                <td id="replacement16"></td>
+                <td id='reason16'></td>
+                <td id='notes16'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date17"></td>
+                <td id="temp17"></td>
+                <td id="hdd17"></td>
+                <td id="meterReading17"></td>
+                <td id="expected17"></td>
+                <td id="replacement17"></td>
+                <td id='reason17'></td>
+                <td id='notes17'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date18"></td>
+                <td id="temp18"></td>
+                <td id="hdd18"></td>
+                <td id="meterReading18"></td>
+                <td id="expected18"></td>
+                <td id="replacement18"></td>
+                <td id='reason18'></td>
+                <td id='notes18'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date19"></td>
+                <td id="temp19"></td>
+                <td id="hdd19"></td>
+                <td id="meterReading19"></td>
+                <td id="expected19"></td>
+                <td id="replacement19"></td>
+                <td id='reason19'></td>
+                <td id='notes19'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date20"></td>
+                <td id="temp20"></td>
+                <td id="hdd20"></td>
+                <td id="meterReading20"></td>
+                <td id="expected20"></td>
+                <td id="replacement20"></td>
+                <td id='reason20'></td>
+                <td id='notes20'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date21"></td>
+                <td id="temp21"></td>
+                <td id="hdd21"></td>
+                <td id="meterReading21"></td>
+                <td id="expected21"></td>
+                <td id="replacement21"></td>
+                <td id='reason21'></td>
+                <td id='notes21'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date22"></td>
+                <td id="temp22"></td>
+                <td id="hdd22"></td>
+                <td id="meterReading22"></td>
+                <td id="expected22"></td>
+                <td id="replacement22"></td>
+                <td id='reason22'></td>
+                <td id='notes22'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date23"></td>
+                <td id="temp23"></td>
+                <td id="hdd23"></td>
+                <td id="meterReading23"></td>
+                <td id="expected23"></td>
+                <td id="replacement23"></td>
+                <td id='reason23'></td>
+                <td id='notes23'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date24"></td>
+                <td id="temp24"></td>
+                <td id="hdd24"></td>
+                <td id="meterReading24"></td>
+                <td id="expected24"></td>
+                <td id="replacement24"></td>
+                <td id='reason24'></td>
+                <td id='notes24'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date25"></td>
+                <td id="temp25"></td>
+                <td id="hdd25"></td>
+                <td id="meterReading25"></td>
+                <td id="expected25"></td>
+                <td id="replacement25"></td>
+                <td id='reason25'></td>
+                <td id='notes25'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date26"></td>
+                <td id="temp26"></td>
+                <td id="hdd26"></td>
+                <td id="meterReading26"></td>
+                <td id="expected26"></td>
+                <td id="replacement26"></td>
+                <td id='reason26'></td>
+                <td id='notes26'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date27"></td>
+                <td id="temp27"></td>
+                <td id="hdd27"></td>
+                <td id="meterReading27"></td>
+                <td id="expected27"></td>
+                <td id="replacement27"></td>
+                <td id='reason27'></td>
+                <td id='notes27'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date28"></td>
+                <td id="temp28"></td>
+                <td id="hdd28"></td>
+                <td id="meterReading28"></td>
+                <td id="expected28"></td>
+                <td id="replacement28"></td>
+                <td id='reason28'></td>
+                <td id='notes28'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date29"></td>
+                <td id="temp29"></td>
+                <td id="hdd29"></td>
+                <td id="meterReading29"></td>
+                <td id="expected29"></td>
+                <td id="replacement29"></td>
+                <td id='reason29'></td>
+                <td id='notes29'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date30"></td>
+                <td id="temp30"></td>
+                <td id="hdd30"></td>
+                <td id="meterReading30"></td>
+                <td id="expected30"></td>
+                <td id="replacement30"></td>
+                <td id='reason30'></td>
+                <td id='notes30'></td>
+            </tr>
+            <tr class='text-end'>
+                <td id="date31"></td>
+                <td id="temp31"></td>
+                <td id="hdd31"></td>
+                <td id="meterReading31"></td>
+                <td id="expected31"></td>
+                <td id="replacement31"></td>
+                <td id='reason31'></td>
+                <td id='notes31'></td>
+            </tr>
+        </tbody>
     </table>
 </div>
