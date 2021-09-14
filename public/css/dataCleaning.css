@@ -32,10 +32,15 @@
     overflow: auto;
 }
 
+.followScroll{
+    margin-top: 27.5px
+}
+
 .bordered {
     border: 1px solid
 }
-  
+
+
   @keyframes rotate {
       0% {
           transform: rotate(0deg);

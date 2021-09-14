@@ -122,28 +122,30 @@
             <canvas id="myChart2" width="1000" height="1000"></canvas>
         </div>
     </div>
-    <div style="display: none" class="row tableData mb-3">
+    <div class="row tableData mb-3">
         <div class="col-md-8">
-            <table id="table2" class="table table-bordered border-secondary">
+            <table data-detail-view="true" data-detail-view-align='right' data-detail-formatter="detailFormatter"
+                id="table2" class="table table-bordered border-secondary">
+                <h6 class='text-end'>Click the <i class="fas fa-plus"></i> to view more details</h6>
                 <thead>
                     <tr>
-                        <th data-field="state" data-checkbox="true">Copy</th>
-                        <th data-field="date">Date</th>
-                        <th data-field="temperature">Temperature</th>
-                        <th data-field="hdd">HDD</th>
-                        <th data-field="meterReading">Meter Reading</th>
-                        <th data-field="expected">Expected</th>
-                        <th data-field="replacement">Replacement</th>
-                        <th data-field="reason">Reason</th>
-                        <th data-field="notes">Notes</th>
+                        <th data-checkbox="true"></th>
+                        <th data-field="Date">Date</th>
+                        <th data-field="Temperature">Temperature</th>
+                        <th data-field="HDD">HDD</th>
+                        <th data-field="Meter">Meter Reading</th>
+                        <th data-field="Expected">Expected</th>
+                        <th data-field="Replacement" data-visible="false">Replacement</th>
+                        <th data-field="Reason" data-visible="false">Reason</th>
+                        <th data-field="Notes" data-visible="false">Notes</th>
                 </thead>
             </table>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 followScroll">
             <ol class="list-group list-group-numbered">
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                     <div class="ms-2 me-auto">
-                        <div class="fw-bold">Subheading</div>
+                        <div class="fw-bold rValue">Subheading</div>
                         Cras justo odio
                     </div>
                     <span class="badge bg-primary rounded-pill">14</span>
@@ -213,6 +215,7 @@
                             <span class="badge bg-primary rounded-pill">14</span>
                         </li>
                     </ol>
+                    <button type="button" id="button3" class="btn btn-success mt-3">Copy</button>
                 </div>
             </div>
         </div>
