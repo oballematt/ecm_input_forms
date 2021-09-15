@@ -1,6 +1,7 @@
 
 let data = []
 let replaceData = []
+
 $(document).ready(() => {
 
     const dateInput_1 = $('.datepicker');
@@ -78,6 +79,8 @@ $(document).ready(() => {
         e.preventDefault();
         modelApi()
 
+        $('#chartData').load(location.href + " #chartData")
+
     })
 
     const modelApi = function () {
@@ -100,6 +103,10 @@ $(document).ready(() => {
                 }
             }
         }).then(response => {
+            let valueArray = []
+            let keyArray = []
+            let result = {}
+            let newArray = []
             const obj = JSON.parse(response.body)
             console.log(obj)
             $('.overlayMessage').text('Getting data, this will take a few seconds')
@@ -117,7 +124,31 @@ $(document).ready(() => {
             $('.r2').html(r2)
             $('.stdDev').html(stdDev)
             $('.meterVariable').html(`Variable: ${meterVariable}`)
-            $('.tableData').show()
+            // $('#tableData').show()
+            valueArray.push(obj.model.data.predicted_value_lower_bound)
+            let valueSliceArray = valueArray[0].slice(365)
+            console.log(valueSliceArray)
+            keyArray.push(obj.model.data.average_dry_bulb_temperature)
+            let keySliceArray = keyArray[0].slice(365)
+            console.log(keySliceArray)
+            keySliceArray.forEach((key, i) => result[key] = valueSliceArray[i])
+            console.log(result)
+            // newArray.push(result)
+            // let sortArray = newArray.sort(function (a, b) { return a - b })
+            // console.log(sortArray)
+
+            // $.each(result, function(key, value) {
+            //     newArray.push(key, value);
+            // })
+            //    let sortArray = newArray.sort(function (a, b) { return a - b })
+            //  console.log(sortArray)
+            // let floatArray = dataArray[0]
+            // floatArray = floatArray.map(function(each_element){
+            //     return Number(each_element.toFixed(0))
+            // })
+            // const sliceArray = floatArray.slice(365)
+            // const sortArray = sliceArray.sort(function(a, b){return a-b})
+            // console.log(sortArray)
             const config = {
                 data: {
                     datasets: [{
@@ -219,7 +250,7 @@ $(document).ready(() => {
                         }
                         ],
                         backgroundColor: 'rgb(255, 0, 0)',
-                        pointRadius: 5
+                        pointRadius: 5,
                     }, {
                         type: 'line',
                         label: 'High Limit',
@@ -320,126 +351,32 @@ $(document).ready(() => {
                         ],
                         fill: false,
                         pointRadius: 0,
+                        tension: 0.1,
                         borderColor: 'rgb(0, 0, 255)',
-                        tension: 0.1
+
                     }, {
                         type: 'line',
                         label: 'Low Limit',
+
                         data: [{
-                            x: obj.model.data.average_dry_bulb_temperature[365],
-                            y: obj.model.data.predicted_value_lower_bound[365]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[366],
-                            y: obj.model.data.predicted_value_lower_bound[366]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[367],
-                            y: obj.model.data.predicted_value_lower_bound[367]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[368],
-                            y: obj.model.data.predicted_value_lower_bound[368]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[369],
-                            y: obj.model.data.predicted_value_lower_bound[369]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[370],
-                            y: obj.model.data.predicted_value_lower_bound[370]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[371],
-                            y: obj.model.data.predicted_value_lower_bound[371]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[372],
-                            y: obj.model.data.predicted_value_lower_bound[372]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[373],
-                            y: obj.model.data.predicted_value_lower_bound[373]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[374],
-                            y: obj.model.data.predicted_value_lower_bound[374]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[375],
-                            y: obj.model.data.predicted_value_lower_bound[375]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[376],
-                            y: obj.model.data.predicted_value_lower_bound[376]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[377],
-                            y: obj.model.data.predicted_value_lower_bound[377]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[378],
-                            y: obj.model.data.predicted_value_lower_bound[378]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[379],
-                            y: obj.model.data.predicted_value_lower_bound[379]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[380],
-                            y: obj.model.data.predicted_value_lower_bound[380]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[381],
-                            y: obj.model.data.predicted_value_lower_bound[381]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[382],
-                            y: obj.model.data.predicted_value_lower_bound[382]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[383],
-                            y: obj.model.data.predicted_value_lower_bound[383]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[384],
-                            y: obj.model.data.predicted_value_lower_bound[384]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[385],
-                            y: obj.model.data.predicted_value_lower_bound[385]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[386],
-                            y: obj.model.data.predicted_value_lower_bound[386]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[387],
-                            y: obj.model.data.predicted_value_lower_bound[387]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[388],
-                            y: obj.model.data.predicted_value_lower_bound[388]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[389],
-                            y: obj.model.data.predicted_value_lower_bound[389]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[390],
-                            y: obj.model.data.predicted_value_lower_bound[390]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[391],
-                            y: obj.model.data.predicted_value_lower_bound[391]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[392],
-                            y: obj.model.data.predicted_value_lower_bound[392]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[393],
-                            y: obj.model.data.predicted_value_lower_bound[393]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[394],
-                            y: obj.model.data.predicted_value_lower_bound[394]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[395],
-                            y: obj.model.data.predicted_value_lower_bound[395]
+                            x: x,
+                            y: y
                         }],
                         fill: false,
                         pointRadius: 0,
+                        tension: 0.1,
                         borderColor: 'rgb(0, 128, 0)',
-                        tension: 0.1
                     }]
                 },
                 options: {
                     scales: {
-                        x: {
-                            type: 'time',
-                            time: {
-                                unit: 'day'
-                            }
-                        },
                         y: {
                             beginAtZero: true
                         }
                     }
-
                 }
             };
+
 
             const config2 = {
 
@@ -778,320 +715,321 @@ $(document).ready(() => {
                 let replacementValue = obj.model.data.replacement_value
                 let replacementReason = obj.model.data.replacement_reason
                 let replacementNotes = obj.model.data.replacement_notes
-               
+
                 let data = [
                     {
                         'Date': obj.model.data.timestamp[365],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[365],
                         'HDD': parseFloat(obj.model.data.degree_day[365]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[365],
+                        'Meter': parseFloat(obj.model.data.raw_value[365]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[365]).toFixed(0),
-                        'Replacement': replacementValue[365] = 'null' ? 'Not Replaced': replacementValue[365],
-                        'Reason': replacementReason[365] = 'null' ? 'No replacement reason': replacementReason[365],
-                        'Notes': replacementNotes[365] = 'null' ? 'No replacement notes': replacementNotes[365]
+                        'Replacement': replacementValue[365] = 'null' ? 'Not Replaced' : replacementValue[365],
+                        'Reason': replacementReason[365] = 'null' ? 'No replacement reason' : replacementReason[365],
+                        'Notes': replacementNotes[365] = 'null' ? 'No replacement notes' : replacementNotes[365]
                     },
                     {
                         'Date': obj.model.data.timestamp[366],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[366],
                         'HDD': parseFloat(obj.model.data.degree_day[366]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[366],
+                        'Meter': parseFloat(obj.model.data.raw_value[366]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[366]).toFixed(0),
-                        'Replacement': replacementValue[366] = 'null' ? 'Not Replaced': replacementValue[366] ,
-                        'Reason': replacementReason[366] = 'null' ? 'No replacement reason': replacementReason[365],
-                        'Notes': replacementNotes[366] = 'null' ? 'No replacement notes' : replacementNotes[366] 
+                        'Replacement': replacementValue[366] = 'null' ? 'Not Replaced' : replacementValue[366],
+                        'Reason': replacementReason[366] = 'null' ? 'No replacement reason' : replacementReason[365],
+                        'Notes': replacementNotes[366] = 'null' ? 'No replacement notes' : replacementNotes[366]
                     },
                     {
                         'Date': obj.model.data.timestamp[367],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[367],
                         'HDD': parseFloat(obj.model.data.degree_day[367]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[367],
+                        'Meter': parseFloat(obj.model.data.raw_value[367]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[367]).toFixed(0),
-                        'Replacement': replacementValue[367] = 'null' ? 'Not Replaced': replacementValue[367] ,
-                        'Reason': replacementReason[367] = 'null' ? 'No replacement reason': replacementReason[367],
-                        'Notes': replacementNotes[367] = 'null' ? 'No replacement notes' : replacementNotes[367] 
+                        'Replacement': replacementValue[367] = 'null' ? 'Not Replaced' : replacementValue[367],
+                        'Reason': replacementReason[367] = 'null' ? 'No replacement reason' : replacementReason[367],
+                        'Notes': replacementNotes[367] = 'null' ? 'No replacement notes' : replacementNotes[367]
                     },
                     {
                         'Date': obj.model.data.timestamp[368],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[368],
                         'HDD': parseFloat(obj.model.data.degree_day[368]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[368],
+                        'Meter': parseFloat(obj.model.data.raw_value[368]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[368]).toFixed(0),
-                        'Replacement': replacementValue[368] = 'null' ? 'Not Replaced': replacementValue[368] ,
-                        'Reason': replacementReason[368] = 'null' ? 'No replacement reason': replacementReason[368],
-                        'Notes': replacementNotes[368] = 'null' ? 'No replacement notes' : replacementNotes[368] 
+                        'Replacement': replacementValue[368] = 'null' ? 'Not Replaced' : replacementValue[368],
+                        'Reason': replacementReason[368] = 'null' ? 'No replacement reason' : replacementReason[368],
+                        'Notes': replacementNotes[368] = 'null' ? 'No replacement notes' : replacementNotes[368]
                     },
                     {
                         'Date': obj.model.data.timestamp[369],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[369],
                         'HDD': parseFloat(obj.model.data.degree_day[369]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[369],
+                        'Meter': parseFloat(obj.model.data.raw_value[369]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[369]).toFixed(0),
-                        'Replacement': replacementValue[369] = 'null' ? 'Not Replaced': replacementValue[369] ,
-                        'Reason': replacementReason[369] = 'null' ? 'No replacement reason': replacementReason[369],
-                        'Notes': replacementNotes[369] = 'null' ? 'No replacement notes' : replacementNotes[369] 
+                        'Replacement': replacementValue[369] = 'null' ? 'Not Replaced' : replacementValue[369],
+                        'Reason': replacementReason[369] = 'null' ? 'No replacement reason' : replacementReason[369],
+                        'Notes': replacementNotes[369] = 'null' ? 'No replacement notes' : replacementNotes[369]
                     },
                     {
                         'Date': obj.model.data.timestamp[370],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[370],
                         'HDD': parseFloat(obj.model.data.degree_day[370]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[370],
+                        'Meter': parseFloat(obj.model.data.raw_value[370]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[370]).toFixed(0),
-                        'Replacement': replacementValue[370] = 'null' ? 'Not Replaced': replacementValue[370] ,
-                        'Reason': replacementReason[370] = 'null' ? 'No replacement reason': replacementReason[370],
-                        'Notes': replacementNotes[370] = 'null' ? 'No replacement notes' : replacementNotes[370] 
+                        'Replacement': replacementValue[370] = 'null' ? 'Not Replaced' : replacementValue[370],
+                        'Reason': replacementReason[370] = 'null' ? 'No replacement reason' : replacementReason[370],
+                        'Notes': replacementNotes[370] = 'null' ? 'No replacement notes' : replacementNotes[370]
                     },
                     {
                         'Date': obj.model.data.timestamp[371],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[371],
                         'HDD': parseFloat(obj.model.data.degree_day[371]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[371],
+                        'Meter': parseFloat(obj.model.data.raw_value[371]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[371]).toFixed(0),
-                        'Replacement': replacementValue[371] = 'null' ? 'Not Replaced': replacementValue[371] ,
-                        'Reason': replacementReason[371] = 'null' ? 'No replacement reason': replacementReason[371],
-                        'Notes': replacementNotes[371] = 'null' ? 'No replacement notes' : replacementNotes[371] 
+                        'Replacement': replacementValue[371] = 'null' ? 'Not Replaced' : replacementValue[371],
+                        'Reason': replacementReason[371] = 'null' ? 'No replacement reason' : replacementReason[371],
+                        'Notes': replacementNotes[371] = 'null' ? 'No replacement notes' : replacementNotes[371]
                     },
                     {
                         'Date': obj.model.data.timestamp[372],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[372],
                         'HDD': parseFloat(obj.model.data.degree_day[372]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[372],
+                        'Meter': parseFloat(obj.model.data.raw_value[372]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[372]).toFixed(0),
-                        'Replacement': replacementValue[372] = 'null' ? 'Not Replaced': replacementValue[372] ,
-                        'Reason': replacementReason[372] = 'null' ? 'No replacement reason': replacementReason[372],
-                        'Notes': replacementNotes[372] = 'null' ? 'No replacement notes' : replacementNotes[372] 
+                        'Replacement': replacementValue[372] = 'null' ? 'Not Replaced' : replacementValue[372],
+                        'Reason': replacementReason[372] = 'null' ? 'No replacement reason' : replacementReason[372],
+                        'Notes': replacementNotes[372] = 'null' ? 'No replacement notes' : replacementNotes[372]
                     },
                     {
                         'Date': obj.model.data.timestamp[373],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[373],
                         'HDD': parseFloat(obj.model.data.degree_day[373]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[373],
+                        'Meter': parseFloat(obj.model.data.raw_value[373]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[373]).toFixed(0),
-                        'Replacement': replacementValue[373] = 'null' ? 'Not Replaced': replacementValue[373] ,
-                        'Reason': replacementReason[373] = 'null' ? 'No replacement reason': replacementReason[373],
-                        'Notes': replacementNotes[373] = 'null' ? 'No replacement notes' : replacementNotes[373] 
+                        'Replacement': replacementValue[373] = 'null' ? 'Not Replaced' : replacementValue[373],
+                        'Reason': replacementReason[373] = 'null' ? 'No replacement reason' : replacementReason[373],
+                        'Notes': replacementNotes[373] = 'null' ? 'No replacement notes' : replacementNotes[373]
                     },
                     {
                         'Date': obj.model.data.timestamp[374],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[374],
                         'HDD': parseFloat(obj.model.data.degree_day[374]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[374],
+                        'Meter': parseFloat(obj.model.data.raw_value[374]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[374]).toFixed(0),
-                        'Replacement': replacementValue[374] = 'null' ? 'Not Replaced': replacementValue[374] ,
-                        'Reason': replacementReason[374] = 'null' ? 'No replacement reason': replacementReason[374],
-                        'Notes': replacementNotes[374] = 'null' ? 'No replacement notes' : replacementNotes[374] 
+                        'Replacement': replacementValue[374] = 'null' ? 'Not Replaced' : replacementValue[374],
+                        'Reason': replacementReason[374] = 'null' ? 'No replacement reason' : replacementReason[374],
+                        'Notes': replacementNotes[374] = 'null' ? 'No replacement notes' : replacementNotes[374]
                     },
                     {
                         'Date': obj.model.data.timestamp[375],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[375],
                         'HDD': parseFloat(obj.model.data.degree_day[375]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[375],
+                        'Meter': parseFloat(obj.model.data.raw_value[375]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[375]).toFixed(0),
-                        'Replacement': replacementValue[375] = 'null' ? 'Not Replaced': replacementValue[375] ,
-                        'Reason': replacementReason[375] = 'null' ? 'No replacement reason': replacementReason[375],
-                        'Notes': replacementNotes[375] = 'null' ? 'No replacement notes' : replacementNotes[375] 
+                        'Replacement': replacementValue[375] = 'null' ? 'Not Replaced' : replacementValue[375],
+                        'Reason': replacementReason[375] = 'null' ? 'No replacement reason' : replacementReason[375],
+                        'Notes': replacementNotes[375] = 'null' ? 'No replacement notes' : replacementNotes[375]
                     },
                     {
                         'Date': obj.model.data.timestamp[376],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[376],
                         'HDD': parseFloat(obj.model.data.degree_day[376]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[376],
+                        'Meter': parseFloat(obj.model.data.raw_value[376]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[376]).toFixed(0),
-                        'Replacement': replacementValue[376] = 'null' ? 'Not Replaced': replacementValue[376] ,
-                        'Reason': replacementReason[376] = 'null' ? 'No replacement reason': replacementReason[376],
-                        'Notes': replacementNotes[376] = 'null' ? 'No replacement notes' : replacementNotes[376] 
+                        'Replacement': replacementValue[376] = 'null' ? 'Not Replaced' : replacementValue[376],
+                        'Reason': replacementReason[376] = 'null' ? 'No replacement reason' : replacementReason[376],
+                        'Notes': replacementNotes[376] = 'null' ? 'No replacement notes' : replacementNotes[376]
                     },
                     {
                         'Date': obj.model.data.timestamp[377],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[377],
                         'HDD': parseFloat(obj.model.data.degree_day[377]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[377],
+                        'Meter': parseFloat(obj.model.data.raw_value[377]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[377]).toFixed(0),
-                        'Replacement': replacementValue[377] = 'null' ? 'Not Replaced': replacementValue[377] ,
-                        'Reason': replacementReason[377] = 'null' ? 'No replacement reason': replacementReason[377],
-                        'Notes': replacementNotes[377] = 'null' ? 'No replacement notes' : replacementNotes[377] 
+                        'Replacement': replacementValue[377] = 'null' ? 'Not Replaced' : replacementValue[377],
+                        'Reason': replacementReason[377] = 'null' ? 'No replacement reason' : replacementReason[377],
+                        'Notes': replacementNotes[377] = 'null' ? 'No replacement notes' : replacementNotes[377]
                     },
                     {
                         'Date': obj.model.data.timestamp[378],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[378],
                         'HDD': parseFloat(obj.model.data.degree_day[378]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[378],
+                        'Meter': parseFloat(obj.model.data.raw_value[378]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[378]).toFixed(0),
-                        'Replacement': replacementValue[378] = 'null' ? 'Not Replaced': replacementValue[378] ,
-                        'Reason': replacementReason[378] = 'null' ? 'No replacement reason': replacementReason[378],
-                        'Notes': replacementNotes[378] = 'null' ? 'No replacement notes' : replacementNotes[378] 
+                        'Replacement': replacementValue[378] = 'null' ? 'Not Replaced' : replacementValue[378],
+                        'Reason': replacementReason[378] = 'null' ? 'No replacement reason' : replacementReason[378],
+                        'Notes': replacementNotes[378] = 'null' ? 'No replacement notes' : replacementNotes[378]
                     },
                     {
                         'Date': obj.model.data.timestamp[379],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[379],
                         'HDD': parseFloat(obj.model.data.degree_day[379]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[379],
+                        'Meter': parseFloat(obj.model.data.raw_value[379]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[379]).toFixed(0),
-                        'Replacement': replacementValue[379] = 'null' ? 'Not Replaced': replacementValue[379] ,
-                        'Reason': replacementReason[379] = 'null' ? 'No replacement reason': replacementReason[379],
-                        'Notes': replacementNotes[379] = 'null' ? 'No replacement notes' : replacementNotes[379] 
+                        'Replacement': replacementValue[379] = 'null' ? 'Not Replaced' : replacementValue[379],
+                        'Reason': replacementReason[379] = 'null' ? 'No replacement reason' : replacementReason[379],
+                        'Notes': replacementNotes[379] = 'null' ? 'No replacement notes' : replacementNotes[379]
                     },
                     {
                         'Date': obj.model.data.timestamp[380],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[380],
                         'HDD': parseFloat(obj.model.data.degree_day[380]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[380],
+                        'Meter': parseFloat(obj.model.data.raw_value[380]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[380]).toFixed(0),
-                        'Replacement': replacementValue[380] = 'null' ? 'Not Replaced': replacementValue[380] ,
-                        'Reason': replacementReason[380] = 'null' ? 'No replacement reason': replacementReason[380],
-                        'Notes': replacementNotes[380] = 'null' ? 'No replacement notes' : replacementNotes[380] 
+                        'Replacement': replacementValue[380] = 'null' ? 'Not Replaced' : replacementValue[380],
+                        'Reason': replacementReason[380] = 'null' ? 'No replacement reason' : replacementReason[380],
+                        'Notes': replacementNotes[380] = 'null' ? 'No replacement notes' : replacementNotes[380]
                     },
                     {
                         'Date': obj.model.data.timestamp[381],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[381],
                         'HDD': parseFloat(obj.model.data.degree_day[381]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[381],
+                        'Meter': parseFloat(obj.model.data.raw_value[381]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[381]).toFixed(0),
-                        'Replacement': replacementValue[381] = 'null' ? 'Not Replaced': replacementValue[381] ,
-                        'Reason': replacementReason[381] = 'null' ? 'No replacement reason': replacementReason[381],
-                        'Notes': replacementNotes[381] = 'null' ? 'No replacement notes' : replacementNotes[381] 
+                        'Replacement': replacementValue[381] = 'null' ? 'Not Replaced' : replacementValue[381],
+                        'Reason': replacementReason[381] = 'null' ? 'No replacement reason' : replacementReason[381],
+                        'Notes': replacementNotes[381] = 'null' ? 'No replacement notes' : replacementNotes[381]
                     },
                     {
                         'Date': obj.model.data.timestamp[382],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[382],
                         'HDD': parseFloat(obj.model.data.degree_day[382]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[382],
+                        'Meter': parseFloat(obj.model.data.raw_value[382]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[382]).toFixed(0),
-                        'Replacement': replacementValue[382] = 'null' ? 'Not Replaced': replacementValue[382] ,
-                        'Reason': replacementReason[382] = 'null' ? 'No replacement reason': replacementReason[382],
-                        'Notes': replacementNotes[382] = 'null' ? 'No replacement notes' : replacementNotes[382] 
+                        'Replacement': replacementValue[382] = 'null' ? 'Not Replaced' : replacementValue[382],
+                        'Reason': replacementReason[382] = 'null' ? 'No replacement reason' : replacementReason[382],
+                        'Notes': replacementNotes[382] = 'null' ? 'No replacement notes' : replacementNotes[382]
                     },
                     {
                         'Date': obj.model.data.timestamp[383],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[383],
                         'HDD': parseFloat(obj.model.data.degree_day[383]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[383],
+                        'Meter': parseFloat(obj.model.data.raw_value[383]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[383]).toFixed(0),
-                        'Replacement': replacementValue[383] = 'null' ? 'Not Replaced': replacementValue[383] ,
-                        'Reason': replacementReason[383] = 'null' ? 'No replacement reason': replacementReason[383],
-                        'Notes': replacementNotes[383] = 'null' ? 'No replacement notes' : replacementNotes[383] 
+                        'Replacement': replacementValue[383] = 'null' ? 'Not Replaced' : replacementValue[383],
+                        'Reason': replacementReason[383] = 'null' ? 'No replacement reason' : replacementReason[383],
+                        'Notes': replacementNotes[383] = 'null' ? 'No replacement notes' : replacementNotes[383]
                     },
                     {
                         'Date': obj.model.data.timestamp[384],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[384],
                         'HDD': parseFloat(obj.model.data.degree_day[384]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[384],
+                        'Meter': parseFloat(obj.model.data.raw_value[384]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[384]).toFixed(0),
-                        'Replacement': replacementValue[384] = 'null' ? 'Not Replaced': replacementValue[384] ,
-                        'Reason': replacementReason[384] = 'null' ? 'No replacement reason': replacementReason[384],
-                        'Notes': replacementNotes[384] = 'null' ? 'No replacement notes' : replacementNotes[384] 
+                        'Replacement': replacementValue[384] = 'null' ? 'Not Replaced' : replacementValue[384],
+                        'Reason': replacementReason[384] = 'null' ? 'No replacement reason' : replacementReason[384],
+                        'Notes': replacementNotes[384] = 'null' ? 'No replacement notes' : replacementNotes[384]
                     },
                     {
                         'Date': obj.model.data.timestamp[385],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[385],
                         'HDD': parseFloat(obj.model.data.degree_day[385]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[385],
+                        'Meter': parseFloat(obj.model.data.raw_value[385]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[385]).toFixed(0),
-                        'Replacement': replacementValue[385] = 'null' ? 'Not Replaced': replacementValue[385] ,
-                        'Reason': replacementReason[385] = 'null' ? 'No replacement reason': replacementReason[385],
-                        'Notes': replacementNotes[385] = 'null' ? 'No replacement notes' : replacementNotes[385] 
+                        'Replacement': replacementValue[385] = 'null' ? 'Not Replaced' : replacementValue[385],
+                        'Reason': replacementReason[385] = 'null' ? 'No replacement reason' : replacementReason[385],
+                        'Notes': replacementNotes[385] = 'null' ? 'No replacement notes' : replacementNotes[385]
                     },
                     {
                         'Date': obj.model.data.timestamp[386],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[386],
                         'HDD': parseFloat(obj.model.data.degree_day[386]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[386],
+                        'Meter': parseFloat(obj.model.data.raw_value[386]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[386]).toFixed(0),
-                        'Replacement': replacementValue[386] = 'null' ? 'Not Replaced': replacementValue[386] ,
-                        'Reason': replacementReason[386] = 'null' ? 'No replacement reason': replacementReason[386],
-                        'Notes': replacementNotes[386] = 'null' ? 'No replacement notes' : replacementNotes[386] 
+                        'Replacement': replacementValue[386] = 'null' ? 'Not Replaced' : replacementValue[386],
+                        'Reason': replacementReason[386] = 'null' ? 'No replacement reason' : replacementReason[386],
+                        'Notes': replacementNotes[386] = 'null' ? 'No replacement notes' : replacementNotes[386]
                     },
                     {
                         'Date': obj.model.data.timestamp[387],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[387],
                         'HDD': parseFloat(obj.model.data.degree_day[387]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[387],
+                        'Meter': parseFloat(obj.model.data.raw_value[387]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[387]).toFixed(0),
-                        'Replacement': replacementValue[387] = 'null' ? 'Not Replaced': replacementValue[387] ,
-                        'Reason': replacementReason[387] = 'null' ? 'No replacement reason': replacementReason[387],
-                        'Notes': replacementNotes[387] = 'null' ? 'No replacement notes' : replacementNotes[387] 
+                        'Replacement': replacementValue[387] = 'null' ? 'Not Replaced' : replacementValue[387],
+                        'Reason': replacementReason[387] = 'null' ? 'No replacement reason' : replacementReason[387],
+                        'Notes': replacementNotes[387] = 'null' ? 'No replacement notes' : replacementNotes[387]
                     },
                     {
                         'Date': obj.model.data.timestamp[388],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[388],
                         'HDD': parseFloat(obj.model.data.degree_day[388]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[388],
+                        'Meter': parseFloat(obj.model.data.raw_value[388]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[388]).toFixed(0),
-                        'Replacement': replacementValue[388] = 'null' ? 'Not Replaced': replacementValue[388] ,
-                        'Reason': replacementReason[388] = 'null' ? 'No replacement reason': replacementReason[388],
-                        'Notes': replacementNotes[388] = 'null' ? 'No replacement notes' : replacementNotes[388] 
+                        'Replacement': replacementValue[388] = 'null' ? 'Not Replaced' : replacementValue[388],
+                        'Reason': replacementReason[388] = 'null' ? 'No replacement reason' : replacementReason[388],
+                        'Notes': replacementNotes[388] = 'null' ? 'No replacement notes' : replacementNotes[388]
                     },
                     {
                         'Date': obj.model.data.timestamp[389],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[389],
                         'HDD': parseFloat(obj.model.data.degree_day[389]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[389],
+                        'Meter': parseFloat(obj.model.data.raw_value[389]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[389]).toFixed(0),
-                        'Replacement': replacementValue[389] = 'null' ? 'Not Replaced': replacementValue[389] ,
-                        'Reason': replacementReason[389] = 'null' ? 'No replacement reason': replacementReason[389],
-                        'Notes': replacementNotes[389] = 'null' ? 'No replacement notes' : replacementNotes[389] 
+                        'Replacement': replacementValue[389] = 'null' ? 'Not Replaced' : replacementValue[389],
+                        'Reason': replacementReason[389] = 'null' ? 'No replacement reason' : replacementReason[389],
+                        'Notes': replacementNotes[389] = 'null' ? 'No replacement notes' : replacementNotes[389]
                     },
                     {
                         'Date': obj.model.data.timestamp[390],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[390],
                         'HDD': parseFloat(obj.model.data.degree_day[390]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[390],
+                        'Meter': parseFloat(obj.model.data.raw_value[390]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[390]).toFixed(0),
-                        'Replacement': replacementValue[390] = 'null' ? 'Not Replaced': replacementValue[390] ,
-                        'Reason': replacementReason[390] = 'null' ? 'No replacement reason': replacementReason[390],
-                        'Notes': replacementNotes[390] = 'null' ? 'No replacement notes' : replacementNotes[390] 
+                        'Replacement': replacementValue[390] = 'null' ? 'Not Replaced' : replacementValue[390],
+                        'Reason': replacementReason[390] = 'null' ? 'No replacement reason' : replacementReason[390],
+                        'Notes': replacementNotes[390] = 'null' ? 'No replacement notes' : replacementNotes[390]
                     },
                     {
                         'Date': obj.model.data.timestamp[391],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[391],
                         'HDD': parseFloat(obj.model.data.degree_day[391]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[391],
+                        'Meter': parseFloat(obj.model.data.raw_value[391]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[391]).toFixed(0),
-                        'Replacement': replacementValue[391] = 'null' ? 'Not Replaced': replacementValue[391] ,
-                        'Reason': replacementReason[391] = 'null' ? 'No replacement reason': replacementReason[391],
-                        'Notes': replacementNotes[391] = 'null' ? 'No replacement notes' : replacementNotes[391] 
+                        'Replacement': replacementValue[391] = 'null' ? 'Not Replaced' : replacementValue[391],
+                        'Reason': replacementReason[391] = 'null' ? 'No replacement reason' : replacementReason[391],
+                        'Notes': replacementNotes[391] = 'null' ? 'No replacement notes' : replacementNotes[391]
                     },
                     {
                         'Date': obj.model.data.timestamp[392],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[392],
                         'HDD': parseFloat(obj.model.data.degree_day[392]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[392],
+                        'Meter': parseFloat(obj.model.data.raw_value[392]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[392]).toFixed(0),
-                        'Replacement': replacementValue[392] = 'null' ? 'Not Replaced': replacementValue[392] ,
-                        'Reason': replacementReason[392] = 'null' ? 'No replacement reason': replacementReason[392],
-                        'Notes': replacementNotes[392] = 'null' ? 'No replacement notes' : replacementNotes[392] 
+                        'Replacement': replacementValue[392] = 'null' ? 'Not Replaced' : replacementValue[392],
+                        'Reason': replacementReason[392] = 'null' ? 'No replacement reason' : replacementReason[392],
+                        'Notes': replacementNotes[392] = 'null' ? 'No replacement notes' : replacementNotes[392]
                     },
                     {
                         'Date': obj.model.data.timestamp[393],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[393],
                         'HDD': parseFloat(obj.model.data.degree_day[393]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[393],
+                        'Meter': parseFloat(obj.model.data.raw_value[393]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[393]).toFixed(0),
-                        'Replacement': replacementValue[393] = 'null' ? 'Not Replaced': replacementValue[393] ,
-                        'Reason': replacementReason[393] = 'null' ? 'No replacement reason': replacementReason[393],
-                        'Notes': replacementNotes[393] = 'null' ? 'No replacement notes' : replacementNotes[393] 
+                        'Replacement': replacementValue[393] = 'null' ? 'Not Replaced' : replacementValue[393],
+                        'Reason': replacementReason[393] = 'null' ? 'No replacement reason' : replacementReason[393],
+                        'Notes': replacementNotes[393] = 'null' ? 'No replacement notes' : replacementNotes[393]
                     },
                     {
                         'Date': obj.model.data.timestamp[394],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[394],
                         'HDD': parseFloat(obj.model.data.degree_day[394]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[394],
+                        'Meter': parseFloat(obj.model.data.raw_value[394]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[394]).toFixed(0),
-                        'Replacement': replacementValue[394] = 'null' ? 'Not Replaced': replacementValue[394] ,
-                        'Reason': replacementReason[394] = 'null' ? 'No replacement reason': replacementReason[394],
-                        'Notes': replacementNotes[394] = 'null' ? 'No replacement notes' : replacementNotes[394] 
+                        'Replacement': replacementValue[394] = 'null' ? 'Not Replaced' : replacementValue[394],
+                        'Reason': replacementReason[394] = 'null' ? 'No replacement reason' : replacementReason[394],
+                        'Notes': replacementNotes[394] = 'null' ? 'No replacement notes' : replacementNotes[394]
                     },
                     {
                         'Date': obj.model.data.timestamp[395],
                         'Temperature': obj.model.data.average_dry_bulb_temperature[395],
                         'HDD': parseFloat(obj.model.data.degree_day[395]).toFixed(0),
-                        'Meter': obj.model.data.raw_value[395],
+                        'Meter': parseFloat(obj.model.data.raw_value[395]).toFixed(0),
                         'Expected': parseFloat(obj.model.data.predicted_value[395]).toFixed(0),
-                        'Replacement': replacementValue[395] = 'null' ? 'Not Replaced': replacementValue[395] ,
-                        'Reason': replacementReason[395] = 'null' ? 'No replacement reason': replacementReason[395],
-                        'Notes': replacementNotes[395] = 'null' ? 'No replacement notes' : replacementNotes[395] 
+                        'Replacement': replacementValue[395] = 'null' ? 'Not Replaced' : replacementValue[395],
+                        'Reason': replacementReason[395] = 'null' ? 'No replacement reason' : replacementReason[395],
+                        'Notes': replacementNotes[395] = 'null' ? 'No replacement notes' : replacementNotes[395]
                     },
                 ]
                 $table2.bootstrapTable({ data: data })
+                $table2.bootstrapTable('load', data)
             })
 
         })
