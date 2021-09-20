@@ -1,6 +1,6 @@
 
 let data = []
-let replaceData = []
+
 
 $(document).ready(() => {
 
@@ -64,13 +64,11 @@ $(document).ready(() => {
         })
 
         $button3.click(function () {
-            replaceData.push($table2.bootstrapTable('getSelections'))
+            let replaceData = $table2.bootstrapTable('getSelections')
             console.log(replaceData)
-            $.each(replaceData, function (index, value) {
-                $.each(value, function (index, value) {
-                    console.log(index, value.Meter)
-                })
-            })
+           replaceData.forEach(item => {
+               $('.followScroll').append(`<p>${item.Meter}</p>`)
+           })
         })
 
     })
@@ -139,18 +137,7 @@ $(document).ready(() => {
             })
 
             console.log(newArray)
-
-            let mapArray =  $.map(newArray, function (subArray){
-                 return subArray
-             })
-             
-             const newMapArray = $.map(mapArray, function (element){
-                 return element
-             })
-
-             console.log(newMapArray)
-            
-            
+        
 
             const config = {
                 data: {
