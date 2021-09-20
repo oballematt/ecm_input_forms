@@ -65,10 +65,36 @@ $(document).ready(() => {
 
         $button3.click(function () {
             let replaceData = $table2.bootstrapTable('getSelections')
+
             console.log(replaceData)
-           replaceData.forEach(item => {
-               $('.followScroll').append(`<p>${item.Meter}</p>`)
-           })
+            replaceData.forEach(item => {
+
+                $('.meterData').append(`<ol class="list-group list-group-numbered mb-4">
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                      <div class="ms-2 me-auto">
+                        <div class="fw-bold">Replacement</div>
+                        ${item.Meter} => ${item.Expected}
+                      </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                      <div class="ms-2 me-auto">
+                        <div class="fw-bold">Reason</div>
+                        Cras justo odio
+                      </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                      <div class="ms-2 me-auto">
+                        <div class="fw-bold">Notes</div>
+                       <textarea rows="4" cols="45"></textarea>
+                       <hr>
+                       <div class="text-end">
+                         <button type="button" class="btn btn-success">Submit</button>
+                       </div>
+                      </div>
+                    </li>
+                  </ol>`)
+
+            })
         })
 
     })
@@ -137,7 +163,7 @@ $(document).ready(() => {
             })
 
             console.log(newArray)
-        
+
 
             const config = {
                 data: {

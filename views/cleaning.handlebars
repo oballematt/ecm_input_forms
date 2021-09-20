@@ -123,13 +123,14 @@
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <table data-detail-view="true" data-detail-view-align='right' data-detail-formatter="detailFormatter"
-                id="table2" class="table table-bordered border-secondary">
+                id="table2" class="table table-bordered border-secondary" data-multiple-select-row="true"
+                data-click-to-select="true">
                 <h6 class='text-end'>Click the <i class="fas fa-plus"></i> to view more details</h6>
                 <thead>
                     <tr>
-                        <th data-checkbox="true"></th>
+                        <th data-field="state" data-checkbox="true"></th>
                         <th data-field="Date">Date</th>
                         <th data-field="Temperature">Temperature</th>
                         <th data-field="HDD">HDD</th>
@@ -140,10 +141,11 @@
                         <th data-field="Notes" data-visible="false">Notes</th>
                 </thead>
             </table>
+            <button type="button" id="button3" class="btn btn-success mt-3 w-100">Replace</button>
         </div>
-        <div class="col-md-4 followScroll">
-
-            <button type="button" id="button3" class="btn btn-success mt-3">Copy</button>
+    </div>
+    <div class="row">
+        <div class="col-md-4 meterData">
 
         </div>
     </div>
