@@ -78,7 +78,9 @@ $(document).ready(() => {
     $(".apiGateway").on("click", function (e) {
         e.preventDefault();
         modelApi()
-
+        valueArray = []
+        keyArray = []
+        newArray = []
         $('#chartData').load(location.href + " #chartData")
 
     })
@@ -106,7 +108,6 @@ $(document).ready(() => {
             let valueArray = []
             let keyArray = []
             let result = {}
-            let newArray = []
             const obj = JSON.parse(response.body)
             console.log(obj)
             $('.overlayMessage').text('Getting data, this will take a few seconds')
@@ -127,28 +128,30 @@ $(document).ready(() => {
             // $('#tableData').show()
             valueArray.push(obj.model.data.predicted_value_lower_bound)
             let valueSliceArray = valueArray[0].slice(365)
-            console.log(valueSliceArray)
             keyArray.push(obj.model.data.average_dry_bulb_temperature)
             let keySliceArray = keyArray[0].slice(365)
-            console.log(keySliceArray)
             keySliceArray.forEach((key, i) => result[key] = valueSliceArray[i])
-            console.log(result)
-            // newArray.push(result)
-            // let sortArray = newArray.sort(function (a, b) { return a - b })
-            // console.log(sortArray)
+            var newArray = Object.keys(result).map(function (key) {
+                return [Number(key), result[key]];
+            })
+            newArray.sort(function (a, b) {
+                return a[0] - b[0]
+            })
 
-            // $.each(result, function(key, value) {
-            //     newArray.push(key, value);
-            // })
-            //    let sortArray = newArray.sort(function (a, b) { return a - b })
-            //  console.log(sortArray)
-            // let floatArray = dataArray[0]
-            // floatArray = floatArray.map(function(each_element){
-            //     return Number(each_element.toFixed(0))
-            // })
-            // const sliceArray = floatArray.slice(365)
-            // const sortArray = sliceArray.sort(function(a, b){return a-b})
-            // console.log(sortArray)
+            console.log(newArray)
+
+            let mapArray =  $.map(newArray, function (subArray){
+                 return subArray
+             })
+             
+             const newMapArray = $.map(mapArray, function (element){
+                 return element
+             })
+
+             console.log(newMapArray)
+            
+            
+
             const config = {
                 data: {
                     datasets: [{
@@ -354,108 +357,18 @@ $(document).ready(() => {
                         tension: 0.1,
                         borderColor: 'rgb(0, 0, 255)',
 
-                    }, {
-                        type: 'line',
-                        label: 'Low Limit',
+                        // }, {
+                        //     type: 'line',
+                        //     label: 'Low Limit',
 
-                        data: [{
-                            x: obj.model.data.average_dry_bulb_temperature[373],
-                            y: obj.model.data.predicted_value_lower_bound[373]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[376],
-                            y: obj.model.data.predicted_value_lower_bound[376]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[374],
-                            y: obj.model.data.predicted_value_lower_bound[374]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[389],
-                            y: obj.model.data.predicted_value_lower_bound[389]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[380],
-                            y: obj.model.data.predicted_value_lower_bound[380]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[371],
-                            y: obj.model.data.predicted_value_lower_bound[371]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[371],
-                            y: obj.model.data.predicted_value_lower_bound[371]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[372],
-                            y: obj.model.data.predicted_value_lower_bound[372]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[373],
-                            y: obj.model.data.predicted_value_lower_bound[373]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[374],
-                            y: obj.model.data.predicted_value_lower_bound[374]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[375],
-                            y: obj.model.data.predicted_value_lower_bound[375]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[376],
-                            y: obj.model.data.predicted_value_lower_bound[376]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[377],
-                            y: obj.model.data.predicted_value_lower_bound[377]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[378],
-                            y: obj.model.data.predicted_value_lower_bound[378]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[379],
-                            y: obj.model.data.predicted_value_lower_bound[379]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[380],
-                            y: obj.model.data.predicted_value_lower_bound[380]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[381],
-                            y: obj.model.data.predicted_value_lower_bound[381]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[382],
-                            y: obj.model.data.predicted_value_lower_bound[382]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[383],
-                            y: obj.model.data.predicted_value_lower_bound[383]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[384],
-                            y: obj.model.data.predicted_value_lower_bound[384]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[385],
-                            y: obj.model.data.predicted_value_lower_bound[385]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[386],
-                            y: obj.model.data.predicted_value_lower_bound[386]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[387],
-                            y: obj.model.data.predicted_value_lower_bound[387]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[388],
-                            y: obj.model.data.predicted_value_lower_bound[388]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[389],
-                            y: obj.model.data.predicted_value_lower_bound[389]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[390],
-                            y: obj.model.data.predicted_value_lower_bound[390]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[391],
-                            y: obj.model.data.predicted_value_lower_bound[391]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[392],
-                            y: obj.model.data.predicted_value_lower_bound[392]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[393],
-                            y: obj.model.data.predicted_value_lower_bound[393]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[394],
-                            y: obj.model.data.predicted_value_lower_bound[394]
-                        }, {
-                            x: obj.model.data.average_dry_bulb_temperature[395],
-                            y: obj.model.data.predicted_value_lower_bound[395]
-                        }],
-                        fill: false,
-                        pointRadius: 0,
-                        tension: 0.1,
-                        borderColor: 'rgb(0, 128, 0)',
+                        //     data: [{
+                        //         x: subArray[0],
+                        //         y: subArray[1]
+                        //     }],
+                        //     fill: false,
+                        //     pointRadius: 0,
+                        //     tension: 0.1,
+                        //     borderColor: 'rgb(0, 128, 0)',
                     }]
                 },
                 options: {
@@ -466,6 +379,10 @@ $(document).ready(() => {
                     }
                 }
             };
+            let ctx = document.getElementById('myChart').getContext('2d');
+            let myChart = new Chart(ctx, config);
+
+
 
 
             const config2 = {
@@ -795,8 +712,7 @@ $(document).ready(() => {
                 }
             };
 
-            let ctx = document.getElementById('myChart').getContext('2d');
-            let myChart = new Chart(ctx, config);
+
 
             let ctx2 = document.getElementById('myChart2').getContext('2d');
             let myChart2 = new Chart(ctx2, config2);
@@ -1128,4 +1044,5 @@ $(document).ready(() => {
     }
 
 })
+
 
