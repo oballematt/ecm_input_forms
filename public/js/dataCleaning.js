@@ -31,11 +31,14 @@ $(document).ready(() => {
 
 
 
-    var $table = $('#table')
-    var $table2 = $('#table2')
-    var $button = $('#button')
-    var $button2 = $('#button2')
-    var $button3 = $('#button3')
+    let $table = $('#table')
+    let $table2 = $('#table2')
+    let $button = $('#button')
+    let $button2 = $('#button2')
+    let $button3 = $('#button3')
+    let container = $('#row-container')
+    let content = ""
+
 
     $(function () {
         let isChecked = false
@@ -63,41 +66,110 @@ $(document).ready(() => {
             isChecked = false
         })
 
-        $button3.click(function () {
-            let replaceData = $table2.bootstrapTable('getSelections')
 
-            console.log(replaceData)
-            replaceData.forEach(item => {
+    })
 
-                $('.meterData').append(`<ol class="list-group list-group-numbered mb-4">
+    $button3.click(function () {
+        let replaceData = $table2.bootstrapTable('getSelections')
+        let id 
+        console.log(replaceData)
+        replaceData.forEach(function (item, i) {
+            if (i == 0) {
+                content += '<div class="row">'
+            }
+            content += `<div class="col-md-4">
+                <ol style='border-color: red' class="list-group list-group-numbered mb-4">
                     <li class="list-group-item d-flex justify-content-between align-items-start">
-                      <div class="ms-2 me-auto">
-                        <div class="fw-bold">Replacement</div>
-                        ${item.Meter} => ${item.Expected}
-                      </div>
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Replacement</div>
+                            <p>${item.Meter} => ${item.Expected}</p>
+                        </div>
+                        <span class="badge bg-primary rounded-pill">${item.Date}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-start">
-                      <div class="ms-2 me-auto">
-                        <div class="fw-bold">Reason</div>
-                        Cras justo odio
-                      </div>
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Steward</div>
+                            <select class="form-select steward">
+                                <option disabled selected>Choose...</option>
+                                <option>Grace Hsieh</option>
+                                <option>Matt Stevens</option>
+                                <option>Meagan Jones</option>
+                            </select>
+                        </div>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-start">
-                      <div class="ms-2 me-auto">
-                        <div class="fw-bold">Notes</div>
-                       <textarea rows="4" cols="45"></textarea>
-                       <hr>
-                       <div class="text-end">
-                         <button type="button" class="btn btn-success">Submit</button>
-                       </div>
-                      </div>
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Reason</div>
+                            <select class="form-select reason" id=${item.Expected}>
+                                <option disabled selected>Choose...</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
                     </li>
-                  </ol>`)
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Notes</div>
+                            <textarea class='notes' rows="4" cols="45"></textarea>
+                            <hr>
+                            <div class="text-end">
+                                <button data-replacement=${item.Expected} data-date=${item.Date} type="button" class="btn btn-success submit">Submit</button>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
+            </div>`
+            if (i != 0 && i % 5 == 0) {
+                content += '</div><div class="row">'
+            }
+        })
+        content += '</div>'
+        container.append(content)
 
+        $('.notes').on('change', function () {
+            let x = $(this).val()
+            $('.notes').each(function (index, el) {
+                $(this).html(x)
+                $(this).off('change')
+            })
+        })
+        $('.steward').on('change', function () {
+            let x = $(this).val()
+            $('.steward').each(function (index, el) {
+                $(this).val(x)
+                $(this).off('change')
             })
         })
 
+        $('.reason').on('change', function () {
+            let x = $(this).val()
+            id = $(this).attr('id')
+            $('.reason').each(function () {
+                $(this).val(x)
+                $(this).off('change')  
+               
+                $('.submit').attr('data-reason', $('#' + id).val())
+            })
+             
+        })
+
+
+        $('.submit').on('click', function () {
+            const replacement = $(this).attr('data-replacement')
+            const date = $(this).attr('data-date')
+            console.log(replacement, date)
+            // const data = {
+            //     timestamp: date,
+            //     value: replacement,
+            //     reason: 
+            // }
+        })
+
+
     })
+
+
 
     $(".apiGateway").on("click", function (e) {
         e.preventDefault();
@@ -106,7 +178,6 @@ $(document).ready(() => {
         keyArray = []
         newArray = []
         $('#chartData').load(location.href + " #chartData")
-
     })
 
     const modelApi = function () {
@@ -149,7 +220,7 @@ $(document).ready(() => {
             $('.r2').html(r2)
             $('.stdDev').html(stdDev)
             $('.meterVariable').html(`Variable: ${meterVariable}`)
-            // $('#tableData').show()
+            $('#tableData').show()
             valueArray.push(obj.model.data.predicted_value_lower_bound)
             let valueSliceArray = valueArray[0].slice(365)
             keyArray.push(obj.model.data.average_dry_bulb_temperature)

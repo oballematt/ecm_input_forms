@@ -122,12 +122,12 @@
             <canvas id="myChart2" width="1000" height="1000"></canvas>
         </div>
     </div>
-    <div class="row mb-3">
+    <div style='display: none' id='tableData' class="row mb-3">
         <div class="col-md-12">
             <table data-detail-view="true" data-detail-view-align='right' data-detail-formatter="detailFormatter"
-                id="table2" class="table table-bordered border-secondary" data-multiple-select-row="true"
-                data-click-to-select="true">
-                <h6 class='text-end'>Click the <i class="fas fa-plus"></i> to view more details</h6>
+                id="table2" class="table table-bordered border-secondary w-100" data-multiple-select-row="true"
+                data-click-to-select="true" data-toolbar="#toolbar">
+                 <h6 class='text-end'>Click the <i class="fas fa-plus"></i> to view more details</h6>
                 <thead>
                     <tr>
                         <th data-field="state" data-checkbox="true"></th>
@@ -144,9 +144,7 @@
             <button type="button" id="button3" class="btn btn-success mt-3 w-100">Replace</button>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-4 meterData">
+    <div id='row-container'>
 
-        </div>
     </div>
 </div>
