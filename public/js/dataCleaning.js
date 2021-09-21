@@ -71,25 +71,25 @@ $(document).ready(() => {
 
     $button3.click(function () {
         let replaceData = $table2.bootstrapTable('getSelections')
-        let id 
         console.log(replaceData)
         replaceData.forEach(function (item, i) {
             if (i == 0) {
                 content += '<div class="row">'
             }
-            content += `<div class="col-md-4">
-                <ol style='border-color: red' class="list-group list-group-numbered mb-4">
+            content += `
+            <div class="col-md-4">
+                <ul class="list-group mb-4 bg-light">
                     <li class="list-group-item d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">Replacement</div>
-                            <p>${item.Meter} => ${item.Expected}</p>
+                            ${item.Meter} => ${item.Expected}
                         </div>
                         <span class="badge bg-primary rounded-pill">${item.Date}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">Steward</div>
-                            <select class="form-select steward">
+                            <select id=${Math.floor(Math.random() * 20) + 11 } class="form-select steward">
                                 <option disabled selected>Choose...</option>
                                 <option>Grace Hsieh</option>
                                 <option>Matt Stevens</option>
@@ -111,14 +111,14 @@ $(document).ready(() => {
                     <li class="list-group-item d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">Notes</div>
-                            <textarea class='notes' rows="4" cols="45"></textarea>
+                            <textarea id=${Math.floor(Math.random() * 10) + 1} class='notes' rows="4" cols="45"></textarea>
                             <hr>
                             <div class="text-end">
                                 <button data-replacement=${item.Expected} data-date=${item.Date} type="button" class="btn btn-success submit">Submit</button>
                             </div>
                         </div>
                     </li>
-                </ol>
+                </ul>
             </div>`
             if (i != 0 && i % 5 == 0) {
                 content += '</div><div class="row">'
@@ -128,37 +128,55 @@ $(document).ready(() => {
         container.append(content)
 
         $('.notes').on('change', function () {
-            let x = $(this).val()
-            $('.notes').each(function (index, el) {
-                $(this).html(x)
-                $(this).off('change')
-            })
+            let x = $(this).val();
+            let id = $(this).attr('id');
+            if (!$(this).attr('was-changed')) {
+                $('.notes').each(function () {
+                    $(this).val(x);
+                    $(this).attr('was-changed', true); 
+                });
+                $('.submit').attr('data-notes', $('#' + id).val());
+            }
+            else {
+                $(this).closest('ul').find('.submit').attr('data-notes', $('#' + id).val());
+            }
         })
         $('.steward').on('change', function () {
-            let x = $(this).val()
-            $('.steward').each(function (index, el) {
-                $(this).val(x)
-                $(this).off('change')
-            })
+            let x = $(this).val();
+            let id = $(this).attr('id');
+            if (!$(this).attr('was-changed')) {
+                $('.steward').each(function () {
+                    $(this).val(x);
+                    $(this).attr('was-changed', true); 
+                });
+                $('.submit').attr('data-steward', $('#' + id).val());
+            }
+            else {
+                $(this).closest('ul').find('.submit').attr('data-steward', $('#' + id).val());
+            }
         })
 
         $('.reason').on('change', function () {
-            let x = $(this).val()
-            id = $(this).attr('id')
-            $('.reason').each(function () {
-                $(this).val(x)
-                $(this).off('change')  
-               
-                $('.submit').attr('data-reason', $('#' + id).val())
-            })
-             
+            let x = $(this).val();
+            let id = $(this).attr('id');
+            if (!$(this).attr('was-changed')) {
+                $('.reason').each(function () {
+                    $(this).val(x);
+                    $(this).attr('was-changed', true); 
+                });
+                $('.submit').attr('data-reason', $('#' + id).val());
+            }
+            else {
+                $(this).closest('ul').find('.submit').attr('data-reason', $('#' + id).val());
+            }
         })
 
 
         $('.submit').on('click', function () {
             const replacement = $(this).attr('data-replacement')
             const date = $(this).attr('data-date')
-            console.log(replacement, date)
+            const reason = $(this).attr('data-reason')
+            console.log(replacement, date, reason)
             // const data = {
             //     timestamp: date,
             //     value: replacement,
