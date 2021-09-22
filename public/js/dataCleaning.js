@@ -66,59 +66,62 @@ $(document).ready(() => {
             isChecked = false
         })
 
-
     })
+
+    function makeid(length) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() *
+                charactersLength));
+        }
+        return result;
+    }
 
     $button3.click(function () {
         let replaceData = $table2.bootstrapTable('getSelections')
         console.log(replaceData)
+        $("html,body").animate({ "scrollTop": $("#row-container").offset().top }, 100);
         replaceData.forEach(function (item, i) {
             if (i == 0) {
                 content += '<div class="row">'
             }
             content += `
             <div class="col-md-4">
-                <ul class="list-group mb-4 bg-light">
-                    <li class="list-group-item d-flex justify-content-between align-items-start">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold">Replacement</div>
-                            ${item.Meter} => ${item.Expected}
-                        </div>
-                        <span class="badge bg-primary rounded-pill">${item.Date}</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-start">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold">Steward</div>
-                            <select id=${Math.floor(Math.random() * 20) + 11 } class="form-select steward">
-                                <option disabled selected>Choose...</option>
-                                <option>Grace Hsieh</option>
-                                <option>Matt Stevens</option>
-                                <option>Meagan Jones</option>
-                            </select>
-                        </div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-start">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold">Reason</div>
-                            <select class="form-select reason" id=${item.Expected}>
-                                <option disabled selected>Choose...</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-start">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold">Notes</div>
-                            <textarea id=${Math.floor(Math.random() * 10) + 1} class='notes' rows="4" cols="45"></textarea>
-                            <hr>
-                            <div class="text-end">
-                                <button data-replacement=${item.Expected} data-date=${item.Date} type="button" class="btn btn-success submit">Submit</button>
+                <div class="card border-secondary bg-light mb-3" w-100>
+                    <div class="card-body text-dark">
+                        <div class="card-title d-flex justify-content-between align-items-start">
+                            <div>
+                                <h5>Replacement:</h5>
+                                <strong><p class="card-text ms-2">${item.Meter} <i class="fas fa-arrow-right"></i> ${item.Expected}</p></strong>
                             </div>
+                            <span style="font-size:13px;" class="badge rounded-pill bg-primary text-light">${item.Date}</span>
                         </div>
-                    </li>
-                </ul>
+                        <hr>
+                        <h5 class="card-title">Steward:</h5>
+                        <select id=${makeid(5)} class="form-select steward">
+                            <option disabled selected>Choose...</option>
+                            <option>Grace Hsieh</option>
+                            <option>Matt Stevens</option>
+                            <option>Meagan Jones</option>
+                        </select>
+                        <hr>
+                        <h5 class="card-title">Reason:</h5>
+                        <select class="form-select reason" id=${makeid(5)}>
+                            <option disabled selected>Choose...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                        <hr>
+                        <h5 class="card-title">Notes:</h5>
+                        <textarea id=${makeid(5)} class='notes' rows="4" cols="47"></textarea>
+                    </div>
+                    <div class="card-footer bg-transparent border-secondary text-end">
+                        <button data-replacement=${item.Expected} data-date=${item.Date} type="button" class="btn btn-success submit">Submit</button>
+                    </div>
+                </div>
             </div>`
             if (i != 0 && i % 5 == 0) {
                 content += '</div><div class="row">'
@@ -133,12 +136,12 @@ $(document).ready(() => {
             if (!$(this).attr('was-changed')) {
                 $('.notes').each(function () {
                     $(this).val(x);
-                    $(this).attr('was-changed', true); 
+                    $(this).attr('was-changed', true);
                 });
                 $('.submit').attr('data-notes', $('#' + id).val());
             }
             else {
-                $(this).closest('ul').find('.submit').attr('data-notes', $('#' + id).val());
+                $(this).closest('.card').find('.submit').attr('data-notes', $('#' + id).val());
             }
         })
         $('.steward').on('change', function () {
@@ -147,12 +150,12 @@ $(document).ready(() => {
             if (!$(this).attr('was-changed')) {
                 $('.steward').each(function () {
                     $(this).val(x);
-                    $(this).attr('was-changed', true); 
+                    $(this).attr('was-changed', true);
                 });
                 $('.submit').attr('data-steward', $('#' + id).val());
             }
             else {
-                $(this).closest('ul').find('.submit').attr('data-steward', $('#' + id).val());
+                $(this).closest('.card').find('.submit').attr('data-steward', $('#' + id).val());
             }
         })
 
@@ -162,12 +165,12 @@ $(document).ready(() => {
             if (!$(this).attr('was-changed')) {
                 $('.reason').each(function () {
                     $(this).val(x);
-                    $(this).attr('was-changed', true); 
+                    $(this).attr('was-changed', true);
                 });
                 $('.submit').attr('data-reason', $('#' + id).val());
             }
             else {
-                $(this).closest('ul').find('.submit').attr('data-reason', $('#' + id).val());
+                $(this).closest('.card').find('.submit').attr('data-reason', $('#' + id).val());
             }
         })
 
@@ -176,7 +179,9 @@ $(document).ready(() => {
             const replacement = $(this).attr('data-replacement')
             const date = $(this).attr('data-date')
             const reason = $(this).attr('data-reason')
-            console.log(replacement, date, reason)
+            const notes = $(this).attr('data-notes')
+            const steward = $(this).attr('data-steward')
+            console.log(replacement, date, reason, notes, steward)
             // const data = {
             //     timestamp: date,
             //     value: replacement,
@@ -187,7 +192,10 @@ $(document).ready(() => {
 
     })
 
+    $('#top').on('click', function () {
+        $("html, body").animate({ scrollTop: 0 }, 100);
 
+    })
 
     $(".apiGateway").on("click", function (e) {
         e.preventDefault();

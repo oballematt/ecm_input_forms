@@ -1,7 +1,4 @@
-.table-hover tbody tr:hover td  {  
-     background-color: lightgray;
-     cursor: pointer;   
-}   
+
 
 #overlay {
     background-color:rgba(255, 255, 255, .8);
@@ -27,17 +24,8 @@
       border-radius: 50%;
   }
 
-.tableContainer {
-    height: 400px;
-    overflow: auto;
-}
-
-.followScroll{
-    margin-top: 27.5px
-}
-
-.bordered {
-    border: 1px solid
+.row {
+    margin: auto
 }
 
 

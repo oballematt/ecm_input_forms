@@ -111,10 +111,12 @@
             </div>
         </div>
     </form>
-    <div class="d-grid gap-2 mt-4">
-        <button class="btn btn-primary apiGateway load" type="button">Run Model</button>
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <button class="btn btn-primary apiGateway load w-100" type="button">Run Model</button>
+        </div>
     </div>
-    <div id='chartData' class="row mt-5 mb-5">
+    <div id='chartData' class="row mt-3 mb-3">
         <div class="col-md-6">
             <canvas id="myChart" width="1000" height="1000"></canvas>
         </div>
@@ -125,9 +127,9 @@
     <div style='display: none' id='tableData' class="row mb-3">
         <div class="col-md-12">
             <table data-detail-view="true" data-detail-view-align='right' data-detail-formatter="detailFormatter"
-                id="table2" class="table table-bordered border-secondary w-100" data-multiple-select-row="true"
-                data-click-to-select="true" data-toolbar="#toolbar">
-                 <h6 class='text-end'>Click the <i class="fas fa-plus"></i> to view more details</h6>
+                id="table2" class="table table-bordered border-secondary" data-multiple-select-row="true"
+                data-click-to-select="true">
+                <h6 class='text-end'>Click the <i class="fas fa-plus"></i> to view more details</h6>
                 <thead>
                     <tr>
                         <th data-field="state" data-checkbox="true"></th>
@@ -145,6 +147,8 @@
         </div>
     </div>
     <div id='row-container'>
-
+    </div>
+    <div class="text-center mb-3">
+        <button type="button" id="top" class="btn btn-secondary">Back to Top</button>
     </div>
 </div>
