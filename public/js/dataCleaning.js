@@ -78,9 +78,10 @@ $(document).ready(() => {
         }
         return result;
     }
+    let replaceData
 
     $button3.click(function () {
-        let replaceData = $table2.bootstrapTable('getSelections')
+        replaceData = $table2.bootstrapTable('getSelections')
         console.log(replaceData)
         $("html,body").animate({ "scrollTop": $("#row-container").offset().top }, 100);
         replaceData.forEach(function (item, i) {
@@ -181,12 +182,31 @@ $(document).ready(() => {
             const reason = $(this).attr('data-reason')
             const notes = $(this).attr('data-notes')
             const steward = $(this).attr('data-steward')
+            const buildingNumber = data[0][0].building_number
+            const commodityTag = data[0][0].commodity_tag
+            const meter = data[0][0].meter
             console.log(replacement, date, reason, notes, steward)
-            // const data = {
-            //     timestamp: date,
-            //     value: replacement,
-            //     reason: 
-            // }
+            $.ajax({
+                url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/building_meter_replacement`,
+                method: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    "analyst": steward,
+                    "building_number": buildingNumber,
+                    "commodity_tag": commodityTag,
+                    "meter": meter,
+                    "data": {
+                        "timestamp": [date],
+                        "value": [parseFloat(replacement)],
+                        "reason": [reason],
+                        "notes": [notes],
+                    }
+                }),
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            })
         })
 
 
@@ -197,9 +217,13 @@ $(document).ready(() => {
 
     })
 
+
     $(".apiGateway").on("click", function (e) {
         e.preventDefault();
         modelApi()
+        container.empty()
+        replaceData = []
+        content = ''
         valueArray = []
         keyArray = []
         newArray = []
@@ -226,6 +250,7 @@ $(document).ready(() => {
                 }
             }
         }).then(response => {
+            $("#row-container").empty()
             let valueArray = []
             let keyArray = []
             let result = {}
