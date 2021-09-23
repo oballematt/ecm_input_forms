@@ -3,17 +3,16 @@
     <br />
     <p class='overlayMessage'>Getting data, this will take a few seconds</p>
 </div>
-
 <div class="row">
-    <form action="/datacleaning" method="POST">
+    <div class="user">
+        {{#if user}}
+        {{user}}
+        {{/if}}
+    </div>
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12 mt-4">
-                {{#each errors}}
-                <div>{{text}}</div>
-                {{/each}}
-                <div id="toolbar">
-                </div>
-                <table id="table" data-toggle="table" data-toolbar="#toolbar" data-height="460" data-ajax="ajaxRequest"
+            <div class="col-md-4 col-lg-4 bg-light ">
+                <table id="table" data-toggle="table" data-toolbar="#toolbar" data-height="430" data-ajax="ajaxRequest"
                     data-search="true" data-pagination="true">
                     <thead>
                         <tr class="rowData">
@@ -26,22 +25,9 @@
                     </thead>
                 </table>
                 <button type="button" id="button" class="btn btn-success mt-3">Confirm Meter Selection</button>
-                <button type="button" id="button2" class="btn btn-danger mt-3">Clear Selection</button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 mt-5">
-                <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-between align-items-start">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold">Current Meter Selection:</div>
-                            <div class="meterSelection">--</div>
-                        </div>
-                    </li>
-                </ul>
                 <div class="input-group flex-nowrap mt-3">
                     <span class="input-group-text" id="addon-wrapping">Model Start Date:</span>
-                    <input disabled='true' id="modelStart" type="text"
+                    <input autocomplete="off" disabled='true' id="modelStart" type="text"
                         class="form-control datepicker disabled modelStart" placeholder="yyyy/mm/dd"
                         aria-label="Model Start Date" aria-describedby="addon-wrapping">
                 </div>
@@ -50,7 +36,7 @@
                     <input disabled="true" type="text" class="form-control datepicker disabled modelEnd"
                         placeholder="yyyy/mm/dd" aria-label="Model End Date" aria-describedby="addon-wrapping">
                 </div>
-                <div class="input-group flex-nowrap mt-5">
+                <div class="input-group flex-nowrap mt-3">
                     <span class="input-group-text" id="addon-wrapping">Analysis Start Date:</span>
                     <input disabled="true" type="text" class="form-control datepicker disabled analysisStart"
                         placeholder="yyyy/mm/dd" aria-label="Analysis Start Date" aria-describedby="addon-wrapping">
@@ -68,9 +54,8 @@
                         </div>
                     </li>
                 </ul>
-            </div>
-            <div class="col-md-6 mt-5">
-                <ul class="list-group">
+                <button class="btn btn-primary apiGateway load mt-3 w-100" type="button">Run Model</button>
+                <ul class="list-group mt-3 mb-3">
                     <li class="list-group-item d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">Base Temp:</div>
@@ -109,46 +94,100 @@
                     </li>
                 </ul>
             </div>
-        </div>
-    </form>
-    <div class="row mt-4">
-        <div class="col-md-12">
-            <button class="btn btn-primary apiGateway load w-100" type="button">Run Model</button>
+
+            <main class="col-md-8 ms-sm-auto col-lg-8 px-md-4">
+                {{!-- <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2 meterSelection">Current Meter: --</h1>
+                </div> --}}
+                <div id='chartData' class="row">
+                    <div class="col-md-6">
+                        <canvas class="my-4 w-100" id="myChart" width="900" height="415"></canvas>
+                    </div>
+                    <div class="col-md-6">
+                        <canvas class="my-4 w-100" id="myChart2" width="900" height="415"></canvas>
+                    </div>
+                </div>
+
+                <h2>Replacement</h2>
+                <div style="display: none" id='tableData' class="row">
+                    <div class="col-md-6">
+                        <div class="table-responsive ">
+                            <table data-detail-view="true" data-detail-view-align='left' data-height="460"
+                                data-toggle="table" data-pagination="true" data-detail-formatter="detailFormatter"
+                                id="table2" class="table table-bordered border-secondary"
+                                data-multiple-select-row="true" data-click-to-select="true">
+                                <h6 class='text-end'>Click the <i class="fas fa-plus"></i> to view more details</h6>
+                                <thead>
+                                    <tr>
+                                        <th data-field="state" data-checkbox="true"></th>
+                                        <th data-field="Date">Date</th>
+                                        <th data-field="Temperature">Temperature</th>
+                                        <th data-field="HDD">HDD</th>
+                                        <th data-field="Meter">Meter Reading</th>
+                                        <th data-field="Expected">Expected</th>
+                                        <th data-field="Replacement" data-visible="false">Replacement</th>
+                                        <th data-field="Reason" data-visible="false">Reason</th>
+                                        <th data-field="Notes" data-visible="false">Notes</th>
+                                </thead>
+                            </table>
+                            <button type="button" id="button3" class="btn btn-success mt-3 w-100">Replace</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-4">
+                        <div class="card text-dark bg-light mb-3">
+                            <h6 class="card-header">Replacement Data</h6>
+                            <div class="card-body">
+                                <div class="col-md-10 offset-1 text-center">
+                                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Current Meter Value</th>
+                                                    <th scope="col">Replacement Value</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="replaceTable">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3 text-start">
+                                                <label for="reason" class="form-label">
+                                                    <h6>Reason</h6>
+                                                </label>
+                                                <select disabled='true' class="form-select" id="reason"
+                                                    aria-label="Default select example">
+                                                    <option disabled selected>Choose...</option>
+                                                    <option>meter issue</option>
+                                                    <option>building maintenance issue</option>
+                                                    <option>major renovation/addition in progress</option>
+                                                    <option>other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 text-start">
+                                            <div class="mb-3">
+                                                <label for="notes" class="form-label">
+                                                    <h6>Notes</h6>
+                                                </label>
+                                                <textarea disabled='true' class="form-control" id="notes"
+                                                    rows="2"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button style="display: none" type="button"
+                                            class="btn btn-success submit w-100 load">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
         </div>
     </div>
-    <div id='chartData' class="row mt-3 mb-3">
-        <div class="col-md-6">
-            <canvas id="myChart" width="1000" height="1000"></canvas>
-        </div>
-        <div class="col-md-6">
-            <canvas id="myChart2" width="1000" height="1000"></canvas>
-        </div>
-    </div>
-    <div style='display: none' id='tableData' class="row mb-3">
-        <div class="col-md-12">
-            <table data-detail-view="true" data-detail-view-align='right' data-detail-formatter="detailFormatter"
-                id="table2" class="table table-bordered border-secondary" data-multiple-select-row="true"
-                data-click-to-select="true">
-                <h6 class='text-end'>Click the <i class="fas fa-plus"></i> to view more details</h6>
-                <thead>
-                    <tr>
-                        <th data-field="state" data-checkbox="true"></th>
-                        <th data-field="Date">Date</th>
-                        <th data-field="Temperature">Temperature</th>
-                        <th data-field="HDD">HDD</th>
-                        <th data-field="Meter">Meter Reading</th>
-                        <th data-field="Expected">Expected</th>
-                        <th data-field="Replacement" data-visible="false">Replacement</th>
-                        <th data-field="Reason" data-visible="false">Reason</th>
-                        <th data-field="Notes" data-visible="false">Notes</th>
-                </thead>
-            </table>
-            <button type="button" id="button3" class="btn btn-success mt-3 w-100">Replace</button>
-        </div>
-    </div>
-    <div id='row-container'>
-    </div>
-    <div class="text-center mb-3">
-        <button type="button" id="top" class="btn btn-secondary">Back to Top</button>
-    </div>
-</div>
