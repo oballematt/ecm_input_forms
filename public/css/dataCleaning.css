@@ -37,6 +37,14 @@
     display: block;
     }
 
+    @media (min-width: 764px) and (max-width: 1400px){
+        .responsive{
+            flex-direction: column;
+            width: 100%
+        }
+    }
+  
+
 
   @keyframes rotate {
       0% {
