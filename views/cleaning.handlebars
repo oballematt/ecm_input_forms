@@ -3,17 +3,17 @@
     <br />
     <p class='overlayMessage'>Getting data, this will take a few seconds</p>
 </div>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3 bg-light">
+<div class="container-fluid" style='background-color:#333f48; height: 100%;'>
+    <div style="height: 100%;" class="row">
+        <div  class="col-md-3 searchBox ">
             <div class="user">
                 {{#if user}}
                 {{user}}
                 {{/if}}
             </div>
             <table id="table" data-toggle="table" data-toolbar="#toolbar" data-height="430" data-ajax="ajaxRequest"
-                data-search="true" data-pagination="true">
-                <thead>
+                data-search="true" data-pagination="true" style="background-color: white">
+                <thead style="background-color: white">
                     <tr class="rowData">
                         <th id="button3" data-field="state" data-radio="true"></th>
                         <th data-field="building_abbreviation">Building</th>
@@ -47,57 +47,57 @@
             </div>
             <button class="btn btn-primary apiGateway load mt-3 w-100" type="button">Run Model</button>
         </div>
-        <div class="col-md-9">
-            <div id='chartData' class="row">
-                <div class="col-md-6">
+        <div class="col-md-9" style="height: 100%;">
+            <div id='chartData' class="row" style="height: 40%;">
+                <div class="col-md-6" >
                     <canvas class="my-4 w-100" id="myChart" width="900" height="415"></canvas>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 ">
                     <canvas class="my-4 w-100" id="myChart2" width="900" height="415"></canvas>
                 </div>
             </div>
             <hr>
             <div class="row">
-                <h4>Meter Data</h4>
+                <h4 style="color: white">Meter Data</h4>
                 <div class="col-md-6">
-                    <ul class="list-group mt-3 mb-3">
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <ul class="list-group mt-3 mb-3" >
+                        <li class="list-group-item d-flex justify-content-between align-items-start listGroupColor"> 
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">Meter Description:</div>
                                 <div class="meterVariable">--</div>
                             </div>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <li class="list-group-item d-flex justify-content-between align-items-start listGroupColor"> 
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">Base Temp:</div>
                                 <div class="baseTemp">--</div>
                             </div>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <li class="list-group-item d-flex justify-content-between align-items-start listGroupColor"> 
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">% Auto-Ignored:</div>
                                 <div class="autoIgnored">--</div>
                             </div>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <li class="list-group-item d-flex justify-content-between align-items-start listGroupColor"> 
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">Slope:</div>
                                 <div class="slope">--</div>
                             </div>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <li class="list-group-item d-flex justify-content-between align-items-start listGroupColor"> 
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">Intercept:</div>
                                 <div class="intercept">--</div>
                             </div>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <li class="list-group-item d-flex justify-content-between align-items-start listGroupColor"> 
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">R-Squared:</div>
                                 <div class="r2">--</div>
                             </div>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <li class="list-group-item d-flex justify-content-between align-items-start listGroupColor"> 
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">Std Dev:</div>
                                 <div class="stdDev">--</div>

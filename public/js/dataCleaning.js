@@ -210,7 +210,7 @@ $(document).ready(() => {
             highValueArray.push(obj.model.data.predicted_value_upper_bound)
             let highValueSliceArray = highValueArray[0].slice(365)
             xTempSlice.forEach((key, i) => result[key] = highValueSliceArray[i])
-            let highArray = Object.keys(result).map(function (key){
+            let highArray = Object.keys(result).map(function (key) {
                 return [Number(key), result[key]]
             })
             highArray.sort(function (a, b) {
@@ -219,52 +219,69 @@ $(document).ready(() => {
             rawValue.push(obj.model.data.raw_value)
             let rawValueSlice = rawValue[0].slice(365)
             xTempSlice.forEach((key, i) => result[key] = rawValueSlice[i])
-            let newRawValue = Object.keys(result).map(function (key){
+            let newRawValue = Object.keys(result).map(function (key) {
                 return [Number(key), result[key]]
             })
             newRawValue.sort(function (a, b) {
                 return a[0] - b[0]
             })
-                const config = {
-                    data: {
-                        datasets: [{
-                            type: "scatter",
-                            label: "Meter VS. Temp",
-                            data: newRawValue.map(a => { return { x: a[0], y: a[1]}}),
-                            backgroundColor: 'rgb(255, 0, 0)',
-                            pointRadius: 5,
-                        }, {
-                            type: 'line',
-                            label: 'High Limit',
-                            data: highArray.map(a => { return { x: a[0], y: a[1]}}),
-                            fill: false,
-                            pointRadius: 0,
-                            tension: 0.1,
-                            borderColor: 'rgb(0, 0, 255)',
+            const config = {
+                data: {
+                    datasets: [{
+                        type: "scatter",
+                        label: "Meter VS. Temp",
+                        data: newRawValue.map(a => { return { x: a[0], y: a[1] } }),
+                        backgroundColor: 'rgb(255, 0, 0)',
+                        pointRadius: 5,
+                    }, {
+                        type: 'line',
+                        label: 'High Limit',
+                        data: highArray.map(a => { return { x: a[0], y: a[1] } }),
+                        fill: false,
+                        pointRadius: 0,
+                        tension: 0.1,
+                        borderColor: 'rgb(0, 0, 255)',
 
-                         }, 
-                         {
-                            type: 'line',
-                            label: 'Low Limit',
-                            data: lowArray.map(a => { return { x: a[0], y: a[1]}}),
-                            fill: false,
-                            pointRadius: 0,
-                            tension: 0.1,
-                            borderColor: 'rgb(0, 128, 0)',
-                        }
-                    ]
                     },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
+                    {
+                        type: 'line',
+                        label: 'Low Limit',
+                        data: lowArray.map(a => { return { x: a[0], y: a[1] } }),
+                        fill: false,
+                        pointRadius: 0,
+                        tension: 0.1,
+                        borderColor: 'rgb(0, 128, 0)',
+                    }
+                    ]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'white'
                             }
                         }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: 'white'
+                            }
+
+                        },
+                        x: {
+                            ticks: {
+                                color: 'white'
+                            }
+                        }
+
                     }
-                };
-                let ctx = document.getElementById('myChart').getContext('2d');
-                let myChart = new Chart(ctx, config);
-          
+                }
+            };
+            let ctx = document.getElementById('myChart').getContext('2d');
+            let myChart = new Chart(ctx, config);
+
 
             const config2 = {
 
@@ -578,15 +595,29 @@ $(document).ready(() => {
                     ]
                 },
                 options: {
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'white'
+                            }
+                        }
+                    },
                     scales: {
                         x: {
                             type: 'time',
                             time: {
                                 unit: 'day'
+                            },
+                            ticks: {
+                                color: 'white'
                             }
                         },
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            ticks: {
+                                color: 'white'
+                            }
+
                         }
                     }
 
