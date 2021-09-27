@@ -3,17 +3,17 @@
     <br />
     <p class='overlayMessage'>Getting data, this will take a few seconds</p>
 </div>
-<div class="container-fluid" style='background-color:#333f48; height: 100%;'>
-    <div style="height: 100%;" class="row">
-        <div  class="col-md-3 searchBox ">
+<div class="container-fluid" style='height: 100%; width: 100%'>
+    <div style="height: 100%; width: 100%" class="row">
+        <div class="col-md-3 searchBox">
             <div class="user">
                 {{#if user}}
                 {{user}}
                 {{/if}}
             </div>
             <table id="table" data-toggle="table" data-toolbar="#toolbar" data-height="430" data-ajax="ajaxRequest"
-                data-search="true" data-pagination="true" style="background-color: white">
-                <thead style="background-color: white">
+                data-search="true" data-pagination="true" style="color: white">
+                <thead style="color: white">
                     <tr class="rowData">
                         <th id="button3" data-field="state" data-radio="true"></th>
                         <th data-field="building_abbreviation">Building</th>
@@ -24,6 +24,14 @@
                 </thead>
             </table>
             <button type="button" id="button" class="btn btn-success mt-3">Confirm Meter Selection</button>
+            <ul class="list-group mt-3 mb-3">
+                <li class="list-group-item d-flex justify-content-between align-items-start listGroupColor">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">Current Meter Selection:</div>
+                        <div class="meterVariable meterSelection">--</div>
+                    </div>
+                </li>
+            </ul>
             <div class="input-group flex-nowrap mt-3">
                 <span class="input-group-text" id="addon-wrapping">Model Start Date:</span>
                 <input autocomplete="off" disabled='true' id="modelStart" type="text"
@@ -47,290 +55,122 @@
             </div>
             <button class="btn btn-primary apiGateway load mt-3 w-100" type="button">Run Model</button>
         </div>
-        <div class="col-md-9" style="height: 100%;">
-            <div id='chartData' class="row" style="height: 40%;">
-                <div class="col-md-6" >
-                    <canvas class="my-4 w-100" id="myChart" width="900" height="415"></canvas>
+        <div class="col-md-9">
+            <nav class="nav justify-content-between">
+                <h6 style='color: white' class="nav-link ">Meter Description:
+                    <span class="units text-end meterVariable">--</span>
+                </h6>
+                <h6 style='color: white' class="nav-link">Base Temp:
+                    <span class="units text-end baseTemp">--</span>
+                </h6>
+                <h6 style='color: white' class="nav-link">% Auto Ignored:
+                    <span class="units text-end autoIgnored">--</span>
+                </h6>
+                <h6 style='color: white' class="nav-link">Slope:
+                    <span class="units text-end slope">--</span>
+                </h6>
+                <h6 style='color: white' class="nav-link">Intercept:
+                    <span class="units text-end intercept">--</span>
+                </h6>
+                <h6 style='color: white' class="nav-link">R-Squared:
+                    <span class="units text-end r2">--</span>
+                </h6>
+                <h6 style='color: white' class="nav-link">Std Dev:
+                    <span class="units text-end stdDev">--</span>
+                </h6>
+            </nav>
+            <div id='chartData' class="row">
+                <div class="col-md-6">
+                    <div class="card w-100">
+                        <div class="card-body">
+                            <canvas class="my-4 w-100" id="myChart" width="900" height="415"></canvas>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-6 ">
-                    <canvas class="my-4 w-100" id="myChart2" width="900" height="415"></canvas>
+                <div class="col-md-6">
+                    <div class="card w-100">
+                        <div class="card-body">
+                            <canvas class="my-4 w-100" id="myChart2" width="900" height="415"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
             <hr>
-            <div class="row">
-                <h4 style="color: white">Meter Data</h4>
-                <div class="col-md-6">
-                    <ul class="list-group mt-3 mb-3" >
-                        <li class="list-group-item d-flex justify-content-between align-items-start listGroupColor"> 
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Meter Description:</div>
-                                <div class="meterVariable">--</div>
-                            </div>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start listGroupColor"> 
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Base Temp:</div>
-                                <div class="baseTemp">--</div>
-                            </div>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start listGroupColor"> 
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">% Auto-Ignored:</div>
-                                <div class="autoIgnored">--</div>
-                            </div>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start listGroupColor"> 
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Slope:</div>
-                                <div class="slope">--</div>
-                            </div>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start listGroupColor"> 
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Intercept:</div>
-                                <div class="intercept">--</div>
-                            </div>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start listGroupColor"> 
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">R-Squared:</div>
-                                <div class="r2">--</div>
-                            </div>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start listGroupColor"> 
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Std Dev:</div>
-                                <div class="stdDev">--</div>
-                            </div>
-                        </li>
-                    </ul>
-
-                </div>
+            <div class="row mb-3">
                 <div style='display: none' id='tableData' class="col-md-6 text-start">
-                    <div class="table-responsive ">
-                        <table data-detail-view="true" data-detail-view-align='left' data-height="400"
-                            data-toggle="table" data-pagination="true" data-detail-formatter="detailFormatter"
-                            id="table2" class="table table-bordered border-secondary" data-multiple-select-row="true"
-                            data-click-to-select="true">
-                            <h6>Click the <i class="fas fa-plus"></i> to view more details</h6>
-                            <thead>
-                                <tr>
-                                    <th data-field="state" data-checkbox="true"></th>
-                                    <th data-field="Date">Date</th>
-                                    <th data-field="Temperature">Temperature</th>
-                                    <th data-field="HDD">HDD</th>
-                                    <th data-field="Meter">Meter Reading</th>
-                                    <th data-field="Expected">Expected</th>
-                                    <th data-field="Replacement" data-visible="false">Replacement</th>
-                                    <th data-field="Reason" data-visible="false">Reason</th>
-                                    <th data-field="Notes" data-visible="false">Notes</th>
-                            </thead>
-                        </table>
-                        <button class="btn btn-success" type="button" data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Copy
-                        </button>
+                    <div class='card'>
+                        <div class='card-body'>
+                            <div class="table-responsive ">
+                                <table data-detail-view="true" data-detail-view-align='left' data-height="462"
+                                    data-toggle="table" data-pagination="true" data-detail-formatter="detailFormatter"
+                                    id="table2" class="table table-bordered border-secondary"
+                                    data-multiple-select-row="true" data-click-to-select="true" style="color: white">
+                                    <thead style="color: white">
+                                        <tr>
+                                            <th data-field="state" data-checkbox="true"></th>
+                                            <th data-field="Date">Date</th>
+                                            <th data-field="Temperature">Temperature</th>
+                                            <th data-field="HDD">HDD</th>
+                                            <th data-field="Meter">Meter Reading</th>
+                                            <th data-field="Expected">Expected</th>
+                                            <th data-field="Replacement" data-visible="false">Replacement</th>
+                                            <th data-field="Reason" data-visible="false">Reason</th>
+                                            <th data-field="Notes" data-visible="false">Notes</th>
+                                    </thead>
+                                </table>
+                                <button id="button3" class="btn btn-success" type="button">Copy
+                                </button>
+                            </div>
+                        </div>
                     </div>
-
-                    {{!-- <div class="card text-dark bg-light">
-                        <h6 class="card-header">Replacement Data</h6>
+                </div>
+                <div id="row-container" class="col-md-6" style="display: none">
+                    <div class="card">
                         <div class="card-body">
-                            <div class="col-md-10 offset-1 text-center">
-                                <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Date</th>
-                                                <th scope="col">Current Meter Value</th>
-                                                <th scope="col">Replacement Value</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="replaceTable">
+                            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                                <table class="table table-bordered" style="color: white">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Current Meter Value</th>
+                                            <th scope="col">Replacement Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="replaceTable">
 
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-3 text-start">
-                                            <label for="reason" class="form-label">
-                                                <h6>Reason</h6>
-                                            </label>
-                                            <select disabled='true' class="form-select" id="reason"
-                                                aria-label="Default select example">
-                                                <option disabled selected>Choose...</option>
-                                                <option>meter issue</option>
-                                                <option>building maintenance issue</option>
-                                                <option>major renovation/addition in progress</option>
-                                                <option>other</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 text-start">
-                                        <div class="mb-3">
-                                            <label for="notes" class="form-label">
-                                                <h6>Notes</h6>
-                                            </label>
-                                            <textarea disabled='true' class="form-control" id="notes"
-                                                rows="2"></textarea>
-                                        </div>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3 text-start">
+                                        <label for="reason" class="form-label">
+                                            <h6 style='color: white'>Reason</h6>
+                                        </label>
+                                        <select disabled='true' class="form-select" id="reason"
+                                            aria-label="Default select example">
+                                            <option disabled selected>Choose...</option>
+                                            <option>meter issue</option>
+                                            <option>building maintenance issue</option>
+                                            <option>major renovation/addition in progress</option>
+                                            <option>other</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div>
-                                    <button style="display: none" type="button"
-                                        class="btn btn-success submit w-100 load">Submit</button>
+                                <div class="col-md-6 text-start">
+                                    <div class="mb-3">
+                                        <label for="notes" class="form-label">
+                                            <h6 style="color: white">Notes</h6>
+                                        </label>
+                                        <textarea disabled='true' class="form-control" id="notes" rows="2"></textarea>
+                                    </div>
                                 </div>
+                                <button style="display: none" type="button"
+                                    class="btn btn-success submit load">Submit</button>
                             </div>
-                        </div>
-                    </div> --}}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div  class="offcanvas offcanvas-end bg-transparent" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
-    id="offcanvasRight" aria-labelledby="offcanvasRightLabel" >
-    <div class="offcanvas-header">
-        <h5 id="offcanvasRightLabel">Offcanvas right</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col">Date</th>
-                                <th scope="col">Current Meter Value</th>
-                                <th scope="col">Replacement Value</th>
-                            </tr>
-                        </thead>
-                        <tbody id="replaceTable">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="mb-3 text-start">
-                    <label for="reason" class="form-label">
-                        <h6>Reason</h6>
-                    </label>
-                    <select disabled='true' class="form-select" id="reason" aria-label="Default select example">
-                        <option disabled selected>Choose...</option>
-                        <option>meter issue</option>
-                        <option>building maintenance issue</option>
-                        <option>major renovation/addition in progress</option>
-                        <option>other</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="notes" class="form-label">
-                        <h6>Notes</h6>
-                    </label>
-                    <textarea disabled='true' class="form-control" id="notes" rows="2"></textarea>
-                </div>
-                <div>
-                    <button style="display: none" type="button"
-                        class="btn btn-success submit w-100 load">Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-{{!-- <main class="col-md-8 col-lg-8 "> --}}
-    {{!-- <div
-        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2 meterSelection">Current Meter: --</h1>
-    </div> --}}
-    {{!-- <div id='chartData' class="row responsive">
-        <div class="col-md-6">
-            <canvas class="my-4 w-100" id="myChart" width="900" height="415"></canvas>
-        </div>
-        <div class="col-md-6">
-            <canvas class="my-4 w-100" id="myChart2" width="900" height="415"></canvas>
-        </div>
-    </div>
-
-    <h2>Replacement</h2>
-    <div style="display: none" id='tableData' class="row responsive">
-        <div class="col-md-6">
-            <div class="table-responsive ">
-                <table data-detail-view="true" data-detail-view-align='left' data-height="460" data-toggle="table"
-                    data-pagination="true" data-detail-formatter="detailFormatter" id="table2"
-                    class="table table-bordered border-secondary" data-multiple-select-row="true"
-                    data-click-to-select="true">
-                    <h6 class='text-end'>Click the <i class="fas fa-plus"></i> to view more details</h6>
-                    <thead>
-                        <tr>
-                            <th data-field="state" data-checkbox="true"></th>
-                            <th data-field="Date">Date</th>
-                            <th data-field="Temperature">Temperature</th>
-                            <th data-field="HDD">HDD</th>
-                            <th data-field="Meter">Meter Reading</th>
-                            <th data-field="Expected">Expected</th>
-                            <th data-field="Replacement" data-visible="false">Replacement</th>
-                            <th data-field="Reason" data-visible="false">Reason</th>
-                            <th data-field="Notes" data-visible="false">Notes</th>
-                    </thead>
-                </table>
-                <button type="button" id="button3" class="btn btn-success mt-3 w-100">Replace</button>
-            </div>
-        </div>
-        <div class="col-md-6 mt-4">
-            <div class="card text-dark bg-light mb-3">
-                <h6 class="card-header">Replacement Data</h6>
-                <div class="card-body">
-                    <div class="col-md-10 offset-1 text-center">
-                        <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Current Meter Value</th>
-                                        <th scope="col">Replacement Value</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="replaceTable">
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3 text-start">
-                                    <label for="reason" class="form-label">
-                                        <h6>Reason</h6>
-                                    </label>
-                                    <select disabled='true' class="form-select" id="reason"
-                                        aria-label="Default select example">
-                                        <option disabled selected>Choose...</option>
-                                        <option>meter issue</option>
-                                        <option>building maintenance issue</option>
-                                        <option>major renovation/addition in progress</option>
-                                        <option>other</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6 text-start">
-                                <div class="mb-3">
-                                    <label for="notes" class="form-label">
-                                        <h6>Notes</h6>
-                                    </label>
-                                    <textarea disabled='true' class="form-control" id="notes" rows="2"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <button style="display: none" type="button"
-                                class="btn btn-success submit w-100 load">Submit</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</main>
-</div>
-</div> --}}

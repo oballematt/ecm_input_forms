@@ -30,30 +30,33 @@
     position: relative;
     height: 350px;
     overflow: auto;
-    }
-    .table-wrapper-scroll-y {
+}
+
+.table-wrapper-scroll-y {
     display: block;
-    }
+}
 
-    @media (min-width: 764px) and (max-width: 1400px){
-        .responsive{
-            flex-direction: column;
-            width: 100%
-        }
-    }
+.units{
+    display: block
+}
 
-.searchBox, .listGroupColor{
+.bordered {
+    border: 1px solid
+}
+
+@media (min-width: 764px) and (max-width: 1400px){
+    .responsive{
+        flex-direction: column;
+        width: 100%
+    }
+}
+
+.searchBox, .listGroupColor, .card{
     background-color: rgba(156,173,183,0.2);
     color: white;
 }
 
 
-
-
-
-
-
-  
 
 
   @keyframes rotate {

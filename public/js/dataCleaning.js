@@ -39,8 +39,6 @@ $(document).ready(() => {
     let $button2 = $('#button2')
     let $button3 = $('#button3')
     let container = $('#row-container')
-    let content = ""
-
 
     $(function () {
         let isChecked = false
@@ -57,7 +55,7 @@ $(document).ready(() => {
             else {
                 data.push($table.bootstrapTable('getSelections'))
                 $('.disabled').attr('disabled', false)
-                $('.meterSelection').html(`Current Meter: ${data[0][0].meter}`)
+                $('.meterSelection').html(`${data[0][0].meter}`)
             }
         })
         $button2.click(function () {
@@ -80,6 +78,8 @@ $(document).ready(() => {
         console.log($('.user').text().trim())
         $('#reason').removeAttr('disabled')
         $('#notes').removeAttr('disabled')
+        $('#reason').val('meter issue')
+
         replaceData.forEach(function (item) {
             $("#replaceTable").append(
                 `<tr class="text-end">
@@ -96,6 +96,7 @@ $(document).ready(() => {
 
         })
 
+
         $('.submit').on('click', function () {
             let notes = []
             let reason = []
@@ -104,12 +105,21 @@ $(document).ready(() => {
             const buildingNumber = data[0][0].building_number
             const commodityTag = data[0][0].commodity_tag
             const meter = data[0][0].meter
-            replaceData.forEach(function (item) {
-                notes.push($('#notes').val())
-                reason.push($('#reason').val())
-                values.push(parseFloat(item.Expected))
-                date.push(item.Date)
-            })
+            if ($('#reason').val() === 'meter issue') {
+                replaceData.forEach(function (item) {
+                    notes.push($('#notes').val())
+                    reason.push($('#reason').val())
+                    values.push(parseFloat(item.Expected))
+                    date.push(item.Date)
+                })
+            } else {
+                replaceData.forEach(function (item) {
+                    notes.push($('#notes').val())
+                    reason.push($('#reason').val())
+                    values.push(null)
+                    date.push(item.Date)
+                })
+            }
             $('.overlayMessage').text('Submitting Data. Please wait...')
             $.ajax({
                 url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/building_meter_replacement`,
@@ -267,14 +277,25 @@ $(document).ready(() => {
                             beginAtZero: true,
                             ticks: {
                                 color: 'white'
+                            },
+                            grid: {
+                                borderColor: 'white',
+                                color: 'black'
+
                             }
 
                         },
                         x: {
                             ticks: {
                                 color: 'white'
+                            },
+                            grid: {
+                                borderColor: 'white',
+                                color: 'black'
+
                             }
-                        }
+                        },
+
 
                     }
                 }
@@ -610,12 +631,22 @@ $(document).ready(() => {
                             },
                             ticks: {
                                 color: 'white'
+                            },
+                            grid: {
+                                borderColor: 'white',
+                                color: 'black'
+
                             }
                         },
                         y: {
                             beginAtZero: true,
                             ticks: {
                                 color: 'white'
+                            },
+                            grid: {
+                                borderColor: 'white',
+                                color: 'black'
+
                             }
 
                         }
