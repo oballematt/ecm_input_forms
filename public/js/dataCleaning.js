@@ -225,7 +225,7 @@ $(document).ready(() => {
         $.ajax({
             url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/model?building_number=${data[0][0].building_number}&commodity_tag=${data[0][0].commodity_tag}&meter=${data[0][0].meter}&train_start=${modelStart}&train_end=${modelEnd}&analysis_start=${analysisStart}&analysis_end=${analysisEnd}`,
             method: 'GET',
-            error: function (xhr) {
+            error: function (xhr, status, error) {
                 if (xhr.status === 504) {
                     modelApi()
                     $('.overlayMessage').text('Server not responding, trying your search again. Please do not refresh the page')
