@@ -5,7 +5,7 @@
 </div>
 <div class="container-fluid" style='height: 100%; width: 100%'>
     <div style="height: 100%; width: 100%" class="row">
-        <div class="col-md-3 searchBox">
+        <div class="col-xxl-3 col-lg-4 searchBox">
             <div class="user">
                 {{#if user}}
                 {{user}}
@@ -23,12 +23,12 @@
                     </tr>
                 </thead>
             </table>
-            <button type="button" id="button" class="btn btn-success mt-3">Confirm Meter Selection</button>
+            <button style=" color:white" type="button" id="button" class="btn btn-outline-dark mt-3">Confirm Meter Selection</button>
             <ul class="list-group mt-3 mb-3">
                 <li class="list-group-item d-flex justify-content-between align-items-start listGroupColor">
                     <div class="ms-2 me-auto">
                         <div class="fw-bold">Current Meter Selection:</div>
-                        <div class="meterVariable meterSelection">--</div>
+                        <div class="meterSelection">--</div>
                     </div>
                 </li>
             </ul>
@@ -53,10 +53,10 @@
                 <input disabled="true" type="text" class="form-control datepicker disabled analysisEnd"
                     placeholder="yyyy/mm/dd" aria-label="Analysis End Date" aria-describedby="addon-wrapping">
             </div>
-            <button class="btn btn-primary apiGateway load mt-3 w-100" type="button">Run Model</button>
+            <button style="background-color: #bf5700;" class="btn btn-primary apiGateway mt-3 w-100 load" type="button">Run Model</button>
         </div>
-        <div class="col-md-9">
-            <nav class="nav ">
+        <div class="col-xxl-9 col-lg-8">
+            <nav class="nav">
                 <h6 style='color: white' class="nav-link ">Meter Description:
                     <span class="units text-end meterVariable">--</span>
                 </h6>
@@ -79,15 +79,15 @@
                     <span class="units text-end stdDev">--</span>
                 </h6>
             </nav>
-            <div id='chartData' class="row">
-                <div class="col-md-6">
+            <div id='chartData' class="row responsive">
+                <div class="col-xxl-6 col-xl-12">
                     <div class="card w-100">
                         <div class="card-body">
                             <canvas class="my-4 w-100" id="myChart" width="900" height="415"></canvas>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-xxl-6 col-xl-12">
                     <div class="card w-100">
                         <div class="card-body">
                             <canvas class="my-4 w-100" id="myChart2" width="900" height="415"></canvas>
@@ -96,9 +96,9 @@
                 </div>
             </div>
             <hr>
-            <div class="row mb-3">
-                <div style='display: none' id='tableData' class="col-md-6 text-start">
-                    <div class='card'>
+            <div class="row mb-3 responsive">
+                <div style='display: none' id='tableData' class="col-xxl-7 col-xl-12 text-start">
+                    <div class='card w-100'>
                         <div class='card-body'>
                             <div class="table-responsive ">
                                 <table data-detail-view="true" data-detail-view-align='left' data-height="462"
@@ -113,18 +113,18 @@
                                             <th data-field="HDD">HDD</th>
                                             <th data-field="Meter">Meter Reading</th>
                                             <th data-field="Expected">Expected</th>
-                                            <th data-field="Replacement" data-visible="false">Replacement</th>
+                                            <th data-field="Replacement">Replacement</th>
                                             <th data-field="Reason" data-visible="false">Reason</th>
                                             <th data-field="Notes" data-visible="false">Notes</th>
                                     </thead>
                                 </table>
-                                <button id="button3" class="btn btn-success" type="button">Copy
+                                <button style="background-color: #bf5700;" id="button3" class="btn btn-success" type="button">Copy
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div id="row-container" class="col-md-6" style="display: none">
+                <div id="row-container" class="col-xxl-5 col-xl-12" style="display: none">
                     <div class="card">
                         <div class="card-body">
                             <div class="table-wrapper-scroll-y my-custom-scrollbar">
@@ -133,7 +133,7 @@
                                         <tr>
                                             <th scope="col">Date</th>
                                             <th scope="col">Current Meter Value</th>
-                                            <th scope="col">Replacement Value</th>
+                                            <th class='replaceReason' scope="col">Replacement Value</th>
                                         </tr>
                                     </thead>
                                     <tbody id="replaceTable">
@@ -142,7 +142,7 @@
                                 </table>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-lg-6">
                                     <div class="mb-3 text-start">
                                         <label for="reason" class="form-label">
                                             <h6 style='color: white'>Reason</h6>
@@ -157,7 +157,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6 text-start">
+                                <div class="col-lg-6 text-start">
                                     <div class="mb-3">
                                         <label for="notes" class="form-label">
                                             <h6 style="color: white">Notes</h6>
@@ -165,7 +165,7 @@
                                         <textarea disabled='true' class="form-control" id="notes" rows="2"></textarea>
                                     </div>
                                 </div>
-                                <button style="display: none" type="button"
+                                <button style="display: none; background-color:#bf5700" type="button"
                                     class="btn btn-success submit load">Submit</button>
                             </div>
                         </div>
