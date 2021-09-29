@@ -5,6 +5,7 @@ const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
 const authorization = require('./middleware/authorization')
+const cors = require('cors');
 require('dotenv').config();
 
 
@@ -63,6 +64,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Express Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors())
 
 //Express Route
 app.get('/login', authorization.checkAuthenticated,(req, res) => res.render('login', {error: req.flash('error')}));                                             
@@ -72,7 +74,10 @@ app.get("/logout", (req, res) => {
   req.logout();                                             
   res.redirect('/login')                                             
 });  
-app.get('/datacleaning', authorization.checkNotAuthenticated, (req, res) => { res.render('cleaning', {layout: 'datacleaning', user: req.user.email})})                                           
+app.get('/datacleaning', authorization.checkNotAuthenticated, (req, res) => {
+   res.render('cleaning', {layout: 'datacleaning', user: req.user.email})
+   res.header('Access-Control-Allow-Origin', '*')
+  })                                           
                                              
 app.post(                                             
   "/login",                                             

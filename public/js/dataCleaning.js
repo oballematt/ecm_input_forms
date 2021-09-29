@@ -221,11 +221,10 @@ $(document).ready(() => {
         const modelEnd = $('.modelEnd').val()
         const analysisStart = $('.analysisStart').val()
         const analysisEnd = $('.analysisEnd').val()
-
+        
         $.ajax({
             url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/model?building_number=${data[0][0].building_number}&commodity_tag=${data[0][0].commodity_tag}&meter=${data[0][0].meter}&train_start=${modelStart}&train_end=${modelEnd}&analysis_start=${analysisStart}&analysis_end=${analysisEnd}`,
             method: 'GET',
-            contentType: 'application/json',
             error: function (xhr) {
                 if (xhr.status === 504) {
                     modelApi()
