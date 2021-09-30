@@ -5,6 +5,8 @@ let data = []
 $(document).ready(() => {
 
 
+    var toastLiveExample = document.getElementById('liveToast')
+    var toast = new bootstrap.Toast(toastLiveExample)
 
     const dateInput_1 = $('.datepicker');
 
@@ -54,11 +56,11 @@ $(document).ready(() => {
                 let analysisStart = new Date()
                 let analysisEnd = new Date()
                 modelStart.setDate(1)
-                modelStart.setMonth(modelStart.getMonth()-1)
-                modelStart.setYear(modelStart.getFullYear() -1)
+                modelStart.setMonth(modelStart.getMonth() - 1)
+                modelStart.setYear(modelStart.getFullYear() - 1)
                 modelEnd.setDate(1)
-                modelEnd.setMonth(modelEnd.getMonth() -1)
-                modelEnd.setYear(modelEnd.getFullYear() -1)
+                modelEnd.setMonth(modelEnd.getMonth() - 1)
+                modelEnd.setYear(modelEnd.getFullYear() - 1)
                 modelEnd.setDate(+364)
                 analysisStart.setDate(1)
                 analysisStart.setMonth(analysisStart.getMonth() - 1);
@@ -231,6 +233,7 @@ $(document).ready(() => {
             values = []
             reason = []
             $table2.bootstrapTable('uncheckAll')
+            toast.show()
         })
 
     })

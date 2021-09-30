@@ -23,7 +23,8 @@
                     </tr>
                 </thead>
             </table>
-            <button style=" color:white" type="button" id="button" class="btn btn-success mt-3">Confirm Meter Selection</button>
+            <button style=" color:white" type="button" id="button" class="btn btn-success mt-3">Confirm Meter
+                Selection</button>
             <ul class="list-group mt-3 mb-3">
                 <li class="list-group-item d-flex justify-content-between align-items-start listGroupColor">
                     <div class="ms-2 me-auto">
@@ -53,7 +54,8 @@
                 <input disabled="true" type="text" class="form-control datepicker disabled analysisEnd"
                     placeholder="yyyy/mm/dd" aria-label="Analysis End Date" aria-describedby="addon-wrapping">
             </div>
-            <button style="background-color: #bf5700;" class="btn btn-primary apiGateway mt-3 w-100 load" type="button">Run Model</button>
+            <button style="background-color: #bf5700;" class="btn btn-primary apiGateway mt-3 w-100 load"
+                type="button">Run Model</button>
         </div>
         <div class="col-xxl-9 col-lg-8">
             <nav class="nav">
@@ -118,7 +120,8 @@
                                             <th data-field="Notes" data-visible="false">Notes</th>
                                     </thead>
                                 </table>
-                                <button style="background-color: #bf5700;" id="button3" class="btn btn-success" type="button">Copy
+                                <button style="background-color: #bf5700;" id="button3" class="btn btn-success"
+                                    type="button">Copy
                                 </button>
                             </div>
                         </div>
@@ -171,6 +174,19 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="position-fixed top-50 start-50 p-3" style="z-index: 11">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <i class="far fa-check-circle"></i>
+                <br>
+                <strong class="me-auto">Success</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div style="color: white" class="toast-body bg-success">
+                Your data has been submitted successfully!
             </div>
         </div>
     </div>
