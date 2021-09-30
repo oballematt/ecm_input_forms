@@ -217,6 +217,10 @@ $(document).ready(() => {
                     alert("Invalid Request. Please try again.")
                     $('#overlay').fadeOut()
                 }
+                if (jqXhr.status === 504) {
+                    $('#overlay').fadeOut()
+                    alert('Server Error. Please submit your data again.')
+                }
             }
         }).then(() => {
             $('#replaceTable').empty()
