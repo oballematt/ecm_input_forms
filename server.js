@@ -82,7 +82,7 @@ app.get('/datacleaning', authorization.checkNotAuthenticated, (req, res) => {
 app.post(                                             
   "/login",                                             
   passport.authenticate("local", {                                             
-    successRedirect: "/",                                             
+    successRedirect: "/datacleaning",                                             
     failureRedirect: "/login",                                             
     failureFlash: true                                             
   })                                             

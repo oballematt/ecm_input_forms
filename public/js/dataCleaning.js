@@ -49,8 +49,25 @@ $(document).ready(() => {
                 alert('Please select a meter')
             }
             else {
-                let newDate = new Date()
-                newDate.getFullYear()
+                let modelStart = new Date()
+                let modelEnd = new Date()
+                let analysisStart = new Date()
+                let analysisEnd = new Date()
+                modelStart.setDate(1)
+                modelStart.setMonth(modelStart.getMonth()-1)
+                modelStart.setYear(modelStart.getFullYear() -1)
+                modelEnd.setDate(1)
+                modelEnd.setMonth(modelEnd.getMonth() -1)
+                modelEnd.setYear(modelEnd.getFullYear() -1)
+                modelEnd.setDate(+364)
+                analysisStart.setDate(1)
+                analysisStart.setMonth(analysisStart.getMonth() - 1);
+                analysisEnd.setDate(0)
+                analysisEnd.setMonth(analysisEnd.getMonth())
+                $('.modelStart').datepicker('setDate', modelStart)
+                $('.modelEnd').datepicker('setDate', modelEnd)
+                $('.analysisStart').datepicker('setDate', analysisStart)
+                $('.analysisEnd').datepicker('setDate', analysisEnd)
                 data.push($table.bootstrapTable('getSelections'))
                 $('.disabled').attr('disabled', false)
                 $('.meterSelection').html(`${data[0][0].meter}`)
@@ -147,7 +164,12 @@ $(document).ready(() => {
         if ($('#reason').val() === 'meter issue') {
 
             replaceData.forEach(function (item) {
-                notes.push($('#notes').val())
+                if ($('#notes').val() === '') {
+                    notes.push(null)
+                } else {
+                    notes.push($('#notes').val())
+                }
+
                 reason.push($('#reason').val())
                 values.push(parseFloat(item.Expected))
                 date.push(item.Date)
@@ -155,7 +177,12 @@ $(document).ready(() => {
         } else {
 
             replaceData.forEach(function (item) {
-                notes.push($('#notes').val())
+                if ($('#notes').val() === '') {
+                    notes.push(null)
+                } else {
+                    notes.push($('#notes').val())
+                }
+
                 reason.push($('#reason').val())
                 values.push(null)
                 date.push(item.Date)
@@ -167,40 +194,40 @@ $(document).ready(() => {
         console.log(date)
         $('.overlayMessage').text('Submitting Data. Please wait...')
 
-        $.ajax({
-            url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/building_meter_replacement`,
-            method: 'POST',
-            dataType: 'json',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                "analyst": $('.user').text().trim(),
-                "building_number": buildingNumber,
-                "commodity_tag": commodityTag,
-                "meter": meter,
-                "data": {
-                    "timestamp": date,
-                    "value": values,
-                    "reason": reason,
-                    "notes": notes,
-                }
-            }),
-            error: function (jqXhr, textStatus, errorThrown) {
-                console.log(errorThrown);
-                if (jqXhr.status === 400) {
-                    alert("Invalid Request. Please try again.")
-                    $('#overlay').fadeOut()
-                }
-            }
-        }).then(() => {
-            $('#replaceTable').empty()
-            $('#overlay').fadeOut()
-            $('.overlayMessage').text('Getting data, this will take a few seconds')
-            notes = []
-            date = []
-            values = []
-            reason = []
-            $table2.bootstrapTable('uncheckAll')
-        })
+        // $.ajax({
+        //     url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/building_meter_replacement`,
+        //     method: 'POST',
+        //     dataType: 'json',
+        //     contentType: 'application/json',
+        //     data: JSON.stringify({
+        //         "analyst": $('.user').text().trim(),
+        //         "building_number": buildingNumber,
+        //         "commodity_tag": commodityTag,
+        //         "meter": meter,
+        //         "data": {
+        //             "timestamp": date,
+        //             "value": values,
+        //             "reason": reason,
+        //             "notes": notes,
+        //         }
+        //     }),
+        //     error: function (jqXhr, textStatus, errorThrown) {
+        //         console.log(errorThrown);
+        //         if (jqXhr.status === 400) {
+        //             alert("Invalid Request. Please try again.")
+        //             $('#overlay').fadeOut()
+        //         }
+        //     }
+        // }).then(() => {
+        //     $('#replaceTable').empty()
+        //     $('#overlay').fadeOut()
+        //     $('.overlayMessage').text('Getting data, this will take a few seconds')
+        //     notes = []
+        //     date = []
+        //     values = []
+        //     reason = []
+        //     $table2.bootstrapTable('uncheckAll')
+        // })
 
     })
 
@@ -221,7 +248,7 @@ $(document).ready(() => {
         const modelEnd = $('.modelEnd').val()
         const analysisStart = $('.analysisStart').val()
         const analysisEnd = $('.analysisEnd').val()
-        
+
         $.ajax({
             url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/model?building_number=${data[0][0].building_number}&commodity_tag=${data[0][0].commodity_tag}&meter=${data[0][0].meter}&train_start=${modelStart}&train_end=${modelEnd}&analysis_start=${analysisStart}&analysis_end=${analysisEnd}`,
             method: 'GET',
@@ -271,7 +298,7 @@ $(document).ready(() => {
                 return a[0] - b[0]
             })
 
-           
+
             xTemp.forEach((key, i) => result[key] = highLimit[i])
 
             let highLimitArr = Object.keys(result).map(function (key) {
@@ -282,7 +309,7 @@ $(document).ready(() => {
                 return a[0] - b[0]
             })
 
-           
+
             xTemp.forEach((key, i) => result[key] = rawValue[i])
 
             let RawValueArr = Object.keys(result).map(function (key) {
@@ -361,7 +388,7 @@ $(document).ready(() => {
             let ctx = document.getElementById('myChart').getContext('2d');
             let myChart = new Chart(ctx, config);
 
-            
+
 
             xtimestamp.forEach((key, i) => result2[key] = rawValue[i])
 
@@ -470,7 +497,7 @@ $(document).ready(() => {
                 let replacement = obj.model.data.replacement_value.slice(365)
                 let reason = obj.model.data.replacement_reason.slice(365)
                 let notes = obj.model.data.replacement_notes.slice(365)
-                
+
                 let data = dates.map((date, index) => {
                     return {
                         'Date': date,
