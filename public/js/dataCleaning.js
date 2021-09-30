@@ -194,40 +194,40 @@ $(document).ready(() => {
         console.log(date)
         $('.overlayMessage').text('Submitting Data. Please wait...')
 
-        // $.ajax({
-        //     url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/building_meter_replacement`,
-        //     method: 'POST',
-        //     dataType: 'json',
-        //     contentType: 'application/json',
-        //     data: JSON.stringify({
-        //         "analyst": $('.user').text().trim(),
-        //         "building_number": buildingNumber,
-        //         "commodity_tag": commodityTag,
-        //         "meter": meter,
-        //         "data": {
-        //             "timestamp": date,
-        //             "value": values,
-        //             "reason": reason,
-        //             "notes": notes,
-        //         }
-        //     }),
-        //     error: function (jqXhr, textStatus, errorThrown) {
-        //         console.log(errorThrown);
-        //         if (jqXhr.status === 400) {
-        //             alert("Invalid Request. Please try again.")
-        //             $('#overlay').fadeOut()
-        //         }
-        //     }
-        // }).then(() => {
-        //     $('#replaceTable').empty()
-        //     $('#overlay').fadeOut()
-        //     $('.overlayMessage').text('Getting data, this will take a few seconds')
-        //     notes = []
-        //     date = []
-        //     values = []
-        //     reason = []
-        //     $table2.bootstrapTable('uncheckAll')
-        // })
+        $.ajax({
+            url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/building_meter_replacement`,
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "analyst": $('.user').text().trim(),
+                "building_number": buildingNumber,
+                "commodity_tag": commodityTag,
+                "meter": meter,
+                "data": {
+                    "timestamp": date,
+                    "value": values,
+                    "reason": reason,
+                    "notes": notes,
+                }
+            }),
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+                if (jqXhr.status === 400) {
+                    alert("Invalid Request. Please try again.")
+                    $('#overlay').fadeOut()
+                }
+            }
+        }).then(() => {
+            $('#replaceTable').empty()
+            $('#overlay').fadeOut()
+            $('.overlayMessage').text('Getting data, this will take a few seconds')
+            notes = []
+            date = []
+            values = []
+            reason = []
+            $table2.bootstrapTable('uncheckAll')
+        })
 
     })
 
