@@ -271,6 +271,7 @@ $(document).ready(() => {
             }
         }).then(response => {
             const obj = JSON.parse(response.body)
+            let detailView = $('.detail-view')
             let lowLimit = obj.model.data.predicted_value_lower_bound.slice(365)
             let xTemp = obj.model.data.average_dry_bulb_temperature.slice(365)
             let highLimit = obj.model.data.predicted_value_upper_bound.slice(365)
@@ -394,8 +395,6 @@ $(document).ready(() => {
             };
             let ctx = document.getElementById('myChart').getContext('2d');
             let myChart = new Chart(ctx, config);
-
-
 
             xtimestamp.forEach((key, i) => result2[key] = rawValue[i])
 

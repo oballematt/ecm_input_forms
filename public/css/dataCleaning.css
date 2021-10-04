@@ -56,6 +56,10 @@
     color: white;
 }
 
+.table-hover>tbody>tr:hover {
+    background-color: #ffffff; 
+}
+
 
   @keyframes rotate {
       0% {
