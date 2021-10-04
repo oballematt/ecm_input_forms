@@ -92,16 +92,19 @@ $(document).ready(() => {
     $button3.click(function () {
         replaceData = $table2.bootstrapTable('getSelections')
         console.log(replaceData)
-        container.show()
-        $('.submit').show()
-        console.log($('.user').text().trim())
-        $('#reason').removeAttr('disabled')
-        $('#notes').removeAttr('disabled')
-        $('#reason').val('meter issue')
+        if (replaceData.length === 0) {
+            alert('Please select at least one option')
+        } else {
+            container.show()
+            $('.submit').show()
+            console.log($('.user').text().trim())
+            $('#reason').removeAttr('disabled')
+            $('#notes').removeAttr('disabled')
+            $('#reason').val('meter issue')
 
-        replaceData.forEach(function (item) {
-            $("#replaceTable").append(
-                `<tr class="text-end">
+            replaceData.forEach(function (item) {
+                $("#replaceTable").append(
+                    `<tr class="text-end">
                     <td>
                         ${item.Date}
                     </td>
@@ -113,15 +116,15 @@ $(document).ready(() => {
                     </td>
                 </tr>`)
 
-        })
+            })
 
-        $("#reason").on('change', function () {
-            $('#replaceTable').empty()
-            if ($(this).val() != 'meter issue') {
-                $('.replaceReason').html('Reason')
-                replaceData.forEach(function (item) {
-                    $("#replaceTable").append(
-                        `<tr class="text-end">
+            $("#reason").on('change', function () {
+                $('#replaceTable').empty()
+                if ($(this).val() != 'meter issue') {
+                    $('.replaceReason').html('Reason')
+                    replaceData.forEach(function (item) {
+                        $("#replaceTable").append(
+                            `<tr class="text-end">
                             <td>
                                 ${item.Date}
                             </td>
@@ -132,12 +135,12 @@ $(document).ready(() => {
                                 ${$('#reason').val()}
                             </td>
                         </tr>`)
-                })
-            } else {
-                $('.replaceReason').html('Replacement Value')
-                replaceData.forEach(function (item) {
-                    $("#replaceTable").append(
-                        `<tr class="text-end">
+                    })
+                } else {
+                    $('.replaceReason').html('Replacement Value')
+                    replaceData.forEach(function (item) {
+                        $("#replaceTable").append(
+                            `<tr class="text-end">
                             <td>
                                 ${item.Date}
                             </td>
@@ -148,11 +151,13 @@ $(document).ready(() => {
                                 ${item.Expected}
                             </td>
                         </tr>`)
-                })
+                    })
 
-            }
-        })
+                }
+            })
+        }
     })
+
 
     $('.submit').on('click', function (e) {
         e.preventDefault()
@@ -246,6 +251,8 @@ $(document).ready(() => {
             $('#overlay').hide()
         } else {
             $('#chartData').load(location.href + " #chartData")
+            $('#chartData2').load(location.href + " #chartData2")
+            $('#chartData3').load(location.href + " #chartData3")
             modelApi()
         }
     })
@@ -396,6 +403,9 @@ $(document).ready(() => {
             let ctx = document.getElementById('myChart').getContext('2d');
             let myChart = new Chart(ctx, config);
 
+            let ctx3 = document.getElementById('myChart3').getContext('2d');
+            let myChart3 = new Chart(ctx3, config);
+
             xtimestamp.forEach((key, i) => result2[key] = rawValue[i])
 
             let rawValueArr2 = Object.keys(result2).map(function (key) {
@@ -492,6 +502,9 @@ $(document).ready(() => {
             };
             let ctx2 = document.getElementById('myChart2').getContext('2d');
             let myChart2 = new Chart(ctx2, config2);
+
+            let ctx4 = document.getElementById('myChart4').getContext('2d');
+            let myChart4 = new Chart(ctx4, config2);
 
             $(function () {
 
