@@ -13,7 +13,8 @@ module.exports = {
       },
       password: {
         type: Sequelize.STRING
-      }
+      },
+      name: Sequelize.STRING
     });
   },
   down: async (queryInterface, Sequelize) => {

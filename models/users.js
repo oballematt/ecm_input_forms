@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         this.setDataValue('password', hash);
       },
     },
+    name: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Users',

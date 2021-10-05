@@ -74,10 +74,10 @@ app.get("/logout", (req, res) => {
   req.logout();                                             
   res.redirect('/login')                                             
 });  
-app.get('/datacleaning', authorization.checkNotAuthenticated, (req, res) => {
-   res.render('cleaning', {layout: 'datacleaning', user: req.user.email})
-   res.header('Access-Control-Allow-Origin', '*')
-  })                                           
+// app.get('/datacleaning', authorization.checkNotAuthenticated, (req, res) => {
+//    res.render('cleaning', {layout: 'datacleaning', user: req.user.email})
+//    res.header('Access-Control-Allow-Origin', '*')
+//   })                                           
                                              
 app.post(                                             
   "/login",                                             

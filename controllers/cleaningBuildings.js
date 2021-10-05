@@ -1,34 +1,37 @@
 const { Bldg_metadata } = require('../models');
 
 module.exports = {
-    buildingsBySteward: async (req, res) => {
-        const { steward } = req.body;
-        let errors = []
+    getBuildings: async (req, res) => {
+
         try {
 
-            if (steward.includes('hello')) {
-                errors.push({ text: 'Invalid Entry' })
-            }
+            const buildings = await Bldg_metadata.findAll({
 
-            if (errors.length > 0) {
-                return res.render('cleaning', {
-                    errors
-                })
-            } else {
+                order: [
+                    ['building', 'ASC']
+                ]
+            })
 
-                const findBuilding = await Bldg_metadata.findAll({
-                    where: {
-                        steward
-                    },
-                    order: [
-                        ['building', 'ASC']
-                    ]
-                })
+            return res.render('cleaning', { layout: 'dataCleaning', buildings, email: req.user.email, name: req.user.name, })
 
-                return res.json(findBuilding)
-            }
+        } catch (error) {
+            console.error(error.message)
+        }
+    },
 
+    getBuildingsBySteward: async (req, res) => {
 
+        const { steward } = req.body
+
+        try {
+
+            const buildings = await Bldg_metadata.findAll({
+                where: { steward },
+                order: [
+                    ['building', 'ASC']
+                ]
+            })
+            return res.json(buildings)
         } catch (error) {
             console.error(error.message)
         }

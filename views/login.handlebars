@@ -1,37 +1,88 @@
-<div class="container d-flex align-items-center justify-content-center" style="min-height: 80vh;">
-    <form action='/login' id="loginData" method="POST">
-        <div class="card border-secondary text-light" style="background-color: #333f48">
-            <h5 style="background-color: #bf5700;" class="card-header">Login</h5>
-            <div class="card-body w-100 text-end mt-3">
-                {{#if error}}
-                <div class="mb-3 text-start" style="color:red; font-size: 20px">
-                    <p>{{error}}</p>
-                </div>
-                {{/if}}
-                {{#each success}}
-                <div class="mb-3 text-center" style="font-size: 20px">
-                    <p style="color: green">{{text}}</a></p>
-                </div>
-                {{/each}}
-                <div class="row mb-3">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Email:</label>
-                    <div class="col-sm-10">
-                        <input type="email" class="form-control" name="email" id="inputEmail3">
+<div class="container-fluid" style='height: 100%;'>
+    <div class="row d-flex" style='height: 100%;'>
+        <div style="background-color: #bf5700;" class="col-md-5 ">
+            <img src="./images/logo-uem.svg" height="1000px" width="1040px" class='center'>
+        </div>
+        <div style="background-color: #333f48;" class="col-md-7 center">
+
+            <div class="login-box">
+                <div class="login-snip"> <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label
+                        for="tab-1" class="tab">Login</label> <input id="tab-2" type="radio" name="tab"
+                        class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+                    <div class="login-space">
+                        <form action='/login' id="loginData" method="POST">
+                            <div class="login">
+                                <div class="group"> <label for="user" class="label">Email</label> <input name='email'
+                                        id="user" type="text" class="input" placeholder="Enter your email"> </div>
+                                <div class="group"> <label for="pass" class="label">Password</label> <input
+                                        name='password' id="pass" type="password" class="input" data-type="password"
+                                        placeholder="Enter your password"> </div>
+                                <div class="group mt-5"> <input type="submit" class="button" value="Sign In"> </div>
+                                <div class="hr"></div>
+                                <div style='color: white' class="foot"> <a href="#">Forgot Password?</a> </div>
+                            </div>
+                        </form>
+                        <div class="sign-up-form">
+                            <div class="group"> <label for="user" class="label">Full Name</label> <input name='name'
+                                    id="user" type="text" class="input" placeholder="Create your Username"> </div>
+                            <div class="group"> <label for="pass" class="label">Password</label> <input id="pass"
+                                    type="password" class="input" data-type="password"
+                                    placeholder="Create your password"> </div>
+                            <div class="group"> <label for="pass" class="label">Repeat Password</label> <input id="pass"
+                                    type="password" class="input" data-type="password"
+                                    placeholder="Repeat your password"> </div>
+                            <div class="group"> <label for="pass" class="label">Email Address</label> <input id="pass"
+                                    type="text" class="input" placeholder="Enter your email address">
+                            </div>
+                            <div class="group"> <input type="submit" class="button" value="Sign Up"> </div>
+                            <div class="hr"></div>
+                            <div class="foot"> <label for="tab-1">Already Member?</label> </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Password:</label>
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" name="password" id="inputPassword3">
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-success mb-2">Log In</button>
-                <div class="card-footer text-center">
-                    Don't have an account? <a href="/register">Sign Up</a>
-                    <br>
-                    Forgot Password? <a href="/reset">Reset</a>
                 </div>
             </div>
+
         </div>
-    </form>
+        {{!-- <div style="background-color:#333f48; color:white" class="col-md-7 center">
+            <div style='background-color: rgba(156,173,183,0.2);' class="card">
+                <div class="card-body pb-5">
+                    <h4 class='mb-5 mt-5 pt-3'>Sign In</h4>
+                    {{#if error}}
+                    <div class="mb-3 text-start" style="color:red; font-size: 20px">
+                        <p>{{error}}</p>
+                    </div>
+                    {{/if}}
+                    {{#each success}}
+                    <div class="mb-3 text-center" style="font-size: 20px">
+                        <p style="color: green">{{text}}</a></p>
+                    </div>
+                    {{/each}}
+                    <div class="row">
+                        <form action='/login' id="loginData" method="POST">
+                            <div class="col-md-6 offset-md-3">
+                                <div class="form-floating mb-3">
+                                    <input name='email' type="email" class="form-control" id="floatingInput"
+                                        placeholder="name@example.com">
+                                    <label for="floatingInput">Email address</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 offset-md-3">
+                                <div class="form-floating">
+                                    <input name='password' type="password" class="form-control" id="floatingPassword"
+                                        placeholder="Password">
+                                    <label for="floatingPassword">Password</label>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-success mt-4">Log In</button>
+                        </form>
+                    </div>
+                    <div class="card-footer text-center mt-4">
+                        Don't have an account? <a href="/register">Sign Up</a>
+                        <br>
+                        Forgot Password? <a href="/reset">Reset</a>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
+    </div>
 </div>

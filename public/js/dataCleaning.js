@@ -15,6 +15,8 @@ $(document).ready(() => {
         dateFormat: 'yy-mm-dd',
     });
 
+
+
     $('.load').on('click', function () {
         $('#overlay').fadeIn()
     });
@@ -39,6 +41,16 @@ $(document).ready(() => {
     let $button2 = $('#button2')
     let $button3 = $('#button3')
     let container = $('#row-container')
+
+    $('#filterBy').on('change', function () {
+        $table.bootstrapTable('filterBy', {
+            building_abbreviation: $(this).val(),
+        });
+    })
+    $('.reset').on('click', function () {
+        $table.bootstrapTable('filterBy', {});
+        $('#filterBy').val('Filter By')
+    })
 
     $(function () {
         let isChecked = false
@@ -97,7 +109,6 @@ $(document).ready(() => {
         } else {
             container.show()
             $('.submit').show()
-            console.log($('.user').text().trim())
             $('#reason').removeAttr('disabled')
             $('#notes').removeAttr('disabled')
             $('#reason').val('meter issue')
@@ -158,6 +169,20 @@ $(document).ready(() => {
         }
     })
 
+    $.ajax({
+        type: 'POST',
+        url: '/buildings',
+        data: { steward: $('.user').text().trim() }
+    }).then(function (response) {
+        console.log(response)
+        if (response.length === 0) {
+            $('.allBuildings').show()
+        } else {
+            response.map(a => {
+                $('#filterBy').append(`<option>${a.building}</option>`)
+            })
+        }
+    })
 
     $('.submit').on('click', function (e) {
         e.preventDefault()
@@ -207,7 +232,7 @@ $(document).ready(() => {
             dataType: 'json',
             contentType: 'application/json',
             data: JSON.stringify({
-                "analyst": $('.user').text().trim(),
+                "analyst": $('.email').text().trim(),
                 "building_number": buildingNumber,
                 "commodity_tag": commodityTag,
                 "meter": meter,
@@ -278,7 +303,7 @@ $(document).ready(() => {
             }
         }).then(response => {
             const obj = JSON.parse(response.body)
-            let detailView = $('.detail-view')
+            $('.expand').show()
             let lowLimit = obj.model.data.predicted_value_lower_bound.slice(365)
             let xTemp = obj.model.data.average_dry_bulb_temperature.slice(365)
             let highLimit = obj.model.data.predicted_value_upper_bound.slice(365)

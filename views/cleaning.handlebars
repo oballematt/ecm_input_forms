@@ -6,18 +6,36 @@
 <div class="container-fluid" style='height: 100%; width: 100%'>
     <div style="height: 100%; width: 100%" class="row">
         <div class="col-xxl-3 col-lg-4 searchBox">
-            <div class="user">
-                {{#if user}}
-                {{user}}
+            <div style='display: none' class="email">
+                {{#if email}}
+                {{email}}
                 {{/if}}
             </div>
-            <table id="table" data-toggle="table" data-toolbar="#toolbar" data-height="430" data-ajax="ajaxRequest"
-                data-search="true" data-pagination="true" data-filter-control="true" style="color: white">
+            <div class="user">
+                {{#if name}}
+                {{name}}
+                {{/if}}
+            </div>
+            <div id="toolbar">
+                <div class="input-group  mb-3">
+                    <select id="filterBy" class="form-select " id="inputGroupSelect01">
+                        <option disabled selected>Filter By:</option>
+                        {{#each buildings}}
+                        <option class='allBuildings' style='display: none'>{{building}}</option>
+                        {{/each}}
+                    </select>
+                    <button type='button' class="btn btn-primary reset">reset</button>
+                </div>
+
+            </div>
+            <table id="table" data-toggle="table" data-toolbar="#toolbar" data-height="480" data-ajax="ajaxRequest"
+                data-search="true" data-pagination="true" data-filter="true" data-filter-show-clear="true"
+                style="color: white">
                 <thead style="color: white">
                     <tr class="rowData">
                         <th id="button3" data-field="state" data-radio="true"></th>
                         <th data-filter-control="select" data-field="building_abbreviation">Building</th>
-                        <th data-filter-control="select" data-field="meter">Meter Name</th>
+                        <th data-filter-type="select" data-field="meter">Meter Name</th>
                         <th data-visible='false' data-field="building_number">Building Number</th>
                         <th data-field="commodity_tag">Commodity</th>
                     </tr>
@@ -86,8 +104,8 @@
                     <div class="card w-100">
                         <div class="card-body">
                             <canvas class="my-4 w-100 myChart" id="myChart" width="900" height="415"></canvas>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
+                            <button style="display: none" type="button" class="btn btn-primary expand"
+                                data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Expand
                             </button>
                         </div>
@@ -97,8 +115,8 @@
                     <div class="card w-100">
                         <div class="card-body">
                             <canvas class="my-4 w-100" id="myChart2" width="900" height="415"></canvas>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#chartDate">
+                            <button style="display: none" type="button" class="btn btn-primary expand"
+                                data-bs-toggle="modal" data-bs-target="#chartDate">
                                 Expand
                             </button>
                         </div>
@@ -197,6 +215,5 @@
             </div>
         </div>
     </div>
-        {{> chartModalTemp}}
-        {{> chartModalDates}}
-    
+    {{> chartModalTemp}}
+    {{> chartModalDates}}

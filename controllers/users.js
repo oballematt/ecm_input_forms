@@ -4,7 +4,7 @@ require('dotenv').config();
 module.exports = {
     createUser: async (req, res) => {
 
-        const { email, password, password2 } = req.body;
+        const { email, password, password2, name } = req.body;
 
         let errors = [];
         let success = []
@@ -49,6 +49,10 @@ module.exports = {
                 errors.push({ text: "Passwords do not match" })
             }
 
+            if (!name) {
+                errors.push({ text: "Please enter your first and last name"})
+            }
+
 
             if (errors.length > 0) {
                 return res.render('signup', { errors })
@@ -57,7 +61,7 @@ module.exports = {
 
                 await Users.create(
                     {
-                        email, password
+                        email, password, name
 
                     }).then(() => {
                         success.push({ text: "Registration successful! Please log in" })
