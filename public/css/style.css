@@ -125,6 +125,7 @@ h1 {
     bottom: 0;
     position: absolute;
     transform: rotateY(180deg);
+    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     transition: all .4s linear
 }
