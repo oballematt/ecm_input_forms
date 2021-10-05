@@ -106,7 +106,7 @@ h1 {
     min-height: 670px;
     position: relative;
     background-color: rgba(156,173,183,0.2);
-    box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19)
+    box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
 }
 
 .login-snip {
@@ -114,7 +114,7 @@ h1 {
     height: 100%;
     position: absolute;
     padding: 90px 70px 50px 70px;
-    background-color: rgba(156,173,183,0.2);
+    background: rgba(156,173,183,0.2);
 }
 
 .login-snip .login,

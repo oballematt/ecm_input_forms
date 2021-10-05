@@ -1,7 +1,7 @@
 <div class="container-fluid" style='height: 100%;'>
     <div class="row d-flex" style='height: 100%;'>
         <div style="background-color: #bf5700;" class="col-md-5 ">
-            <img src="./images/logo-uem.svg" height="1000px" width="1040px" class='center'>
+            <img src="./images/logo-uem.svg" height="900px" width="100%" class='center'>
         </div>
         <div style="background-color: #333f48;" class="col-md-7 center">
 
@@ -18,6 +18,11 @@
                                         name='password' id="pass" type="password" class="input" data-type="password"
                                         placeholder="Enter your password"> </div>
                                 <div class="group mt-5"> <input type="submit" class="button" value="Sign In"> </div>
+                                {{#if error}}
+                                <div class="alert alert-danger" role="alert">
+                                    {{error}}
+                                </div>
+                                {{/if}}
                                 <div class="hr"></div>
                                 <div style='color: white' class="foot"> <a href="#">Forgot Password?</a> </div>
                             </div>
@@ -37,7 +42,7 @@
                                         id="pass" type="password" name='password2' class="input" data-type="password"
                                         placeholder="Repeat your password"> </div>
 
-                                <div class="group"> <input type="submit" class="button" value="Sign Up"> </div>
+                                <div class="group"> <input type="submit" class="button mt-5" value="Sign Up"> </div>
                                 <div class="hr"></div>
                             </div>
                         </form>
