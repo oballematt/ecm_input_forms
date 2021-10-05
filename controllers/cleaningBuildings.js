@@ -12,7 +12,7 @@ module.exports = {
                 ]
             })
 
-            return res.render('cleaning', { layout: 'dataCleaning', buildings, email: req.user.email, name: req.user.name, })
+            return res.render('cleaning', { layout: 'datacleaning', buildings, email: req.user.email, name: req.user.name, })
 
         } catch (error) {
             console.error(error.message)
