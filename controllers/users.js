@@ -7,7 +7,6 @@ module.exports = {
         const { email, password, password2, name } = req.body;
 
         let errors = [];
-        let success = []
 
         const userArray = [process.env.USER1, process.env.USER2, process.env.USER3, process.env.USER4, process.env.USER5, 
             process.env.USER6, process.env.USER7, process.env.USER8, process.env.USER9, process.env.USER10, process.env.USER11, process.env.USER12];
@@ -56,24 +55,17 @@ module.exports = {
 
 
             if (errors.length > 0) {
-                return res.render('signup', { errors })
+                return res.json(errors)
 
             } else {
 
-                await Users.create(
+                const users = await Users.create(
                     {
                         email, password, name
 
-                    }).then(() => {
-                        success.push({ text: "Registration successful! Please log in" })
-
-                    }).catch(error => {
-                        console.error(error)
                     })
 
-                return res.render('login', {
-                    success
-                })
+                return res.json(users)
             }
 
         } catch (error) {
