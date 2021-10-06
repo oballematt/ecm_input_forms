@@ -81,13 +81,17 @@ h1 {
       border-radius: 50%;
   }
 
-  .center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    min-height: 90vh;
-  }
+.pageContainer {
+    overflow: hidden;
+    max-width: 450px
+}
+
+.page {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 100%;
+    flex: 1 0 100%;
+    padding: .2rem;
+}
 
  
   @keyframes rotate {
@@ -106,8 +110,7 @@ h1 {
     max-width: 525px;
     min-height: 670px;
     position: relative;
-    background-color: rgba(156,173,183,0.2);
-    box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
+  
 }
 
 .login-snip {
@@ -115,7 +118,7 @@ h1 {
     height: 100%;
     position: absolute;
     padding: 90px 70px 50px 70px;
-    background: rgba(156,173,183,0.2);
+   
 }
 
 .login-snip .login,
@@ -182,7 +185,7 @@ h1 {
 .login-space .group .button {
     border: none;
     padding: 15px 20px;
-    border-radius: 25px;
+
     background: rgba(255, 255, 255, .1)
 }
 
