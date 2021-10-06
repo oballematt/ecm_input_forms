@@ -314,7 +314,7 @@ $(document).ready(() => {
             console.log(obj)
             $('.overlayMessage').text('Getting data, this will take a few seconds')
             $('#overlay').fadeOut()
-            const autoIgnored = parseFloat(obj.model.auto_ignored_percentage).toFixed(0);
+            const autoIgnored = parseFloat(obj.model.missing_value.auto_ignored_percentage).toFixed(0);
             const slope = parseFloat(obj.model.slope).toFixed(2);
             const intercept = parseFloat(obj.model.intercept).toFixed(2)
             const r2 = parseFloat(obj.model.max_train_r2).toFixed(2)
