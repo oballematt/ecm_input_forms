@@ -350,7 +350,15 @@ $(document).ready(() => {
             })
 
 
-            xTemp.forEach((key, i) => result[key] = rawValue[i])
+            xTemp.forEach((key, i) => {
+                if (key[i] === key[i]) {
+                    key[i] += .01
+                    console.log(key, i)
+                }
+               
+                result[key] = rawValue[i]
+            })
+            console.log(result)
 
             let RawValueArr = Object.keys(result).map(function (key) {
                 return [Number(key), result[key]]
@@ -359,6 +367,7 @@ $(document).ready(() => {
             RawValueArr.sort(function (a, b) {
                 return a[0] - b[0]
             })
+
 
             const config = {
                 data: {
@@ -422,8 +431,18 @@ $(document).ready(() => {
                         },
 
 
+                    },
+                    onClick(e) {
+                        const activePoints = myChart.getElementsAtEventForMode(e, 'nearest', {
+                            intersect: true
+                        }, false)
+                        const [{
+                            index
+                        }] = activePoints;
+                        console.log(config.data.datasets[0].data[index]);
                     }
                 }
+
             };
             let ctx = document.getElementById('myChart').getContext('2d');
             let myChart = new Chart(ctx, config);
