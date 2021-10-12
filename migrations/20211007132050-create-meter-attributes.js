@@ -33,7 +33,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       auto_ignored: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       slope: {
         type: Sequelize.REAL

@@ -268,6 +268,50 @@ $(document).ready(() => {
 
     })
 
+    let meterAttributes = false
+
+    const submitAttributes = () => {
+        const meterVariable = $('.meterVariable').text()
+        const baseTemp = $('.baseTemp').text()
+        const autoIgnored = $('.autoIgnored').text()
+        const slope = $('.slope').text()
+        const intercept = $('.intercept').text()
+        const r2 = $('.r2').text()
+        const stdDev = $('.stdDev').text()
+        const confirmSubmit = confirm(`Do you want to submit the current meter attributes for meter: ${$('.currentMeter').text()}
+        \u2022 Variable: ${meterVariable}
+        \u2022 Base Temp: ${baseTemp}
+        \u2022 Auto Ignored: ${autoIgnored}
+        \u2022 Slope: ${slope}
+        \u2022 Intercept: ${intercept}
+        \u2022 R-Squared: ${r2}
+        \u2022 Std Dev: ${stdDev}`)
+    
+        if (confirmSubmit === true) {
+            const attributeData = {
+                meter_name: $('.currentMeter').text(),
+                building_name: data[0][0].building_abbreviation,
+                model_start: $('.modelStart').val(),
+                model_end: $('.modelEnd').val(),
+                analysis_start: $('.analysisStart').val(),
+                analysis_end: $('.analysisEnd').val(),
+                meter_description: meterVariable,
+                base_temp: Number(baseTemp),
+                auto_ignored: autoIgnored,
+                slope: slope,
+                intercept: intercept,
+                r_squared: r2,
+                std_dev: stdDev
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/attributes',
+                data: attributeData
+            })
+
+        }
+    }
+
     $(".apiGateway").on("click", function (e) {
         e.preventDefault();
 
@@ -275,10 +319,14 @@ $(document).ready(() => {
             alert('No meter selected. Please click "Confirm Meter Selection" to confirm your selected meter')
             $('#overlay').hide()
         } else {
+            if (meterAttributes === true) {
+                submitAttributes()
+            }
             $('#chartData').load(location.href + " #chartData")
             $('#chartData2').load(location.href + " #chartData2")
             $('#chartData3').load(location.href + " #chartData3")
             modelApi()
+            
         }
     })
 
@@ -303,6 +351,7 @@ $(document).ready(() => {
             }
         }).then(response => {
             const obj = JSON.parse(response.body)
+            meterAttributes = true
             $('.expand').show()
             let lowLimit = obj.model.data.predicted_value_lower_bound.slice(365)
             let xTemp = obj.model.data.average_dry_bulb_temperature.slice(365)
@@ -326,7 +375,8 @@ $(document).ready(() => {
             $('.intercept').html(intercept)
             $('.r2').html(r2)
             $('.stdDev').html(stdDev)
-            $('.meterVariable').html(`Variable: ${meterVariable}`)
+            $('.meterVariable').html(meterVariable)
+            $('.currentMeter').text(`${data[0][0].meter}`)
             $('#tableData').show()
 
             xTemp.forEach((key, i) => result[key] = lowLimit[i])
@@ -351,11 +401,6 @@ $(document).ready(() => {
 
 
             xTemp.forEach((key, i) => {
-                if (key[i] === key[i]) {
-                    key[i] += .01
-                    console.log(key, i)
-                }
-               
                 result[key] = rawValue[i]
             })
             console.log(result)
@@ -554,18 +599,19 @@ $(document).ready(() => {
 
                 let dates = obj.model.data.timestamp.slice(365)
                 let temperature = obj.model.data.average_dry_bulb_temperature.slice(365)
-                let hdd = obj.model.data.degree_day.slice(365)
+                let hdd = obj.model.data.degree_day ? obj.model.data.degree_day.slice(365) : 'No Value'
                 let meter = obj.model.data.raw_value.slice(365)
                 let expected = obj.model.data.predicted_value.slice(365)
                 let replacement = obj.model.data.replacement_value.slice(365)
                 let reason = obj.model.data.replacement_reason.slice(365)
                 let notes = obj.model.data.replacement_notes.slice(365)
 
+                
                 let data = dates.map((date, index) => {
                     return {
                         'Date': date,
                         'Temperature': temperature[index],
-                        'HDD': parseFloat(hdd[index]).toFixed(0),
+                        'HDD': hdd === 'No Value' ? hdd : parseFloat(hdd[index]).toFixed(0),
                         'Meter': meter[index],
                         'Expected': parseFloat(expected[index]).toFixed(0),
                         'Replacement': replacement[index],
@@ -573,9 +619,10 @@ $(document).ready(() => {
                         'Notes': notes[index],
                     }
                 })
-
+            
                 $table2.bootstrapTable({ data: data })
                 $table2.bootstrapTable('load', data)
+            
             })
 
         })

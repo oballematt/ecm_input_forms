@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     analysis_end: DataTypes.DATEONLY,
     meter_description: DataTypes.STRING,
     base_temp: DataTypes.INTEGER,
-    auto_ignored: DataTypes.INTEGER,
+    auto_ignored: DataTypes.STRING,
     slope: DataTypes.REAL,
     intercept: DataTypes.REAL,
     r_squared: DataTypes.REAL,

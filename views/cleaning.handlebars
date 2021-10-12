@@ -78,7 +78,7 @@
         <div class="col-xxl-9 col-lg-8">
             <nav class="nav">
                 <h6 style='color: white' class="nav-link ">Meter Description:
-                    <span class="units text-end meterVariable">--</span>
+                    <span class="units text-end meterVariable">Variable: --</span>
                 </h6>
                 <h6 style='color: white' class="nav-link">Base Temp:
                     <span class="units text-end baseTemp">--</span>
@@ -97,6 +97,9 @@
                 </h6>
                 <h6 style='color: white' class="nav-link">Std Dev:
                     <span class="units text-end stdDev">--</span>
+                </h6>
+                <h6  style='display: none' class="nav-link">Std Dev:
+                    <span class="units text-end currentMeter">--</span>
                 </h6>
             </nav>
             <div id='chartData' class="row responsive">
@@ -147,7 +150,7 @@
                                     </thead>
                                 </table>
                                 <button style="background-color: #bf5700;" id="button3" class="btn btn-success"
-                                    type="button">Copy
+                                    type="button">Edit
                                 </button>
                             </div>
                         </div>
