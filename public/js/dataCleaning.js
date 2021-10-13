@@ -1,5 +1,6 @@
 
 let data = []
+let attributes
 
 
 $(document).ready(() => {
@@ -25,14 +26,6 @@ $(document).ready(() => {
         let date2 = $(this).datepicker('getDate')
         date2.setDate(date2.getDate() + 364)
         $('.modelEnd').datepicker('setDate', date2)
-        let date3 = new Date()
-        date3.setDate(1);
-        date3.setMonth(date3.getMonth() - 1);
-        $('.analysisStart').datepicker('setDate', date3)
-        let date4 = new Date()
-        date4.setDate(0)
-        date4.setMonth(date4.getMonth())
-        $('.analysisEnd').datepicker('setDate', date4)
     })
 
     let $table = $('#table')
@@ -67,21 +60,27 @@ $(document).ready(() => {
                 let modelEnd = new Date()
                 let analysisStart = new Date()
                 let analysisEnd = new Date()
+
                 modelStart.setDate(1)
                 modelStart.setMonth(modelStart.getMonth() - 1)
                 modelStart.setYear(modelStart.getFullYear() - 1)
+
                 modelEnd.setDate(1)
                 modelEnd.setMonth(modelEnd.getMonth() - 1)
                 modelEnd.setYear(modelEnd.getFullYear() - 1)
                 modelEnd.setDate(+364)
+
                 analysisStart.setDate(1)
                 analysisStart.setMonth(analysisStart.getMonth() - 1);
+
                 analysisEnd.setDate(0)
                 analysisEnd.setMonth(analysisEnd.getMonth())
+
                 $('.modelStart').datepicker('setDate', modelStart)
                 $('.modelEnd').datepicker('setDate', modelEnd)
                 $('.analysisStart').datepicker('setDate', analysisStart)
                 $('.analysisEnd').datepicker('setDate', analysisEnd)
+
                 data.push($table.bootstrapTable('getSelections'))
                 $('.disabled').attr('disabled', false)
                 $('.meterSelection').html(`${data[0][0].meter}`)
@@ -278,38 +277,97 @@ $(document).ready(() => {
         const intercept = $('.intercept').text()
         const r2 = $('.r2').text()
         const stdDev = $('.stdDev').text()
-        const confirmSubmit = confirm(`Do you want to submit the current meter attributes for meter: ${$('.currentMeter').text()}
-        \u2022 Variable: ${meterVariable}
-        \u2022 Base Temp: ${baseTemp}
-        \u2022 Auto Ignored: ${autoIgnored}
-        \u2022 Slope: ${slope}
-        \u2022 Intercept: ${intercept}
-        \u2022 R-Squared: ${r2}
-        \u2022 Std Dev: ${stdDev}`)
-    
-        if (confirmSubmit === true) {
-            const attributeData = {
-                meter_name: $('.currentMeter').text(),
-                building_name: data[0][0].building_abbreviation,
-                model_start: $('.modelStart').val(),
-                model_end: $('.modelEnd').val(),
-                analysis_start: $('.analysisStart').val(),
-                analysis_end: $('.analysisEnd').val(),
-                meter_description: meterVariable,
-                base_temp: Number(baseTemp),
-                auto_ignored: autoIgnored,
-                slope: slope,
-                intercept: intercept,
-                r_squared: r2,
-                std_dev: stdDev
-            }
-            $.ajax({
-                type: 'POST',
-                url: '/attributes',
-                data: attributeData
-            })
 
+        if (attributes.length === 0) {
+            const confirmSubmit = confirm(`Do you want to submit the current meter attributes for meter: ${$('.currentMeter').text()}
+                \u2022 Variable: ${meterVariable}
+                \u2022 Base Temp: ${baseTemp}
+                \u2022 Auto Ignored: ${autoIgnored}
+                \u2022 Slope: ${slope}
+                \u2022 Intercept: ${intercept}
+                \u2022 R-Squared: ${r2}
+                \u2022 Std Dev: ${stdDev}`)
+
+
+            if (confirmSubmit === true) {
+                const attributeData = {
+                    meter_name: $('.currentMeter').text(),
+                    building_name: data[0][0].building_abbreviation,
+                    model_start: $('.modelStart').val(),
+                    model_end: $('.modelEnd').val(),
+                    analysis_start: $('.analysisStart').val(),
+                    analysis_end: $('.analysisEnd').val(),
+                    meter_description: meterVariable,
+                    base_temp: Number(baseTemp),
+                    auto_ignored: autoIgnored,
+                    slope: slope,
+                    intercept: intercept,
+                    r_squared: r2,
+                    std_dev: stdDev
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/attributes',
+                    data: attributeData
+                }).then((response) => {
+                    console.log(response)
+                })
+
+            } 
+        } else if (attributes[0].base_temp !== Number(baseTemp) || attributes[0].intercept !== Number(intercept) || attributes[0].slope !== Number(slope) 
+        || attributes[0].auto_ignored !== autoIgnored || attributes[0].r_squared !== Number(r2) || attributes[0].std_dev !== Number(stdDev)) {
+            const confirmUpdate = confirm('Do you want to update current attribute values ?')
+            if (confirmUpdate === true) {
+                const updateData = {
+                    base_temp: Number($('.baseTemp').text()),
+                    auto_ignored: $('.autoIgnored').text(),
+                    slope: $('.slope').text(),
+                    intercept: $('.intercept').text(),
+                    r_squared: $('.r2').text(),
+                    std_dev: $('.stdDev').text()
+                }
+
+                $.ajax({
+                    url: '/updateAttributes/' + attributes[0].id,
+                    type: 'POST',
+                    data: updateData
+                })
+            }
         }
+    }
+
+    const getAttributes = function () {
+        const meterVariable = $('.meterVariable').text()
+        const baseTemp = $('.baseTemp').text()
+        const autoIgnored = $('.autoIgnored').text()
+        const slope = $('.slope').text()
+        const intercept = $('.intercept').text()
+        const r2 = $('.r2').text()
+        const stdDev = $('.stdDev').text()
+        const getData = {
+            meter_name: $('.currentMeter').text(),
+            building_name: data[0][0].building_abbreviation,
+            model_start: $('.modelStart').val(),
+            model_end: $('.modelEnd').val(),
+            analysis_start: $('.analysisStart').val(),
+            analysis_end: $('.analysisEnd').val(),
+            meter_description: meterVariable,
+            base_temp: Number(baseTemp),
+            auto_ignored: autoIgnored,
+            slope: slope,
+            intercept: intercept,
+            r_squared: r2,
+            std_dev: stdDev
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/getAttributes',
+            data: getData
+        }).then((response) => {
+            attributes = response
+            console.log(attributes)
+            
+        })
     }
 
     $(".apiGateway").on("click", function (e) {
@@ -326,7 +384,7 @@ $(document).ready(() => {
             $('#chartData2').load(location.href + " #chartData2")
             $('#chartData3').load(location.href + " #chartData3")
             modelApi()
-            
+
         }
     })
 
@@ -363,21 +421,16 @@ $(document).ready(() => {
             console.log(obj)
             $('.overlayMessage').text('Getting data, this will take a few seconds')
             $('#overlay').fadeOut()
-            const autoIgnored = parseFloat(obj.model.missing_value.auto_ignored_percentage).toFixed(0);
-            const slope = parseFloat(obj.model.slope).toFixed(2);
-            const intercept = parseFloat(obj.model.intercept).toFixed(2)
-            const r2 = parseFloat(obj.model.max_train_r2).toFixed(2)
-            const stdDev = parseFloat(obj.model.std.train).toFixed(2)
-            const meterVariable = obj.model.x.toUpperCase()
             $('.baseTemp').html(obj.model.base_temperature)
-            $('.autoIgnored').html(autoIgnored + '%')
-            $('.slope').html(slope)
-            $('.intercept').html(intercept)
-            $('.r2').html(r2)
-            $('.stdDev').html(stdDev)
-            $('.meterVariable').html(meterVariable)
+            $('.autoIgnored').html(parseFloat(obj.model.missing_value.auto_ignored_percentage).toFixed(0) + '%')
+            $('.slope').html(parseFloat(obj.model.slope).toFixed(2))
+            $('.intercept').html(parseFloat(obj.model.intercept).toFixed(2))
+            $('.r2').html(parseFloat(obj.model.max_train_r2).toFixed(2))
+            $('.stdDev').html(parseFloat(obj.model.std.train).toFixed(2))
+            $('.meterVariable').html(obj.model.x.toUpperCase())
             $('.currentMeter').text(`${data[0][0].meter}`)
             $('#tableData').show()
+            getAttributes()
 
             xTemp.forEach((key, i) => result[key] = lowLimit[i])
 
@@ -606,7 +659,7 @@ $(document).ready(() => {
                 let reason = obj.model.data.replacement_reason.slice(365)
                 let notes = obj.model.data.replacement_notes.slice(365)
 
-                
+
                 let data = dates.map((date, index) => {
                     return {
                         'Date': date,
@@ -619,10 +672,10 @@ $(document).ready(() => {
                         'Notes': notes[index],
                     }
                 })
-            
+
                 $table2.bootstrapTable({ data: data })
                 $table2.bootstrapTable('load', data)
-            
+
             })
 
         })
