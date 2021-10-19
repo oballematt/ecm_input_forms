@@ -37,8 +37,9 @@ $(document).ready(() => {
 
     $('#filterBy').on('change', function () {
         $table.bootstrapTable('filterBy', {
-            building_abbreviation: $(this).val(),
+            building_number: $(this).val(),
         });
+        console.log($(this).val())
     })
     $('.reset').on('click', function () {
         $table.bootstrapTable('filterBy', {});

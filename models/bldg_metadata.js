@@ -18,6 +18,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       primaryKey: true
     },
+    building_id: {
+      type: DataTypes.STRING,
+    }
   }, {
     sequelize,
     modelName: 'Bldg_metadata',

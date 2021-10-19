@@ -21,7 +21,7 @@
                     <select id="filterBy" class="form-select " id="inputGroupSelect01">
                         <option disabled selected>Filter By:</option>
                         {{#each buildings}}
-                        <option class='allBuildings' style='display: none'>{{building}}</option>
+                        <option class='allBuildings' style='display: none' value={{building_id}}>{{building}}</option>
                         {{/each}}
                     </select>
                     <button type='button' class="btn btn-primary reset">reset</button>
