@@ -270,94 +270,67 @@ $(document).ready(() => {
     let meterAttributes = false
 
     const submitAttributes = () => {
+
+        let str = $('.autoIgnored').text()
+        let newStr = str.substring(0, str.length - 1)
+
         const meterVariable = $('.meterVariable').text()
         const baseTemp = $('.baseTemp').text()
-        const autoIgnored = $('.autoIgnored').text()
+        const autoIgnored = Number(newStr)
         const slope = $('.slope').text()
         const intercept = $('.intercept').text()
         const r2 = $('.r2').text()
         const stdDev = $('.stdDev').text()
+        const trainStart = $('.modelStart').val()
+        const trainEnd = $('.modelEnd').val()
 
-        if (attributes.length === 0) {
+     
+        if (attributes.length === 0 || attributes[0].base_temperature !== Number(baseTemp) || attributes[0].intercept !== Number(intercept) || attributes[0].slope !== Number(slope)
+            || attributes[0].auto_ignored_percentage !== autoIgnored || attributes[0].r2 !== Number(r2) || attributes[0].std !== Number(stdDev) ||
+            attributes[0].train_start !== trainStart || attributes[0].train_end !== trainEnd) {
             const confirmSubmit = confirm(`Do you want to submit the current meter attributes for meter: ${$('.currentMeter').text()}
-                \u2022 Variable: ${meterVariable}
-                \u2022 Base Temp: ${baseTemp}
-                \u2022 Auto Ignored: ${autoIgnored}
-                \u2022 Slope: ${slope}
-                \u2022 Intercept: ${intercept}
-                \u2022 R-Squared: ${r2}
-                \u2022 Std Dev: ${stdDev}`)
+
+            \u2022 Variable: ${meterVariable}
+            \u2022 Base Temp: ${baseTemp}
+            \u2022 Auto Ignored: ${autoIgnored}
+            \u2022 Slope: ${slope}
+            \u2022 Intercept: ${intercept}
+            \u2022 R-Squared: ${r2}
+            \u2022 Std Dev: ${stdDev}`)
 
 
             if (confirmSubmit === true) {
-                const attributeData = {
-                    meter_name: $('.currentMeter').text(),
-                    building_name: data[0][0].building_abbreviation,
-                    model_start: $('.modelStart').val(),
-                    model_end: $('.modelEnd').val(),
-                    analysis_start: $('.analysisStart').val(),
-                    analysis_end: $('.analysisEnd').val(),
-                    meter_description: meterVariable,
-                    base_temp: Number(baseTemp),
-                    auto_ignored: autoIgnored,
-                    slope: slope,
-                    intercept: intercept,
-                    r_squared: r2,
-                    std_dev: stdDev
-                }
+
                 $.ajax({
+                    dataType: 'json',
+                    contentType: 'application/json',
                     type: 'POST',
-                    url: '/attributes',
-                    data: attributeData
-                }).then((response) => {
+                    url: 'https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/model',
+                    data: JSON.stringify({
+                        building_number: $('.currentBuilding').text(),
+                        meter: $('.currentMeter').text(),
+                        commodity_tag: $('.currentCommodity').text(),
+                        train_start: $('.modelStart').val(),
+                        train_end: $('.modelEnd').val(),
+                        x: $('.meterVariable').text().toLowerCase(),
+                        auto_ignored_percentage: Number(autoIgnored),
+                        base_temperature: Number($('.baseTemp').text()) === 0 ? null : Number($('.baseTemp').text()),
+                        r2: Number($('.r2').text()),
+                        slope: Number($('.slope').text()),
+                        intercept: Number($('.intercept').text()),
+                        std: Number($('.stdDev').text())
+                    })
+                }).then(function (response) {
                     console.log(response)
-                })
-
-            } 
-        } else if (attributes[0].base_temp !== Number(baseTemp) || attributes[0].intercept !== Number(intercept) || attributes[0].slope !== Number(slope) 
-        || attributes[0].auto_ignored !== autoIgnored || attributes[0].r_squared !== Number(r2) || attributes[0].std_dev !== Number(stdDev)) {
-            const confirmUpdate = confirm('Do you want to update current attribute values ?')
-            if (confirmUpdate === true) {
-                const updateData = {
-                    base_temp: Number($('.baseTemp').text()),
-                    auto_ignored: $('.autoIgnored').text(),
-                    slope: $('.slope').text(),
-                    intercept: $('.intercept').text(),
-                    r_squared: $('.r2').text(),
-                    std_dev: $('.stdDev').text()
-                }
-
-                $.ajax({
-                    url: '/updateAttributes/' + attributes[0].id,
-                    type: 'POST',
-                    data: updateData
                 })
             }
         }
     }
 
     const getAttributes = function () {
-        const meterVariable = $('.meterVariable').text()
-        const baseTemp = $('.baseTemp').text()
-        const autoIgnored = $('.autoIgnored').text()
-        const slope = $('.slope').text()
-        const intercept = $('.intercept').text()
-        const r2 = $('.r2').text()
-        const stdDev = $('.stdDev').text()
+
         const getData = {
-            meter_name: $('.currentMeter').text(),
-            building_name: data[0][0].building_abbreviation,
-            model_start: $('.modelStart').val(),
-            model_end: $('.modelEnd').val(),
-            analysis_start: $('.analysisStart').val(),
-            analysis_end: $('.analysisEnd').val(),
-            meter_description: meterVariable,
-            base_temp: Number(baseTemp),
-            auto_ignored: autoIgnored,
-            slope: slope,
-            intercept: intercept,
-            r_squared: r2,
-            std_dev: stdDev
+            meter: $('.currentMeter').text(),
         }
         $.ajax({
             type: 'POST',
@@ -366,7 +339,7 @@ $(document).ready(() => {
         }).then((response) => {
             attributes = response
             console.log(attributes)
-            
+
         })
     }
 
@@ -428,7 +401,9 @@ $(document).ready(() => {
             $('.r2').html(parseFloat(obj.model.max_train_r2).toFixed(2))
             $('.stdDev').html(parseFloat(obj.model.std.train).toFixed(2))
             $('.meterVariable').html(obj.model.x.toUpperCase())
-            $('.currentMeter').text(`${data[0][0].meter}`)
+            $('.currentMeter').text(data[0][0].meter)
+            $('.currentBuilding').text(data[0][0].building_number)
+            $('.currentCommodity').text(data[0][0].commodity_tag)
             $('#tableData').show()
             getAttributes()
 

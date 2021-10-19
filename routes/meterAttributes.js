@@ -5,6 +5,6 @@ router.post('/attributes', attributeController.submitAttributes)
 
 router.post('/getAttributes', attributeController.getAttributes)
 
-router.post('/updateAttributes/:id', attributeController.updateAttributes)
+// router.post('/updateAttributes/:id', attributeController.updateAttributes)
 
 module.exports = router

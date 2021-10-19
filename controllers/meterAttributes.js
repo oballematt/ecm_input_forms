@@ -1,27 +1,15 @@
-const { Meter_attributes } = require('../models')
+const { Meter_olsr_model } = require('../models')
 
 module.exports = {
     getAttributes: async (req, res) => {
         try {
 
-            let { meter_name, building_name, model_start, model_end, analysis_start, analysis_end, meter_description, base_temp,
-                auto_ignored, slope, intercept, r_squared, std_dev } = req.body
+            let { meter } = req.body
 
-            const findAttributes = await Meter_attributes.findAll({
+            const findAttributes = await Meter_olsr_model.findAll({
                 where: {
-                    meter_name,
-                    building_name,
-                    model_start,
-                    model_end,
-                    analysis_start,
-                    analysis_end,
-                    meter_description,
-                    base_temp,
-                    auto_ignored,
-                    slope,
-                    intercept,
-                    r_squared,
-                    std_dev,
+                    meter,
+                 
                 }
             })
 
@@ -39,12 +27,12 @@ module.exports = {
     submitAttributes: async (req, res) => {
         try {
 
-            let { meter_name, building_name, model_start, model_end, analysis_start, analysis_end, meter_description, base_temp,
-                auto_ignored, slope, intercept, r_squared, std_dev } = req.body
+            let { meter, building_number, train_start, train_end, x, base_temperature,
+                commodity_tag, auto_ignored_percentage, slope, intercept, r2, std } = req.body
 
             const attributes = await Meter_attributes.create({
-                meter_name, building_name, model_start, model_end, analysis_start, analysis_end, meter_description, base_temp,
-                auto_ignored, slope, intercept, r_squared, std_dev
+                meter, building_number, train_start, train_end, x, base_temperature,
+                commodity_tag, auto_ignored_percentage, slope, intercept, r2, std
             })
 
             return res.json(attributes)
@@ -58,24 +46,24 @@ module.exports = {
 
     },
 
-    updateAttributes: async (req, res) => {
+    // updateAttributes: async (req, res) => {
 
-        try {
+    //     try {
 
-            let { base_temp, auto_ignored, slope, intercept, r_squared, std_dev } = req.body
-            const { id } = req.params
+    //         let { base_temperature, auto_ignored_percentage, slope, intercept, r2, std, train_start, train_end } = req.body
+    //         const { id } = req.params
 
-            const update = await Meter_attributes.update({
-                base_temp, auto_ignored, slope, intercept, r_squared, std_dev
-            }, {
-                where: { id }
-            })
+    //         const update = await Meter_attributes.update({
+    //             base_temperature, auto_ignored_percentage, slope, intercept, r2, std, train_start, train_end
+    //         }, {
+    //             where: { id }
+    //         })
 
-        } catch (error) {
+    //     } catch (error) {
 
-            console.error(error.message);
-            return res.status(500).json(error);
+    //         console.error(error.message);
+    //         return res.status(500).json(error);
 
-        }
-    }
+    //     }
+    // }
 }
