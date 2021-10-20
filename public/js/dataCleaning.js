@@ -1,6 +1,7 @@
 
 let data = []
 let attributes
+let analysisIndex 
 
 
 $(document).ready(() => {
@@ -39,7 +40,6 @@ $(document).ready(() => {
         $table.bootstrapTable('filterBy', {
             building_number: $(this).val(),
         });
-        console.log($(this).val())
     })
     $('.reset').on('click', function () {
         $table.bootstrapTable('filterBy', {});
@@ -104,69 +104,69 @@ $(document).ready(() => {
     $button3.click(function () {
         replaceData = $table2.bootstrapTable('getSelections')
         console.log(replaceData)
-        if (replaceData.length === 0) {
-            alert('Please select at least one option')
-        } else {
-            container.show()
-            $('.submit').show()
-            $('#reason').removeAttr('disabled')
-            $('#notes').removeAttr('disabled')
-            $('#reason').val('meter issue')
+        // if (replaceData.length === 0) {
+        //     alert('Please select at least one option')
+        // } else {
+        //     container.show()
+        //     $('.submit').show()
+        //     $('#reason').removeAttr('disabled')
+        //     $('#notes').removeAttr('disabled')
+        //     $('#reason').val('meter issue')
 
-            replaceData.forEach(function (item) {
-                $("#replaceTable").append(
-                    `<tr class="text-end">
-                    <td>
-                        ${item.Date}
-                    </td>
-                    <td>
-                        ${item.Meter}
-                    </td>
-                    <td>
-                        ${item.Expected}
-                    </td>
-                </tr>`)
+        //     replaceData.forEach(function (item) {
+        //         $("#replaceTable").append(
+        //             `<tr class="text-end">
+        //             <td>
+        //                 ${item.Date}
+        //             </td>
+        //             <td>
+        //                 ${item.Meter}
+        //             </td>
+        //             <td>
+        //                 ${item.Expected}
+        //             </td>
+        //         </tr>`)
 
-            })
+        //     })
 
-            $("#reason").on('change', function () {
-                $('#replaceTable').empty()
-                if ($(this).val() != 'meter issue') {
-                    $('.replaceReason').html('Reason')
-                    replaceData.forEach(function (item) {
-                        $("#replaceTable").append(
-                            `<tr class="text-end">
-                            <td>
-                                ${item.Date}
-                            </td>
-                            <td>
-                                ${item.Meter}
-                            </td>
-                            <td>
-                                ${$('#reason').val()}
-                            </td>
-                        </tr>`)
-                    })
-                } else {
-                    $('.replaceReason').html('Replacement Value')
-                    replaceData.forEach(function (item) {
-                        $("#replaceTable").append(
-                            `<tr class="text-end">
-                            <td>
-                                ${item.Date}
-                            </td>
-                            <td>
-                                ${item.Meter}
-                            </td>
-                            <td>
-                                ${item.Expected}
-                            </td>
-                        </tr>`)
-                    })
+        //     $("#reason").on('change', function () {
+        //         $('#replaceTable').empty()
+        //         if ($(this).val() != 'meter issue') {
+        //             $('.replaceReason').html('Reason')
+        //             replaceData.forEach(function (item) {
+        //                 $("#replaceTable").append(
+        //                     `<tr class="text-end">
+        //                     <td>
+        //                         ${item.Date}
+        //                     </td>
+        //                     <td>
+        //                         ${item.Meter}
+        //                     </td>
+        //                     <td>
+        //                         ${$('#reason').val()}
+        //                     </td>
+        //                 </tr>`)
+        //             })
+        //         } else {
+        //             $('.replaceReason').html('Replacement Value')
+        //             replaceData.forEach(function (item) {
+        //                 $("#replaceTable").append(
+        //                     `<tr class="text-end">
+        //                     <td>
+        //                         ${item.Date}
+        //                     </td>
+        //                     <td>
+        //                         ${item.Meter}
+        //                     </td>
+        //                     <td>
+        //                         ${item.Expected}
+        //                     </td>
+        //                 </tr>`)
+        //             })
 
-                }
-            })
-        }
+        //         }
+        //     })
+        // }
     })
 
     $.ajax({
@@ -220,10 +220,6 @@ $(document).ready(() => {
                 date.push(item.Date)
             })
         }
-        console.log(notes)
-        console.log(reason)
-        console.log(values)
-        console.log(date)
         $('.overlayMessage').text('Submitting Data. Please wait...')
 
         $.ajax({
@@ -384,12 +380,14 @@ $(document).ready(() => {
         }).then(response => {
             const obj = JSON.parse(response.body)
             meterAttributes = true
+            const analysisIndex = obj.model.data.timestamp.indexOf($('.analysisStart').val())
+            console.log(analysisIndex)
             $('.expand').show()
-            let lowLimit = obj.model.data.predicted_value_lower_bound.slice(365)
-            let xTemp = obj.model.data.average_dry_bulb_temperature.slice(365)
-            let highLimit = obj.model.data.predicted_value_upper_bound.slice(365)
-            let rawValue = obj.model.data.raw_value.slice(365)
-            let xtimestamp = obj.model.data.timestamp.slice(365)
+            let lowLimit = obj.model.data.predicted_value_lower_bound.slice(analysisIndex)
+            let xTemp = obj.model.data.average_dry_bulb_temperature.slice(analysisIndex)
+            let highLimit = obj.model.data.predicted_value_upper_bound.slice(analysisIndex)
+            let rawValue = obj.model.data.raw_value.slice(analysisIndex)
+            let xtimestamp = obj.model.data.timestamp.slice(analysisIndex)
             let result = {}
             let result2 = {}
             console.log(obj)
@@ -626,21 +624,21 @@ $(document).ready(() => {
 
             $(function () {
 
-                let dates = obj.model.data.timestamp.slice(365)
-                let temperature = obj.model.data.average_dry_bulb_temperature.slice(365)
-                let hdd = obj.model.data.degree_day ? obj.model.data.degree_day.slice(365) : 'No Value'
-                let meter = obj.model.data.raw_value.slice(365)
-                let expected = obj.model.data.predicted_value.slice(365)
-                let replacement = obj.model.data.replacement_value.slice(365)
-                let reason = obj.model.data.replacement_reason.slice(365)
-                let notes = obj.model.data.replacement_notes.slice(365)
+                let dates = obj.model.data.timestamp.slice(analysisIndex)
+                let temperature = obj.model.data.average_dry_bulb_temperature.slice(analysisIndex)
+                let hdd = obj.model.data.degree_day.slice(analysisIndex)
+                let meter = obj.model.data.raw_value.slice(analysisIndex)
+                let expected = obj.model.data.predicted_value.slice(analysisIndex)
+                let replacement = obj.model.data.replacement_value.slice(analysisIndex)
+                let reason = obj.model.data.replacement_reason.slice(analysisIndex)
+                let notes = obj.model.data.replacement_notes.slice(analysisIndex)
 
 
                 let data = dates.map((date, index) => {
                     return {
                         'Date': date,
                         'Temperature': temperature[index],
-                        'HDD': hdd === 'No Value' ? hdd : parseFloat(hdd[index]).toFixed(0),
+                        'HDD': hdd === 'null' ? 'No Value' : parseFloat(hdd[index]).toFixed(0),
                         'Meter': meter[index],
                         'Expected': parseFloat(expected[index]).toFixed(0),
                         'Replacement': replacement[index],

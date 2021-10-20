@@ -74,33 +74,49 @@
             </div>
             <button style="background-color: #bf5700;" class="btn btn-primary apiGateway mt-3 w-100 load"
                 type="button">Run Model</button>
-            <p class="currentMeter"></p>
-            <p class="currentBuilding"></p>
-            <p class="currentCommodity"></p>
+            <div style="display: none;">
+                <p class="currentMeter"></p>
+                <p class="currentBuilding"></p>
+                <p class="currentCommodity"></p>
+            </div>
         </div>
         <div class="col-xxl-9 col-lg-8">
             <nav class="nav">
-                <h6 style='color: white' class="nav-link ">Meter Description:
-                    <span class="units text-end meterVariable">Variable: --</span>
-                </h6>
-                <h6 style='color: white' class="nav-link">Base Temp:
-                    <span class="units text-end baseTemp">--</span>
-                </h6>
-                <h6 style='color: white' class="nav-link">% Auto Ignored:
-                    <span class="units text-end autoIgnored">--</span>
-                </h6>
-                <h6 style='color: white' class="nav-link">Slope:
-                    <span class="units text-end slope">--</span>
-                </h6>
-                <h6 style='color: white' class="nav-link">Intercept:
-                    <span class="units text-end intercept">--</span>
-                </h6>
-                <h6 style='color: white' class="nav-link">R-Squared:
-                    <span class="units text-end r2">--</span>
-                </h6>
-                <h6 style='color: white' class="nav-link">Std Dev:
-                    <span class="units text-end stdDev">--</span>
-                </h6>
+                <li class='nav-item'>
+                    <h6 style='color: white' class="nav-link">Meter Description:
+                        <span class="units text-end meterVariable">Variable: --</span>
+                    </h6>
+                </li>
+                <li class='nav-item'>
+                    <h6 style='color: white' class="nav-link">Base Temp:
+                        <span class="units text-end baseTemp">--</span>
+                    </h6>
+                </li>
+                <li class='nav-item'>
+                    <h6 style='color: white' class="nav-link">% Auto Ignored:
+                        <span class="units text-end autoIgnored">--</span>
+                    </h6>
+                </li>
+                <li class='nav-item'>
+                    <h6 style='color: white' class="nav-link">Slope:
+                        <span class="units text-end slope">--</span>
+                    </h6>
+                </li>
+                <li class='nav-item'>
+                    <h6 style='color: white' class="nav-link">Intercept:
+                        <span class="units text-end intercept">--</span>
+                    </h6>
+                </li>
+                <li class='nav-item'>
+                    <h6 style='color: white' class="nav-link">R-Squared:
+                        <span class="units text-end r2">--</span>
+                    </h6>
+                </li>
+                <li class='nav-item'>
+                    <h6 style='color: white' class="nav-link">Std Dev:
+                        <span class="units text-end stdDev">--</span>
+                    </h6>
+                </li>
             </nav>
             <div id='chartData' class="row responsive">
                 <div class="col-xxl-6 col-xl-12">
@@ -128,35 +144,57 @@
             </div>
             <hr>
             <div class="row mb-3 responsive">
-                <div style='display: none' id='tableData' class="col-xxl-7 col-xl-12 text-start">
+                <div style='display: none' id='tableData' class="col-xxl-12 col-xl-12 text-start">
                     <div class='card w-100'>
                         <div class='card-body'>
                             <div class="table-responsive ">
-                                <table data-detail-view="true" data-detail-view-align='left' data-height="462"
-                                    data-toggle="table" data-pagination="true" data-detail-formatter="detailFormatter"
-                                    id="table2" class="table table-bordered border-secondary"
-                                    data-multiple-select-row="true" data-click-to-select="true" style="color: white">
+                                <table data-height="462" data-toggle="table" data-virtual-scroll="true"
+                                    data-detail-formatter="detailFormatter" id="table2"
+                                    class="table table-bordered border-secondary" data-multiple-select-row="true"
+                                    data-click-to-select="true" style="color: white">
                                     <thead style="color: white">
                                         <tr>
                                             <th data-field="state" data-checkbox="true"></th>
-                                            <th data-field="Date">Date</th>
-                                            <th data-field="Temperature">Temperature</th>
-                                            <th data-field="HDD">HDD</th>
-                                            <th data-field="Meter">Meter Reading</th>
-                                            <th data-field="Expected">Expected</th>
-                                            <th data-field="Replacement">Replacement</th>
-                                            <th data-field="Reason" data-visible="false">Reason</th>
-                                            <th data-field="Notes" data-visible="false">Notes</th>
+                                            <th data-width='150' data-field="Date">Date</th>
+                                            <th data-width='150' data-field="Temperature">Temperature</th>
+                                            <th data-width='150' data-field="HDD">HDD</th>
+                                            <th data-width='150' data-field="Meter">Meter Reading</th>
+                                            <th data-width='150' data-field="Expected">Expected</th>
+                                            <th data-width='150' data-field="Replacement">Replacement</th>
+                                            <th data-width='150' data-field="Reason">Reason</th>
+                                            <th data-width="200" data-field="Notes">Notes</th>
                                     </thead>
                                 </table>
-                                <button style="background-color: #bf5700;" id="button3" class="btn btn-success"
-                                    type="button">Edit
-                                </button>
                             </div>
                         </div>
+                        {{!-- <div class="card-footer bg-transparent border-success">
+                            <select class="form-select" id="reason" aria-label="Default select example">
+                                <option disabled selected>Choose...</option>
+                                <option>Investigate</option>
+                                <option>meter issue</option>
+                                <option>building maintenance issue</option>
+                                <option>major renovation/addition in progress</option>
+                                <option>other</option>
+                            </select>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Dropdown button
+                                </button>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <button style="background-color: #bf5700;" id="button3" class="btn btn-success "
+                                type="button">Edit
+                            </button>
+                        </div> --}}
                     </div>
                 </div>
-                <div id="row-container" class="col-xxl-5 col-xl-12" style="display: none">
+                {{!-- <div id="row-container" class="col-xxl-5 col-xl-12" style="display: none">
                     <div class="card">
                         <div class="card-body">
                             <div class="table-wrapper-scroll-y my-custom-scrollbar">
@@ -202,7 +240,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
