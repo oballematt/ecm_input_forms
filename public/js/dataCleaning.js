@@ -1,10 +1,25 @@
 
 let data = []
 let attributes
-let analysisIndex 
+let analysisIndex
 
 
 $(document).ready(() => {
+
+    $.ajax({
+        type: 'POST',
+        url: '/buildings',
+        data: { steward: $('.user').text().trim() }
+    }).then(function (response) {
+        console.log(response)
+        if (response.length === 0) {
+            $('.allBuildings').show()
+        } else {
+            response.map(a => {
+                $('#filterBy').append(`<option>${a.building}</option>`)
+            })
+        }
+    })
 
 
     var toastLiveExample = document.getElementById('liveToast')
@@ -34,7 +49,6 @@ $(document).ready(() => {
     let $button = $('#button')
     let $button2 = $('#button2')
     let $button3 = $('#button3')
-    let container = $('#row-container')
 
     $('#filterBy').on('change', function () {
         $table.bootstrapTable('filterBy', {
@@ -101,91 +115,11 @@ $(document).ready(() => {
 
     let replaceData
 
-    $button3.click(function () {
+    $button3.click(function (e) {
+        e.preventDefault()
         replaceData = $table2.bootstrapTable('getSelections')
         console.log(replaceData)
-        // if (replaceData.length === 0) {
-        //     alert('Please select at least one option')
-        // } else {
-        //     container.show()
-        //     $('.submit').show()
-        //     $('#reason').removeAttr('disabled')
-        //     $('#notes').removeAttr('disabled')
-        //     $('#reason').val('meter issue')
-
-        //     replaceData.forEach(function (item) {
-        //         $("#replaceTable").append(
-        //             `<tr class="text-end">
-        //             <td>
-        //                 ${item.Date}
-        //             </td>
-        //             <td>
-        //                 ${item.Meter}
-        //             </td>
-        //             <td>
-        //                 ${item.Expected}
-        //             </td>
-        //         </tr>`)
-
-        //     })
-
-        //     $("#reason").on('change', function () {
-        //         $('#replaceTable').empty()
-        //         if ($(this).val() != 'meter issue') {
-        //             $('.replaceReason').html('Reason')
-        //             replaceData.forEach(function (item) {
-        //                 $("#replaceTable").append(
-        //                     `<tr class="text-end">
-        //                     <td>
-        //                         ${item.Date}
-        //                     </td>
-        //                     <td>
-        //                         ${item.Meter}
-        //                     </td>
-        //                     <td>
-        //                         ${$('#reason').val()}
-        //                     </td>
-        //                 </tr>`)
-        //             })
-        //         } else {
-        //             $('.replaceReason').html('Replacement Value')
-        //             replaceData.forEach(function (item) {
-        //                 $("#replaceTable").append(
-        //                     `<tr class="text-end">
-        //                     <td>
-        //                         ${item.Date}
-        //                     </td>
-        //                     <td>
-        //                         ${item.Meter}
-        //                     </td>
-        //                     <td>
-        //                         ${item.Expected}
-        //                     </td>
-        //                 </tr>`)
-        //             })
-
-        //         }
-        //     })
-        // }
-    })
-
-    $.ajax({
-        type: 'POST',
-        url: '/buildings',
-        data: { steward: $('.user').text().trim() }
-    }).then(function (response) {
-        console.log(response)
-        if (response.length === 0) {
-            $('.allBuildings').show()
-        } else {
-            response.map(a => {
-                $('#filterBy').append(`<option>${a.building}</option>`)
-            })
-        }
-    })
-
-    $('.submit').on('click', function (e) {
-        e.preventDefault()
+        let checked = $('#replace').is(':checked')
         let notes = []
         let reason = []
         let values = []
@@ -193,35 +127,34 @@ $(document).ready(() => {
         const buildingNumber = data[0][0].building_number
         const commodityTag = data[0][0].commodity_tag
         const meter = data[0][0].meter
-        if ($('#reason').val() === 'meter issue') {
-
-            replaceData.forEach(function (item) {
-                if ($('#notes').val() === '') {
-                    notes.push(null)
-                } else {
-                    notes.push($('#notes').val())
-                }
-
-                reason.push($('#reason').val())
-                values.push(parseFloat(item.Expected))
-                date.push(item.Date)
-            })
+        if (replaceData.length === 0) {
+            alert('Please select at least one option')
         } else {
-
-            replaceData.forEach(function (item) {
-                if ($('#notes').val() === '') {
-                    notes.push(null)
-                } else {
-                    notes.push($('#notes').val())
-                }
-
-                reason.push($('#reason').val())
-                values.push(null)
-                date.push(item.Date)
-            })
+            if (checked === true) {
+                replaceData.forEach(function (item) {
+                    if ($('#notes').val() === '') {
+                        notes.push(null)
+                    } else {
+                        notes.push($('#notes').val())
+                    }
+                    reason.push($('#reason').val())
+                    values.push(parseFloat(item.Expected))
+                    date.push(item.Date)
+                })
+            } else {
+                replaceData.forEach(function (item) {
+                    if ($('#notes').val() === '') {
+                        notes.push(null)
+                    } else {
+                        notes.push($('#notes').val())
+                    }
+                    reason.push($('#reason').val())
+                    values.push(null)
+                    date.push(item.Date)
+                })
+            }
         }
         $('.overlayMessage').text('Submitting Data. Please wait...')
-
         $.ajax({
             url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/building_meter_replacement`,
             method: 'POST',
@@ -250,8 +183,8 @@ $(document).ready(() => {
                     alert('Server Error. Please submit your data again.')
                 }
             }
-        }).then(() => {
-            $('#replaceTable').empty()
+        }).then((response) => {
+            console.log(response)
             $('#overlay').fadeOut()
             $('.overlayMessage').text('Getting data, this will take a few seconds')
             notes = []
@@ -261,7 +194,6 @@ $(document).ready(() => {
             $table2.bootstrapTable('uncheckAll')
             toast.show()
         })
-
     })
 
     let meterAttributes = false
@@ -281,7 +213,7 @@ $(document).ready(() => {
         const trainStart = $('.modelStart').val()
         const trainEnd = $('.modelEnd').val()
 
-     
+
         if (attributes.length === 0 || attributes[0].base_temperature !== Number(baseTemp) || attributes[0].intercept !== Number(intercept) || attributes[0].slope !== Number(slope)
             || attributes[0].auto_ignored_percentage !== autoIgnored || attributes[0].r2 !== Number(r2) || attributes[0].std !== Number(stdDev) ||
             attributes[0].train_start !== trainStart || attributes[0].train_end !== trainEnd) {
