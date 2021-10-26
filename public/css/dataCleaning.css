@@ -53,6 +53,9 @@
     background-color: #ffffff; 
 }
 
+.form-check-input[type=checkbox]:checked:after {
+    margin-left: .25rem;
+}
 
   @keyframes rotate {
       0% {

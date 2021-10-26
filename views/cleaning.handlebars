@@ -143,8 +143,8 @@
                 </div>
             </div>
             <hr>
-           <div class="successAlert"></div>
-            <div style="display: none" id="tableData" class="row mb-3 responsive">
+            <div class="successAlert"></div>
+            <div id="tableData" class="row mb-3 responsive">
                 <div id='tableData' class="col-xxl-12 col-xl-12 text-start">
                     <div class='card w-100'>
                         <div class='card-body'>
@@ -189,9 +189,14 @@
                                     <button class="btn btn-primary w-100" type="button" data-bs-toggle="offcanvas"
                                         data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Notes</button>
                                 </div>
-                                <div class="col-md-3">
-                                    <input type="checkbox" class="btn-check w-100" id="replace" autocomplete="off" />
-                                    <label class="btn btn-outline-success w-100" for="replace">Replace?</label>
+                                <div class="col-md-3 mt-1 d-flex justify-content-start">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value=""
+                                            id="flexCheckDefault" />
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Default checkbox
+                                        </label>
+                                    </div>
                                 </div>
                                 <div class="col-md-3">
                                     <button style="background-color: #bf5700;" id="button3"
