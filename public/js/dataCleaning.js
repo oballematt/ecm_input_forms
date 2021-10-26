@@ -579,7 +579,7 @@ $(document).ready(() => {
                         'Date': date,
                         'Temperature': temperature[index],
                         'HDD': hdd === 'null' ? 'No Value' : parseFloat(hdd[index]).toFixed(0),
-                        'Meter': meter[index],
+                        'Meter': parseFloat(meter[index]).toFixed(0),
                         'Expected': parseFloat(expected[index]).toFixed(0),
                         'Replacement': replacement[index],
                         'Reason': reason[index],
