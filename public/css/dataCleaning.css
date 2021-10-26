@@ -22,27 +22,20 @@
       border-radius: 50%;
   }
 
-.row {
-    margin: auto
-}
-
-.my-custom-scrollbar {
-    position: relative;
-    height: 350px;
-    overflow: auto;
-}
-
-.table-wrapper-scroll-y {
-    display: block;
-}
-
 .units{
-    display: block
+    display: block;
+    text-align: right;
 }
 
 .bordered {
     border: 1px solid
 }
+
+.page-list .btn-secondary {
+    background-color: white;
+    color: black
+}
+
 
 @media (min-width: 764px) and (max-width: 1400px){
     .responsive{

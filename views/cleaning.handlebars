@@ -44,7 +44,7 @@
             <button style=" color:white" type="button" id="button" class="btn btn-success mt-3">Confirm Meter
                 Selection</button>
             <ul class="list-group mt-3 mb-3">
-                <li class="list-group-item d-flex justify-content-between align-items-start listGroupColor">
+                <li class="list-group-item listGroupColor">
                     <div class="ms-2 me-auto">
                         <div class="fw-bold">Current Meter Selection:</div>
                         <div class="meterSelection">--</div>
@@ -52,23 +52,23 @@
                 </li>
             </ul>
             <div class="input-group flex-nowrap mt-3">
-                <span class="input-group-text" id="addon-wrapping">Model Start Date:</span>
+                <span class="input-group-text text-white" id="addon-wrapping">Model Start Date:</span>
                 <input autocomplete="off" disabled='true' id="modelStart" type="text"
                     class="form-control datepicker disabled modelStart" placeholder="yyyy/mm/dd"
                     aria-label="Model Start Date" aria-describedby="addon-wrapping">
             </div>
             <div class="input-group flex-nowrap mt-3">
-                <span class="input-group-text" id="addon-wrapping">Model End Date:</span>
+                <span class="input-group-text text-white" id="addon-wrapping">Model End Date:</span>
                 <input disabled="true" type="text" class="form-control datepicker disabled modelEnd"
                     placeholder="yyyy/mm/dd" aria-label="Model End Date" aria-describedby="addon-wrapping">
             </div>
             <div class="input-group flex-nowrap mt-3">
-                <span class="input-group-text" id="addon-wrapping">Analysis Start Date:</span>
+                <span class="input-group-text text-white" id="addon-wrapping">Analysis Start Date:</span>
                 <input disabled="true" type="text" class="form-control datepicker disabled analysisStart"
                     placeholder="yyyy/mm/dd" aria-label="Analysis Start Date" aria-describedby="addon-wrapping">
             </div>
             <div class="input-group flex-nowrap mt-3">
-                <span class="input-group-text" id="addon-wrapping">Analysis End Date:</span>
+                <span class="input-group-text text-white" id="addon-wrapping">Analysis End Date:</span>
                 <input disabled="true" type="text" class="form-control datepicker disabled analysisEnd"
                     placeholder="yyyy/mm/dd" aria-label="Analysis End Date" aria-describedby="addon-wrapping">
             </div>
@@ -84,37 +84,37 @@
             <nav class="nav">
                 <li class='nav-item'>
                     <h6 style='color: white' class="nav-link">Meter Description:
-                        <span class="units text-end meterVariable">Variable: --</span>
+                        <span class="units meterVariable">Variable: --</span>
                     </h6>
                 </li>
                 <li class='nav-item'>
                     <h6 style='color: white' class="nav-link">Base Temp:
-                        <span class="units text-end baseTemp">--</span>
+                        <span class="units baseTemp">--</span>
                     </h6>
                 </li>
                 <li class='nav-item'>
                     <h6 style='color: white' class="nav-link">% Auto Ignored:
-                        <span class="units text-end autoIgnored">--</span>
+                        <span class="units autoIgnored">--</span>
                     </h6>
                 </li>
                 <li class='nav-item'>
                     <h6 style='color: white' class="nav-link">Slope:
-                        <span class="units text-end slope">--</span>
+                        <span class="units slope">--</span>
                     </h6>
                 </li>
                 <li class='nav-item'>
                     <h6 style='color: white' class="nav-link">Intercept:
-                        <span class="units text-end intercept">--</span>
+                        <span class="units intercept">--</span>
                     </h6>
                 </li>
                 <li class='nav-item'>
                     <h6 style='color: white' class="nav-link">R-Squared:
-                        <span class="units text-end r2">--</span>
+                        <span class="units r2">--</span>
                     </h6>
                 </li>
                 <li class='nav-item'>
                     <h6 style='color: white' class="nav-link">Std Dev:
-                        <span class="units text-end stdDev">--</span>
+                        <span class="units stdDev">--</span>
                     </h6>
                 </li>
             </nav>
@@ -143,35 +143,35 @@
                 </div>
             </div>
             <hr>
-            <div id="tableData" style="display: none" class="row mb-3 responsive">
+            <div id="tableData" class="row mb-3 responsive">
                 <div id='tableData' class="col-xxl-12 col-xl-12 text-start">
                     <div class='card w-100'>
                         <div class='card-body'>
                             <div class="table-responsive ">
                                 <table data-height="462" data-toggle="table" data-virtual-scroll="true"
                                     data-detail-formatter="detailFormatter" id="table2"
-                                    class="table table-bordered border-secondary" data-multiple-select-row="true"
-                                    data-click-to-select="true" style="color: white">
+                                    class="table table-bordered" data-multiple-select-row="true"
+                                    data-click-to-select="true" style="color: white";>
                                     <thead style="color: white">
                                         <tr>
                                             <th data-field="state" data-checkbox="true"></th>
-                                            <th data-width='150' data-field="Date">Date</th>
-                                            <th data-width='150' data-field="Temperature">Temperature</th>
-                                            <th data-width='150' data-field="HDD">HDD</th>
-                                            <th data-width='150' data-field="Meter">Meter Reading</th>
-                                            <th data-width='150' data-field="Expected">Expected</th>
-                                            <th data-width='150' data-field="Replacement">Replacement</th>
-                                            <th data-width='150' data-field="Reason">Reason</th>
-                                            <th data-width="200" data-field="Notes">Notes</th>
+                                            <th data-halign="left" data-width='150' data-field="Date">Date</th>
+                                            <th data-halign="left" data-width='150' data-field="Temperature">Temperature</th>
+                                            <th data-halign="left" data-width='150' data-field="HDD">HDD</th>
+                                            <th data-halign="left" data-width='150' data-field="Meter">Meter Reading</th>
+                                            <th data-halign="left" data-width='150' data-field="Expected">Expected</th>
+                                            <th data-halign="left" data-width='150' data-field="Replacement">Replacement</th>
+                                            <th data-halign="left" data-width='150' data-field="Reason">Reason</th>
+                                            <th data-halign="left" data-width="200" data-field="Notes">Notes</th>
                                     </thead>
                                 </table>
                             </div>
                         </div>
-                        <div style='width: 100%' class="card-footer bg-transparent border-success">
+                        <div style='width: 100%' class="card-footer bg-transparent">
                             <div style='width: 100%' class="row">
                                 <div class="col-md-3">
                                     <div class="input-group">
-                                        <label class='input-group-text' for="reason">Reason</label>
+                                        <label class='input-group-text text-white' for="reason">Reason</label>
                                         <select class="form-select" id="reason" aria-label="Default select example">
                                             <option disabled selected>Choose...</option>
                                             <option>Investigate</option>
@@ -183,24 +183,12 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <button class="btn btn-primary w-100" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseExample" aria-expanded="false"
-                                        aria-controls="collapseExample">
-                                        Notes
-                                    </button>
-                                    <div class="collapse" id="collapseExample">
-
-                                        <textarea id="notes" rows="3" cols='38'></textarea>
-
-                                    </div>
+                                    <button class="btn btn-primary w-100" type="button" data-bs-toggle="offcanvas"
+                                        data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Notes</button>
                                 </div>
-                                <div class="col-md-3 mt-1">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="replace">
-                                        <label class="form-check-label" for="replace">
-                                            Replace?
-                                        </label>
-                                    </div>
+                                <div class="col-md-3">
+                                    <input type="checkbox" class="btn-check w-100" id="replace" autocomplete="off" />
+                                    <label class="btn btn-outline-success w-100" for="replace">Replace?</label>
                                 </div>
                                 <div class="col-md-3">
                                     <button style="background-color: #bf5700;" id="button3"
@@ -229,3 +217,12 @@
     </div>
     {{> chartModalTemp}}
     {{> chartModalDates}}
+    <div class="offcanvas offcanvas-bottom text-end" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasBottomLabel">Notes</h5>
+            <button type="button" class="btn-close text-reset mr-2" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body small">
+            <textarea id='notes' style="width: 100%; height: 100%"></textarea>
+        </div>
+    </div>
