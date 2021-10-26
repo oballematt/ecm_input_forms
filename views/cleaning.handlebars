@@ -143,24 +143,27 @@
                 </div>
             </div>
             <hr>
+           <div class="successAlert"></div>
             <div id="tableData" class="row mb-3 responsive">
                 <div id='tableData' class="col-xxl-12 col-xl-12 text-start">
                     <div class='card w-100'>
                         <div class='card-body'>
                             <div class="table-responsive ">
                                 <table data-height="462" data-toggle="table" data-virtual-scroll="true"
-                                    data-detail-formatter="detailFormatter" id="table2"
-                                    class="table table-bordered" data-multiple-select-row="true"
-                                    data-click-to-select="true" style="color: white";>
+                                    data-detail-formatter="detailFormatter" id="table2" class="table table-bordered"
+                                    data-multiple-select-row="true" data-click-to-select="true" style="color: white" ;>
                                     <thead style="color: white">
                                         <tr>
                                             <th data-field="state" data-checkbox="true"></th>
                                             <th data-halign="left" data-width='150' data-field="Date">Date</th>
-                                            <th data-halign="left" data-width='150' data-field="Temperature">Temperature</th>
+                                            <th data-halign="left" data-width='150' data-field="Temperature">Temperature
+                                            </th>
                                             <th data-halign="left" data-width='150' data-field="HDD">HDD</th>
-                                            <th data-halign="left" data-width='150' data-field="Meter">Meter Reading</th>
+                                            <th data-halign="left" data-width='150' data-field="Meter">Meter Reading
+                                            </th>
                                             <th data-halign="left" data-width='150' data-field="Expected">Expected</th>
-                                            <th data-halign="left" data-width='150' data-field="Replacement">Replacement</th>
+                                            <th data-halign="left" data-width='150' data-field="Replacement">Replacement
+                                            </th>
                                             <th data-halign="left" data-width='150' data-field="Reason">Reason</th>
                                             <th data-halign="left" data-width="200" data-field="Notes">Notes</th>
                                     </thead>
@@ -203,24 +206,14 @@
             </div>
         </div>
     </div>
-    <div class="position-fixed top-50 start-50 p-3" style="z-index: 11">
-        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <br>
-                <strong class="me-auto">Success</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div style="color: white" class="toast-body bg-success">
-                Your data has been submitted successfully!
-            </div>
-        </div>
-    </div>
     {{> chartModalTemp}}
     {{> chartModalDates}}
-    <div class="offcanvas offcanvas-bottom text-end" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+    <div class="offcanvas offcanvas-bottom text-end" tabindex="-1" id="offcanvasBottom"
+        aria-labelledby="offcanvasBottomLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasBottomLabel">Notes</h5>
-            <button type="button" class="btn-close text-reset mr-2" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <button type="button" class="btn-close text-reset mr-2" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
         </div>
         <div class="offcanvas-body small">
             <textarea id='notes' style="width: 100%; height: 100%"></textarea>

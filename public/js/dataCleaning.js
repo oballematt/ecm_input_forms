@@ -192,7 +192,10 @@ $(document).ready(() => {
             values = []
             reason = []
             $table2.bootstrapTable('uncheckAll')
-            toast.show()
+            $('.successAlert').append(`<div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Success!</strong> Your data has been successfully uploaded!.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>`)
         })
     })
 
@@ -204,7 +207,7 @@ $(document).ready(() => {
         let newStr = str.substring(0, str.length - 1)
 
         const meterVariable = $('.meterVariable').text()
-        const baseTemp = $('.baseTemp').text()
+        let baseTemp = $('.baseTemp').text() 
         const autoIgnored = Number(newStr)
         const slope = $('.slope').text()
         const intercept = $('.intercept').text()
@@ -213,8 +216,13 @@ $(document).ready(() => {
         const trainStart = $('.modelStart').val()
         const trainEnd = $('.modelEnd').val()
 
+        if (baseTemp === '') {
+            baseTemp = null
+        } else {
+            baseTemp = Number($('.baseTemp').text())
+        }
 
-        if (attributes.length === 0 || attributes[0].base_temperature !== Number(baseTemp) || attributes[0].intercept !== Number(intercept) || attributes[0].slope !== Number(slope)
+        if (attributes.length === 0 || attributes[0].base_temperature !== baseTemp || attributes[0].intercept !== Number(intercept) || attributes[0].slope !== Number(slope)
             || attributes[0].auto_ignored_percentage !== autoIgnored || attributes[0].r2 !== Number(r2) || attributes[0].std !== Number(stdDev) ||
             attributes[0].train_start !== trainStart || attributes[0].train_end !== trainEnd) {
             const confirmSubmit = confirm(`Do you want to submit the current meter attributes for meter: ${$('.currentMeter').text()}
