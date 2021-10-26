@@ -57,6 +57,11 @@
     margin-left: .25rem;
 }
 
+.form-check .form-check-input {
+    float: left;
+    margin-right: 0.5em;
+}
+
   @keyframes rotate {
       0% {
           transform: rotate(0deg);
