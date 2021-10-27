@@ -207,7 +207,7 @@ $(document).ready(() => {
         let newStr = str.substring(0, str.length - 1)
 
         const meterVariable = $('.meterVariable').text()
-        let baseTemp = $('.baseTemp').text() 
+        let baseTemp = $('.baseTemp').text()
         const autoIgnored = Number(newStr)
         const slope = $('.slope').text()
         const intercept = $('.intercept').text()
@@ -380,7 +380,11 @@ $(document).ready(() => {
                 return a[0] - b[0]
             })
 
-
+            if (data[0][0].commodity_tag === 'W') {
+                $('.hideIfWater').hide()
+                $('#fullWidth').attr('class', 'col-xxl-12')
+                $('#myChart2').css('height', '400px')
+            }
             const config = {
                 data: {
                     datasets: [{
@@ -411,6 +415,7 @@ $(document).ready(() => {
                     ]
                 },
                 options: {
+
                     plugins: {
                         legend: {
                             labels: {
@@ -451,7 +456,8 @@ $(document).ready(() => {
                         const [{
                             index
                         }] = activePoints;
-                        console.log(config.data.datasets[0].data[index]);
+                        console.log(config.data.datasets[0].data[index].y);
+                        $table2.bootstrapTable('scrollTo', { unit: 'rows', value: 5 })
                     }
                 }
 
@@ -574,7 +580,7 @@ $(document).ready(() => {
                 let notes = obj.model.data.replacement_notes.slice(analysisIndex)
 
 
-                let data = dates.map((date, index) => {
+                let dataTable = dates.map((date, index) => {
                     return {
                         'Date': date,
                         'Temperature': temperature[index],
@@ -587,8 +593,8 @@ $(document).ready(() => {
                     }
                 })
 
-                $table2.bootstrapTable({ data: data })
-                $table2.bootstrapTable('load', data)
+                $table2.bootstrapTable({ data: dataTable})
+                $table2.bootstrapTable('load', dataTable)
 
             })
 

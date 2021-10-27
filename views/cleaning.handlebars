@@ -118,11 +118,11 @@
                     </h6>
                 </li>
             </nav>
-            <div id='chartData' class="row responsive">
-                <div class="col-xxl-6 col-xl-12">
+            <div id='chartData' class="row responsive chartBox">
+                <div class="col-xxl-6 col-xl-12 hideIfWater">
                     <div class="card w-100">
                         <div class="card-body">
-                            <canvas class="my-4 w-100 myChart" id="myChart" width="900" height="415"></canvas>
+                            <canvas class="my-4 myChart w-100" id="myChart"></canvas>
                             <button style="display: none" type="button" class="btn btn-primary expand"
                                 data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Expand
@@ -130,10 +130,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xxl-6 col-xl-12">
+                <div id="fullWidth" class="col-xxl-6 col-xl-12">
                     <div class="card w-100">
                         <div class="card-body">
-                            <canvas class="my-4 w-100" id="myChart2" width="900" height="415"></canvas>
+                            <canvas class="my-4  w-100" id="myChart2"></canvas>
                             <button style="display: none" type="button" class="btn btn-primary expand"
                                 data-bs-toggle="modal" data-bs-target="#chartDate">
                                 Expand
@@ -145,13 +145,13 @@
             <hr>
             <div class="successAlert"></div>
             <div id="tableData" class="row mb-3 responsive">
-                <div style="display: none;" id='tableData' class="col-xxl-12 col-xl-12 text-start">
+                <div class="col-xxl-12 col-xl-12 text-start">
                     <div class='card w-100'>
                         <div class='card-body'>
                             <div class="table-responsive ">
                                 <table data-height="462" data-toggle="table" data-virtual-scroll="true"
                                     data-detail-formatter="detailFormatter" id="table2" class="table table-bordered"
-                                    data-multiple-select-row="true" data-click-to-select="true" style="color: white" ;>
+                                    data-multiple-select-row="true" data-click-to-select="true" data-cell-style="cellStyle" style="color: white">
                                     <thead style="color: white">
                                         <tr>
                                             <th data-field="state" data-checkbox="true"></th>
