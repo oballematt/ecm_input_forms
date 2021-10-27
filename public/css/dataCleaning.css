@@ -62,6 +62,13 @@
     margin-right: 0.5em;
 }
 
+.dropdown-toggle{
+    height: 40px;
+}
+
+.pointer:hover{
+    cursor: pointer;
+}
 
   @keyframes rotate {
       0% {

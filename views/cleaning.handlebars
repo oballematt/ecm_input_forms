@@ -11,26 +11,31 @@
                 {{email}}
                 {{/if}}
             </div>
-            <div class="user">
+            <div style='display: none' class="user">
                 {{#if name}}
                 {{name}}
                 {{/if}}
             </div>
-            <div id="toolbar">
-                <div class="input-group  mb-3">
-                    <select id="filterBy" class="form-select " id="inputGroupSelect01">
-                        <option disabled selected>Filter By:</option>
-                        {{#each buildings}}
-                        <option class='allBuildings' style='display: none' value={{building_id}}>{{building}}</option>
-                        {{/each}}
-                    </select>
-                    <button type='button' class="btn btn-primary reset">reset</button>
+            <div class="input-group mt-3 mb-2">
+                <div class="dropdown">
+                    <button style='background-color:#333f48; color: white' class="btn dropdown-toggle" type="button"
+                        id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Steward:
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li class="dropdown-item pointer">Grace Hsieh</li>
+                        <li class="dropdown-item pointer">Meagan Jones</li>
+                        <li class="dropdown-item pointer">Matt Stevens</li>
+                    </ul>
                 </div>
-
+                <select id="filterBy" class="form-select " id="inputGroupSelect01">
+                    <option disabled selected>Select a Steward</option>
+                </select>
+                <button type='button' class="btn btn-primary reset">reset</button>
             </div>
-            <table id="table" data-toggle="table" data-toolbar="#toolbar" data-height="480" data-ajax="ajaxRequest"
-                data-search="true" data-pagination="true" data-filter="true" data-filter-show-clear="true"
-                style="color: white">
+            <table id="table" data-search-align="left" data-toggle="table" data-toolbar="#toolbar" data-height="465"
+                data-ajax="ajaxRequest" data-search="true" data-virtual-scroll="true" data-filter="true"
+                data-filter-show-clear="true" style="color: white">
                 <thead style="color: white">
                     <tr class="rowData">
                         <th id="button3" data-field="state" data-radio="true"></th>
@@ -149,16 +154,16 @@
                     <div class='card w-100'>
                         <div class='card-body'>
                             <div class="table-responsive ">
-                                <table data-height="462" data-toggle="table" data-virtual-scroll="true"
-                                    data-detail-formatter="detailFormatter" id="table2" class="table table-bordered"
-                                    data-multiple-select-row="true" data-click-to-select="true" data-cell-style="cellStyle" style="color: white">
+                                <table id="table2" class="table table-bordered" data-height="462" data-toggle="table"
+                                    data-virtual-scroll="true" data-multiple-select-row="true"
+                                    data-click-to-select="true" style="color: white">
                                     <thead style="color: white">
                                         <tr>
                                             <th data-field="state" data-checkbox="true"></th>
                                             <th data-halign="left" data-width='150' data-field="Date">Date</th>
                                             <th data-halign="left" data-width='150' data-field="Temperature">Temperature
                                             </th>
-                                            <th data-halign="left" data-width='150' data-field="HDD">HDD</th>
+                                            <th id='x' data-halign="left" data-field='X' data-width='150'>--</th>
                                             <th data-halign="left" data-width='150' data-field="Meter">Meter Reading
                                             </th>
                                             <th data-halign="left" data-width='150' data-field="Expected">Expected</th>
@@ -170,8 +175,8 @@
                                 </table>
                             </div>
                         </div>
-                        <div style='width: 100%' class="card-footer bg-transparent">
-                            <div style='width: 100%' class="row">
+                        <div style="display: none" id="footer" class="card-footer bg-transparent">
+                            <div class="row">
                                 <div class="col-md-3">
                                     <div class="input-group">
                                         <label class='input-group-text text-white' for="reason">Reason</label>
@@ -189,7 +194,7 @@
                                     <button class="btn btn-primary w-100" type="button" data-bs-toggle="offcanvas"
                                         data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Notes</button>
                                 </div>
-                                <div class="col-md-3 mt-1 d-flex justify-content-start">
+                                <div class="col-md-3 mt-2 d-flex justify-content-start">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="replace" />
                                         <label class="form-check-label" for="replace">

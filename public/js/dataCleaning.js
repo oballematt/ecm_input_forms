@@ -6,25 +6,6 @@ let analysisIndex
 
 $(document).ready(() => {
 
-    $.ajax({
-        type: 'POST',
-        url: '/buildings',
-        data: { steward: $('.user').text().trim() }
-    }).then(function (response) {
-        console.log(response)
-        if (response.length === 0) {
-            $('.allBuildings').show()
-        } else {
-            response.map(a => {
-                $('#filterBy').append(`<option>${a.building}</option>`)
-            })
-        }
-    })
-
-
-    var toastLiveExample = document.getElementById('liveToast')
-    var toast = new bootstrap.Toast(toastLiveExample)
-
     const dateInput_1 = $('.datepicker');
 
     dateInput_1.datepicker({
@@ -47,7 +28,6 @@ $(document).ready(() => {
     let $table = $('#table')
     let $table2 = $('#table2')
     let $button = $('#button')
-    let $button2 = $('#button2')
     let $button3 = $('#button3')
 
     $('#filterBy').on('change', function () {
@@ -103,166 +83,29 @@ $(document).ready(() => {
             }
 
         })
-        $button2.click(function () {
-            $table.bootstrapTable('uncheckAll')
-            data = []
-            $('.meterSelection').html('--')
-            $('.disabled').attr('disabled', true)
-            isChecked = false
-        })
 
     })
 
     let replaceData
 
-    $button3.click(function (e) {
-        e.preventDefault()
-        replaceData = $table2.bootstrapTable('getSelections')
-        console.log(replaceData)
-        let checked = $('#replace').is(':checked')
-        let notes = []
-        let reason = []
-        let values = []
-        let date = []
-        const buildingNumber = data[0][0].building_number
-        const commodityTag = data[0][0].commodity_tag
-        const meter = data[0][0].meter
-        if (replaceData.length === 0) {
-            alert('Please select at least one option')
-        } else {
-            if (checked === true) {
-                replaceData.forEach(function (item) {
-                    if ($('#notes').val() === '') {
-                        notes.push(null)
-                    } else {
-                        notes.push($('#notes').val())
-                    }
-                    reason.push($('#reason').val())
-                    values.push(parseFloat(item.Expected))
-                    date.push(item.Date)
-                })
-            } else {
-                replaceData.forEach(function (item) {
-                    if ($('#notes').val() === '') {
-                        notes.push(null)
-                    } else {
-                        notes.push($('#notes').val())
-                    }
-                    reason.push($('#reason').val())
-                    values.push(null)
-                    date.push(item.Date)
-                })
-            }
-        }
-        $('.overlayMessage').text('Submitting Data. Please wait...')
+    $('.pointer').on('click', function () {
+        $('#filterBy').empty()
+        const steward = $(this).text()
         $.ajax({
-            url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/building_meter_replacement`,
-            method: 'POST',
-            dataType: 'json',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                "analyst": $('.email').text().trim(),
-                "building_number": buildingNumber,
-                "commodity_tag": commodityTag,
-                "meter": meter,
-                "data": {
-                    "timestamp": date,
-                    "value": values,
-                    "reason": reason,
-                    "notes": notes,
-                }
-            }),
-            error: function (jqXhr, textStatus, errorThrown) {
-                console.log(errorThrown);
-                if (jqXhr.status === 400) {
-                    alert("Invalid Request. Please try again.")
-                    $('#overlay').fadeOut()
-                }
-                if (jqXhr.status === 504) {
-                    $('#overlay').fadeOut()
-                    alert('Server Error. Please submit your data again.')
-                }
-            }
-        }).then((response) => {
+            type: 'POST',
+            url: '/buildings',
+            data: { steward: steward }
+        }).then(function (response) {
             console.log(response)
-            $('#overlay').fadeOut()
-            $('.overlayMessage').text('Getting data, this will take a few seconds')
-            notes = []
-            date = []
-            values = []
-            reason = []
-            $table2.bootstrapTable('uncheckAll')
-            $('.successAlert').append(`<div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Success!</strong> Your data has been successfully uploaded!.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>`)
+            $('#filterBy').append('<option selected disabled>Choose...</option>')
+            response.map(a => {
+                $('#filterBy').append(`<option value=${a.building_id}>${a.building}</option>`)
+            })
+            $('.dropdown-toggle').text(steward)
         })
+
     })
 
-    let meterAttributes = false
-
-    const submitAttributes = () => {
-
-        let str = $('.autoIgnored').text()
-        let newStr = str.substring(0, str.length - 1)
-
-        const meterVariable = $('.meterVariable').text()
-        let baseTemp = $('.baseTemp').text()
-        const autoIgnored = Number(newStr)
-        const slope = $('.slope').text()
-        const intercept = $('.intercept').text()
-        const r2 = $('.r2').text()
-        const stdDev = $('.stdDev').text()
-        const trainStart = $('.modelStart').val()
-        const trainEnd = $('.modelEnd').val()
-
-        if (baseTemp === '') {
-            baseTemp = null
-        } else {
-            baseTemp = Number($('.baseTemp').text())
-        }
-
-        if (attributes.length === 0 || attributes[0].base_temperature !== baseTemp || attributes[0].intercept !== Number(intercept) || attributes[0].slope !== Number(slope)
-            || attributes[0].auto_ignored_percentage !== autoIgnored || attributes[0].r2 !== Number(r2) || attributes[0].std !== Number(stdDev) ||
-            attributes[0].train_start !== trainStart || attributes[0].train_end !== trainEnd) {
-            const confirmSubmit = confirm(`Do you want to submit the current meter attributes for meter: ${$('.currentMeter').text()}
-
-            \u2022 Variable: ${meterVariable}
-            \u2022 Base Temp: ${baseTemp}
-            \u2022 Auto Ignored: ${autoIgnored}
-            \u2022 Slope: ${slope}
-            \u2022 Intercept: ${intercept}
-            \u2022 R-Squared: ${r2}
-            \u2022 Std Dev: ${stdDev}`)
-
-
-            if (confirmSubmit === true) {
-
-                $.ajax({
-                    dataType: 'json',
-                    contentType: 'application/json',
-                    type: 'POST',
-                    url: 'https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/model',
-                    data: JSON.stringify({
-                        building_number: $('.currentBuilding').text(),
-                        meter: $('.currentMeter').text(),
-                        commodity_tag: $('.currentCommodity').text(),
-                        train_start: $('.modelStart').val(),
-                        train_end: $('.modelEnd').val(),
-                        x: $('.meterVariable').text().toLowerCase(),
-                        auto_ignored_percentage: Number(autoIgnored),
-                        base_temperature: Number($('.baseTemp').text()) === 0 ? null : Number($('.baseTemp').text()),
-                        r2: Number($('.r2').text()),
-                        slope: Number($('.slope').text()),
-                        intercept: Number($('.intercept').text()),
-                        std: Number($('.stdDev').text())
-                    })
-                }).then(function (response) {
-                    console.log(response)
-                })
-            }
-        }
-    }
 
     const getAttributes = function () {
 
@@ -323,6 +166,7 @@ $(document).ready(() => {
             const analysisIndex = obj.model.data.timestamp.indexOf($('.analysisStart').val())
             console.log(analysisIndex)
             $('.expand').show()
+            $('#footer').show()
             let lowLimit = obj.model.data.predicted_value_lower_bound.slice(analysisIndex)
             let xTemp = obj.model.data.average_dry_bulb_temperature.slice(analysisIndex)
             let highLimit = obj.model.data.predicted_value_upper_bound.slice(analysisIndex)
@@ -568,11 +412,11 @@ $(document).ready(() => {
             let ctx4 = document.getElementById('myChart4').getContext('2d');
             let myChart4 = new Chart(ctx4, config2);
 
+            $('[data-field="X"]').find('.th-inner').text(obj.model.x.toUpperCase())
             $(function () {
-
                 let dates = obj.model.data.timestamp.slice(analysisIndex)
                 let temperature = obj.model.data.average_dry_bulb_temperature.slice(analysisIndex)
-                let hdd = obj.model.data.degree_day.slice(analysisIndex)
+                let x = obj.model.data.degree_day.slice(analysisIndex)
                 let meter = obj.model.data.raw_value.slice(analysisIndex)
                 let expected = obj.model.data.predicted_value.slice(analysisIndex)
                 let replacement = obj.model.data.replacement_value.slice(analysisIndex)
@@ -580,11 +424,12 @@ $(document).ready(() => {
                 let notes = obj.model.data.replacement_notes.slice(analysisIndex)
 
 
+
                 let dataTable = dates.map((date, index) => {
                     return {
                         'Date': date,
                         'Temperature': temperature[index],
-                        'HDD': hdd === 'null' ? 'No Value' : parseFloat(hdd[index]).toFixed(0),
+                        'X': parseFloat(x[index]).toFixed(0),
                         'Meter': parseFloat(meter[index]).toFixed(0),
                         'Expected': parseFloat(expected[index]).toFixed(0),
                         'Replacement': replacement[index],
@@ -593,7 +438,7 @@ $(document).ready(() => {
                     }
                 })
 
-                $table2.bootstrapTable({ data: dataTable})
+                $table2.bootstrapTable({ data: dataTable })
                 $table2.bootstrapTable('load', dataTable)
 
             })
@@ -601,6 +446,154 @@ $(document).ready(() => {
         })
     }
 
+    $button3.click(function (e) {
+        e.preventDefault()
+        replaceData = $table2.bootstrapTable('getSelections')
+        console.log(replaceData)
+        let checked = $('#replace').is(':checked')
+        let notes = []
+        let reason = []
+        let values = []
+        let date = []
+        const buildingNumber = data[0][0].building_number
+        const commodityTag = data[0][0].commodity_tag
+        const meter = data[0][0].meter
+        if (replaceData.length === 0) {
+            alert('Please select at least one option')
+        } else {
+            if (checked === true) {
+                replaceData.forEach(function (item) {
+                    if ($('#notes').val() === '') {
+                        notes.push(null)
+                    } else {
+                        notes.push($('#notes').val())
+                    }
+                    reason.push($('#reason').val())
+                    values.push(parseFloat(item.Expected))
+                    date.push(item.Date)
+                })
+            } else {
+                replaceData.forEach(function (item) {
+                    if ($('#notes').val() === '') {
+                        notes.push(null)
+                    } else {
+                        notes.push($('#notes').val())
+                    }
+                    reason.push($('#reason').val())
+                    values.push(null)
+                    date.push(item.Date)
+                })
+            }
+        }
+        $('.overlayMessage').text('Submitting Data. Please wait...')
+        $.ajax({
+            url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/building_meter_replacement`,
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "analyst": $('.email').text().trim(),
+                "building_number": buildingNumber,
+                "commodity_tag": commodityTag,
+                "meter": meter,
+                "data": {
+                    "timestamp": date,
+                    "value": values,
+                    "reason": reason,
+                    "notes": notes,
+                }
+            }),
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+                if (jqXhr.status === 400) {
+                    alert("Invalid Request. Please try again.")
+                    $('#overlay').fadeOut()
+                }
+                if (jqXhr.status === 504) {
+                    $('#overlay').fadeOut()
+                    alert('Server Error. Please submit your data again.')
+                }
+            }
+        }).then((response) => {
+            console.log(response)
+            $('#overlay').fadeOut()
+            $('.overlayMessage').text('Getting data, this will take a few seconds')
+            notes = []
+            date = []
+            values = []
+            reason = []
+            $table2.bootstrapTable('uncheckAll')
+            $('.successAlert').append(`<div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Success!</strong> Your data has been successfully uploaded!.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>`)
+        })
+    })
+
+    let meterAttributes = false
+
+    const submitAttributes = () => {
+
+        let str = $('.autoIgnored').text()
+        let newStr = str.substring(0, str.length - 1)
+
+        const meterVariable = $('.meterVariable').text()
+        let baseTemp = $('.baseTemp').text()
+        const autoIgnored = Number(newStr)
+        const slope = $('.slope').text()
+        const intercept = $('.intercept').text()
+        const r2 = $('.r2').text()
+        const stdDev = $('.stdDev').text()
+        const trainStart = $('.modelStart').val()
+        const trainEnd = $('.modelEnd').val()
+
+        if (baseTemp === '') {
+            baseTemp = null
+        } else {
+            baseTemp = Number($('.baseTemp').text())
+        }
+
+        if (attributes.length === 0 || attributes[0].base_temperature !== baseTemp || attributes[0].intercept !== Number(intercept) || attributes[0].slope !== Number(slope)
+            || attributes[0].auto_ignored_percentage !== autoIgnored || attributes[0].r2 !== Number(r2) || attributes[0].std !== Number(stdDev) ||
+            attributes[0].train_start !== trainStart || attributes[0].train_end !== trainEnd) {
+            const confirmSubmit = confirm(`Do you want to submit the current meter attributes for meter: ${$('.currentMeter').text()}
+
+            \u2022 Variable: ${meterVariable}
+            \u2022 Base Temp: ${baseTemp}
+            \u2022 Auto Ignored: ${autoIgnored}
+            \u2022 Slope: ${slope}
+            \u2022 Intercept: ${intercept}
+            \u2022 R-Squared: ${r2}
+            \u2022 Std Dev: ${stdDev}`)
+
+
+            if (confirmSubmit === true) {
+
+                $.ajax({
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    type: 'POST',
+                    url: 'https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/model',
+                    data: JSON.stringify({
+                        building_number: $('.currentBuilding').text(),
+                        meter: $('.currentMeter').text(),
+                        commodity_tag: $('.currentCommodity').text(),
+                        train_start: $('.modelStart').val(),
+                        train_end: $('.modelEnd').val(),
+                        x: $('.meterVariable').text().toLowerCase(),
+                        auto_ignored_percentage: Number(autoIgnored),
+                        base_temperature: Number($('.baseTemp').text()) === 0 ? null : Number($('.baseTemp').text()),
+                        r2: Number($('.r2').text()),
+                        slope: Number($('.slope').text()),
+                        intercept: Number($('.intercept').text()),
+                        std: Number($('.stdDev').text())
+                    })
+                }).then(function (response) {
+                    console.log(response)
+                })
+            }
+        }
+    }
 })
 
 
