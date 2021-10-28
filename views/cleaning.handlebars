@@ -113,14 +113,17 @@
                         <span class="units stdDev">--</span>
                     </h6>
                 </li>
+                <li class='nav-item ms-auto mt-3'>
+                    <a class="btn btn-danger" href="/logout" role="button">Logout</a>
+                </li>
             </nav>
             <div id='chartData' class="row responsive">
                 <div style='display: none' id="hideIfWater" class="col-xxl-6 col-xl-12 showChart">
                     <div class="card w-100">
                         <div class="card-body">
                             <canvas class="my-4 myChart w-100" id="myChart"></canvas>
-                            <button type="button" class="btn btn-primary expand"
-                                data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <button type="button" class="btn btn-primary expand" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
                                 Expand
                             </button>
                         </div>
@@ -130,8 +133,8 @@
                     <div style='display: none' class="card w-100 showChart">
                         <div class="card-body">
                             <canvas class="my-4  w-100" id="myChart2"></canvas>
-                            <button type="button" class="btn btn-primary expand"
-                                data-bs-toggle="modal" data-bs-target="#chartDate">
+                            <button type="button" class="btn btn-primary expand" data-bs-toggle="modal"
+                                data-bs-target="#chartDate">
                                 Expand
                             </button>
                         </div>
