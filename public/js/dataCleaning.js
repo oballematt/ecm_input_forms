@@ -431,7 +431,7 @@ $(document).ready(() => {
                         'X': parseFloat(x[index]).toFixed(0),
                         'Meter': parseFloat(meter[index]).toFixed(0),
                         'Expected': parseFloat(expected[index]).toFixed(0),
-                        'Replacement': replacement[index],
+                        'Replacement': parseFloat(replacement[index]).toFixed(0),
                         'Reason': reason[index],
                         'Notes': notes[index],
                     }
