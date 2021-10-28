@@ -534,6 +534,12 @@ $(document).ready(() => {
         }
     })
 
+    $('.logout').click(function () {
+        if (meterAttributes === true) {
+            submitAttributes()
+        }
+    })
+
     let meterAttributes = false
 
     const submitAttributes = () => {
