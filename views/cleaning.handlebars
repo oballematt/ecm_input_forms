@@ -11,23 +11,14 @@
                 {{email}}
                 {{/if}}
             </div>
-            <div style='display: none' class="user">
-                {{#if name}}
-                {{name}}
-                {{/if}}
-            </div>
-            <div class="input-group mt-3 mb-2">
-                <div class="dropdown">
-                    <button style='background-color:#333f48; color: white' class="btn dropdown-toggle" type="button"
-                        id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        Steward:
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li class="dropdown-item pointer">Grace Hsieh</li>
-                        <li class="dropdown-item pointer">Meagan Jones</li>
-                        <li class="dropdown-item pointer">Matt Stevens</li>
-                    </ul>
-                </div>
+            <div class="input-group mt-3 mb-3">
+                <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">Steward</button>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item pointer">Grace Hsieh</li>
+                    <li class="dropdown-item pointer">Meagan Jones</li>
+                    <li class="dropdown-item pointer">Matt Stevens</li>
+                </ul>
                 <select id="filterBy" class="form-select " id="inputGroupSelect01">
                     <option disabled selected>Select a Steward</option>
                 </select>
@@ -57,23 +48,23 @@
                 </li>
             </ul>
             <div class="input-group flex-nowrap mt-3">
-                <span class="input-group-text text-white" id="addon-wrapping">Model Start Date:</span>
+                <span style='width: 150px' class="input-group-text" id="addon-wrapping">Model Start Date:</span>
                 <input autocomplete="off" disabled='true' id="modelStart" type="text"
                     class="form-control datepicker disabled modelStart" placeholder="yyyy/mm/dd"
                     aria-label="Model Start Date" aria-describedby="addon-wrapping">
             </div>
             <div class="input-group flex-nowrap mt-3">
-                <span class="input-group-text text-white" id="addon-wrapping">Model End Date:</span>
+                <span style='width: 150px' class="input-group-text" id="addon-wrapping">Model End Date:</span>
                 <input disabled="true" type="text" class="form-control datepicker disabled modelEnd"
                     placeholder="yyyy/mm/dd" aria-label="Model End Date" aria-describedby="addon-wrapping">
             </div>
             <div class="input-group flex-nowrap mt-3">
-                <span class="input-group-text text-white" id="addon-wrapping">Analysis Start Date:</span>
+                <span style='width: 150px' class="input-group-text" id="addon-wrapping">Analysis Start Date:</span>
                 <input disabled="true" type="text" class="form-control datepicker disabled analysisStart"
                     placeholder="yyyy/mm/dd" aria-label="Analysis Start Date" aria-describedby="addon-wrapping">
             </div>
             <div class="input-group flex-nowrap mt-3">
-                <span class="input-group-text text-white" id="addon-wrapping">Analysis End Date:</span>
+                <span style='width: 150px' class="input-group-text" id="addon-wrapping">Analysis End Date:</span>
                 <input disabled="true" type="text" class="form-control datepicker disabled analysisEnd"
                     placeholder="yyyy/mm/dd" aria-label="Analysis End Date" aria-describedby="addon-wrapping">
             </div>
@@ -123,23 +114,23 @@
                     </h6>
                 </li>
             </nav>
-            <div id='chartData' class="row responsive chartBox">
-                <div class="col-xxl-6 col-xl-12 hideIfWater">
+            <div id='chartData' class="row responsive">
+                <div style='display: none' id="hideIfWater" class="col-xxl-6 col-xl-12 showChart">
                     <div class="card w-100">
                         <div class="card-body">
                             <canvas class="my-4 myChart w-100" id="myChart"></canvas>
-                            <button style="display: none" type="button" class="btn btn-primary expand"
+                            <button type="button" class="btn btn-primary expand"
                                 data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Expand
                             </button>
                         </div>
                     </div>
                 </div>
-                <div id="fullWidth" class="col-xxl-6 col-xl-12">
-                    <div class="card w-100">
+                <div class="col-xxl-6 col-xl-12">
+                    <div style='display: none' class="card w-100 showChart">
                         <div class="card-body">
                             <canvas class="my-4  w-100" id="myChart2"></canvas>
-                            <button style="display: none" type="button" class="btn btn-primary expand"
+                            <button type="button" class="btn btn-primary expand"
                                 data-bs-toggle="modal" data-bs-target="#chartDate">
                                 Expand
                             </button>
@@ -149,7 +140,7 @@
             </div>
             <hr>
             <div class="successAlert"></div>
-            <div id="tableData" class="row mb-3 responsive">
+            <div style="display: none" id="tableData" class="row mb-3 responsive">
                 <div class="col-xxl-12 col-xl-12 text-start">
                     <div class='card w-100'>
                         <div class='card-body'>
@@ -175,11 +166,11 @@
                                 </table>
                             </div>
                         </div>
-                        <div style="display: none" id="footer" class="card-footer bg-transparent">
+                        <div class="card-footer bg-transparent">
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="input-group">
-                                        <label class='input-group-text text-white' for="reason">Reason</label>
+                                        <label class='input-group-text' for="reason">Reason</label>
                                         <select class="form-select" id="reason" aria-label="Default select example">
                                             <option disabled selected>Choose...</option>
                                             <option>Investigate</option>
@@ -203,8 +194,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <button style="background-color: #bf5700;" id="button3"
-                                        class="btn btn-success w-100 load" type="button">Submit
+                                    <button style="background-color: #bf5700; color: white" id="button3"
+                                        class="btn w-100 load" type="button">Submit
                                     </button>
                                 </div>
                             </div>

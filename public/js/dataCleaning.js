@@ -161,12 +161,11 @@ $(document).ready(() => {
                 }
             }
         }).then(response => {
+            $('.showChart').show()
             const obj = JSON.parse(response.body)
             meterAttributes = true
             const analysisIndex = obj.model.data.timestamp.indexOf($('.analysisStart').val())
             console.log(analysisIndex)
-            $('.expand').show()
-            $('#footer').show()
             let lowLimit = obj.model.data.predicted_value_lower_bound.slice(analysisIndex)
             let xTemp = obj.model.data.average_dry_bulb_temperature.slice(analysisIndex)
             let highLimit = obj.model.data.predicted_value_upper_bound.slice(analysisIndex)
@@ -225,7 +224,7 @@ $(document).ready(() => {
             })
 
             if (data[0][0].commodity_tag === 'W') {
-                $('.hideIfWater').hide()
+                $('#hideIfWater').hide()
                 $('#fullWidth').attr('class', 'col-xxl-12')
                 $('#myChart2').css('height', '400px')
             }
@@ -459,7 +458,11 @@ $(document).ready(() => {
         const commodityTag = data[0][0].commodity_tag
         const meter = data[0][0].meter
         if (replaceData.length === 0) {
-            alert('Please select at least one option')
+            alert('Please select at least one date')
+            $('#overlay').hide()
+        } else if (!$('#reason').val()) {
+            alert('Please select a reason')
+            $('#overlay').hide()
         } else {
             if (checked === true) {
                 replaceData.forEach(function (item) {
@@ -484,50 +487,51 @@ $(document).ready(() => {
                     date.push(item.Date)
                 })
             }
-        }
-        $('.overlayMessage').text('Submitting Data. Please wait...')
-        $.ajax({
-            url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/building_meter_replacement`,
-            method: 'POST',
-            dataType: 'json',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                "analyst": $('.email').text().trim(),
-                "building_number": buildingNumber,
-                "commodity_tag": commodityTag,
-                "meter": meter,
-                "data": {
-                    "timestamp": date,
-                    "value": values,
-                    "reason": reason,
-                    "notes": notes,
+
+            $('.overlayMessage').text('Submitting Data. Please wait...')
+            $.ajax({
+                url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/building_meter_replacement`,
+                method: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    "analyst": $('.email').text().trim(),
+                    "building_number": buildingNumber,
+                    "commodity_tag": commodityTag,
+                    "meter": meter,
+                    "data": {
+                        "timestamp": date,
+                        "value": values,
+                        "reason": reason,
+                        "notes": notes,
+                    }
+                }),
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                    if (jqXhr.status === 400) {
+                        alert("Invalid Request. Please try again.")
+                        $('#overlay').fadeOut()
+                    }
+                    if (jqXhr.status === 504) {
+                        $('#overlay').fadeOut()
+                        alert('Server Error. Please submit your data again.')
+                    }
                 }
-            }),
-            error: function (jqXhr, textStatus, errorThrown) {
-                console.log(errorThrown);
-                if (jqXhr.status === 400) {
-                    alert("Invalid Request. Please try again.")
-                    $('#overlay').fadeOut()
-                }
-                if (jqXhr.status === 504) {
-                    $('#overlay').fadeOut()
-                    alert('Server Error. Please submit your data again.')
-                }
-            }
-        }).then((response) => {
-            console.log(response)
-            $('#overlay').fadeOut()
-            $('.overlayMessage').text('Getting data, this will take a few seconds')
-            notes = []
-            date = []
-            values = []
-            reason = []
-            $table2.bootstrapTable('uncheckAll')
-            $('.successAlert').append(`<div class="alert alert-success alert-dismissible fade show" role="alert">
+            }).then((response) => {
+                console.log(response)
+                $('#overlay').fadeOut()
+                $('.overlayMessage').text('Getting data, this will take a few seconds')
+                notes = []
+                date = []
+                values = []
+                reason = []
+                $table2.bootstrapTable('uncheckAll')
+                $('.successAlert').append(`<div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Success!</strong> Your data has been successfully uploaded!.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>`)
-        })
+            })
+        }
     })
 
     let meterAttributes = false
