@@ -11,8 +11,9 @@
                 {{email}}
                 {{/if}}
             </div>
-            <div class="input-group mt-3 mb-3">
-                <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+            <label for="filterLabel" class="form-label mt-2 fw-light">Filter By:</label>
+            <div class="input-group mb-2">
+                <button id='filterLabel' class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">Steward</button>
                 <ul class="dropdown-menu">
                     <li class="dropdown-item pointer">Grace Hsieh</li>
@@ -48,23 +49,23 @@
                 </li>
             </ul>
             <div class="input-group flex-nowrap mt-3">
-                <span style='width: 150px' class="input-group-text" id="addon-wrapping">Model Start Date:</span>
+                <span style='width: 120px' class="input-group-text" id="addon-wrapping">Model Start:</span>
                 <input autocomplete="off" disabled='true' id="modelStart" type="text"
                     class="form-control datepicker disabled modelStart" placeholder="yyyy/mm/dd"
                     aria-label="Model Start Date" aria-describedby="addon-wrapping">
             </div>
             <div class="input-group flex-nowrap mt-3">
-                <span style='width: 150px' class="input-group-text" id="addon-wrapping">Model End Date:</span>
+                <span style='width: 120px' class="input-group-text" id="addon-wrapping">Model End:</span>
                 <input disabled="true" type="text" class="form-control datepicker disabled modelEnd"
                     placeholder="yyyy/mm/dd" aria-label="Model End Date" aria-describedby="addon-wrapping">
             </div>
             <div class="input-group flex-nowrap mt-3">
-                <span style='width: 150px' class="input-group-text" id="addon-wrapping">Analysis Start Date:</span>
+                <span style='width: 120px' class="input-group-text" id="addon-wrapping">Analysis Start:</span>
                 <input disabled="true" type="text" class="form-control datepicker disabled analysisStart"
                     placeholder="yyyy/mm/dd" aria-label="Analysis Start Date" aria-describedby="addon-wrapping">
             </div>
             <div class="input-group flex-nowrap mt-3">
-                <span style='width: 150px' class="input-group-text" id="addon-wrapping">Analysis End Date:</span>
+                <span style='width: 120px' class="input-group-text" id="addon-wrapping">Analysis End:</span>
                 <input disabled="true" type="text" class="form-control datepicker disabled analysisEnd"
                     placeholder="yyyy/mm/dd" aria-label="Analysis End Date" aria-describedby="addon-wrapping">
             </div>
