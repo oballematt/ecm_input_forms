@@ -182,7 +182,7 @@ $(document).ready(() => {
             $('.intercept').html(parseFloat(obj.model.intercept).toFixed(2))
             $('.r2').html(parseFloat(obj.model.max_train_r2).toFixed(2))
             $('.stdDev').html(parseFloat(obj.model.std.train).toFixed(2))
-            $('.meterVariable').html(obj.model.x.toUpperCase())
+            $('.meterVariable').html(`Variable: ${obj.model.x.toUpperCase()}`)
             $('.currentMeter').text(data[0][0].meter)
             $('.currentBuilding').text(data[0][0].building_number)
             $('.currentCommodity').text(data[0][0].commodity_tag)
@@ -428,10 +428,10 @@ $(document).ready(() => {
                     return {
                         'Date': date,
                         'Temperature': temperature[index],
-                        'X': parseFloat(x[index]).toFixed(0),
+                        'X': x[index] === null ? '-' : parseFloat(x[index]).toFixed(0),
                         'Meter': parseFloat(meter[index]).toFixed(0),
                         'Expected': parseFloat(expected[index]).toFixed(0),
-                        'Replacement': parseFloat(replacement[index]).toFixed(0),
+                        'Replacement':replacement[index] === null ? '-' :  parseFloat(replacement[index]).toFixed(0),
                         'Reason': reason[index],
                         'Notes': notes[index],
                     }
@@ -590,7 +590,7 @@ $(document).ready(() => {
                         commodity_tag: $('.currentCommodity').text(),
                         train_start: $('.modelStart').val(),
                         train_end: $('.modelEnd').val(),
-                        x: $('.meterVariable').text().toLowerCase(),
+                        x: obj.model.x.toLowerCase(),
                         auto_ignored_percentage: Number(autoIgnored),
                         base_temperature: Number($('.baseTemp').text()) === 0 ? null : Number($('.baseTemp').text()),
                         r2: Number($('.r2').text()),

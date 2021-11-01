@@ -25,13 +25,24 @@ module.exports = {
 
         try {
 
-            const buildings = await Bldg_metadata.findAll({
-                where: { steward },
-                order: [
-                    ['building', 'ASC']
-                ]
-            })
-            return res.json(buildings)
+            if (steward === 'All') {
+                const buildings = await Bldg_metadata.findAll({
+                    order: [
+                        ['building', 'ASC']
+                    ]
+                })
+
+                return res.json(buildings)
+            } else {
+
+                const buildings = await Bldg_metadata.findAll({
+                    where: { steward },
+                    order: [
+                        ['building', 'ASC']
+                    ]
+                })
+                return res.json(buildings)
+            }
         } catch (error) {
             console.error(error.message)
         }
