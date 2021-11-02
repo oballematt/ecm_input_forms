@@ -86,8 +86,6 @@ $(document).ready(() => {
 
     })
 
-    let replaceData
-
     $('.pointer').on('click', function () {
         $('#filterBy').empty()
         const steward = $(this).text()
@@ -165,7 +163,6 @@ $(document).ready(() => {
             const obj = JSON.parse(response.body)
             meterAttributes = true
             const analysisIndex = obj.model.data.timestamp.indexOf($('.analysisStart').val())
-            console.log(analysisIndex)
             let lowLimit = obj.model.data.predicted_value_lower_bound.slice(analysisIndex)
             let xTemp = obj.model.data.average_dry_bulb_temperature.slice(analysisIndex)
             let highLimit = obj.model.data.predicted_value_upper_bound.slice(analysisIndex)
@@ -173,6 +170,7 @@ $(document).ready(() => {
             let xtimestamp = obj.model.data.timestamp.slice(analysisIndex)
             let result = {}
             let result2 = {}
+            let replaceData = []
             console.log(obj)
             $('.overlayMessage').text('Getting data, this will take a few seconds')
             $('#overlay').fadeOut()
@@ -424,21 +422,45 @@ $(document).ready(() => {
 
 
 
-                let dataTable = dates.map((date, index) => {
-                    return {
-                        'Date': date,
-                        'Temperature': temperature[index],
-                        'X': x[index] === null ? '-' : parseFloat(x[index]).toFixed(0),
-                        'Meter': parseFloat(meter[index]).toFixed(0),
-                        'Expected': parseFloat(expected[index]).toFixed(0),
-                        'Replacement':replacement[index] === null ? '-' :  parseFloat(replacement[index]).toFixed(0),
-                        'Reason': reason[index],
-                        'Notes': notes[index],
-                    }
+                 dates.map((date, index) => {
+                    $('.tableBody').append(`
+                    <tr>
+                        <td>${date}</td>
+                        <td>${temperature[index]}</td>
+                        <td>${x[index] === null ? '-' : parseFloat(x[index]).toFixed(0)}</td>
+                        <td>${parseFloat(meter[index]).toFixed(0)}</td>
+                        <td>${parseFloat(expected[index]).toFixed(0)}</td>
+                        <td>${replacement[index] === null ? '-' : parseFloat(replacement[index]).toFixed(0)}</td>
+                        <td>${reason[index] === null ? '-' : reason[index]}</td>
+                        <td>${notes[index] === null ? '-' : notes[index]}</td>
+                    </tr>`)
+                //     return {
+                //         'Date': date,
+                //         'Temperature': temperature[index],
+                //         'X': x[index] === null ? '-' : parseFloat(x[index]).toFixed(0),
+                //         'Meter': parseFloat(meter[index]).toFixed(0),
+                //         'Expected': parseFloat(expected[index]).toFixed(0),
+                //         'Replacement':replacement[index] === null ? '-' :  parseFloat(replacement[index]).toFixed(0),
+                //         'Reason': reason[index],
+                //         'Notes': notes[index],
+                //     }
                 })
 
-                $table2.bootstrapTable({ data: dataTable })
-                $table2.bootstrapTable('load', dataTable)
+            //    $('.tableData tr').click(function () {
+            //        $(this).find('td').each(function() {
+            //            replaceData.push($(this).html())
+            //        })
+            //        console.log(replaceData)
+            //    })
+
+                $('.tableData td:nth-child(4)').each(function() {
+                    if (parseInt($(this).text(), 10) === parseInt($(this).text().prev(), 10)) {
+                        $(this).parent('tr').css('background-color', 'red')
+                    }
+                  
+                })
+                // $table2.bootstrapTable({ data: dataTable })
+                // $table2.bootstrapTable('load', dataTable)
 
             })
 
