@@ -2,9 +2,15 @@
 let data = []
 let attributes
 let analysisIndex
-
+let replaceData = []
 
 $(document).ready(() => {
+
+    new jBox('Tooltip', {
+        attach: '.tooltip',
+        getTitle: 'data-jbox-title',
+        getContent: 'data-jbox-content'
+    });
 
     const dateInput_1 = $('.datepicker');
 
@@ -12,8 +18,6 @@ $(document).ready(() => {
         changeYear: true,
         dateFormat: 'yy-mm-dd',
     });
-
-
 
     $('.load').on('click', function () {
         $('#overlay').fadeIn()
@@ -123,7 +127,6 @@ $(document).ready(() => {
 
     $(".apiGateway").on("click", function (e) {
         e.preventDefault();
-
         if (data.length === 0) {
             alert('No meter selected. Please click "Confirm Meter Selection" to confirm your selected meter')
             $('#overlay').hide()
@@ -134,6 +137,7 @@ $(document).ready(() => {
             $('#chartData').load(location.href + " #chartData")
             $('#chartData2').load(location.href + " #chartData2")
             $('#chartData3').load(location.href + " #chartData3")
+            $('.tableData').load(location.href + " .tableData")
             modelApi()
 
         }
@@ -159,7 +163,7 @@ $(document).ready(() => {
                 }
             }
         }).then(response => {
-            $('.showChart').show()
+           $('.displayData').show()
             const obj = JSON.parse(response.body)
             meterAttributes = true
             const analysisIndex = obj.model.data.timestamp.indexOf($('.analysisStart').val())
@@ -170,7 +174,6 @@ $(document).ready(() => {
             let xtimestamp = obj.model.data.timestamp.slice(analysisIndex)
             let result = {}
             let result2 = {}
-            let replaceData = []
             console.log(obj)
             $('.overlayMessage').text('Getting data, this will take a few seconds')
             $('#overlay').fadeOut()
@@ -184,7 +187,8 @@ $(document).ready(() => {
             $('.currentMeter').text(data[0][0].meter)
             $('.currentBuilding').text(data[0][0].building_number)
             $('.currentCommodity').text(data[0][0].commodity_tag)
-            $('#tableData').show()
+            $('.currentVariable').text(obj.model.x)
+    
             getAttributes()
 
             xTemp.forEach((key, i) => result[key] = lowLimit[i])
@@ -298,7 +302,12 @@ $(document).ready(() => {
                             index
                         }] = activePoints;
                         console.log(config.data.datasets[0].data[index].y);
-                        $table2.bootstrapTable('scrollTo', { unit: 'rows', value: 5 })
+                        var $container = $('.scroll'),
+                            $scrollTo = $('#' + config.data.datasets[0].data[index].y)
+                        $container.animate({
+                            scrollTop: $scrollTo.offset().top - $container.offset().top + $container.scrollTop() - ($container.height() / 2)
+                        });
+                        $scrollTo.parent('tr').effect('highlight', {}, 3000)
                     }
                 }
 
@@ -399,6 +408,21 @@ $(document).ready(() => {
                             }
 
                         }
+                    },
+                    onClick(e) {
+                        const activePoints = myChart2.getElementsAtEventForMode(e, 'nearest', {
+                            intersect: true
+                        }, false)
+                        const [{
+                            index
+                        }] = activePoints;
+                        console.log(config2.data.datasets[0].data[index].y);
+                        var $container = $('.scroll'),
+                            $scrollTo = $('#' + config2.data.datasets[0].data[index].y)
+                        $container.animate({
+                            scrollTop: $scrollTo.offset().top - $container.offset().top + $container.scrollTop() - ($container.height() / 2)
+                        });
+                        $scrollTo.parent('tr').effect('highlight', {}, 3000)
                     }
 
                 }
@@ -409,68 +433,71 @@ $(document).ready(() => {
             let ctx4 = document.getElementById('myChart4').getContext('2d');
             let myChart4 = new Chart(ctx4, config2);
 
-            $('[data-field="X"]').find('.th-inner').text(obj.model.x.toUpperCase())
             $(function () {
-                let dates = obj.model.data.timestamp.slice(analysisIndex)
-                let temperature = obj.model.data.average_dry_bulb_temperature.slice(analysisIndex)
-                let x = obj.model.data.degree_day.slice(analysisIndex)
-                let meter = obj.model.data.raw_value.slice(analysisIndex)
-                let expected = obj.model.data.predicted_value.slice(analysisIndex)
-                let replacement = obj.model.data.replacement_value.slice(analysisIndex)
-                let reason = obj.model.data.replacement_reason.slice(analysisIndex)
-                let notes = obj.model.data.replacement_notes.slice(analysisIndex)
+                const dates = obj.model.data.timestamp.slice(analysisIndex)
+                const temperature = obj.model.data.average_dry_bulb_temperature.slice(analysisIndex)
+                const x = obj.model.data.degree_day.slice(analysisIndex)
+                const meter = obj.model.data.raw_value.slice(analysisIndex)
+                const expected = obj.model.data.predicted_value.slice(analysisIndex)
+                const replacement = obj.model.data.replacement_value.slice(analysisIndex)
+                const reason = obj.model.data.replacement_reason.slice(analysisIndex)
+                const notes = obj.model.data.replacement_notes.slice(analysisIndex)
+                const lowerBound = obj.model.data.predicted_value_lower_bound.slice(analysisIndex)
+                const upperBound = obj.model.data.predicted_value_upper_bound.slice(analysisIndex)
 
-
-
-                 dates.map((date, index) => {
+                dates.map((date, index) => {
                     $('.tableBody').append(`
                     <tr>
-                        <td>${date}</td>
+                        <td class='position'><input class="form-check-input edit" name='edit' type="checkbox"></td>
+                        <td class='date'>${date}</td>
                         <td>${temperature[index]}</td>
                         <td>${x[index] === null ? '-' : parseFloat(x[index]).toFixed(0)}</td>
-                        <td>${parseFloat(meter[index]).toFixed(0)}</td>
-                        <td>${parseFloat(expected[index]).toFixed(0)}</td>
-                        <td>${replacement[index] === null ? '-' : parseFloat(replacement[index]).toFixed(0)}</td>
+                        <td id=${parseFloat(meter[index]).toFixed(0)} class='meterReading'>${parseFloat(meter[index]).toFixed(0)}</td>
+                        <td class='expected'>${parseFloat(expected[index]).toFixed(0)}</td>
+                        <td >${replacement[index] === null ? '-' : parseFloat(replacement[index]).toFixed(0)}</td>
                         <td>${reason[index] === null ? '-' : reason[index]}</td>
                         <td>${notes[index] === null ? '-' : notes[index]}</td>
+                        <td class="upperBound" style='display: none'>${parseFloat(upperBound[index]).toFixed(0)}</td>
+                        <td class="lowerBound" style='display: none'>${parseFloat(lowerBound[index]).toFixed(0)}</td>
                     </tr>`)
-                //     return {
-                //         'Date': date,
-                //         'Temperature': temperature[index],
-                //         'X': x[index] === null ? '-' : parseFloat(x[index]).toFixed(0),
-                //         'Meter': parseFloat(meter[index]).toFixed(0),
-                //         'Expected': parseFloat(expected[index]).toFixed(0),
-                //         'Replacement':replacement[index] === null ? '-' :  parseFloat(replacement[index]).toFixed(0),
-                //         'Reason': reason[index],
-                //         'Notes': notes[index],
-                //     }
                 })
 
-            //    $('.tableData tr').click(function () {
-            //        $(this).find('td').each(function() {
-            //            replaceData.push($(this).html())
-            //        })
-            //        console.log(replaceData)
-            //    })
+                $('.x').html(obj.model.x.toUpperCase())
+                $('.tableData tbody tr').each(function () {
+                    let meterReading = $(this).find('.meterReading').html()
+                    let lowerBound = $(this).find('.lowerBound').html()
+                    let upperBound = $(this).find('.upperBound').html()
+                    if (parseInt(meterReading, 10) < parseInt(lowerBound, 10)) {
+                        $(this).addClass('table-warning')
+                        $(this).children('td:eq(0)').append(`<a href="#" class="warning" data-tool-tip="Low Limit: ${lowerBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
 
-                $('.tableData td:nth-child(4)').each(function() {
-                    if (parseInt($(this).text(), 10) === parseInt($(this).text().prev(), 10)) {
-                        $(this).parent('tr').css('background-color', 'red')
                     }
-                  
+
+                    if (parseInt(meterReading, 10) > parseInt(upperBound, 10)) {
+                        $(this).addClass('table-danger')
+                        $(this).children('td:eq(0)').append(`<a href="#" class="warning" data-tool-tip="High Limit: ${upperBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
+
+                    }
+
+                    if ($(this).children('td:eq(4)').text() === $(this).next().children('td:eq(4)').text()) {
+                        $(this).addClass('table-primary')
+                        $(this).next().addClass('table-primary')
+                    }
                 })
-                // $table2.bootstrapTable({ data: dataTable })
-                // $table2.bootstrapTable('load', dataTable)
 
             })
 
         })
     }
 
-    $button3.click(function (e) {
-        e.preventDefault()
-        replaceData = $table2.bootstrapTable('getSelections')
-        console.log(replaceData)
+    $('#reason').on('change', function () {
+        $button3.removeAttr('disabled')
+    })
+    $button3.click(function () {
+        $('input:checkbox:checked', $('.tableData')).each(function () {
+            replaceData.push({ 'Date': $(this).closest('tr').find('.date').text(), "Expected": $(this).closest('tr').find('.expected').text() })
+        }).get()
+
         let checked = $('#replace').is(':checked')
         let notes = []
         let reason = []
@@ -479,11 +506,9 @@ $(document).ready(() => {
         const buildingNumber = data[0][0].building_number
         const commodityTag = data[0][0].commodity_tag
         const meter = data[0][0].meter
+        console.log(replaceData)
         if (replaceData.length === 0) {
             alert('Please select at least one date')
-            $('#overlay').hide()
-        } else if (!$('#reason').val()) {
-            alert('Please select a reason')
             $('#overlay').hide()
         } else {
             if (checked === true) {
@@ -536,7 +561,8 @@ $(document).ready(() => {
                     }
                     if (jqXhr.status === 504) {
                         $('#overlay').fadeOut()
-                        alert('Server Error. Please submit your data again.')
+                        $('.edit').prop('checked', false)
+                        alert('Server Error. Your data has been saved. Please hit the submit button again.')
                     }
                 }
             }).then((response) => {
@@ -547,7 +573,8 @@ $(document).ready(() => {
                 date = []
                 values = []
                 reason = []
-                $table2.bootstrapTable('uncheckAll')
+                replaceData = []
+                $('.edit').prop('checked', false)
                 $('.successAlert').append(`<div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Success!</strong> Your data has been successfully uploaded!.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -572,10 +599,10 @@ $(document).ready(() => {
         const meterVariable = $('.meterVariable').text()
         let baseTemp = $('.baseTemp').text()
         const autoIgnored = Number(newStr)
-        const slope = $('.slope').text()
-        const intercept = $('.intercept').text()
-        const r2 = $('.r2').text()
-        const stdDev = $('.stdDev').text()
+        const slope = Number($('.slope').text())
+        const intercept = Number($('.intercept').text())
+        const r2 = Number($('.r2').text())
+        const stdDev = Number($('.stdDev').text())
         const trainStart = $('.modelStart').val()
         const trainEnd = $('.modelEnd').val()
 
@@ -585,8 +612,8 @@ $(document).ready(() => {
             baseTemp = Number($('.baseTemp').text())
         }
 
-        if (attributes.length === 0 || attributes[0].base_temperature !== baseTemp || attributes[0].intercept !== Number(intercept) || attributes[0].slope !== Number(slope)
-            || attributes[0].auto_ignored_percentage !== autoIgnored || attributes[0].r2 !== Number(r2) || attributes[0].std !== Number(stdDev) ||
+        if (attributes.length === 0 || attributes[0].base_temperature !== baseTemp || attributes[0].intercept !== intercept || attributes[0].slope !== slope
+            || attributes[0].auto_ignored_percentage !== autoIgnored || attributes[0].r2 !== r2 || attributes[0].std !== stdDev ||
             attributes[0].train_start !== trainStart || attributes[0].train_end !== trainEnd) {
             const confirmSubmit = confirm(`Do you want to submit the current meter attributes for meter: ${$('.currentMeter').text()}
 
@@ -610,15 +637,15 @@ $(document).ready(() => {
                         building_number: $('.currentBuilding').text(),
                         meter: $('.currentMeter').text(),
                         commodity_tag: $('.currentCommodity').text(),
-                        train_start: $('.modelStart').val(),
-                        train_end: $('.modelEnd').val(),
-                        x: obj.model.x.toLowerCase(),
-                        auto_ignored_percentage: Number(autoIgnored),
-                        base_temperature: Number($('.baseTemp').text()) === 0 ? null : Number($('.baseTemp').text()),
-                        r2: Number($('.r2').text()),
-                        slope: Number($('.slope').text()),
-                        intercept: Number($('.intercept').text()),
-                        std: Number($('.stdDev').text())
+                        train_start: trainStart,
+                        train_end: trainEnd,
+                        x: $('.currentVariable').text(),
+                        auto_ignored_percentage: autoIgnored,
+                        base_temperature: baseTemp === 0 ? null : baseTemp,
+                        r2: r2,
+                        slope: slope,
+                        intercept: intercept,
+                        std:stdDev
                     })
                 }).then(function (response) {
                     console.log(response)

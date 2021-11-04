@@ -27,6 +27,10 @@
     text-align: right;
 }
 
+.limitValue{
+    display: block;
+}
+
 .bordered {
     border: 1px solid
 }
@@ -34,6 +38,15 @@
 .page-list .btn-secondary {
     background-color: white;
     color: black
+}
+
+.position{
+    position: relative;
+}
+
+.warning{
+    left: 50%;
+    bottom: 50%
 }
 
 
@@ -116,6 +129,58 @@ table {
     margin-left: 1em;
 }
 
+.tableData {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+}
+
+.tableData thead {
+    flex: 0 0 auto;
+    position: sticky; 
+    top: 0; 
+    z-index: 1;
+}
+
+.tableData tbody {
+    flex: 1 1 auto;
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.tableData tr {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+}
+
+a[data-tool-tip]{
+    position: relative;
+    text-decoration: none;
+    color: black;
+}
+
+a[data-tool-tip]::after{
+    content: attr(data-tool-tip);
+    display: block;
+    position: absolute;
+    background-color: dimgrey;
+    padding: 12px 15px;
+    color: white;
+    border-radius: 5px;
+    font-size: 15px;
+    bottom: 0;
+    left: -190%;
+    white-space: nowrap;
+    transform: scale(0);
+    transition: transform ease-out 150ms, bottom ease-out 150ms;
+}
+
+a[data-tool-tip]:hover::after{
+    transform: scale(1);
+    bottom: 200%;
+}
 
   @keyframes rotate {
       0% {
