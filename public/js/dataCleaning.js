@@ -574,6 +574,9 @@ $(document).ready(() => {
                 reason = []
                 replaceData = []
                 $('.edit').prop('checked', false)
+                $('#replace').prop('checked', false)
+                $('#notes').val('')
+                $('#reason').val('Choose...')
                 $('.successAlert').append(`<div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Success!</strong> Your data has been successfully uploaded!
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
