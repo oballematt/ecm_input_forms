@@ -188,7 +188,6 @@ $(document).ready(() => {
             $('.currentBuilding').text(data[0][0].building_number)
             $('.currentCommodity').text(data[0][0].commodity_tag)
             $('.currentVariable').text(obj.model.x)
-    
             getAttributes()
 
             xTemp.forEach((key, i) => result[key] = lowLimit[i])
@@ -576,9 +575,12 @@ $(document).ready(() => {
                 replaceData = []
                 $('.edit').prop('checked', false)
                 $('.successAlert').append(`<div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Success!</strong> Your data has been successfully uploaded!.
+            <strong>Success!</strong> Your data has been successfully uploaded!
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>`)
+        setTimeout(function () {
+            $('.successAlert').fadeOut()
+        }, 2000)
             })
         }
     })

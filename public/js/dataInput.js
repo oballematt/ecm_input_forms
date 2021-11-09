@@ -802,6 +802,8 @@ $(document).ready(() => {
                 <div class="alert alert-success" role="alert">
                     Registration successful! Please Login
                 </div`)
+
+             
             }
         })
     })
