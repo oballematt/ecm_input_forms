@@ -40,6 +40,10 @@
     color: black
 }
 
+.pointer{
+    cursor: pointer;
+}
+
 .position{
     position: relative;
 }
