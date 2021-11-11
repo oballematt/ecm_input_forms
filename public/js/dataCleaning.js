@@ -6,11 +6,38 @@ let replaceData = []
 
 $(document).ready(() => {
 
-    new jBox('Tooltip', {
-        attach: '.tooltip',
-        getTitle: 'data-jbox-title',
-        getContent: 'data-jbox-content'
+
+    $(function () {
+
+        var start = moment().subtract(29, 'days');
+        var end = moment();
+
+        function cb(start, end) {
+            $('#reportrange span').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+        }
+
+        $('#reportrange').daterangepicker({
+            linkedCalendars: false,
+            showDropdowns: true,
+            startDate: start,
+            endDate: end,
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            }
+        }, cb);
+
+        cb(start, end);
+
+        console.log(start, end);
+
     });
+
+
 
     const dateInput_1 = $('.datepicker');
 
@@ -163,7 +190,7 @@ $(document).ready(() => {
                 }
             }
         }).then(response => {
-           $('.displayData').show()
+            $('.displayData').show()
             const obj = JSON.parse(response.body)
             meterAttributes = true
             const analysisIndex = obj.model.data.timestamp.indexOf($('.analysisStart').val())
@@ -581,9 +608,9 @@ $(document).ready(() => {
             <strong>Success!</strong> Your data has been successfully uploaded!
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>`)
-        setTimeout(function () {
-            $('.successAlert').fadeOut()
-        }, 2000)
+                setTimeout(function () {
+                    $('.successAlert').fadeOut()
+                }, 2000)
             })
         }
     })
@@ -650,7 +677,7 @@ $(document).ready(() => {
                         r2: r2,
                         slope: slope,
                         intercept: intercept,
-                        std:stdDev
+                        std: stdDev
                     })
                 }).then(function (response) {
                     console.log(response)
