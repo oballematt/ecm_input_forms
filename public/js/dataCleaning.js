@@ -159,17 +159,22 @@ $(document).ready(() => {
         const analysisEnd = $('.analysisEnd').val()
 
         $.ajax({
-            url: '/gateway',
+            url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/model?building_number=${data[0][0].building_number}&commodity_tag=${data[0][0].commodity_tag}&meter=${data[0][0].meter}&train_start=${modelStart}&train_end=${modelEnd}&analysis_start=${analysisStart}&analysis_end=${analysisEnd}`,
             method: 'GET',
-            data: {
-                buildingNumber: data[0][0].building_number,
-                commodity: data[0][0].commodity_tag,
-                meter: data[0][0].meter,
-                trainStart: modelStart,
-                trainEnd: modelEnd,
-                analysisStart: analysisStart,
-                analysisEnd: analysisEnd
+            headers: {
+                'authorizationToken': 'ea4d82eae744325614088753c2f50198'
             },
+            // url: '/gateway',
+            // method: 'GET',
+            // data: {
+            //     buildingNumber: data[0][0].building_number,
+            //     commodity: data[0][0].commodity_tag,
+            //     meter: data[0][0].meter,
+            //     trainStart: modelStart,
+            //     trainEnd: modelEnd,
+            //     analysisStart: analysisStart,
+            //     analysisEnd: analysisEnd
+            // },
             error: function (xhr, status, error) {
                 if (xhr.status === 504) {
                     modelApi()
