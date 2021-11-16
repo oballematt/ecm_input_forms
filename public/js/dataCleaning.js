@@ -7,35 +7,24 @@ let replaceData = []
 $(document).ready(() => {
 
 
+
     $(function () {
-
-        var start = moment().subtract(29, 'days');
-        var end = moment();
-
-        function cb(start, end) {
-            $('#reportrange span').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
-        }
-
-        $('#reportrange').daterangepicker({
-            linkedCalendars: false,
-            showDropdowns: true,
-            startDate: start,
-            endDate: end,
-            ranges: {
-                'Today': [moment(), moment()],
-                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                'This Month': [moment().startOf('month'), moment().endOf('month')],
-                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        $("#slider-range").slider({
+            range: true,
+            min: new Date('2010.01.01').getTime() / 1000,
+            max: new Date('2014.01.01').getTime() / 1000,
+            step: 86400,
+            values: [new Date('2013.01.01').getTime() / 1000, new Date('2013.02.01').getTime() / 1000],
+            slide: function (event, ui) {
+                $("#amount").val((new Date(ui.values[0] * 1000).toDateString()) + " - " + (new Date(ui.values[1] * 1000)).toDateString());
             }
-        }, cb);
-
-        cb(start, end);
-
-        console.log(start, end);
-
+        });
+        $("#amount").val((new Date($("#slider-range").slider("values", 0) * 1000).toDateString()) +
+            " - " + (new Date($("#slider-range").slider("values", 1) * 1000)).toDateString());
     });
+
+
+
 
 
 

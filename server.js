@@ -98,6 +98,7 @@ app.use('/', require('./routes/prjt_misc_savings'));
 app.use('/', require('./routes/users'));         
 app.use('/', require('./routes/athenaData'))    
 app.use('/', require('./routes/meterAttributes'))                                
+app.use('/', require('./routes/apiGateway'))                                
                                              
 app.listen(port, async () => {                                             
   console.log(`Server started on port ${port}`);                                             
