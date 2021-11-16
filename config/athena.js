@@ -29,7 +29,7 @@ module.exports = {
     getAllMeters: async (req, res) => {
         try {
 
-            let allResults = await athenaExpress.query(`SELECT * FROM ${process.env.ATHENA_TABLE} ORDER BY ${ORDER1}, ${ORDER2}`)
+            let allResults = await athenaExpress.query(`SELECT * FROM ${process.env.ATHENA_TABLE} ORDER BY ${process.env.ORDER1}, ${process.env.ORDER2}`)
 
             return res.json(allResults)
             
