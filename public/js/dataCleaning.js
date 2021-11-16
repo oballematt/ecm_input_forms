@@ -6,8 +6,6 @@ let replaceData = []
 
 $(document).ready(() => {
 
-
-
     $(function () {
         $("#slider-range").slider({
             range: true,
@@ -22,11 +20,6 @@ $(document).ready(() => {
         $("#amount").val((new Date($("#slider-range").slider("values", 0) * 1000).toDateString()) +
             " - " + (new Date($("#slider-range").slider("values", 1) * 1000)).toDateString());
     });
-
-
-
-
-
 
     const dateInput_1 = $('.datepicker');
 
@@ -166,8 +159,17 @@ $(document).ready(() => {
         const analysisEnd = $('.analysisEnd').val()
 
         $.ajax({
-            url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/model?building_number=${data[0][0].building_number}&commodity_tag=${data[0][0].commodity_tag}&meter=${data[0][0].meter}&train_start=${modelStart}&train_end=${modelEnd}&analysis_start=${analysisStart}&analysis_end=${analysisEnd}`,
+            url: '/gateway',
             method: 'GET',
+            data: {
+                buildingNumber: data[0][0].building_number,
+                commodity: data[0][0].commodity_tag,
+                meter: data[0][0].meter,
+                trainStart: modelStart,
+                trainEnd: modelEnd,
+                analysisStart: analysisStart,
+                analysisEnd: analysisEnd
+            },
             error: function (xhr, status, error) {
                 if (xhr.status === 504) {
                     modelApi()
@@ -180,30 +182,29 @@ $(document).ready(() => {
             }
         }).then(response => {
             $('.displayData').show()
-            const obj = JSON.parse(response.body)
+            console.log(response)
             meterAttributes = true
-            const analysisIndex = obj.model.data.timestamp.indexOf($('.analysisStart').val())
-            let lowLimit = obj.model.data.predicted_value_lower_bound.slice(analysisIndex)
-            let xTemp = obj.model.data.average_dry_bulb_temperature.slice(analysisIndex)
-            let highLimit = obj.model.data.predicted_value_upper_bound.slice(analysisIndex)
-            let rawValue = obj.model.data.raw_value.slice(analysisIndex)
-            let xtimestamp = obj.model.data.timestamp.slice(analysisIndex)
+            const analysisIndex = response.body.model.data.timestamp.indexOf($('.analysisStart').val())
+            let lowLimit = response.body.model.data.predicted_value_lower_bound.slice(analysisIndex)
+            let xTemp = response.body.model.data.average_dry_bulb_temperature.slice(analysisIndex)
+            let highLimit = response.body.model.data.predicted_value_upper_bound.slice(analysisIndex)
+            let rawValue = response.body.model.data.raw_value.slice(analysisIndex)
+            let xtimestamp = response.body.model.data.timestamp.slice(analysisIndex)
             let result = {}
             let result2 = {}
-            console.log(obj)
             $('.overlayMessage').text('Getting data, this will take a few seconds')
             $('#overlay').fadeOut()
-            $('.baseTemp').html(obj.model.base_temperature)
-            $('.autoIgnored').html(parseFloat(obj.model.missing_value.auto_ignored_percentage).toFixed(0) + '%')
-            $('.slope').html(parseFloat(obj.model.slope).toFixed(2))
-            $('.intercept').html(parseFloat(obj.model.intercept).toFixed(2))
-            $('.r2').html(parseFloat(obj.model.max_train_r2).toFixed(2))
-            $('.stdDev').html(parseFloat(obj.model.std.train).toFixed(2))
-            $('.meterVariable').html(`Variable: ${obj.model.x.toUpperCase()}`)
+            $('.baseTemp').html(response.body.model.base_temperature)
+            $('.autoIgnored').html(parseFloat(response.body.model.missing_value.auto_ignored_percentage).toFixed(0) + '%')
+            $('.slope').html(parseFloat(response.body.model.slope).toFixed(2))
+            $('.intercept').html(parseFloat(response.body.model.intercept).toFixed(2))
+            $('.r2').html(parseFloat(response.body.model.max_train_r2).toFixed(2))
+            $('.stdDev').html(parseFloat(response.body.model.std.train).toFixed(2))
+            $('.meterVariable').html(`Variable: ${response.body.model.x.toUpperCase()}`)
             $('.currentMeter').text(data[0][0].meter)
             $('.currentBuilding').text(data[0][0].building_number)
             $('.currentCommodity').text(data[0][0].commodity_tag)
-            $('.currentVariable').text(obj.model.x)
+            $('.currentVariable').text(response.body.model.x)
             getAttributes()
 
             xTemp.forEach((key, i) => result[key] = lowLimit[i])
@@ -449,16 +450,16 @@ $(document).ready(() => {
             let myChart4 = new Chart(ctx4, config2);
 
             $(function () {
-                const dates = obj.model.data.timestamp.slice(analysisIndex)
-                const temperature = obj.model.data.average_dry_bulb_temperature.slice(analysisIndex)
-                const x = obj.model.data.degree_day.slice(analysisIndex)
-                const meter = obj.model.data.raw_value.slice(analysisIndex)
-                const expected = obj.model.data.predicted_value.slice(analysisIndex)
-                const replacement = obj.model.data.replacement_value.slice(analysisIndex)
-                const reason = obj.model.data.replacement_reason.slice(analysisIndex)
-                const notes = obj.model.data.replacement_notes.slice(analysisIndex)
-                const lowerBound = obj.model.data.predicted_value_lower_bound.slice(analysisIndex)
-                const upperBound = obj.model.data.predicted_value_upper_bound.slice(analysisIndex)
+                const dates = response.body.model.data.timestamp.slice(analysisIndex)
+                const temperature = response.body.model.data.average_dry_bulb_temperature.slice(analysisIndex)
+                const x = response.body.model.data.degree_day.slice(analysisIndex)
+                const meter = response.body.model.data.raw_value.slice(analysisIndex)
+                const expected = response.body.model.data.predicted_value.slice(analysisIndex)
+                const replacement = response.body.model.data.replacement_value.slice(analysisIndex)
+                const reason = response.body.model.data.replacement_reason.slice(analysisIndex)
+                const notes = response.body.model.data.replacement_notes.slice(analysisIndex)
+                const lowerBound = response.body.model.data.predicted_value_lower_bound.slice(analysisIndex)
+                const upperBound = response.body.model.data.predicted_value_upper_bound.slice(analysisIndex)
 
                 dates.map((date, index) => {
                     $('.tableBody').append(`
@@ -477,7 +478,7 @@ $(document).ready(() => {
                     </tr>`)
                 })
 
-                $('.x').html(obj.model.x.toUpperCase())
+                $('.x').html(response.body.model.x.toUpperCase())
                 $('.tableData tbody tr').each(function () {
                     let meterReading = $(this).find('.meterReading').html()
                     let lowerBound = $(this).find('.lowerBound').html()

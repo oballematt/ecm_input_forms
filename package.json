@@ -21,6 +21,7 @@
   "dependencies": {
     "athena-express": "^7.1.0",
     "aws-sdk": "^2.964.0",
+    "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "chart.js": "^3.5.1",

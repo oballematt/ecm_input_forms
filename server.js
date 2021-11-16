@@ -77,8 +77,8 @@ app.get("/logout", (req, res) => {
 // app.get('/datacleaning', authorization.checkNotAuthenticated, (req, res) => {
 //    res.render('cleaning', {layout: 'datacleaning', user: req.user.email})
 //    res.header('Access-Control-Allow-Origin', '*')
-//   })                                           
-                                             
+//   })
+                                        
 app.post(                                             
   "/login",                                             
   passport.authenticate("local", {                                             
