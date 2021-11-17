@@ -159,23 +159,18 @@ $(document).ready(() => {
         const analysisEnd = $('.analysisEnd').val()
 
         $.ajax({
-            url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/model?building_number=${data[0][0].building_number}&commodity_tag=${data[0][0].commodity_tag}&meter=${data[0][0].meter}&train_start=${modelStart}&train_end=${modelEnd}&analysis_start=${analysisStart}&analysis_end=${analysisEnd}`,
+            url: '/gateway',
             method: 'GET',
-            headers: {
-                'authorizationToken': 'ea4d82eae744325614088753c2f50198'
+            data: {
+                buildingNumber: data[0][0].building_number,
+                commodity: data[0][0].commodity_tag,
+                meter: data[0][0].meter,
+                trainStart: modelStart,
+                trainEnd: modelEnd,
+                analysisStart: analysisStart,
+                analysisEnd: analysisEnd
             },
-            // url: '/gateway',
-            // method: 'GET',
-            // data: {
-            //     buildingNumber: data[0][0].building_number,
-            //     commodity: data[0][0].commodity_tag,
-            //     meter: data[0][0].meter,
-            //     trainStart: modelStart,
-            //     trainEnd: modelEnd,
-            //     analysisStart: analysisStart,
-            //     analysisEnd: analysisEnd
-            // },
-            error: function (xhr, status, error) {
+            error: function (xhr, status, error, response) {
                 if (xhr.status === 504) {
                     modelApi()
                     $('.overlayMessage').text('Server not responding, trying your search again. Please do not refresh the page')
@@ -186,288 +181,293 @@ $(document).ready(() => {
                 }
             }
         }).then(response => {
-            $('.displayData').show()
-            console.log(response)
-            meterAttributes = true
-            const analysisIndex = response.body.model.data.timestamp.indexOf($('.analysisStart').val())
-            let lowLimit = response.body.model.data.predicted_value_lower_bound.slice(analysisIndex)
-            let xTemp = response.body.model.data.average_dry_bulb_temperature.slice(analysisIndex)
-            let highLimit = response.body.model.data.predicted_value_upper_bound.slice(analysisIndex)
-            let rawValue = response.body.model.data.raw_value.slice(analysisIndex)
-            let xtimestamp = response.body.model.data.timestamp.slice(analysisIndex)
-            let result = {}
-            let result2 = {}
-            $('.overlayMessage').text('Getting data, this will take a few seconds')
-            $('#overlay').fadeOut()
-            $('.baseTemp').html(response.body.model.base_temperature)
-            $('.autoIgnored').html(parseFloat(response.body.model.missing_value.auto_ignored_percentage).toFixed(0) + '%')
-            $('.slope').html(parseFloat(response.body.model.slope).toFixed(2))
-            $('.intercept').html(parseFloat(response.body.model.intercept).toFixed(2))
-            $('.r2').html(parseFloat(response.body.model.max_train_r2).toFixed(2))
-            $('.stdDev').html(parseFloat(response.body.model.std.train).toFixed(2))
-            $('.meterVariable').html(`Variable: ${response.body.model.x.toUpperCase()}`)
-            $('.currentMeter').text(data[0][0].meter)
-            $('.currentBuilding').text(data[0][0].building_number)
-            $('.currentCommodity').text(data[0][0].commodity_tag)
-            $('.currentVariable').text(response.body.model.x)
-            getAttributes()
+            if (response.status === 504) {
+                modelApi()
+                $('.overlayMessage').text('Server not responding, trying your search again. Please do not refresh the page')
+            } else {
 
-            xTemp.forEach((key, i) => result[key] = lowLimit[i])
+                $('.displayData').show()
+                console.log(response)
+                meterAttributes = true
+                const analysisIndex = response.body.model.data.timestamp.indexOf($('.analysisStart').val())
+                let lowLimit = response.body.model.data.predicted_value_lower_bound.slice(analysisIndex)
+                let xTemp = response.body.model.data.average_dry_bulb_temperature.slice(analysisIndex)
+                let highLimit = response.body.model.data.predicted_value_upper_bound.slice(analysisIndex)
+                let rawValue = response.body.model.data.raw_value.slice(analysisIndex)
+                let xtimestamp = response.body.model.data.timestamp.slice(analysisIndex)
+                let result = {}
+                let result2 = {}
+                $('.overlayMessage').text('Getting data, this will take a few seconds')
+                $('#overlay').fadeOut()
+                $('.baseTemp').html(response.body.model.base_temperature)
+                $('.autoIgnored').html(parseFloat(response.body.model.missing_value.auto_ignored_percentage).toFixed(0) + '%')
+                $('.slope').html(parseFloat(response.body.model.slope).toFixed(2))
+                $('.intercept').html(parseFloat(response.body.model.intercept).toFixed(2))
+                $('.r2').html(parseFloat(response.body.model.max_train_r2).toFixed(2))
+                $('.stdDev').html(parseFloat(response.body.model.std.train).toFixed(2))
+                $('.meterVariable').html(`Variable: ${response.body.model.x.toUpperCase()}`)
+                $('.currentMeter').text(data[0][0].meter)
+                $('.currentBuilding').text(data[0][0].building_number)
+                $('.currentCommodity').text(data[0][0].commodity_tag)
+                $('.currentVariable').text(response.body.model.x)
+                getAttributes()
 
-            var lowLimitArr = Object.keys(result).map(function (key) {
-                return [Number(key), result[key]];
-            })
-            lowLimitArr.sort(function (a, b) {
-                return a[0] - b[0]
-            })
+                xTemp.forEach((key, i) => result[key] = lowLimit[i])
 
-
-            xTemp.forEach((key, i) => result[key] = highLimit[i])
-
-            let highLimitArr = Object.keys(result).map(function (key) {
-                return [Number(key), result[key]]
-            })
-
-            highLimitArr.sort(function (a, b) {
-                return a[0] - b[0]
-            })
+                var lowLimitArr = Object.keys(result).map(function (key) {
+                    return [Number(key), result[key]];
+                })
+                lowLimitArr.sort(function (a, b) {
+                    return a[0] - b[0]
+                })
 
 
-            xTemp.forEach((key, i) => {
-                result[key] = rawValue[i]
-            })
-            console.log(result)
+                xTemp.forEach((key, i) => result[key] = highLimit[i])
 
-            let RawValueArr = Object.keys(result).map(function (key) {
-                return [Number(key), result[key]]
-            })
+                let highLimitArr = Object.keys(result).map(function (key) {
+                    return [Number(key), result[key]]
+                })
 
-            RawValueArr.sort(function (a, b) {
-                return a[0] - b[0]
-            })
-
-            if (data[0][0].commodity_tag === 'W') {
-                $('#hideIfWater').hide()
-                $('#fullWidth').attr('class', 'col-xxl-12')
-                $('#myChart2').css('height', '400px')
-            }
-            const config = {
-                data: {
-                    datasets: [{
-                        type: "scatter",
-                        label: "Meter VS. Temp",
-                        data: RawValueArr.map(a => { return { x: a[0], y: a[1] } }),
-                        backgroundColor: '#00FFFF',
-                        pointRadius: 5,
-                    }, {
-                        type: 'line',
-                        label: 'High Limit',
-                        data: highLimitArr.map(a => { return { x: a[0], y: a[1] } }),
-                        fill: false,
-                        pointRadius: 0,
-                        tension: 0.1,
-                        borderColor: 'white',
-
-                    },
-                    {
-                        type: 'line',
-                        label: 'Low Limit',
-                        data: lowLimitArr.map(a => { return { x: a[0], y: a[1] } }),
-                        fill: false,
-                        pointRadius: 0,
-                        tension: 0.1,
-                        borderColor: '#ffcc66',
-                    }
-                    ]
-                },
-                options: {
-
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: 'white'
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                color: 'white'
-                            },
-                            grid: {
-
-                                color: 'black'
-
-                            }
-
-                        },
-                        x: {
-                            ticks: {
-                                color: 'white'
-                            },
-                            grid: {
-
-                                color: 'black'
-
-                            }
-                        },
+                highLimitArr.sort(function (a, b) {
+                    return a[0] - b[0]
+                })
 
 
-                    },
-                    onClick(e) {
-                        const activePoints = myChart.getElementsAtEventForMode(e, 'nearest', {
-                            intersect: true
-                        }, false)
-                        const [{
-                            index
-                        }] = activePoints;
-                        console.log(config.data.datasets[0].data[index].y);
-                        var $container = $('.scroll'),
-                            $scrollTo = $('#' + config.data.datasets[0].data[index].y)
-                        $container.animate({
-                            scrollTop: $scrollTo.offset().top - $container.offset().top + $container.scrollTop() - ($container.height() / 2)
-                        });
-                        $scrollTo.parent('tr').effect('highlight', {}, 3000)
-                    }
+                xTemp.forEach((key, i) => {
+                    result[key] = rawValue[i]
+                })
+                console.log(result)
+
+                let RawValueArr = Object.keys(result).map(function (key) {
+                    return [Number(key), result[key]]
+                })
+
+                RawValueArr.sort(function (a, b) {
+                    return a[0] - b[0]
+                })
+
+                if (data[0][0].commodity_tag === 'W') {
+                    $('#hideIfWater').hide()
+                    $('#fullWidth').attr('class', 'col-xxl-12')
+                    $('#myChart2').css('height', '400px')
                 }
-
-            };
-            let ctx = document.getElementById('myChart').getContext('2d');
-            let myChart = new Chart(ctx, config);
-
-            let ctx3 = document.getElementById('myChart3').getContext('2d');
-            let myChart3 = new Chart(ctx3, config);
-
-            xtimestamp.forEach((key, i) => result2[key] = rawValue[i])
-
-            let rawValueArr2 = Object.keys(result2).map(function (key) {
-                return [String(key), result2[key]];
-            })
-
-            rawValueArr2.sort(function (a, b) {
-                return a[0] - b[0]
-            })
-
-            xtimestamp.forEach((key, i) => result2[key] = highLimit[i])
-            let highLimitArr2 = Object.keys(result2).map(function (key) {
-                return [String(key), result2[key]]
-            })
-            highLimitArr2.sort(function (a, b) {
-                return a[0] - b[0]
-            })
-
-            xtimestamp.forEach((key, i) => result2[key] = lowLimit[i])
-            var lowLimitArr2 = Object.keys(result2).map(function (key) {
-                return [String(key), result2[key]];
-            })
-            lowLimitArr2.sort(function (a, b) {
-                return a[0] - b[0]
-            })
-            const config2 = {
-
-                data: {
-                    datasets: [
-                        {
-                            type: 'scatter',
-                            label: "Meter VS. Dates",
-                            data: rawValueArr2.map(a => { return { x: a[0], y: a[1] } }),
-                            pointRadius: 5,
+                const config = {
+                    data: {
+                        datasets: [{
+                            type: "scatter",
+                            label: "Meter VS. Temp",
+                            data: RawValueArr.map(a => { return { x: a[0], y: a[1] } }),
                             backgroundColor: '#00FFFF',
+                            pointRadius: 5,
                         }, {
                             type: 'line',
                             label: 'High Limit',
-                            data: highLimitArr2.map(a => { return { x: a[0], y: a[1] } }),
+                            data: highLimitArr.map(a => { return { x: a[0], y: a[1] } }),
                             fill: false,
                             pointRadius: 0,
+                            tension: 0.1,
                             borderColor: 'white',
-                            tension: 0.1
-                        }, {
+
+                        },
+                        {
                             type: 'line',
                             label: 'Low Limit',
-                            data: lowLimitArr2.map(a => { return { x: a[0], y: a[1] } }),
+                            data: lowLimitArr.map(a => { return { x: a[0], y: a[1] } }),
                             fill: false,
                             pointRadius: 0,
+                            tension: 0.1,
                             borderColor: '#ffcc66',
-                            tension: 0.1
                         }
-
-                    ]
-                },
-                options: {
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: 'white'
-                            }
-                        }
+                        ]
                     },
-                    scales: {
-                        x: {
-                            type: 'time',
-                            time: {
-                                unit: 'day'
-                            },
-                            ticks: {
-                                color: 'white'
-                            },
-                            grid: {
+                    options: {
 
-                                color: 'black'
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: 'white'
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    color: 'white'
+                                },
+                                grid: {
+
+                                    color: 'black'
+
+                                }
+
+                            },
+                            x: {
+                                ticks: {
+                                    color: 'white'
+                                },
+                                grid: {
+
+                                    color: 'black'
+
+                                }
+                            },
+
+
+                        },
+                        onClick(e) {
+                            const activePoints = myChart.getElementsAtEventForMode(e, 'nearest', {
+                                intersect: true
+                            }, false)
+                            const [{
+                                index
+                            }] = activePoints;
+                            console.log(config.data.datasets[0].data[index].y);
+                            var $container = $('.scroll'),
+                                $scrollTo = $('#' + config.data.datasets[0].data[index].y)
+                            $container.animate({
+                                scrollTop: $scrollTo.offset().top - $container.offset().top + $container.scrollTop() - ($container.height() / 2)
+                            });
+                            $scrollTo.parent('tr').effect('highlight', {}, 3000)
+                        }
+                    }
+
+                };
+                let ctx = document.getElementById('myChart').getContext('2d');
+                let myChart = new Chart(ctx, config);
+
+                let ctx3 = document.getElementById('myChart3').getContext('2d');
+                let myChart3 = new Chart(ctx3, config);
+
+                xtimestamp.forEach((key, i) => result2[key] = rawValue[i])
+
+                let rawValueArr2 = Object.keys(result2).map(function (key) {
+                    return [String(key), result2[key]];
+                })
+
+                rawValueArr2.sort(function (a, b) {
+                    return a[0] - b[0]
+                })
+
+                xtimestamp.forEach((key, i) => result2[key] = highLimit[i])
+                let highLimitArr2 = Object.keys(result2).map(function (key) {
+                    return [String(key), result2[key]]
+                })
+                highLimitArr2.sort(function (a, b) {
+                    return a[0] - b[0]
+                })
+
+                xtimestamp.forEach((key, i) => result2[key] = lowLimit[i])
+                var lowLimitArr2 = Object.keys(result2).map(function (key) {
+                    return [String(key), result2[key]];
+                })
+                lowLimitArr2.sort(function (a, b) {
+                    return a[0] - b[0]
+                })
+                const config2 = {
+
+                    data: {
+                        datasets: [
+                            {
+                                type: 'scatter',
+                                label: "Meter VS. Dates",
+                                data: rawValueArr2.map(a => { return { x: a[0], y: a[1] } }),
+                                pointRadius: 5,
+                                backgroundColor: '#00FFFF',
+                            }, {
+                                type: 'line',
+                                label: 'High Limit',
+                                data: highLimitArr2.map(a => { return { x: a[0], y: a[1] } }),
+                                fill: false,
+                                pointRadius: 0,
+                                borderColor: 'white',
+                                tension: 0.1
+                            }, {
+                                type: 'line',
+                                label: 'Low Limit',
+                                data: lowLimitArr2.map(a => { return { x: a[0], y: a[1] } }),
+                                fill: false,
+                                pointRadius: 0,
+                                borderColor: '#ffcc66',
+                                tension: 0.1
+                            }
+
+                        ]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: 'white'
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                type: 'time',
+                                time: {
+                                    unit: 'day'
+                                },
+                                ticks: {
+                                    color: 'white'
+                                },
+                                grid: {
+
+                                    color: 'black'
+
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    color: 'white'
+                                },
+                                grid: {
+
+                                    color: 'black'
+
+                                }
 
                             }
                         },
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                color: 'white'
-                            },
-                            grid: {
-
-                                color: 'black'
-
-                            }
-
+                        onClick(e) {
+                            const activePoints = myChart2.getElementsAtEventForMode(e, 'nearest', {
+                                intersect: true
+                            }, false)
+                            const [{
+                                index
+                            }] = activePoints;
+                            console.log(config2.data.datasets[0].data[index].y);
+                            var $container = $('.scroll'),
+                                $scrollTo = $('#' + config2.data.datasets[0].data[index].y)
+                            $container.animate({
+                                scrollTop: $scrollTo.offset().top - $container.offset().top + $container.scrollTop() - ($container.height() / 2)
+                            });
+                            $scrollTo.parent('tr').effect('highlight', {}, 3000)
                         }
-                    },
-                    onClick(e) {
-                        const activePoints = myChart2.getElementsAtEventForMode(e, 'nearest', {
-                            intersect: true
-                        }, false)
-                        const [{
-                            index
-                        }] = activePoints;
-                        console.log(config2.data.datasets[0].data[index].y);
-                        var $container = $('.scroll'),
-                            $scrollTo = $('#' + config2.data.datasets[0].data[index].y)
-                        $container.animate({
-                            scrollTop: $scrollTo.offset().top - $container.offset().top + $container.scrollTop() - ($container.height() / 2)
-                        });
-                        $scrollTo.parent('tr').effect('highlight', {}, 3000)
+
                     }
+                };
+                let ctx2 = document.getElementById('myChart2').getContext('2d');
+                let myChart2 = new Chart(ctx2, config2);
 
-                }
-            };
-            let ctx2 = document.getElementById('myChart2').getContext('2d');
-            let myChart2 = new Chart(ctx2, config2);
+                let ctx4 = document.getElementById('myChart4').getContext('2d');
+                let myChart4 = new Chart(ctx4, config2);
 
-            let ctx4 = document.getElementById('myChart4').getContext('2d');
-            let myChart4 = new Chart(ctx4, config2);
+                $(function () {
+                    const dates = response.body.model.data.timestamp.slice(analysisIndex)
+                    const temperature = response.body.model.data.average_dry_bulb_temperature.slice(analysisIndex)
+                    const x = response.body.model.data.degree_day.slice(analysisIndex)
+                    const meter = response.body.model.data.raw_value.slice(analysisIndex)
+                    const expected = response.body.model.data.predicted_value.slice(analysisIndex)
+                    const replacement = response.body.model.data.replacement_value.slice(analysisIndex)
+                    const reason = response.body.model.data.replacement_reason.slice(analysisIndex)
+                    const notes = response.body.model.data.replacement_notes.slice(analysisIndex)
+                    const lowerBound = response.body.model.data.predicted_value_lower_bound.slice(analysisIndex)
+                    const upperBound = response.body.model.data.predicted_value_upper_bound.slice(analysisIndex)
 
-            $(function () {
-                const dates = response.body.model.data.timestamp.slice(analysisIndex)
-                const temperature = response.body.model.data.average_dry_bulb_temperature.slice(analysisIndex)
-                const x = response.body.model.data.degree_day.slice(analysisIndex)
-                const meter = response.body.model.data.raw_value.slice(analysisIndex)
-                const expected = response.body.model.data.predicted_value.slice(analysisIndex)
-                const replacement = response.body.model.data.replacement_value.slice(analysisIndex)
-                const reason = response.body.model.data.replacement_reason.slice(analysisIndex)
-                const notes = response.body.model.data.replacement_notes.slice(analysisIndex)
-                const lowerBound = response.body.model.data.predicted_value_lower_bound.slice(analysisIndex)
-                const upperBound = response.body.model.data.predicted_value_upper_bound.slice(analysisIndex)
-
-                dates.map((date, index) => {
-                    $('.tableBody').append(`
+                    dates.map((date, index) => {
+                        $('.tableBody').append(`
                     <tr>
                         <td class='position'><input class="form-check-input edit" name='edit' type="checkbox"></td>
                         <td class='date'>${date}</td>
@@ -481,33 +481,33 @@ $(document).ready(() => {
                         <td class="upperBound" style='display: none'>${parseFloat(upperBound[index]).toFixed(0)}</td>
                         <td class="lowerBound" style='display: none'>${parseFloat(lowerBound[index]).toFixed(0)}</td>
                     </tr>`)
+                    })
+
+                    $('.x').html(response.body.model.x.toUpperCase())
+                    $('.tableData tbody tr').each(function () {
+                        let meterReading = $(this).find('.meterReading').html()
+                        let lowerBound = $(this).find('.lowerBound').html()
+                        let upperBound = $(this).find('.upperBound').html()
+                        if (parseInt(meterReading, 10) < parseInt(lowerBound, 10)) {
+                            $(this).addClass('table-warning')
+                            $(this).children('td:eq(0)').append(`<a href="#" class="warning" data-tool-tip="Low Limit: ${lowerBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
+
+                        }
+
+                        if (parseInt(meterReading, 10) > parseInt(upperBound, 10)) {
+                            $(this).addClass('table-danger')
+                            $(this).children('td:eq(0)').append(`<a href="#" class="warning" data-tool-tip="High Limit: ${upperBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
+
+                        }
+
+                        if ($(this).children('td:eq(4)').text() === $(this).next().children('td:eq(4)').text()) {
+                            $(this).addClass('table-primary')
+                            $(this).next().addClass('table-primary')
+                        }
+                    })
+
                 })
-
-                $('.x').html(response.body.model.x.toUpperCase())
-                $('.tableData tbody tr').each(function () {
-                    let meterReading = $(this).find('.meterReading').html()
-                    let lowerBound = $(this).find('.lowerBound').html()
-                    let upperBound = $(this).find('.upperBound').html()
-                    if (parseInt(meterReading, 10) < parseInt(lowerBound, 10)) {
-                        $(this).addClass('table-warning')
-                        $(this).children('td:eq(0)').append(`<a href="#" class="warning" data-tool-tip="Low Limit: ${lowerBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
-
-                    }
-
-                    if (parseInt(meterReading, 10) > parseInt(upperBound, 10)) {
-                        $(this).addClass('table-danger')
-                        $(this).children('td:eq(0)').append(`<a href="#" class="warning" data-tool-tip="High Limit: ${upperBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
-
-                    }
-
-                    if ($(this).children('td:eq(4)').text() === $(this).next().children('td:eq(4)').text()) {
-                        $(this).addClass('table-primary')
-                        $(this).next().addClass('table-primary')
-                    }
-                })
-
-            })
-
+            }
         })
     }
 
