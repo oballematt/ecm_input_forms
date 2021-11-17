@@ -184,8 +184,9 @@ $(document).ready(() => {
             if (response.status === 504) {
                 modelApi()
                 $('.overlayMessage').text('Server not responding, trying your search again. Please do not refresh the page')
+            } else if (response.status === 401) {
+                alert('You are not authorized')
             } else {
-
                 $('.displayData').show()
                 console.log(response)
                 meterAttributes = true
@@ -523,9 +524,10 @@ $(document).ready(() => {
         let notes = []
         let reason = []
         let values = []
-        let date = []
-        const buildingNumber = data[0][0].building_number
-        const commodityTag = data[0][0].commodity_tag
+        let timestamp = []
+        const analyst = $('.email').text().trim()
+        const building_number = data[0][0].building_number
+        const commodity_tag = data[0][0].commodity_tag
         const meter = data[0][0].meter
         console.log(replaceData)
         if (replaceData.length === 0) {
@@ -541,7 +543,7 @@ $(document).ready(() => {
                     }
                     reason.push($('#reason').val())
                     values.push(parseFloat(item.Expected))
-                    date.push(item.Date)
+                    timestamp.push(item.Date)
                 })
             } else {
                 replaceData.forEach(function (item) {
@@ -552,27 +554,27 @@ $(document).ready(() => {
                     }
                     reason.push($('#reason').val())
                     values.push(null)
-                    date.push(item.Date)
+                    timestamp.push(item.Date)
                 })
             }
 
             $('.overlayMessage').text('Submitting Data. Please wait...')
             $.ajax({
-                url: `https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/building_meter_replacement`,
+                url: '/postGateway',
                 method: 'POST',
                 dataType: 'json',
-                contentType: 'application/json',
                 data: JSON.stringify({
-                    "analyst": $('.email').text().trim(),
-                    "building_number": buildingNumber,
-                    "commodity_tag": commodityTag,
+                    "analyst": analyst,
+                    "building_number": building_number,
+                    "commodity_tag": commodity_tag,
                     "meter": meter,
                     "data": {
-                        "timestamp": date,
+                        "timestamp": timestamp,
                         "value": values,
                         "reason": reason,
                         "notes": notes,
                     }
+                    
                 }),
                 error: function (jqXhr, textStatus, errorThrown) {
                     console.log(errorThrown);
@@ -591,7 +593,7 @@ $(document).ready(() => {
                 $('#overlay').fadeOut()
                 $('.overlayMessage').text('Getting data, this will take a few seconds')
                 notes = []
-                date = []
+                timestamp = []
                 values = []
                 reason = []
                 replaceData = []

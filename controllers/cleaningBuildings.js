@@ -1,6 +1,7 @@
 const { Bldg_metadata } = require('../models');
 
 module.exports = {
+    
     getBuildings: async (req, res) => {
 
         try {
