@@ -181,7 +181,7 @@ $(document).ready(() => {
                 }
             }
         }).then(response => {
-            if (response.status === 504 || 500) {
+            if (response.status === 504 || response.status === 500) {
                 modelApi()
                 $('.overlayMessage').text('Server not responding, trying your search again. Please do not refresh the page')
             } else if (response.status === 401) {
