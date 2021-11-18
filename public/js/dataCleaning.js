@@ -557,28 +557,25 @@ $(document).ready(() => {
                     timestamp.push(item.Date)
                 })
             }
-
+            console.log(timestamp)
+            console.log(notes)
+            console.log(reason)
+            console.log(values)
             $('.overlayMessage').text('Submitting Data. Please wait...')
             $.ajax({
-                url: 'https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/building_meter_replacement',
+                url: '/postGateway',
                 method: 'POST',
-                dataType: 'json',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'authorizationToken': $('.token').text().trim()
-                },
-                data: JSON.stringify({
+                data: {
                     analyst: analyst,
                     building_number: building_number,
                     commodity_tag: commodity_tag,
                     meter: meter,
-                    data: {
-                        timestamp: timestamp,
-                        value: values,
-                        reason: reason,
-                        notes: notes
-                    }
-                }),
+                    timestamp: JSON.stringify(timestamp),
+                    values: JSON.stringify(values),
+                    reason: JSON.stringify(reason),
+                    notes: JSON.stringify(notes)
+
+                },
                 error: function (jqXhr, textStatus, errorThrown) {
                     console.log(errorThrown);
                     if (jqXhr.status === 400) {
@@ -665,13 +662,8 @@ $(document).ready(() => {
 
                 $.ajax({
                     type: 'POST',
-                    dataType: 'json',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'authorizationToken': $('.token').text().trim()
-                    },
-                    url: 'https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/model',
-                    data: JSON.stringify({
+                    url: '/postAttributes',
+                    data: {
                         building_number: building_number,
                         meter: meter,
                         commodity_tag: commodity_tag,
@@ -684,7 +676,7 @@ $(document).ready(() => {
                         slope: slope,
                         intercept: intercept,
                         std: std
-                    })
+                    }
                 }).then(function (response) {
                     console.log(response)
                 })
