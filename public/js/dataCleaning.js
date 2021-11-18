@@ -560,21 +560,24 @@ $(document).ready(() => {
 
             $('.overlayMessage').text('Submitting Data. Please wait...')
             $.ajax({
-                url: '/postGateway',
+                url: 'https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/building_meter_replacement',
                 method: 'POST',
                 dataType: 'json',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorizationToken': $('.token').text().trim()
+                },
                 data: JSON.stringify({
-                    "analyst": analyst,
-                    "building_number": building_number,
-                    "commodity_tag": commodity_tag,
-                    "meter": meter,
-                    "data": {
-                        "timestamp": timestamp,
-                        "value": values,
-                        "reason": reason,
-                        "notes": notes,
+                    analyst: analyst,
+                    building_number: building_number,
+                    commodity_tag: commodity_tag,
+                    meter: meter,
+                    data: {
+                        timestamp: timestamp,
+                        value: values,
+                        reason: reason,
+                        notes: notes
                     }
-                    
                 }),
                 error: function (jqXhr, textStatus, errorThrown) {
                     console.log(errorThrown);
@@ -624,57 +627,63 @@ $(document).ready(() => {
 
         let str = $('.autoIgnored').text()
         let newStr = str.substring(0, str.length - 1)
-
+        const building_number = $('.currentBuilding').text()
+        const meter = $('.currentMeter').text()
+        const commodity_tag = $('.currentCommodity').text()
         const meterVariable = $('.meterVariable').text()
-        let baseTemp = $('.baseTemp').text()
-        const autoIgnored = Number(newStr)
+        const x = $('.currentVariable').text()
+        let base_temperature = $('.baseTemp').text()
+        const auto_ignored_percentage = Number(newStr)
         const slope = Number($('.slope').text())
         const intercept = Number($('.intercept').text())
         const r2 = Number($('.r2').text())
-        const stdDev = Number($('.stdDev').text())
-        const trainStart = $('.modelStart').val()
-        const trainEnd = $('.modelEnd').val()
+        const std = Number($('.stdDev').text())
+        const train_start = $('.modelStart').val()
+        const train_end = $('.modelEnd').val()
 
-        if (baseTemp === '') {
-            baseTemp = null
+        if (base_temperature === '') {
+            base_temperature = null
         } else {
-            baseTemp = Number($('.baseTemp').text())
+            base_temperature = Number($('.baseTemp').text())
         }
 
-        if (attributes.length === 0 || attributes[0].base_temperature !== baseTemp || attributes[0].intercept !== intercept || attributes[0].slope !== slope
-            || attributes[0].auto_ignored_percentage !== autoIgnored || attributes[0].r2 !== r2 || attributes[0].std !== stdDev ||
-            attributes[0].train_start !== trainStart || attributes[0].train_end !== trainEnd) {
+        if (attributes.length === 0 || attributes[0].base_temperature !== base_temperature || attributes[0].intercept !== intercept || attributes[0].slope !== slope
+            || attributes[0].auto_ignored_percentage !== auto_ignored_percentage || attributes[0].r2 !== r2 || attributes[0].std !== std ||
+            attributes[0].train_start !== train_start || attributes[0].train_end !== train_end) {
             const confirmSubmit = confirm(`Do you want to submit the current meter attributes for meter: ${$('.currentMeter').text()}
 
             \u2022 Variable: ${meterVariable}
-            \u2022 Base Temp: ${baseTemp}
-            \u2022 Auto Ignored: ${autoIgnored}
+            \u2022 Base Temp: ${base_temperature}
+            \u2022 Auto Ignored: ${auto_ignored_percentage}
             \u2022 Slope: ${slope}
             \u2022 Intercept: ${intercept}
             \u2022 R-Squared: ${r2}
-            \u2022 Std Dev: ${stdDev}`)
+            \u2022 Std Dev: ${std}`)
 
 
             if (confirmSubmit === true) {
 
                 $.ajax({
-                    dataType: 'json',
-                    contentType: 'application/json',
                     type: 'POST',
+                    dataType: 'json',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'authorizationToken': $('.token').text().trim()
+                    },
                     url: 'https://c074vo0soh.execute-api.us-east-1.amazonaws.com/beta/model',
                     data: JSON.stringify({
-                        building_number: $('.currentBuilding').text(),
-                        meter: $('.currentMeter').text(),
-                        commodity_tag: $('.currentCommodity').text(),
-                        train_start: trainStart,
-                        train_end: trainEnd,
-                        x: $('.currentVariable').text(),
-                        auto_ignored_percentage: autoIgnored,
-                        base_temperature: baseTemp === 0 ? null : baseTemp,
+                        building_number: building_number,
+                        meter: meter,
+                        commodity_tag: commodity_tag,
+                        train_start: train_start,
+                        train_end: train_end,
+                        x: x,
+                        auto_ignored_percentage: auto_ignored_percentage,
+                        base_temperature: base_temperature === 0 ? null : base_temperature,
                         r2: r2,
                         slope: slope,
                         intercept: intercept,
-                        std: stdDev
+                        std: std
                     })
                 }).then(function (response) {
                     console.log(response)

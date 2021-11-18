@@ -11,6 +11,11 @@
                 {{email}}
                 {{/if}}
             </div>
+            <div style="display: none;" class="token">
+                {{#with token}}
+                {{token}}
+                {{/with}}
+            </div>
             <div class="input-group mb-2 mt-3">
                 <button id='filterLabel' class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">Filter By:</button>

@@ -5,4 +5,6 @@ router.get('/gateway', gatewayController.getModel);
 
 router.post('/postGateway', gatewayController.postModel)
 
+router.post('/postAttributes', gatewayController.postAttributes)
+
 module.exports = router
