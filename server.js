@@ -6,6 +6,7 @@ const flash = require("express-flash");
 const session = require("express-session");
 const authorization = require('./middleware/authorization')
 const cors = require('cors');
+const compression = require('compression')
 require('dotenv').config();
 
 
@@ -55,6 +56,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+app.use(compression({
+  level: 6
+}))
 
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'))
