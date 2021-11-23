@@ -535,8 +535,12 @@ $(document).ready(() => {
                         let upperBound = $(this).find('.upperBound').html()
                         if (parseInt(meterReading, 10) < parseInt(lowerBound, 10)) {
                             $(this).addClass('table-warning')
-                            $(this).children('td:eq(0)').append(`<a href="#" class="warning" data-tool-tip="Low Limit: ${lowerBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
+                            if ($(this).index() === 0) {
+                                $(this).children('td:eq(0)').append(`<a href="#" class="warning firstRow" data-tool-tip="Low Limit: ${lowerBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
 
+                            } else {
+                                $(this).children('td:eq(0)').append(`<a href="#" class="warning" data-tool-tip="Low Limit: ${lowerBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
+                            }
                         }
 
                         if (parseInt(meterReading, 10) > parseInt(upperBound, 10)) {

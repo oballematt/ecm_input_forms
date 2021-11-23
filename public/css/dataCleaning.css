@@ -212,7 +212,7 @@ a[data-tool-tip]:hover::after{
     transition: transform ease-out 150ms, bottom ease-out 150ms;
 }
 
-a.firstRow[data-tool-tip]:hover::after{
+.firstRow[data-tool-tip]:hover::after{
     transform: scale(1);
     bottom: -300%;
     z-index: 3;
