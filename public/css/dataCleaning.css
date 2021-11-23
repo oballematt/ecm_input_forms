@@ -168,6 +168,7 @@ a[data-tool-tip]{
 
 a[data-tool-tip]::after{
     content: attr(data-tool-tip);
+    z-index: 2;
     display: block;
     position: absolute;
     background-color: dimgrey;
@@ -185,6 +186,7 @@ a[data-tool-tip]::after{
 a[data-tool-tip]:hover::after{
     transform: scale(1);
     bottom: 200%;
+    z-index: 2;
 }
 
 .ui-slider-range {

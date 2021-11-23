@@ -7,4 +7,6 @@ router.post('/postGateway', gatewayController.postModel)
 
 router.post('/postAttributes', gatewayController.postAttributes)
 
+router.get('/getConsumption', gatewayController.getConsumption)
+
 module.exports = router

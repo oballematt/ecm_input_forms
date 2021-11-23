@@ -3,23 +3,7 @@ let data = []
 let attributes
 let analysisIndex
 let replaceData = []
-
 $(document).ready(() => {
-
-    $(function () {
-        $("#slider-range").slider({
-            range: true,
-            min: new Date('2010.01.01').getTime() / 1000,
-            max: new Date('2014.01.01').getTime() / 1000,
-            step: 86400,
-            values: [new Date('2013.01.01').getTime() / 1000, new Date('2013.02.01').getTime() / 1000],
-            slide: function (event, ui) {
-                $("#amount").val((new Date(ui.values[0] * 1000).toDateString()) + " - " + (new Date(ui.values[1] * 1000)).toDateString());
-            }
-        });
-        $("#amount").val((new Date($("#slider-range").slider("values", 0) * 1000).toDateString()) +
-            " - " + (new Date($("#slider-range").slider("values", 1) * 1000)).toDateString());
-    });
 
     const dateInput_1 = $('.datepicker');
 
@@ -181,12 +165,13 @@ $(document).ready(() => {
                 }
             }
         }).then(response => {
-            if (response.status === 504 || response.status === 500) {
+            if (response === 'Request failed with status code 504' || response === 'Request failed with status code 500') {
                 modelApi()
                 $('.overlayMessage').text('Server not responding, trying your search again. Please do not refresh the page')
-            } else if (response.status === 401) {
+            } else if (response === 401) {
                 alert('You are not authorized')
             } else {
+                $('#reportrange span').html('Select a Date Range');
                 $('.displayData').show()
                 console.log(response)
                 meterAttributes = true
@@ -212,6 +197,9 @@ $(document).ready(() => {
                 $('.currentCommodity').text(data[0][0].commodity_tag)
                 $('.currentVariable').text(response.body.model.x)
                 getAttributes()
+                const toFindDuplicates = xTemp => xTemp.filter((item, index) => xTemp.indexOf(item) !== index)
+                const duplicateElements = toFindDuplicates(xTemp);
+                console.log(duplicateElements);
 
                 xTemp.forEach((key, i) => result[key] = lowLimit[i])
 
@@ -455,6 +443,62 @@ $(document).ready(() => {
                 let ctx4 = document.getElementById('myChart4').getContext('2d');
                 let myChart4 = new Chart(ctx4, config2);
 
+
+                $(function () {
+                    var start = moment().subtract(29, 'days');
+                    var end = moment();
+                    let endTime
+                    let startTime
+                    
+                    function cb(start, end) {
+                        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                        endTime = end.format('YYYY-MM-DD')
+                        startTime = start.format('YYYY-MM-DD')
+                        $('.consumptionSpinner').append(`<div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span> </div>`)
+                    }
+
+                    $('#reportrange').daterangepicker({
+                        linkedCalendars: false,
+                        showDropdowns: true,
+                        autoApply: true,
+                        autoUpdateInput: false
+                    }, cb);
+
+                    $('.dateRange').on('click', function () {
+                        $(this).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...`)
+                        consumptionApi()
+                    })
+
+                    const consumptionApi = () => {
+                        const buildingNumber = data[0][0].building_number
+                        const commodity = data[0][0].commodity_tag
+                        const meter = data[0][0].meter
+                        $.ajax({
+                            url: '/getConsumption',
+                            method: 'GET',
+                            data: {
+                                buildingNumber: buildingNumber,
+                                commodity: commodity,
+                                meter: meter,
+                                startTimestamp: startTime,
+                                endTimestamp: endTime
+                            }
+                        }).then(function (response) {
+                            console.log(response);
+                            if (response === 'Request failed with status code 504') {
+                                consumptionApi()
+                            } else {
+                                $('.dateRange').html('Run')
+                            }
+                        })
+                    }
+
+
+                });
+
+
                 $(function () {
                     const dates = response.body.model.data.timestamp.slice(analysisIndex)
                     const temperature = response.body.model.data.average_dry_bulb_temperature.slice(analysisIndex)
@@ -474,7 +518,7 @@ $(document).ready(() => {
                         <td class='date'>${date}</td>
                         <td>${temperature[index]}</td>
                         <td>${x[index] === null ? '-' : parseFloat(x[index]).toFixed(0)}</td>
-                        <td id=${parseFloat(meter[index]).toFixed(0)} class='meterReading'>${parseFloat(meter[index]).toFixed(0)}</td>
+                        <td id=${meter[index]} class='meterReading'>${meter[index]}</td>
                         <td class='expected'>${parseFloat(expected[index]).toFixed(0)}</td>
                         <td >${replacement[index] === null ? '-' : parseFloat(replacement[index]).toFixed(0)}</td>
                         <td>${reason[index] === null ? '-' : reason[index]}</td>
