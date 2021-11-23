@@ -447,7 +447,7 @@ $(document).ready(() => {
                 $(function () {
                     let endTime
                     let startTime
-                    
+
                     function cb(start, end) {
                         $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
                         endTime = end.format('YYYY-MM-DD')
@@ -525,7 +525,9 @@ $(document).ready(() => {
                         <td class="lowerBound" style='display: none'>${parseFloat(lowerBound[index]).toFixed(0)}</td>
                     </tr>`)
                     })
-
+                    $('.tableData tbody tr').on('click', function () {
+                        console.log($(this).index())
+                    })
                     $('.x').html(response.body.model.x.toUpperCase())
                     $('.tableData tbody tr').each(function () {
                         let meterReading = $(this).find('.meterReading').html()
@@ -539,8 +541,11 @@ $(document).ready(() => {
 
                         if (parseInt(meterReading, 10) > parseInt(upperBound, 10)) {
                             $(this).addClass('table-danger')
-                            $(this).children('td:eq(0)').append(`<a href="#" class="warning" data-tool-tip="High Limit: ${upperBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
-
+                            if ($(this).index() === 0) {
+                                $(this).children('td:eq(0)').append(`<a href="#" class="warning firstRow" data-tool-tip="High Limit: ${upperBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
+                            } else {
+                                $(this).children('td:eq(0)').append(`<a href="#" class="warning" data-tool-tip="High Limit: ${upperBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
+                            }
                         }
 
                         if ($(this).children('td:eq(4)').text() === $(this).next().children('td:eq(4)').text()) {

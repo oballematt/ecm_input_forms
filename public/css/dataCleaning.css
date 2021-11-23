@@ -186,8 +186,38 @@ a[data-tool-tip]::after{
 a[data-tool-tip]:hover::after{
     transform: scale(1);
     bottom: 200%;
-    z-index: 2;
+    z-index: 3;
 }
+
+.firstRow[data-tool-tip]{
+    position: relative;
+    text-decoration: none;
+    color: black;
+}
+
+.firstRow[data-tool-tip]::after{
+    content: attr(data-tool-tip);
+    z-index: 2;
+    display: block;
+    position: absolute;
+    background-color: dimgrey;
+    padding: 12px 15px;
+    color: white;
+    border-radius: 5px;
+    font-size: 15px;
+    bottom: 0;
+    left: -190%;
+    white-space: nowrap;
+    transform: scale(0);
+    transition: transform ease-out 150ms, bottom ease-out 150ms;
+}
+
+a.firstRow[data-tool-tip]:hover::after{
+    transform: scale(1);
+    bottom: -300%;
+    z-index: 3;
+}
+
 
 .ui-slider-range {
     background-color: #0DCAF0
