@@ -166,7 +166,7 @@ module.exports = {
 
         } catch (error) {
             console.error(error.message)
-            return res.json(error)
+            return res.json(error.message)
         }
     }
 }
