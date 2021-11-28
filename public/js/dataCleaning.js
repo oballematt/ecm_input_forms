@@ -173,6 +173,7 @@ $(document).ready(() => {
             } else {
                 $('#reportrange span').html('Select a Date Range');
                 $('.displayData').show()
+                $('#collapseRow').empty()
                 console.log(response)
                 meterAttributes = true
                 const analysisIndex = response.body.model.data.timestamp.indexOf($('.analysisStart').val())
@@ -245,7 +246,7 @@ $(document).ready(() => {
                         datasets: [{
                             type: "scatter",
                             label: "Meter VS. Temp",
-                            data: RawValueArr.map(a => { return { x: a[0], y: a[1] } }),
+                            data: RawValueArr.map(a => { return { x: a[0], y: Math.trunc(a[1]) } }),
                             backgroundColor: '#00FFFF',
                             pointRadius: 5,
                         }, {
@@ -360,7 +361,7 @@ $(document).ready(() => {
                             {
                                 type: 'scatter',
                                 label: "Meter VS. Dates",
-                                data: rawValueArr2.map(a => { return { x: a[0], y: a[1] } }),
+                                data: rawValueArr2.map(a => { return { x: a[0], y: Math.trunc(a[1]) } }),
                                 pointRadius: 5,
                                 backgroundColor: '#00FFFF',
                             }, {
@@ -443,60 +444,6 @@ $(document).ready(() => {
                 let ctx4 = document.getElementById('myChart4').getContext('2d');
                 let myChart4 = new Chart(ctx4, config2);
 
-
-                $(function () {
-                    let endTime
-                    let startTime
-
-                    function cb(start, end) {
-                        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-                        endTime = end.format('YYYY-MM-DD')
-                        startTime = start.format('YYYY-MM-DD')
-                        $('.consumptionSpinner').append(`<div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Loading...</span> </div>`)
-                    }
-
-                    $('#reportrange').daterangepicker({
-                        linkedCalendars: false,
-                        showDropdowns: true,
-                        autoApply: true,
-                        autoUpdateInput: false
-                    }, cb);
-
-                    $('.dateRange').on('click', function () {
-                        $(this).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        Loading...`)
-                        consumptionApi()
-                    })
-
-                    const consumptionApi = () => {
-                        const buildingNumber = data[0][0].building_number
-                        const commodity = data[0][0].commodity_tag
-                        const meter = data[0][0].meter
-                        $.ajax({
-                            url: '/getConsumption',
-                            method: 'GET',
-                            data: {
-                                buildingNumber: buildingNumber,
-                                commodity: commodity,
-                                meter: meter,
-                                startTimestamp: startTime,
-                                endTimestamp: endTime
-                            }
-                        }).then(function (response) {
-                            console.log(response);
-                            if (response === 'Request failed with status code 504') {
-                                consumptionApi()
-                            } else {
-                                $('.dateRange').html('Run')
-                            }
-                        })
-                    }
-
-
-                });
-
-
                 $(function () {
                     const dates = response.body.model.data.timestamp.slice(analysisIndex)
                     const temperature = response.body.model.data.average_dry_bulb_temperature.slice(analysisIndex)
@@ -516,7 +463,7 @@ $(document).ready(() => {
                         <td class='date'>${date}</td>
                         <td>${temperature[index]}</td>
                         <td>${x[index] === null ? '-' : parseFloat(x[index]).toFixed(0)}</td>
-                        <td id=${meter[index]} class='meterReading'>${meter[index]}</td>
+                        <td id=${Math.trunc(meter[index])} class='meterReading'>${Math.trunc(meter[index])}</td>
                         <td class='expected'>${parseFloat(expected[index]).toFixed(0)}</td>
                         <td >${replacement[index] === null ? '-' : parseFloat(replacement[index]).toFixed(0)}</td>
                         <td>${reason[index] === null ? '-' : reason[index]}</td>
@@ -537,7 +484,6 @@ $(document).ready(() => {
                             $(this).addClass('table-warning')
                             if ($(this).index() === 0) {
                                 $(this).children('td:eq(0)').append(`<a href="#" class="warning firstRow" data-tool-tip="Low Limit: ${lowerBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
-
                             } else {
                                 $(this).children('td:eq(0)').append(`<a href="#" class="warning" data-tool-tip="Low Limit: ${lowerBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
                             }
@@ -562,6 +508,145 @@ $(document).ready(() => {
             }
         })
     }
+
+    $('.dateRange').on('click', function () {
+        $(this).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Loading...`)
+        $('#collapseRow').load(location.href + " #collapseRow")
+        consumptionApi()
+    })
+
+
+    let endTime
+    let startTime
+
+    function cb(start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        endTime = end.format('YYYY-MM-DD')
+        startTime = start.format('YYYY-MM-DD')
+        $('.consumptionSpinner').append(`<div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span> </div>`)
+    }
+
+
+
+    $('#reportrange').daterangepicker({
+        linkedCalendars: false,
+        showDropdowns: true,
+        autoApply: true,
+        autoUpdateInput: false
+    }, cb);
+
+    const consumptionApi = () => {
+        const buildingNumber = data[0][0].building_number
+        const commodity = data[0][0].commodity_tag
+        const meter = data[0][0].meter
+
+
+        $.ajax({
+            url: '/getConsumption',
+            method: 'GET',
+            data: {
+                buildingNumber: buildingNumber,
+                commodity: commodity,
+                meter: meter,
+                startTimestamp: startTime,
+                endTimestamp: endTime
+            }
+        }).then(function (response) {
+            console.log(response);
+            if (response === 'Request failed with status code 504') {
+                consumptionApi()
+            } else {
+                $('.dateRange').html('Run')
+                $('.collapseButton').append(`<button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#myCollapse" aria-expanded="false" aria-controls="myCollapse">
+                    Show/Hide &nbsp; <i class="fas fa-chevron-down"></i>
+                </button>`)
+                $('.collapseChart').append(` <div class="collapse mt-3" id="myCollapse">
+                    <div class="card card-body">
+                    <canvas id="collapseChart"></canvas>
+                    </div>
+                </div>`)
+                var myCollapse = document.getElementById('myCollapse')
+                var bsCollapse = new bootstrap.Collapse(myCollapse, {
+                    toggle: true
+                })
+                bsCollapse.show()
+                const result = {}
+                const xTimestamp = response.body.timestamp
+                const yValue = response.body.value
+                xTimestamp.forEach((key, i) => result[key] = yValue[i])
+                console.log(result)
+                const newArr = Object.keys(result).map(function (key) {
+                    return [String(key), result[key]];
+                })
+
+                newArr.map(function (key) {
+                    console.log(key[0])
+                })
+                const config = {
+                    type: 'scatter',
+                    data: {
+                        datasets: [
+                            {
+                                label: "Meter VS. Dates (Historic)",
+                                data: newArr.map(a => { return { x: a[0], y: a[1] } }),
+                                backgroundColor: '#00FFFF',
+                                pointRadius: 5,
+                            }
+                        ]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: 'white'
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                type: 'time',
+                                time: {
+                                    tooltipFormat: 'MMMM dd, yyyy'
+
+                                },
+                                ticks: {
+                                    color: 'white'
+                                },
+                                grid: {
+
+                                    color: 'black'
+
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    color: 'white'
+                                },
+                                grid: {
+
+                                    color: 'black'
+
+                                }
+
+                            }
+                        },
+                    }
+                };
+
+
+                let ctx = document.getElementById('collapseChart').getContext('2d');
+                let myChart = new Chart(ctx, config);
+
+            }
+        })
+    }
+
+
+
 
     $('#reason').on('change', function () {
         $button3.removeAttr('disabled')
