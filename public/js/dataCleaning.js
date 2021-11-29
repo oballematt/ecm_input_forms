@@ -91,7 +91,7 @@ $(document).ready(() => {
             url: '/buildings',
             data: { steward: steward }
         }).then(function (response) {
-           
+
             $('#filterBy').append('<option selected disabled>Choose...</option>')
             response.map(a => {
                 $('#filterBy').append(`<option value=${a.building_id}>${a.building}</option>`)
@@ -113,7 +113,7 @@ $(document).ready(() => {
             data: getData
         }).then((response) => {
             attributes = response
-         
+
 
         })
     }
@@ -225,7 +225,7 @@ $(document).ready(() => {
                 xTemp.forEach((key, i) => {
                     result[key] = rawValue[i]
                 })
-              
+
 
                 let RawValueArr = Object.keys(result).map(function (key) {
                     return [Number(key), result[key]]
@@ -311,7 +311,7 @@ $(document).ready(() => {
                             const [{
                                 index
                             }] = activePoints;
-                           
+
                             var $container = $('.scroll'),
                                 $scrollTo = $('#' + config.data.datasets[0].data[index].y)
                             $container.animate({
@@ -426,7 +426,7 @@ $(document).ready(() => {
                             const [{
                                 index
                             }] = activePoints;
-                          
+
                             var $container = $('.scroll'),
                                 $scrollTo = $('#' + config2.data.datasets[0].data[index].y)
                             $container.animate({
@@ -447,6 +447,7 @@ $(document).ready(() => {
                     const dates = response.body.model.data.timestamp.slice(analysisIndex)
                     const temperature = response.body.model.data.average_dry_bulb_temperature.slice(analysisIndex)
                     const x = response.body.model.data.degree_day.slice(analysisIndex)
+                    const occ = response.body.model.data.is_occupied.slice(analysisIndex)
                     const meter = response.body.model.data.raw_value.slice(analysisIndex)
                     const expected = response.body.model.data.predicted_value.slice(analysisIndex)
                     const replacement = response.body.model.data.replacement_value.slice(analysisIndex)
@@ -461,7 +462,7 @@ $(document).ready(() => {
                         <td class='position'><input class="form-check-input edit" name='edit' type="checkbox"></td>
                         <td class='date'>${date}</td>
                         <td>${temperature[index]}</td>
-                        <td>${x[index] === null ? '-' : parseFloat(x[index]).toFixed(0)}</td>
+                        <td>${$('.currentVariable').text() === 'occ' ? occ[index] : parseFloat(x[index]).toFixed(0)}</td>
                         <td id=${Math.trunc(meter[index])} class='meterReading'>${Math.trunc(meter[index])}</td>
                         <td class='expected'>${parseFloat(expected[index]).toFixed(0)}</td>
                         <td >${replacement[index] === null ? '-' : parseFloat(replacement[index]).toFixed(0)}</td>
@@ -581,7 +582,7 @@ $(document).ready(() => {
                 const xTimestamp = response.body.timestamp
                 const yValue = response.body.value
                 xTimestamp.forEach((key, i) => result[key] = yValue[i])
-                
+
                 const newArr = Object.keys(result).map(function (key) {
                     return [String(key), result[key]];
                 })
@@ -666,7 +667,7 @@ $(document).ready(() => {
         const building_number = data[0][0].building_number
         const commodity_tag = data[0][0].commodity_tag
         const meter = data[0][0].meter
-       
+
         if (replaceData.length === 0) {
             alert('Please select at least one date')
             $('#overlay').hide()
@@ -721,7 +722,7 @@ $(document).ready(() => {
                     }
                 }
             }).then((response) => {
-              
+
                 $('#overlay').fadeOut()
                 $('.overlayMessage').text('Getting data, this will take a few seconds')
                 notes = []
