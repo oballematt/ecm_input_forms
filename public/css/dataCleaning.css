@@ -219,10 +219,6 @@ a[data-tool-tip]:hover::after{
 }
 
 
-.ui-slider-range {
-    background-color: #0DCAF0
-}
-
  
   @keyframes rotate {
       0% {

@@ -91,7 +91,7 @@ $(document).ready(() => {
             url: '/buildings',
             data: { steward: steward }
         }).then(function (response) {
-            console.log(response)
+           
             $('#filterBy').append('<option selected disabled>Choose...</option>')
             response.map(a => {
                 $('#filterBy').append(`<option value=${a.building_id}>${a.building}</option>`)
@@ -113,7 +113,7 @@ $(document).ready(() => {
             data: getData
         }).then((response) => {
             attributes = response
-            console.log(attributes)
+         
 
         })
     }
@@ -171,7 +171,6 @@ $(document).ready(() => {
             } else if (response === 401) {
                 alert('You are not authorized')
             } else {
-                $('#reportrange span').html('Select a Date Range');
                 $('.displayData').show()
                 $('#collapseRow').empty()
                 console.log(response)
@@ -226,7 +225,7 @@ $(document).ready(() => {
                 xTemp.forEach((key, i) => {
                     result[key] = rawValue[i]
                 })
-                console.log(result)
+              
 
                 let RawValueArr = Object.keys(result).map(function (key) {
                     return [Number(key), result[key]]
@@ -312,7 +311,7 @@ $(document).ready(() => {
                             const [{
                                 index
                             }] = activePoints;
-                            console.log(config.data.datasets[0].data[index].y);
+                           
                             var $container = $('.scroll'),
                                 $scrollTo = $('#' + config.data.datasets[0].data[index].y)
                             $container.animate({
@@ -427,7 +426,7 @@ $(document).ready(() => {
                             const [{
                                 index
                             }] = activePoints;
-                            console.log(config2.data.datasets[0].data[index].y);
+                          
                             var $container = $('.scroll'),
                                 $scrollTo = $('#' + config2.data.datasets[0].data[index].y)
                             $container.animate({
@@ -472,9 +471,6 @@ $(document).ready(() => {
                         <td class="lowerBound" style='display: none'>${parseFloat(lowerBound[index]).toFixed(0)}</td>
                     </tr>`)
                     })
-                    $('.tableData tbody tr').on('click', function () {
-                        console.log($(this).index())
-                    })
                     $('.x').html(response.body.model.x.toUpperCase())
                     $('.tableData tbody tr').each(function () {
                         let meterReading = $(this).find('.meterReading').html()
@@ -516,7 +512,6 @@ $(document).ready(() => {
         consumptionApi()
     })
 
-
     let endTime
     let startTime
 
@@ -528,13 +523,10 @@ $(document).ready(() => {
             <span class="visually-hidden">Loading...</span> </div>`)
     }
 
-
-
     $('#reportrange').daterangepicker({
         linkedCalendars: false,
         showDropdowns: true,
         autoApply: true,
-        autoUpdateInput: false
     }, cb);
 
     const consumptionApi = () => {
@@ -554,20 +546,32 @@ $(document).ready(() => {
                 endTimestamp: endTime
             }
         }).then(function (response) {
-            console.log(response);
             if (response === 'Request failed with status code 504') {
                 consumptionApi()
             } else {
                 $('.dateRange').html('Run')
-                $('.collapseButton').append(`<button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                $('.collapseButton').append(`<button class="btn btn-primary show-hide" type="button" data-bs-toggle="collapse"
                     data-bs-target="#myCollapse" aria-expanded="false" aria-controls="myCollapse">
-                    Show/Hide &nbsp; <i class="fas fa-chevron-down"></i>
+                    <i class="fa fa-eye-slash"></i> <span>Hide</span>
                 </button>`)
                 $('.collapseChart').append(` <div class="collapse mt-3" id="myCollapse">
                     <div class="card card-body">
                     <canvas id="collapseChart"></canvas>
                     </div>
                 </div>`)
+                $('.show-hide').on('click', function () {
+                    const icon = this.querySelector('i');
+                    const text = this.querySelector('span');
+                    if (icon.classList.contains('fa-eye-slash')) {
+                        icon.classList.remove('fa-eye-slash');
+                        icon.classList.add('fa-eye');
+                        text.innerHTML = 'Show';
+                    } else {
+                        icon.classList.remove('fa-eye');
+                        icon.classList.add('fa-eye-slash');
+                        text.innerHTML = 'Hide';
+                    }
+                })
                 var myCollapse = document.getElementById('myCollapse')
                 var bsCollapse = new bootstrap.Collapse(myCollapse, {
                     toggle: true
@@ -577,14 +581,11 @@ $(document).ready(() => {
                 const xTimestamp = response.body.timestamp
                 const yValue = response.body.value
                 xTimestamp.forEach((key, i) => result[key] = yValue[i])
-                console.log(result)
+                
                 const newArr = Object.keys(result).map(function (key) {
                     return [String(key), result[key]];
                 })
 
-                newArr.map(function (key) {
-                    console.log(key[0])
-                })
                 const config = {
                     type: 'scatter',
                     data: {
@@ -665,7 +666,7 @@ $(document).ready(() => {
         const building_number = data[0][0].building_number
         const commodity_tag = data[0][0].commodity_tag
         const meter = data[0][0].meter
-        console.log(replaceData)
+       
         if (replaceData.length === 0) {
             alert('Please select at least one date')
             $('#overlay').hide()
@@ -693,10 +694,6 @@ $(document).ready(() => {
                     timestamp.push(item.Date)
                 })
             }
-            console.log(timestamp)
-            console.log(notes)
-            console.log(reason)
-            console.log(values)
             $('.overlayMessage').text('Submitting Data. Please wait...')
             $.ajax({
                 url: '/postGateway',
@@ -713,7 +710,6 @@ $(document).ready(() => {
 
                 },
                 error: function (jqXhr, textStatus, errorThrown) {
-                    console.log(errorThrown);
                     if (jqXhr.status === 400) {
                         alert("Invalid Request. Please try again.")
                         $('#overlay').fadeOut()
@@ -725,7 +721,7 @@ $(document).ready(() => {
                     }
                 }
             }).then((response) => {
-                console.log(response)
+              
                 $('#overlay').fadeOut()
                 $('.overlayMessage').text('Getting data, this will take a few seconds')
                 notes = []
@@ -813,8 +809,6 @@ $(document).ready(() => {
                         intercept: intercept,
                         std: std
                     }
-                }).then(function (response) {
-                    console.log(response)
                 })
             }
         }
