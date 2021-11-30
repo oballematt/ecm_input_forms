@@ -19,7 +19,7 @@ module.exports = {
 
             const config = {
                 headers: {
-                    'authorizationToken': token.token
+                    'authorizationToken': token.token,
                 }
             }
             const model = process.env.GET_MODEL_URL + `building_number=${buildingNumber}&commodity_tag=${commodity}&meter=${meter}&train_start=${trainStart}&train_end=${trainEnd}&analysis_start=${analysisStart}&analysis_end=${analysisEnd}`

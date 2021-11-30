@@ -37,7 +37,8 @@ module.exports = (sequelize, DataTypes) => {
     r2: DataTypes.REAL,
     slope: DataTypes.REAL,
     intercept: DataTypes.REAL,
-    std: DataTypes.REAL
+    std: DataTypes.REAL,
+    updated_at: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Meter_olsr_model',

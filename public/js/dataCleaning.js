@@ -91,7 +91,6 @@ $(document).ready(() => {
             url: '/buildings',
             data: { steward: steward }
         }).then(function (response) {
-
             $('#filterBy').append('<option selected disabled>Choose...</option>')
             response.map(a => {
                 $('#filterBy').append(`<option value=${a.building_id}>${a.building}</option>`)
@@ -112,9 +111,13 @@ $(document).ready(() => {
             url: '/getAttributes',
             data: getData
         }).then((response) => {
+            console.log(response)
+            if (response.length === 0){
+                $('.attributesSubmitted').html(`<h6 class="text-warning"><strong>Attributes have not been submitted for this meter</strong></h6>`)
+            } else  {
+                $(".attributesSubmitted").html(`<h6 style="color: #00B74A"><strong>Attributes last submitted on: ${new Date(response[0].updated_at).toLocaleString()}</strong></h6>`)
+            }
             attributes = response
-
-
         })
     }
 
@@ -655,7 +658,7 @@ $(document).ready(() => {
     })
     $button3.click(function () {
         $('input:checkbox:checked', $('.tableData')).each(function () {
-            replaceData.push({ 'Date': $(this).closest('tr').find('.date').text(), "Expected": $(this).closest('tr').find('.expected').text() })
+            replaceData.push({ 'Date': $(this).closest('tr').find('.date').text(), "Expected": $(this).closest('tr').find('.expected').text(), "index": $(this).closest('tr').index() })
         }).get()
 
         let checked = $('#replace').is(':checked')
@@ -667,7 +670,7 @@ $(document).ready(() => {
         const building_number = data[0][0].building_number
         const commodity_tag = data[0][0].commodity_tag
         const meter = data[0][0].meter
-
+        console.log(replaceData)
         if (replaceData.length === 0) {
             alert('Please select at least one date')
             $('#overlay').hide()
@@ -695,6 +698,7 @@ $(document).ready(() => {
                     timestamp.push(item.Date)
                 })
             }
+
             $('.overlayMessage').text('Submitting Data. Please wait...')
             $.ajax({
                 url: '/postGateway',
@@ -722,7 +726,14 @@ $(document).ready(() => {
                     }
                 }
             }).then((response) => {
-
+                replaceData.forEach((item, i) => {
+                    const row = $(`.tableData tbody tr:eq(${item.index})`);
+                    const R = c => row.children(`td:eq(${c})`);
+                    R(6).text(values[i] === null ? '-' : values[i]);
+                    R(7).text(reason[i]);
+                    R(8).text(notes[i] === null ? '-' : notes[i]);
+                })
+                console.log(response)
                 $('#overlay').fadeOut()
                 $('.overlayMessage').text('Getting data, this will take a few seconds')
                 notes = []
@@ -734,13 +745,11 @@ $(document).ready(() => {
                 $('#replace').prop('checked', false)
                 $('#notes').val('')
                 $('#reason').val('Choose...')
-                $('.successAlert').append(`<div class="alert alert-success alert-dismissible fade show" role="alert">
+                $('.successAlert').html(`<div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Success!</strong> Your data has been successfully uploaded!
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>`)
-                setTimeout(function () {
-                    $('.successAlert').fadeOut()
-                }, 2000)
+
             })
         }
     })
@@ -750,6 +759,13 @@ $(document).ready(() => {
             submitAttributes()
         }
     })
+
+  window.onbeforeunload = function() {
+    if (meterAttributes === true) {
+        submitAttributes()
+    }
+  }
+
 
     let meterAttributes = false
 
@@ -810,6 +826,8 @@ $(document).ready(() => {
                         intercept: intercept,
                         std: std
                     }
+                }).then((response) => {
+                    console.log(response)
                 })
             }
         }

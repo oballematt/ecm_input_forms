@@ -43,6 +43,9 @@ module.exports = {
       },
       std: {
         type: Sequelize.REAL
+      },
+      updated_at: {
+        type: Sequelize.DATE
       }
     });
   },
