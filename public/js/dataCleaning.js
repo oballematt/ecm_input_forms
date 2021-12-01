@@ -3,6 +3,9 @@ let data = []
 let attributes
 let analysisIndex
 let replaceData = []
+let endTime
+let startTime
+
 $(document).ready(() => {
 
     const dateInput_1 = $('.datepicker');
@@ -112,9 +115,9 @@ $(document).ready(() => {
             data: getData
         }).then((response) => {
             console.log(response)
-            if (response.length === 0){
+            if (response.length === 0) {
                 $('.attributesSubmitted').html(`<h6 class="text-warning"><strong>Attributes have not been submitted for this meter</strong></h6>`)
-            } else  {
+            } else {
                 $(".attributesSubmitted").html(`<h6 style="color: #00B74A"><strong>Attributes last submitted on: ${new Date(response[0].updated_at).toLocaleString()}</strong></h6>`)
             }
             attributes = response
@@ -168,6 +171,7 @@ $(document).ready(() => {
                 }
             }
         }).then(response => {
+
             if (response === 'Request failed with status code 504' || response === 'Request failed with status code 500') {
                 modelApi()
                 $('.overlayMessage').text('Server not responding, trying your search again. Please do not refresh the page')
@@ -175,6 +179,7 @@ $(document).ready(() => {
                 alert('You are not authorized')
             } else {
                 $('.displayData').show()
+                $("#slider").show()
                 $('#collapseRow').empty()
                 console.log(response)
                 meterAttributes = true
@@ -507,6 +512,25 @@ $(document).ready(() => {
                 })
             }
         })
+        var d = new Date();
+        $(".dateRulersExample").dateRangeSlider({
+
+            bounds: { min: new Date(d.getFullYear() - 2, d.getMonth() - 1, 1), max: new Date() },
+            defaultValues: { min: new Date(d.getFullYear(), d.getMonth() - 1, d.getDate()), max: new Date() },
+            step: {
+                days: 1
+            }
+
+        });
+
+      
+
+        $(".dateRulersExample").bind("valuesChanged", function (e, data) {
+            e.preventDefault()
+            startTime = data.values.min
+            endTime = data.values.max
+
+        });
     }
 
     $('.dateRange').on('click', function () {
@@ -514,24 +538,9 @@ $(document).ready(() => {
         Loading...`)
         $('#collapseRow').load(location.href + " #collapseRow")
         consumptionApi()
+        console.log(endTime.toISOString().slice(0, 10))
+        console.log(startTime.toISOString().slice(0, 10))
     })
-
-    let endTime
-    let startTime
-
-    function cb(start, end) {
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-        endTime = end.format('YYYY-MM-DD')
-        startTime = start.format('YYYY-MM-DD')
-        $('.consumptionSpinner').append(`<div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Loading...</span> </div>`)
-    }
-
-    $('#reportrange').daterangepicker({
-        linkedCalendars: false,
-        showDropdowns: true,
-        autoApply: true,
-    }, cb);
 
     const consumptionApi = () => {
         const buildingNumber = data[0][0].building_number
@@ -546,8 +555,8 @@ $(document).ready(() => {
                 buildingNumber: buildingNumber,
                 commodity: commodity,
                 meter: meter,
-                startTimestamp: startTime,
-                endTimestamp: endTime
+                startTimestamp: startTime.toISOString().slice(0, 10),
+                endTimestamp: endTime.toISOString().slice(0, 10)
             }
         }).then(function (response) {
             if (response === 'Request failed with status code 504') {
@@ -760,11 +769,11 @@ $(document).ready(() => {
         }
     })
 
-  window.onbeforeunload = function() {
-    if (meterAttributes === true) {
-        submitAttributes()
+    window.onbeforeunload = function () {
+        if (meterAttributes === true) {
+            submitAttributes()
+        }
     }
-  }
 
 
     let meterAttributes = false
