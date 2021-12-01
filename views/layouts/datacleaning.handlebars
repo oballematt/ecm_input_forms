@@ -45,14 +45,6 @@
             })
         }
 
-        function detailFormatter(index, row) {
-            var html = []
-            $.each(row, function (key, value) {
-                html.push('<p><b>' + key + ':</b> ' + value + '</p>')
-            })
-            return html.join('')
-        }
-
         function createRipple(event) {
             const button = event.currentTarget;
 
@@ -82,7 +74,6 @@
         function loadingTemplate(message) {
             return '<i class="fa fa-spinner fa-spin fa-fw fa-2x"></i>'
         }
-
 
 
     </script>
