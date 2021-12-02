@@ -147,23 +147,15 @@
                 <div id='chartData' class="row responsive mt-3">
                     <div id="hideIfWater" class="col-xxl-6 col-xl-12">
                         <div class="card">
-                            <div class="card-body">
-                                <canvas class="myChart" id="myChart"></canvas>
-                                <button type="button" class="btn btn-primary expand" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal">
-                                    Expand
-                                </button>
+                            <div style="height: 500px" class="card-body">
+                                <canvas  class="myChart" id="myChart"></canvas>
                             </div>
                         </div>
                     </div>
                     <div id="fullWidth" class="col-xxl-6 col-xl-12">
                         <div class="card">
-                            <div class="card-body">
-                                <canvas id="myChart2"></canvas>
-                                <button type="button" class="btn btn-primary expand" data-bs-toggle="modal"
-                                    data-bs-target="#chartDate">
-                                    Expand
-                                </button>
+                            <div style="height: 500px" class="card-body">
+                                <canvas  id="myChart2"></canvas>
                             </div>
                         </div>
                     </div>
@@ -247,8 +239,6 @@
             </div>
         </div>
     </div>
-    {{> chartModalTemp}}
-    {{> chartModalDates}}
     <div class="offcanvas offcanvas-bottom text-end" data-bs-scroll='true' tabindex="-1" id="offcanvasBottom"
         aria-labelledby="offcanvasBottomLabel">
         <div class="offcanvas-header">

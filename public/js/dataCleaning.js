@@ -265,7 +265,6 @@ $(document).ready(() => {
                 if (data[0][0].commodity_tag === 'W') {
                     $('#hideIfWater').hide()
                     $('#fullWidth').attr('class', 'col-xxl-12')
-                    $('#myChart2').css('height', '400px')
                 }
                 const config = {
                     data: {
@@ -297,7 +296,8 @@ $(document).ready(() => {
                         ]
                     },
                     options: {
-
+                        responsive: true,
+                        maintainAspectRatio: false,
                         plugins: {
                             legend: {
                                 labels: {
@@ -351,9 +351,6 @@ $(document).ready(() => {
                 };
                 let ctx = document.getElementById('myChart').getContext('2d');
                 let myChart = new Chart(ctx, config);
-
-                let ctx3 = document.getElementById('myChart3').getContext('2d');
-                let myChart3 = new Chart(ctx3, config);
 
                 xtimestamp.forEach((key, i) => result2[key] = rawValue[i])
 
@@ -411,6 +408,8 @@ $(document).ready(() => {
                         ]
                     },
                     options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
                         plugins: {
                             legend: {
                                 labels: {
@@ -466,9 +465,6 @@ $(document).ready(() => {
                 };
                 let ctx2 = document.getElementById('myChart2').getContext('2d');
                 let myChart2 = new Chart(ctx2, config2);
-
-                let ctx4 = document.getElementById('myChart4').getContext('2d');
-                let myChart4 = new Chart(ctx4, config2);
 
                 $(function () {
                     const dates = response[0].body.model.data.timestamp.slice(analysisIndex)
@@ -529,7 +525,7 @@ $(document).ready(() => {
                     })
 
                 })
-              
+
 
                 const result3 = {}
                 const xTimestamp2 = response2[0].body.timestamp
@@ -644,7 +640,7 @@ $(document).ready(() => {
                             text.innerHTML = 'Show Historic';
                         }
                     })
-                    
+
                     google.visualization.events.addListener(control, 'statechange', function () {
                         var v = control.getState();
                         document.getElementById('dbgchart').innerHTML = v.range.start.toISOString().slice(0, 10) + ' to ' + v.range.end.toISOString().slice(0, 10);

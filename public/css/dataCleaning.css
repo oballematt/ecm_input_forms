@@ -103,7 +103,8 @@ span.ripple {
 
  @media  (max-width: 2000px) {
   #chartData {
-    width: 103.5%
+    width: 103.5%;
+
   }
 }
 
