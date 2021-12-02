@@ -172,7 +172,7 @@ module.exports = {
 
     getMeterAlarm: async (req, res) => {
         try {
-            const { dayThreshold, endTimestamp, buildingNumber, commodityTag, meter, startTimestamp } = req.query
+            const { dayThreshold, endTimestamp, startTimestamp, analyst } = req.query
             const email = req.user.email
 
             const token = await Model_api_authorization.findOne({
@@ -188,7 +188,7 @@ module.exports = {
                 }
             }
 
-            const meterAlarm = process.env.GET_METER_ALARM_URL + `day_threshold=${dayThreshold}&end_timestamp=${endTimestamp}&building_number=${buildingNumber}&commodity_tag=${commodityTag}&meter=${meter}&start_timestamp=${startTimestamp}&analyst=grace.hsieh@austin.utexas.edu`
+            const meterAlarm = process.env.GET_METER_ALARM_URL + `day_threshold=${dayThreshold}&end_timestamp=${endTimestamp}&start_timestamp=${startTimestamp}&analyst=${analyst}`
             const response = await axios.get(meterAlarm, config)
             return res.json(response.data)
         } catch (error) {

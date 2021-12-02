@@ -124,7 +124,7 @@ $(document).ready(() => {
             if (response.length === 0) {
                 $('.attributesSubmitted').html(`<h6 class="text-warning"><strong>Attributes have not been submitted for this meter</strong></h6>`)
             } else {
-                $(".attributesSubmitted").html(`<h6 style="color: #00B74A"><strong>Attributes last submitted on: ${new Date(response[0].updated_at).toLocaleString()}</strong></h6>`)
+                $(".attributesSubmitted").html(`<h6 style="color: #00B74A"><strong>Last Saved: ${new Date(response[0].train_end).toLocaleString()}</strong></h6>`)
             }
             attributes = response
         })
@@ -671,6 +671,21 @@ $(document).ready(() => {
         })
 
     }
+
+    $('.meterAlarm').on('click', () => {
+        $.ajax({
+            url: '/getAlarm', 
+            type: 'GET',
+            data: {
+                endTimestamp: '2020-12-09',
+                startTimestamp: '2020-11-30',
+                dayThreshold: 10,
+                analyst: 'grace.hsieh@austin.utexas.edu'
+            }
+        }).then(response => {
+            console.log(response)
+        })
+    })
 
 
 
