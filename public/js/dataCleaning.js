@@ -3,11 +3,11 @@ let data = []
 let attributes
 let analysisIndex
 let replaceData = []
-let d2 = new Date()
+let d = new Date()
 let endTime = new Date().toISOString().slice(0, 10)
-let startTime = new Date(d2.getFullYear() - 2, d2.getMonth() - 1, 1).toISOString().slice(0, 10)
-let sliderStartTime
-let sliderEnd
+let startTime = new Date(d.getFullYear() - 2, d.getMonth() - 1, 1).toISOString().slice(0, 10)
+let updateModelStart
+let updateModelEnd
 
 $(document).ready(() => {
     console.log(startTime)
@@ -650,14 +650,25 @@ $(document).ready(() => {
                     google.visualization.events.addListener(control, 'statechange', function () {
                         var v = control.getState();
                         document.getElementById('dbgchart').innerHTML = v.range.start.toISOString().slice(0, 10) + ' to ' + v.range.end.toISOString().slice(0, 10);
+                        updateModelStart = v.range.start.toISOString().slice(0, 10)
+                        updateModelEnd = v.range.end.toISOString().slice(0, 10)
                         return 0;
+
                     });
+
+
                 }
+
+                $('.clickbutton').on('click', () => {
+                    console.log(updateModelStart)
+                    console.log(updateModelEnd)
+                    $('.modelStart').val(updateModelStart)
+                    $(".modelEnd").val(updateModelEnd)
+                })
             }
+
+
         })
-
-
-
 
     }
 
