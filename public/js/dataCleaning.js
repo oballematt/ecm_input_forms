@@ -529,19 +529,8 @@ $(document).ready(() => {
                     })
 
                 })
-                $('.show-hide').on('click', function () {
-                    const icon = this.querySelector('i');
-                    const text = this.querySelector('span');
-                    if (icon.classList.contains('fa-eye-slash')) {
-                        icon.classList.remove('fa-eye-slash');
-                        icon.classList.add('fa-eye');
-                        text.innerHTML = 'Show';
-                    } else {
-                        icon.classList.remove('fa-eye');
-                        icon.classList.add('fa-eye-slash');
-                        text.innerHTML = 'Hide';
-                    }
-                })
+              
+
                 const result3 = {}
                 const xTimestamp2 = response2[0].body.timestamp
                 const yValue = response2[0].body.value
@@ -617,7 +606,7 @@ $(document).ready(() => {
                             textStyle: { color: '#FFF' }
                         },
                         height: 600,
-                        width: '100%',
+                        width: 1000,
                         backgroundColor: {
                             fill: '#48555F',
 
@@ -641,8 +630,21 @@ $(document).ready(() => {
 
 
                     dash.bind([control], [chart]);
-
-                    dash.draw(data);
+                    $('.show-hide').on('click', function () {
+                        const icon = this.querySelector('i');
+                        const text = this.querySelector('span');
+                        dash.draw(data);
+                        if (icon.classList.contains('fa-eye')) {
+                            icon.classList.remove('fa-eye');
+                            icon.classList.add('fa-eye-slash');
+                            text.innerHTML = 'Hide Historic';
+                        } else {
+                            icon.classList.remove('fa-eye-slash');
+                            icon.classList.add('fa-eye');
+                            text.innerHTML = 'Show Historic';
+                        }
+                    })
+                    
                     google.visualization.events.addListener(control, 'statechange', function () {
                         var v = control.getState();
                         document.getElementById('dbgchart').innerHTML = v.range.start.toISOString().slice(0, 10) + ' to ' + v.range.end.toISOString().slice(0, 10);
