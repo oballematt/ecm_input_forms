@@ -501,26 +501,26 @@ $(document).ready(() => {
                         let lowerBound = $(this).find('.lowerBound').html()
                         let upperBound = $(this).find('.upperBound').html()
                         if (parseInt(meterReading, 10) < parseInt(lowerBound, 10)) {
-                            $(this).addClass('table-warning')
+                            $(this).css('background-color', '#F0AD4E')
                             if ($(this).index() === 0) {
-                                $(this).children('td:eq(0)').append(`<a href="#" class="warning firstRow" data-tool-tip="Low Limit: ${lowerBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
+                                $(this).children('td:eq(0)').append(`<a  href="#" class="warning firstRow" data-tool-tip="Low Limit: ${lowerBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
                             } else {
-                                $(this).children('td:eq(0)').append(`<a href="#" class="warning" data-tool-tip="Low Limit: ${lowerBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
+                                $(this).children('td:eq(0)').append(`<a  href="#" class="warning" data-tool-tip="Low Limit: ${lowerBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
                             }
                         }
 
                         if (parseInt(meterReading, 10) > parseInt(upperBound, 10)) {
-                            $(this).addClass('table-danger')
+                            $(this).css('background-color', '#d9534f')
                             if ($(this).index() === 0) {
-                                $(this).children('td:eq(0)').append(`<a href="#" class="warning firstRow" data-tool-tip="High Limit: ${upperBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
+                                $(this).children('td:eq(0)').append(`<a  href="#" class="warning firstRow" data-tool-tip="High Limit: ${upperBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
                             } else {
-                                $(this).children('td:eq(0)').append(`<a href="#" class="warning" data-tool-tip="High Limit: ${upperBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
+                                $(this).children('td:eq(0)').append(`<a  href="#" class="warning" data-tool-tip="High Limit: ${upperBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
                             }
                         }
 
                         if ($(this).children('td:eq(4)').text() === $(this).next().children('td:eq(4)').text()) {
-                            $(this).addClass('table-primary')
-                            $(this).next().addClass('table-primary')
+                            $(this).css('background-color', '#0275d8')
+                            $(this).next().css('background-color', '#0275d8')
                         }
                     })
 
@@ -554,6 +554,12 @@ $(document).ready(() => {
                     var control = new google.visualization.ControlWrapper({
                         controlType: 'ChartRangeFilter',
                         containerId: 'control_div',
+                        state: {
+                            range: {
+                                start: new Date($('.modelStart').val()),
+                                end: new Date($('.modelEnd').val())
+                            }
+                        },
                         options: {
                             filterColumnIndex: 0,
                             ui: {
