@@ -3,10 +3,16 @@ let data = []
 let attributes
 let analysisIndex
 let replaceData = []
-let endTime
-let startTime
+let d2 = new Date()
+let endTime = new Date().toISOString().slice(0, 10)
+let startTime = new Date(d2.getFullYear() - 2, d2.getMonth() - 1, 1).toISOString().slice(0, 10)
+let sliderStartTime
+let sliderEnd
 
 $(document).ready(() => {
+    console.log(startTime)
+
+
 
     const dateInput_1 = $('.datepicker');
 
@@ -137,6 +143,7 @@ $(document).ready(() => {
             $('#chartData2').load(location.href + " #chartData2")
             $('#chartData3').load(location.href + " #chartData3")
             $('.tableData').load(location.href + " .tableData")
+            $('#collapseRow').load(location.href + " #collapseRow")
             modelApi()
 
         }
@@ -147,9 +154,12 @@ $(document).ready(() => {
         const modelEnd = $('.modelEnd').val()
         const analysisStart = $('.analysisStart').val()
         const analysisEnd = $('.analysisEnd').val()
+        const buildingNumber = data[0][0].building_number
+        const commodity = data[0][0].commodity_tag
+        const meter = data[0][0].meter
 
-        $.ajax({
-            url: '/gateway',
+        $.when($.ajax({
+            url: '/getModel',
             method: 'GET',
             data: {
                 buildingNumber: data[0][0].building_number,
@@ -170,40 +180,49 @@ $(document).ready(() => {
                     alert('No data was returned for your current search criteria. Please try selecting a different meter or date range')
                 }
             }
-        }).then(response => {
+        }), $.ajax({
+            url: '/getConsumption',
+            method: 'GET',
+            data: {
+                buildingNumber: buildingNumber,
+                commodity: commodity,
+                meter: meter,
+                startTimestamp: startTime,
+                endTimestamp: endTime
+            }
 
-            if (response === 'Request failed with status code 504' || response === 'Request failed with status code 500') {
+        })).then((response, response2) => {
+            if (response[0] === 'Request failed with status code 504' || response[0] === 'Request failed with status code 500' || response2[0] === 'Request failed with status code 504') {
                 modelApi()
                 $('.overlayMessage').text('Server not responding, trying your search again. Please do not refresh the page')
             } else if (response === 401) {
                 alert('You are not authorized')
             } else {
                 $('.displayData').show()
-                $("#slider").show()
-                $('#collapseRow').empty()
                 console.log(response)
+                console.log(response2)
                 meterAttributes = true
-                const analysisIndex = response.body.model.data.timestamp.indexOf($('.analysisStart').val())
-                let lowLimit = response.body.model.data.predicted_value_lower_bound.slice(analysisIndex)
-                let xTemp = response.body.model.data.average_dry_bulb_temperature.slice(analysisIndex)
-                let highLimit = response.body.model.data.predicted_value_upper_bound.slice(analysisIndex)
-                let rawValue = response.body.model.data.raw_value.slice(analysisIndex)
-                let xtimestamp = response.body.model.data.timestamp.slice(analysisIndex)
+                const analysisIndex = response[0].body.model.data.timestamp.indexOf($('.analysisStart').val())
+                let lowLimit = response[0].body.model.data.predicted_value_lower_bound.slice(analysisIndex)
+                let xTemp = response[0].body.model.data.average_dry_bulb_temperature.slice(analysisIndex)
+                let highLimit = response[0].body.model.data.predicted_value_upper_bound.slice(analysisIndex)
+                let rawValue = response[0].body.model.data.raw_value.slice(analysisIndex)
+                let xtimestamp = response[0].body.model.data.timestamp.slice(analysisIndex)
                 let result = {}
                 let result2 = {}
                 $('.overlayMessage').text('Getting data, this will take a few seconds')
                 $('#overlay').fadeOut()
-                $('.baseTemp').html(response.body.model.base_temperature)
-                $('.autoIgnored').html(parseFloat(response.body.model.missing_value.auto_ignored_percentage).toFixed(0) + '%')
-                $('.slope').html(parseFloat(response.body.model.slope).toFixed(2))
-                $('.intercept').html(parseFloat(response.body.model.intercept).toFixed(2))
-                $('.r2').html(parseFloat(response.body.model.max_train_r2).toFixed(2))
-                $('.stdDev').html(parseFloat(response.body.model.std.train).toFixed(2))
-                $('.meterVariable').html(`Variable: ${response.body.model.x.toUpperCase()}`)
+                $('.baseTemp').html(response[0].body.model.base_temperature)
+                $('.autoIgnored').html(parseFloat(response[0].body.model.missing_value.auto_ignored_percentage).toFixed(0) + '%')
+                $('.slope').html(parseFloat(response[0].body.model.slope).toFixed(2))
+                $('.intercept').html(parseFloat(response[0].body.model.intercept).toFixed(2))
+                $('.r2').html(parseFloat(response[0].body.model.max_train_r2).toFixed(2))
+                $('.stdDev').html(parseFloat(response[0].body.model.std.train).toFixed(2))
+                $('.meterVariable').html(`Variable: ${response[0].body.model.x.toUpperCase()}`)
                 $('.currentMeter').text(data[0][0].meter)
                 $('.currentBuilding').text(data[0][0].building_number)
                 $('.currentCommodity').text(data[0][0].commodity_tag)
-                $('.currentVariable').text(response.body.model.x)
+                $('.currentVariable').text(response[0].body.model.x)
                 getAttributes()
                 const toFindDuplicates = xTemp => xTemp.filter((item, index) => xTemp.indexOf(item) !== index)
                 const duplicateElements = toFindDuplicates(xTemp);
@@ -452,17 +471,17 @@ $(document).ready(() => {
                 let myChart4 = new Chart(ctx4, config2);
 
                 $(function () {
-                    const dates = response.body.model.data.timestamp.slice(analysisIndex)
-                    const temperature = response.body.model.data.average_dry_bulb_temperature.slice(analysisIndex)
-                    const x = response.body.model.data.degree_day.slice(analysisIndex)
-                    const occ = response.body.model.data.is_occupied.slice(analysisIndex)
-                    const meter = response.body.model.data.raw_value.slice(analysisIndex)
-                    const expected = response.body.model.data.predicted_value.slice(analysisIndex)
-                    const replacement = response.body.model.data.replacement_value.slice(analysisIndex)
-                    const reason = response.body.model.data.replacement_reason.slice(analysisIndex)
-                    const notes = response.body.model.data.replacement_notes.slice(analysisIndex)
-                    const lowerBound = response.body.model.data.predicted_value_lower_bound.slice(analysisIndex)
-                    const upperBound = response.body.model.data.predicted_value_upper_bound.slice(analysisIndex)
+                    const dates = response[0].body.model.data.timestamp.slice(analysisIndex)
+                    const temperature = response[0].body.model.data.average_dry_bulb_temperature.slice(analysisIndex)
+                    const x = response[0].body.model.data.degree_day.slice(analysisIndex)
+                    const occ = response[0].body.model.data.is_occupied.slice(analysisIndex)
+                    const meter = response[0].body.model.data.raw_value.slice(analysisIndex)
+                    const expected = response[0].body.model.data.predicted_value.slice(analysisIndex)
+                    const replacement = response[0].body.model.data.replacement_value.slice(analysisIndex)
+                    const reason = response[0].body.model.data.replacement_reason.slice(analysisIndex)
+                    const notes = response[0].body.model.data.replacement_notes.slice(analysisIndex)
+                    const lowerBound = response[0].body.model.data.predicted_value_lower_bound.slice(analysisIndex)
+                    const upperBound = response[0].body.model.data.predicted_value_upper_bound.slice(analysisIndex)
 
                     dates.map((date, index) => {
                         $('.tableBody').append(`
@@ -480,7 +499,7 @@ $(document).ready(() => {
                         <td class="lowerBound" style='display: none'>${parseFloat(lowerBound[index]).toFixed(0)}</td>
                     </tr>`)
                     })
-                    $('.x').html(response.body.model.x.toUpperCase())
+                    $('.x').html(response[0].body.model.x.toUpperCase())
                     $('.tableData tbody tr').each(function () {
                         let meterReading = $(this).find('.meterReading').html()
                         let lowerBound = $(this).find('.lowerBound').html()
@@ -510,68 +529,6 @@ $(document).ready(() => {
                     })
 
                 })
-            }
-        })
-        var d = new Date();
-        $(".dateRulersExample").dateRangeSlider({
-
-            bounds: { min: new Date(d.getFullYear() - 2, d.getMonth() - 1, 1), max: new Date() },
-            defaultValues: { min: new Date(d.getFullYear(), d.getMonth() - 1, d.getDate()), max: new Date() },
-            step: {
-                days: 1
-            }
-
-        });
-
-      
-
-        $(".dateRulersExample").bind("valuesChanged", function (e, data) {
-            e.preventDefault()
-            startTime = data.values.min
-            endTime = data.values.max
-
-        });
-    }
-
-    $('.dateRange').on('click', function () {
-        $(this).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        Loading...`)
-        $('#collapseRow').load(location.href + " #collapseRow")
-        consumptionApi()
-        console.log(endTime.toISOString().slice(0, 10))
-        console.log(startTime.toISOString().slice(0, 10))
-    })
-
-    const consumptionApi = () => {
-        const buildingNumber = data[0][0].building_number
-        const commodity = data[0][0].commodity_tag
-        const meter = data[0][0].meter
-
-
-        $.ajax({
-            url: '/getConsumption',
-            method: 'GET',
-            data: {
-                buildingNumber: buildingNumber,
-                commodity: commodity,
-                meter: meter,
-                startTimestamp: startTime.toISOString().slice(0, 10),
-                endTimestamp: endTime.toISOString().slice(0, 10)
-            }
-        }).then(function (response) {
-            if (response === 'Request failed with status code 504') {
-                consumptionApi()
-            } else {
-                $('.dateRange').html('Run')
-                $('.collapseButton').append(`<button class="btn btn-primary show-hide" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#myCollapse" aria-expanded="false" aria-controls="myCollapse">
-                    <i class="fa fa-eye-slash"></i> <span>Hide</span>
-                </button>`)
-                $('.collapseChart').append(` <div class="collapse mt-3" id="myCollapse">
-                    <div class="card card-body">
-                    <canvas id="collapseChart"></canvas>
-                    </div>
-                </div>`)
                 $('.show-hide').on('click', function () {
                     const icon = this.querySelector('i');
                     const text = this.querySelector('span');
@@ -585,80 +542,120 @@ $(document).ready(() => {
                         text.innerHTML = 'Hide';
                     }
                 })
-                var myCollapse = document.getElementById('myCollapse')
-                var bsCollapse = new bootstrap.Collapse(myCollapse, {
-                    toggle: true
-                })
-                bsCollapse.show()
-                const result = {}
-                const xTimestamp = response.body.timestamp
-                const yValue = response.body.value
-                xTimestamp.forEach((key, i) => result[key] = yValue[i])
+                const result3 = {}
+                const xTimestamp2 = response2[0].body.timestamp
+                const yValue = response2[0].body.value
+                xTimestamp2.forEach((key, i) => result3[key] = yValue[i])
 
-                const newArr = Object.keys(result).map(function (key) {
-                    return [String(key), result[key]];
+                const newArr = Object.keys(result3).map(function (key) {
+                    return [String(key), result3[key]];
                 })
 
-                const config = {
-                    type: 'scatter',
-                    data: {
-                        datasets: [
-                            {
-                                label: "Meter VS. Dates (Historic)",
-                                data: newArr.map(a => { return { x: a[0], y: a[1] } }),
-                                backgroundColor: '#00FFFF',
-                                pointRadius: 5,
-                            }
-                        ]
-                    },
-                    options: {
-                        plugins: {
-                            legend: {
-                                labels: {
-                                    color: 'white'
-                                }
-                            }
-                        },
-                        scales: {
-                            x: {
-                                type: 'time',
-                                time: {
-                                    tooltipFormat: 'MMMM dd, yyyy'
 
-                                },
-                                ticks: {
-                                    color: 'white'
-                                },
-                                grid: {
+                google.load('visualization', '1', { packages: ['controls', 'charteditor'] });
+                google.setOnLoadCallback(drawChart);
 
-                                    color: 'black'
+                function drawChart() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('date');
+                    data.addColumn('number');
+
+                    newArr.forEach((item) => {
+                        data.addRow([new Date(item[0]), item[1]]);
+                    })
+
+                    var dash = new google.visualization.Dashboard(document.getElementById('dashboard'));
+
+                    var control = new google.visualization.ControlWrapper({
+                        controlType: 'ChartRangeFilter',
+                        containerId: 'control_div',
+                        options: {
+                            filterColumnIndex: 0,
+                            ui: {
+                                chartType: 'ScatterChart',
+                                chartOptions: {
+
+                                    height: '100',
+                                    width: '90%',
+                                    colors: ['#15A0C8'],
+                                    backgroundColor: {
+                                        fill: '#48555F',
+
+                                    },
+                                    chartArea: {
+                                        height: '100',
+                                        width: '90%'
+                                    },
+                                    hAxis: {
+                                        baselineColor: '#FFFFFF',
+                                        gridlineColor: '#FFFFFF',
+                                        textStyle: { color: '#FFF' }
+                                    },
 
                                 }
                             },
-                            y: {
-                                beginAtZero: true,
-                                ticks: {
-                                    color: 'white'
-                                },
-                                grid: {
 
-                                    color: 'black'
-
-                                }
-
-                            }
+                        }
+                    });
+                    const chartOptions = {
+                        legend: 'none',
+                        tooltip: {
+                            isHtml: true,
+                            trigger: 'hover'
                         },
+                        pointSize: 10,
+                        dataOpacity: 1,
+                        colors: ['#15A0C8'],
+                        vAxis: {
+                            baselineColor: '#000000',
+                            gridlineColor: '#000000',
+                            textStyle: { color: '#FFF' }
+                        },
+                        hAxis: {
+                            baselineColor: '#000000',
+                            gridlineColor: '#000000',
+                            textStyle: { color: '#FFF' }
+                        },
+                        height: 600,
+                        width: '100%',
+                        backgroundColor: {
+                            fill: '#48555F',
+
+                        }
+                    };
+
+                    var chart = new google.visualization.ChartWrapper({
+                        chartType: 'ScatterChart',
+                        containerId: 'chart_div',
+                        options: chartOptions
+                    });
+
+                    function setOptions(wrapper) {
+
+                        wrapper.setOption('width', '90%');
+                        wrapper.setOption('chartArea.width', '90%');
+
                     }
-                };
+
+                    setOptions(chart);
 
 
-                let ctx = document.getElementById('collapseChart').getContext('2d');
-                let myChart = new Chart(ctx, config);
+                    dash.bind([control], [chart]);
 
+                    dash.draw(data);
+                    google.visualization.events.addListener(control, 'statechange', function () {
+                        var v = control.getState();
+                        document.getElementById('dbgchart').innerHTML = v.range.start.toISOString().slice(0, 10) + ' to ' + v.range.end.toISOString().slice(0, 10);
+                        return 0;
+                    });
+                }
             }
         })
-    }
 
+
+
+
+    }
 
 
 
@@ -710,7 +707,7 @@ $(document).ready(() => {
 
             $('.overlayMessage').text('Submitting Data. Please wait...')
             $.ajax({
-                url: '/postGateway',
+                url: '/postModel',
                 method: 'POST',
                 data: {
                     analyst: analyst,

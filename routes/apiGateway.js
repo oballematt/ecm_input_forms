@@ -1,9 +1,9 @@
 const router = require('express').Router()
 const gatewayController = require('../controllers/apiGatewayModel')
 
-router.get('/gateway', gatewayController.getModel);
+router.get('/getModel', gatewayController.getModel);
 
-router.post('/postGateway', gatewayController.postModel)
+router.post('/postModel', gatewayController.postModel)
 
 router.post('/postAttributes', gatewayController.postAttributes)
 

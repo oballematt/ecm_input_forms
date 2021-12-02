@@ -61,7 +61,7 @@
     }
 }
 
-.searchBox, .listGroupColor, .card{
+.searchBox, .listGroupColor, .card, .card-footer{
     background-color: rgba(156,173,183,0.2);
     color: white;
 }
@@ -94,6 +94,18 @@ span.ripple {
     animation: ripple 600ms linear;
     background-color: rgba(255, 255, 255, 0.7);
   }
+
+  @media  (min-width: 2001px) {
+    #chartData {
+      width: 102.5%
+    }
+  }
+
+ @media  (max-width: 2000px) {
+  #chartData {
+    width: 103.5%
+  }
+}
 
 .btn-success{
     background-color: #00B74A
@@ -468,7 +480,6 @@ a[data-tool-tip]:hover::after{
     height: 5px;
   }
 
- 
   @keyframes rotate {
       0% {
           transform: rotate(0deg);
