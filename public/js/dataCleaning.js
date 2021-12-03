@@ -8,12 +8,9 @@ let endTime = new Date().toISOString().slice(0, 10)
 let startTime = new Date(d.getFullYear() - 2, d.getMonth() - 1, 1).toISOString().slice(0, 10)
 let updateModelStart
 let updateModelEnd
+let meterAttributes = false
 
 $(document).ready(() => {
-    console.log(startTime)
-
-
-
     const dateInput_1 = $('.datepicker');
 
     dateInput_1.datepicker({
@@ -110,25 +107,25 @@ $(document).ready(() => {
     })
 
 
-    const getAttributes = function () {
+    // const getAttributes = function () {
 
-        const getData = {
-            meter: $('.currentMeter').text(),
-        }
-        $.ajax({
-            type: 'POST',
-            url: '/getAttributes',
-            data: getData
-        }).then((response) => {
-            console.log(response)
-            if (response.length === 0) {
-                $('.attributesSubmitted').html(`<h6 class="text-warning"><strong>Attributes have not been submitted for this meter</strong></h6>`)
-            } else {
-                $(".attributesSubmitted").html(`<h6 style="color: #00B74A"><strong>Last Saved: ${new Date(response[0].train_end).toLocaleString()}</strong></h6>`)
-            }
-            attributes = response
-        })
-    }
+    //     const getData = {
+    //         meter: $('.currentMeter').text(),
+    //     }
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: '/getAttributes',
+    //         data: getData
+    //     }).then((response) => {
+    //         console.log(response)
+    // if (response.length === 0) {
+    //     $('.attributesSubmitted').html(`<h6 class="text-warning"><strong>Attributes have not been submitted for this meter</strong></h6>`)
+    // } else {
+    //     $(".attributesSubmitted").html(`<h6 style="color: #00B74A"><strong>Last Saved Model: ${response[0].train_end}</strong></h6>`)
+    // }
+    //         attributes = response
+    //     })
+    // }
 
     $(".apiGateway").on("click", function (e) {
         e.preventDefault();
@@ -191,7 +188,13 @@ $(document).ready(() => {
                 endTimestamp: endTime
             }
 
-        })).then((response, response2) => {
+        }), $.ajax({
+            type: 'POST',
+            url: '/getAttributes',
+            data: {
+                meter: data[0][0].meter
+            }
+        })).then((response, response2, response3) => {
             if (response[0] === 'Request failed with status code 504' || response[0] === 'Request failed with status code 500' || response2[0] === 'Request failed with status code 504') {
                 modelApi()
                 $('.overlayMessage').text('Server not responding, trying your search again. Please do not refresh the page')
@@ -201,7 +204,21 @@ $(document).ready(() => {
                 $('.displayData').show()
                 console.log(response)
                 console.log(response2)
-                meterAttributes = true
+                console.log(response3[0])
+                if (response3[0].length === 0) {
+                    $('.attributesSubmitted').html(`<h6 class="text-warning"><strong>Attributes have not been submitted for this meter</strong></h6>`)
+                    meterAttributes = true
+
+                } else if (response3[0][0].train_start === $('.currentStart').text() && response3[0][0].train_end === $('.currentEnd').text()) {
+                    meterAttributes = false
+                } 
+
+                 if (response3[0].length === 1) {
+                    $(".attributesSubmitted").html(`<h6 style="color: #00B74A"><strong>Last Saved Model: ${response3[0][0].train_end}</strong></h6>`)
+                    meterAttributes = true
+
+                }
+                attributes = response3[0]
                 const analysisIndex = response[0].body.model.data.timestamp.indexOf($('.analysisStart').val())
                 let lowLimit = response[0].body.model.data.predicted_value_lower_bound.slice(analysisIndex)
                 let xTemp = response[0].body.model.data.average_dry_bulb_temperature.slice(analysisIndex)
@@ -223,7 +240,10 @@ $(document).ready(() => {
                 $('.currentBuilding').text(data[0][0].building_number)
                 $('.currentCommodity').text(data[0][0].commodity_tag)
                 $('.currentVariable').text(response[0].body.model.x)
-                getAttributes()
+                $('.currentStart').text(modelStart)
+                $('.currentEnd').text(modelEnd)
+
+                console.log(xTemp)
                 const toFindDuplicates = xTemp => xTemp.filter((item, index) => xTemp.indexOf(item) !== index)
                 const duplicateElements = toFindDuplicates(xTemp);
                 console.log(duplicateElements);
@@ -237,8 +257,8 @@ $(document).ready(() => {
                     return a[0] - b[0]
                 })
 
-
                 xTemp.forEach((key, i) => result[key] = highLimit[i])
+
 
                 let highLimitArr = Object.keys(result).map(function (key) {
                     return [Number(key), result[key]]
@@ -261,6 +281,7 @@ $(document).ready(() => {
                 RawValueArr.sort(function (a, b) {
                     return a[0] - b[0]
                 })
+
 
                 if (data[0][0].commodity_tag === 'W') {
                     $('#hideIfWater').hide()
@@ -358,6 +379,7 @@ $(document).ready(() => {
                     return [String(key), result2[key]];
                 })
 
+
                 rawValueArr2.sort(function (a, b) {
                     return a[0] - b[0]
                 })
@@ -421,7 +443,8 @@ $(document).ready(() => {
                             x: {
                                 type: 'time',
                                 time: {
-                                    unit: 'day'
+                                    unit: 'day',
+                                    tooltipFormat: 'MMM dd, yyyy'
                                 },
                                 ticks: {
                                     color: 'white'
@@ -512,7 +535,7 @@ $(document).ready(() => {
                         if (parseInt(meterReading, 10) > parseInt(upperBound, 10)) {
                             $(this).css('background-color', '#d9534f')
                             if ($(this).index() === 0) {
-                                $(this).children('td:eq(0)').append(`<a  href="#" class="warning firstRow" data-tool-tip="High Limit: ${upperBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
+                                $(this).children('td:eq(0)').append(`<a  href="#" class="warning firstRow" data-tool-tip="High Limit: ${upperBound}"><i class="fas fa-exclamation-circle fa-2x text-white"></i></a>`)
                             } else {
                                 $(this).children('td:eq(0)').append(`<a  href="#" class="warning" data-tool-tip="High Limit: ${upperBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
                             }
@@ -660,8 +683,6 @@ $(document).ready(() => {
                 }
 
                 $('.clickbutton').on('click', () => {
-                    console.log(updateModelStart)
-                    console.log(updateModelEnd)
                     $('.modelStart').val(updateModelStart)
                     $(".modelEnd").val(updateModelEnd)
                 })
@@ -674,7 +695,7 @@ $(document).ready(() => {
 
     $('.meterAlarm').on('click', () => {
         $.ajax({
-            url: '/getAlarm', 
+            url: '/getAlarm',
             type: 'GET',
             data: {
                 endTimestamp: '2020-12-09',
@@ -706,7 +727,6 @@ $(document).ready(() => {
         const building_number = data[0][0].building_number
         const commodity_tag = data[0][0].commodity_tag
         const meter = data[0][0].meter
-        console.log(replaceData)
         if (replaceData.length === 0) {
             alert('Please select at least one date')
             $('#overlay').hide()
@@ -769,7 +789,6 @@ $(document).ready(() => {
                     R(7).text(reason[i]);
                     R(8).text(notes[i] === null ? '-' : notes[i]);
                 })
-                console.log(response)
                 $('#overlay').fadeOut()
                 $('.overlayMessage').text('Getting data, this will take a few seconds')
                 notes = []
@@ -803,7 +822,7 @@ $(document).ready(() => {
     }
 
 
-    let meterAttributes = false
+
 
     const submitAttributes = () => {
 
@@ -820,8 +839,8 @@ $(document).ready(() => {
         const intercept = Number($('.intercept').text())
         const r2 = Number($('.r2').text())
         const std = Number($('.stdDev').text())
-        const train_start = $('.modelStart').val()
-        const train_end = $('.modelEnd').val()
+        const train_start = $('.currentStart').text()
+        const train_end = $('.currentEnd').text()
 
         if (base_temperature === '') {
             base_temperature = null
@@ -863,7 +882,7 @@ $(document).ready(() => {
                         std: std
                     }
                 }).then((response) => {
-                    console.log(response)
+
                 })
             }
         }
