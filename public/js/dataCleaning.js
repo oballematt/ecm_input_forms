@@ -9,6 +9,7 @@ let startTime = new Date(d.getFullYear() - 2, d.getMonth() - 1, 1).toISOString()
 let updateModelStart
 let updateModelEnd
 let meterAttributes = false
+let outOfBoundsData
 
 $(document).ready(() => {
     const dateInput_1 = $('.datepicker');
@@ -107,26 +108,6 @@ $(document).ready(() => {
     })
 
 
-    // const getAttributes = function () {
-
-    //     const getData = {
-    //         meter: $('.currentMeter').text(),
-    //     }
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: '/getAttributes',
-    //         data: getData
-    //     }).then((response) => {
-    //         console.log(response)
-    // if (response.length === 0) {
-    //     $('.attributesSubmitted').html(`<h6 class="text-warning"><strong>Attributes have not been submitted for this meter</strong></h6>`)
-    // } else {
-    //     $(".attributesSubmitted").html(`<h6 style="color: #00B74A"><strong>Last Saved Model: ${response[0].train_end}</strong></h6>`)
-    // }
-    //         attributes = response
-    //     })
-    // }
-
     $(".apiGateway").on("click", function (e) {
         e.preventDefault();
         if (data.length === 0) {
@@ -211,9 +192,9 @@ $(document).ready(() => {
 
                 } else if (response3[0][0].train_start === $('.currentStart').text() && response3[0][0].train_end === $('.currentEnd').text()) {
                     meterAttributes = false
-                } 
+                }
 
-                 if (response3[0].length === 1) {
+                if (response3[0].length === 1) {
                     $(".attributesSubmitted").html(`<h6 style="color: #00B74A"><strong>Last Saved Model: ${response3[0][0].train_end}</strong></h6>`)
                     meterAttributes = true
 
@@ -694,18 +675,8 @@ $(document).ready(() => {
     }
 
     $('.meterAlarm').on('click', () => {
-        $.ajax({
-            url: '/getAlarm',
-            type: 'GET',
-            data: {
-                endTimestamp: '2020-12-09',
-                startTimestamp: '2020-11-30',
-                dayThreshold: 10,
-                analyst: 'grace.hsieh@austin.utexas.edu'
-            }
-        }).then(response => {
-            console.log(response)
-        })
+        window.open('/oobt')
+     
     })
 
 
