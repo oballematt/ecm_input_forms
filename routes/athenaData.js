@@ -3,7 +3,7 @@ const athenaController = require('../config/athena')
 const buildingController = require('../controllers/cleaningBuildings')
 const authorization = require('../middleware/authorization')
 
-router.get('/datacleaning', authorization.checkNotAuthenticated, buildingController.getBuildings)
+router.get('/allBuildings', buildingController.getBuildings)
 
 router.get('/athenaDataMeters', athenaController.getAllMeters)
 

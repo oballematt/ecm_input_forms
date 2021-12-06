@@ -34,7 +34,7 @@ module.exports = {
 
     postModel: async (req, res) => {
 
-        const { analyst, building_number, commodity_tag, meter, timestamp, values, reason, notes } = req.body
+        const { building_number, commodity_tag, meter, timestamp, values, reason, notes } = req.body
         const email = req.user.email
   
         try {
@@ -54,7 +54,7 @@ module.exports = {
 
 
             const postdata = JSON.stringify({
-                'analyst': analyst,
+                'analyst': email,
                 'building_number': building_number,
                 'commodity_tag': commodity_tag,
                 'meter': meter,

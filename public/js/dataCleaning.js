@@ -176,7 +176,8 @@ $(document).ready(() => {
                 meter: data[0][0].meter
             }
         })).then((response, response2, response3) => {
-            if (response[0] === 'Request failed with status code 504' || response[0] === 'Request failed with status code 500' || response2[0] === 'Request failed with status code 504') {
+            console.log(JSON.parse(response[0].trim()))
+            if (response[0] === 'Request failed with status code 504' || response[0] === 'Request failed with status code 500' || response[0] === 'Request failed with status code 503' || response2[0] === 'Request failed with status code 504') {
                 modelApi()
                 $('.overlayMessage').text('Server not responding, trying your search again. Please do not refresh the page')
             } else if (response === 401) {
@@ -694,7 +695,6 @@ $(document).ready(() => {
         let reason = []
         let values = []
         let timestamp = []
-        const analyst = $('.email').text().trim()
         const building_number = data[0][0].building_number
         const commodity_tag = data[0][0].commodity_tag
         const meter = data[0][0].meter
@@ -731,7 +731,6 @@ $(document).ready(() => {
                 url: '/postModel',
                 method: 'POST',
                 data: {
-                    analyst: analyst,
                     building_number: building_number,
                     commodity_tag: commodity_tag,
                     meter: meter,
@@ -785,15 +784,6 @@ $(document).ready(() => {
             submitAttributes()
         }
     })
-
-    window.onbeforeunload = function () {
-        if (meterAttributes === true) {
-            submitAttributes()
-        }
-    }
-
-
-
 
     const submitAttributes = () => {
 

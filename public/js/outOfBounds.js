@@ -1,6 +1,17 @@
 $(document).ready(() => {
 
     $.ajax({
+        url: '/allBuildings',
+        type: 'GET'
+    }).then((response) => {
+        console.log(response)
+        response.map((a) => {
+            $('#building').append(`<option value=${a.building}>${a.building}</option>`)
+        })
+
+    })
+
+    $.ajax({
         url: '/getAlarm',
         type: 'GET',
         data: {
@@ -13,18 +24,19 @@ $(document).ready(() => {
         $('.ring').hide()
         console.log(response)
         $('.outOfBoundsTable').append(`
-        <table style="color: white" id="table3" data-sort-name="%_deviation_avg"
-        data-sort-order="desc">
+        <table style="color: white" id="table3" data-sort-name="deviation_avg"
+        data-sort-order="desc" data-filter-control="true"  data-icon-size="sm"
+        data-show-search-clear-button="true">
             <thead>
                 <tr>
-                    <th data-field="building">Building</th>
-                    <th data-field="commodity">Commodity</th>
+                    <th data-width="200" data-filter-control="select" data-field="building">Building</th>
+                    <th data-width='200' data-filter-control='select' data-field="commodity">Commodity</th>
                     <th data-field="meter">Meter</th>
                     <th data-sortable="true" data-field="start_date">Start Date</th>
                     <th data-sortable="true" data-field="end_date">End Date</th>
                     <th data-sortable="true" data-field="days_out_of_range">Days Out of Range</th>
-                    <th data-sortable="true" data-field="%_deviation_avg">% Deviation (AVG)</th>
-                    <th data-sortable="true" data-field="%_deviation_max">% Deviation (MAX)</th>
+                    <th data-sortable="true" data-field="deviation_avg">% Deviation (AVG)</th>
+                    <th data-sortable="true" data-field="deviation_max">% Deviation (MAX)</th>
                 </tr>
             </thead>
         </table>`)
@@ -49,13 +61,16 @@ $(document).ready(() => {
                     'start_date': startDate[index],
                     'end_date': endDate[index],
                     'days_out_of_range': daysOutOfRange[index],
-                    '%_deviation_avg': deviationAvg[index],
-                    '%_deviation_max': deviationMax[index],
+                    'deviation_avg': deviationAvg[index],
+                    'deviation_max': deviationMax[index],
                 }
 
             })
             $table.bootstrapTable({ data: data })
         })
+
+        $('select').prop('title', 'filter')
+
     })
 
 })

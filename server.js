@@ -82,6 +82,11 @@ app.get('/oobt', authorization.checkNotAuthenticated, (req, res) => {
    res.render('outOfBoundsTable', {layout: 'outOfBounds'})
  
   })
+
+  app.get('/datacleaning', authorization.checkNotAuthenticated, (req, res) => {
+    res.render('cleaning', {layout: 'dataCleaning'})
+  
+   })
                                         
 app.post(                                             
   "/login",                                             

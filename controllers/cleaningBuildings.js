@@ -14,7 +14,7 @@ module.exports = {
                 ]
             })
 
-            return res.render('cleaning', { layout: 'datacleaning', buildings,  email: req.user.email, name: req.user.name, })
+            return res.json(buildings)
 
         } catch (error) {
             console.error(error.message)
