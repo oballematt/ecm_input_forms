@@ -1,15 +1,6 @@
+let startDate
+let endDate
 $(document).ready(() => {
-
-    $.ajax({
-        url: '/allBuildings',
-        type: 'GET'
-    }).then((response) => {
-        console.log(response)
-        response.map((a) => {
-            $('#building').append(`<option value=${a.building}>${a.building}</option>`)
-        })
-
-    })
 
     $.ajax({
         url: '/getAlarm',
@@ -23,23 +14,7 @@ $(document).ready(() => {
     }).then(response => {
         $('.ring').hide()
         console.log(response)
-        $('.outOfBoundsTable').append(`
-        <table style="color: white" id="table3" data-sort-name="deviation_avg"
-        data-sort-order="desc" data-filter-control="true"  data-icon-size="sm"
-        data-show-search-clear-button="true">
-            <thead>
-                <tr>
-                    <th data-width="200" data-filter-control="select" data-field="building">Building</th>
-                    <th data-width='200' data-filter-control='select' data-field="commodity">Commodity</th>
-                    <th data-field="meter">Meter</th>
-                    <th data-sortable="true" data-field="start_date">Start Date</th>
-                    <th data-sortable="true" data-field="end_date">End Date</th>
-                    <th data-sortable="true" data-field="days_out_of_range">Days Out of Range</th>
-                    <th data-sortable="true" data-field="deviation_avg">% Deviation (AVG)</th>
-                    <th data-sortable="true" data-field="deviation_max">% Deviation (MAX)</th>
-                </tr>
-            </thead>
-        </table>`)
+        $('.display').show()
 
         var $table = $('#table3')
 
@@ -61,16 +36,93 @@ $(document).ready(() => {
                     'start_date': startDate[index],
                     'end_date': endDate[index],
                     'days_out_of_range': daysOutOfRange[index],
-                    'deviation_avg': deviationAvg[index],
-                    'deviation_max': deviationMax[index],
+                    'deviation_avg': parseFloat(deviationAvg[index]).toFixed(2),
+                    'deviation_max': parseFloat(deviationMax[index]).toFixed(2),
                 }
 
             })
             $table.bootstrapTable({ data: data })
         })
+    })
 
-        $('select').prop('title', 'filter')
+
+
+    $(function () {
+
+        var start = moment().subtract(29, 'days');
+        var end = moment();
+
+        function cb(start, end) {
+            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            startDate = start.format('YYYY-MM-DD')
+            endDate = end.format('YYYY-MM-DD')
+        }
+
+        $('#reportrange').daterangepicker({
+            startDate: start,
+            endDate: end,
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            }
+        }, cb);
+
+        cb(start, end)
+
+    });
+
+
+    $('#daterange').on('click', function () {
+        $(this).html(` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <span class="visually-hidden">Loading...</span>`)
+        $(this).prop("disabled", true)
+        $.ajax({
+            url: '/getAlarm',
+            type: 'GET',
+            data: {
+                startTimestamp: startDate,
+                endTimestamp: endDate,
+                dayThreshold: 1,
+                analyst: 'grace.hsieh@austin.utexas.edu'
+            }
+        }).then((response) => {
+            console.log(response)
+            $(this).prop("disabled", false);
+            $(this).html('Run')
+            var $table = $('#table3')
+            $(function () {
+
+                let building = response.body.building_abbreviation
+                let commodity = response.body.commodity_tag
+                let meter = response.body.meter
+                let startDate = response.body.start_timestamp
+                let endDate = response.body.end_timestamp
+                let daysOutOfRange = response.body.out_of_bound_day_count
+                let deviationAvg = response.body.average_percentage_error
+                let deviationMax = response.body.maximum_percentage_error
+                let data = building.map((bldg, index) => {
+
+                    return {
+                        'building': bldg,
+                        'commodity': commodity[index],
+                        'meter': meter[index],
+                        'start_date': startDate[index],
+                        'end_date': endDate[index],
+                        'days_out_of_range': daysOutOfRange[index],
+                        'deviation_avg': parseFloat(deviationAvg[index]).toFixed(2),
+                        'deviation_max': parseFloat(deviationMax[index]).toFixed(2),
+                    }
+
+                })
+                $table.bootstrapTable('load', data)
+            })
+        })
 
     })
+
 
 })

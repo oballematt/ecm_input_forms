@@ -176,7 +176,6 @@ $(document).ready(() => {
                 meter: data[0][0].meter
             }
         })).then((response, response2, response3) => {
-            console.log(JSON.parse(response[0].trim()))
             if (response[0] === 'Request failed with status code 504' || response[0] === 'Request failed with status code 500' || response[0] === 'Request failed with status code 503' || response2[0] === 'Request failed with status code 504') {
                 modelApi()
                 $('.overlayMessage').text('Server not responding, trying your search again. Please do not refresh the page')

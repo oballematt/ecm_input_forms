@@ -11,7 +11,36 @@
             <div></div>
         </div>
     </div>
-    <div class="outOfBoundsTable mt-3 mb-3">
+    <div style="display: none;" class="display">
+        <label style="color: white" for="reportrange" class="form-label mt-3">Select a new Date Range</label>
+        <div class="input-group">
+            <div id="reportrange"
+                style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 33%;">
+                <i class="fa fa-calendar"></i>&nbsp;
+                <span></span> <i class="fa fa-caret-down"></i>
+            </div>
+            <button id='daterange' class="btn btn-primary" type="button">
+                Run
+               
+            </button>
+        </div>
 
+        <div class="outOfBoundsTable mb-3">
+            <table style="color: white" id="table3" data-sort-name="deviation_avg" data-sort-order="desc"
+                data-filter-control="true" data-icon-size="sm" data-show-search-clear-button="true">
+                <thead>
+                    <tr>
+                        <th data-width="400" data-filter-control="select" data-field="building">Building</th>
+                        <th data-width='280' data-filter-control='select' data-field="commodity">Commodity</th>
+                        <th data-field="meter">Meter</th>
+                        <th data-sortable="true" data-width="300" data-field="start_date">Start Date</th>
+                        <th data-sortable="true" data-width="300" data-field="end_date">End Date</th>
+                        <th data-sortable="true" data-field="days_out_of_range">Days Out of Range</th>
+                        <th data-sortable="true" data-field="deviation_avg">% Deviation (AVG)</th>
+                        <th data-sortable="true" data-field="deviation_max">% Deviation (MAX)</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
     </div>
 </div>
