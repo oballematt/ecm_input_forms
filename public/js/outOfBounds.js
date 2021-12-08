@@ -1,15 +1,18 @@
 let startDate
 let endDate
 $(document).ready(() => {
+    let d = new Date()
 
+    console.log(new Date(d.getFullYear(), d.getMonth() - 1, 1).toISOString().slice(0, 10))
+    console.log(new Date(d.getFullYear(), d.getMonth(), 0).toISOString().slice(0, 10))
     $.ajax({
         url: '/getAlarm',
         type: 'GET',
         data: {
-            endTimestamp: '2021-03-11',
-            startTimestamp: '2020-11-30',
+            startTimestamp: new Date(d.getFullYear(), d.getMonth() - 1, 1).toISOString().slice(0, 10),
+            endTimestamp: new Date(d.getFullYear(), d.getMonth(), 0).toISOString().slice(0, 10),
             dayThreshold: 1,
-            analyst: 'grace.hsieh@austin.utexas.edu'
+            // analyst: 'grace.hsieh@austin.utexas.edu'
         }
     }).then(response => {
         $('.ring').hide()
@@ -27,9 +30,11 @@ $(document).ready(() => {
             let daysOutOfRange = response.body.out_of_bound_day_count
             let deviationAvg = response.body.average_percentage_error
             let deviationMax = response.body.maximum_percentage_error
+            let steward = response.body.steward_name
             let data = building.map((bldg, index) => {
 
                 return {
+                    'steward': steward[index],
                     'building': bldg,
                     'commodity': commodity[index],
                     'meter': meter[index],
@@ -45,12 +50,10 @@ $(document).ready(() => {
         })
     })
 
-
-
     $(function () {
 
-        var start = moment().subtract(29, 'days');
-        var end = moment();
+        var start = moment().subtract(1, 'month').startOf('month');
+        var end = moment().subtract(1, 'month').endOf('month');
 
         function cb(start, end) {
             $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));

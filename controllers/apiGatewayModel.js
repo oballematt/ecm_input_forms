@@ -188,7 +188,7 @@ module.exports = {
                 }
             }
 
-            const meterAlarm = process.env.GET_METER_ALARM_URL + `day_threshold=${dayThreshold}&end_timestamp=${endTimestamp}&start_timestamp=${startTimestamp}&analyst=${analyst}`
+            const meterAlarm = process.env.GET_METER_ALARM_URL + `day_threshold=${dayThreshold}&end_timestamp=${endTimestamp}&start_timestamp=${startTimestamp}`
             const response = await axios.get(meterAlarm, config)
             return res.json(response.data)
         } catch (error) {
