@@ -521,7 +521,7 @@ $(document).ready(() => {
                         if (parseInt(meterReading, 10) > parseInt(upperBound, 10)) {
                             $(this).css('background-color', '#d9534f')
                             if ($(this).index() === 0) {
-                                $(this).children('td:eq(0)').append(`<a  href="#" class="warning firstRow" data-tool-tip="High Limit: ${upperBound}"><i class="fas fa-exclamation-circle fa-2x text-white"></i></a>`)
+                                $(this).children('td:eq(0)').append(`<a  href="#" class="warning firstRow" data-tool-tip="High Limit: ${upperBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
                             } else {
                                 $(this).children('td:eq(0)').append(`<a  href="#" class="warning" data-tool-tip="High Limit: ${upperBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`)
                             }

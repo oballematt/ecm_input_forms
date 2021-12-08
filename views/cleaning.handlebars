@@ -5,9 +5,11 @@
 </div>
 <div class="container-fluid" style='height: 100%; width: 100%'>
     <div style="height: 100%; width: 100%" class="row">
+
+
         <div class="col-xxl-3 col-lg-4 searchBox">
             {{!-- <label class='mt-1' for='filterLabel'>Filter By:</label> --}}
-             <div class="input-group mb-2 mt-3">
+            <div class="input-group mb-2 mt-3">
                 <button id='filterLabel' class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">Filter By:</button>
                 <ul class="dropdown-menu">
@@ -46,7 +48,7 @@
                     Out of Bounds Table
                 </button>
             </div>
-            <table id="table"  data-toolbar-align="right" data-search-align="left" data-toggle="table"
+            <table id="table" data-toolbar-align="right" data-search-align="left" data-toggle="table"
                 data-toolbar="#toolbar" data-height="448" data-ajax="ajaxRequest" data-search="true"
                 data-virtual-scroll="true" data-filter="true" data-filter-show-clear="true"
                 data-loading-template="loadingTemplate" style="color: white">
@@ -94,6 +96,7 @@
             </div>
             <button style="background-color: #bf5700;" class="btn btn-primary apiGateway mt-3 mb-3 w-100 load"
                 type="button">Run Model</button>
+            
 
             <div style="display: none;">
                 <p class="currentMeter"></p>
