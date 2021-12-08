@@ -12,6 +12,11 @@ let meterAttributes = false
 let outOfBoundsData
 
 $(document).ready(() => {
+
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
     const dateInput_1 = $('.datepicker');
 
     dateInput_1.datepicker({
@@ -676,7 +681,7 @@ $(document).ready(() => {
 
     $('.meterAlarm').on('click', () => {
         window.open('/oobt')
-     
+
     })
 
 

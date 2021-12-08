@@ -231,6 +231,10 @@ a[data-tool-tip]:hover::after{
     z-index: 3;
 }
 
+.float-left {
+    width: 30%
+}
+
   @keyframes rotate {
       0% {
           transform: rotate(0deg);

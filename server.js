@@ -84,7 +84,7 @@ app.get('/oobt', authorization.checkNotAuthenticated, (req, res) => {
   })
 
   app.get('/datacleaning', authorization.checkNotAuthenticated, (req, res) => {
-    res.render('cleaning', {layout: 'dataCleaning'})
+    res.render('cleaning', {layout: 'datacleaning'})
   
    })
                                         
