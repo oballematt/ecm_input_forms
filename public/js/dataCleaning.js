@@ -39,14 +39,14 @@ $(document).ready(() => {
     let $button = $('#button')
     let $button3 = $('#button3')
 
-    $('#filterBy').on('change', function () {
+    $('#filterBuildings').on('change', function () {
         $table.bootstrapTable('filterBy', {
             building_number: $(this).val(),
         });
     })
     $('.reset').on('click', function () {
         $table.bootstrapTable('filterBy', {});
-        $('#filterBy').val('Filter By')
+        $('#filterBuildings').val('Filter By')
     })
 
     $(function () {
@@ -95,17 +95,31 @@ $(document).ready(() => {
 
     })
 
-    $('.pointer').on('click', function () {
-        $('#filterBy').empty()
+    $('.chooseSteward').on('click', function () {
+        $('#filterBuildings').empty()
         const steward = $(this).text()
-        $.ajax({
+        $.when($.ajax({
             type: 'POST',
             url: '/buildings',
             data: { steward: steward }
-        }).then(function (response) {
-            $('#filterBy').append('<option selected disabled>Choose...</option>')
-            response.map(a => {
-                $('#filterBy').append(`<option value=${a.building_id}>${a.building}</option>`)
+        }), $.ajax({
+            url: '/getAlarm',
+            type: 'GET',
+            data: {
+                startTimestamp: new Date(d.getFullYear(), d.getMonth() - 1, 1).toISOString().slice(0, 10),
+                endTimestamp: new Date(d.getFullYear(), d.getMonth(), 0).toISOString().slice(0, 10),
+                outOfBounds: 1,
+                analyst: 'mjones@austin.utexas.edu'
+            }
+        })).then(function (response, response2) {
+            console.log(response)
+            console.log(response2)
+            response[0].map(a => {
+                $('#filterBuildings').append(`<option value=${a.building_id}>${a.building}</option>`)
+            })
+            response2[0].body.meter.map(a => { 
+                console.log(a)
+                $('#filterOobMeters').append(`<option>${a}</option>`)
             })
             $('.dropdown-toggle').text(steward)
         })

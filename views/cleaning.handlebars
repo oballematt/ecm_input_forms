@@ -8,15 +8,15 @@
 
 
         <div class="col-xxl-3 col-lg-4 searchBox">
-            {{!-- <label class='mt-1' for='filterLabel'>Filter By:</label> --}}
-            <div class="input-group mb-2 mt-3">
+            <label class='mt-1' for='filterLabel'>Filter By:</label>
+            {{!-- <div class="input-group mb-2 mt-3">
                 <button id='filterLabel' class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">Filter By:</button>
                 <ul class="dropdown-menu">
-                    <li class="dropdown-item pointer">All</li>
-                    <li class="dropdown-item pointer">Grace Hsieh</li>
-                    <li class="dropdown-item pointer">Meagan Jones</li>
-                    <li class="dropdown-item pointer">Matt Stevens</li>
+                    <li class="dropdown-item chooseSteward">All</li>
+                    <li class="dropdown-item chooseSteward">Grace Hsieh</li>
+                    <li class="dropdown-item chooseSteward">Meagan Jones</li>
+                    <li class="dropdown-item chooseSteward">Matt Stevens</li>
                 </ul>
                 <select id="filterBy" class="form-select form-select-sm" id="inputGroupSelect01">
                     <option disabled selected>Select a Steward</option>
@@ -24,29 +24,29 @@
 
                 <button type='button' class="btn btn-primary reset">reset</button>
 
-            </div>
-            {{!-- <div class="input-group mb-2 mt-1">
+            </div> --}}
+            <div class="input-group mb-2 mt-1">
                 <button id='filterLabel' class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">Stewards:</button>
                 <ul class="dropdown-menu">
-                    <li class="dropdown-item pointer">All</li>
-                    <li class="dropdown-item pointer">Grace Hsieh</li>
-                    <li class="dropdown-item pointer">Meagan Jones</li>
-                    <li class="dropdown-item pointer">Matt Stevens</li>
+                    <li class="dropdown-item chooseSteward">All</li>
+                    <li class="dropdown-item chooseSteward">Grace Hsieh</li>
+                    <li class="dropdown-item chooseSteward">Meagan Jones</li>
+                    <li class="dropdown-item chooseSteward">Matt Stevens</li>
                 </ul>
-                <select id="filterBy" class="form-select form-select-sm" id="floatingSelect">
+                <select id="filterBuildings" class="form-select form-select-sm" id="floatingSelect">
                     <option disabled selected>Buildings</option>
                 </select>
-                <select id="filterBy2" class="form-select form-select-sm" id="inputGroupSelect01">
+                <select id="filterOobMeters" class="form-select form-select-sm" id="inputGroupSelect01">
                     <option disabled selected>Out of Bounds Meters</option>
                 </select>
-            </div> --}}
+            </div>
             <div id="toolbar">
-                {{!-- <button data-bs-toggle="tooltip" data-bs-placement="top" title="Reset Filters" type='button'
-                    class="btn btn-primary reset"><i class="fas fa-trash-alt"></i></button> --}}
-                <button class="btn btn-primary meterAlarm " type="button">
+                <button data-bs-toggle="tooltip" data-bs-placement="top" title="Reset Filters" type='button'
+                    class="btn btn-primary reset"><i class="fas fa-trash-alt"></i></button>
+                {{!-- <button class="btn btn-primary meterAlarm " type="button">
                     Out of Bounds Table
-                </button>
+                </button> --}}
             </div>
             <table id="table" data-toolbar-align="right" data-search-align="left" data-toggle="table"
                 data-toolbar="#toolbar" data-height="448" data-ajax="ajaxRequest" data-search="true"

@@ -11,8 +11,8 @@ $(document).ready(() => {
         data: {
             startTimestamp: new Date(d.getFullYear(), d.getMonth() - 1, 1).toISOString().slice(0, 10),
             endTimestamp: new Date(d.getFullYear(), d.getMonth(), 0).toISOString().slice(0, 10),
-            dayThreshold: 1,
-            // analyst: 'grace.hsieh@austin.utexas.edu'
+            outOfBounds: 1,
+            analyst: 'mjones@austin.utexas.edu'
         }
     }).then(response => {
         $('.ring').hide()
