@@ -1,5 +1,5 @@
 
-let data = []
+let meterData = []
 let attributes
 let analysisIndex
 let replaceData = []
@@ -9,6 +9,7 @@ let startTime = new Date(d.getFullYear() - 2, d.getMonth() - 1, 1).toISOString()
 let updateModelStart
 let updateModelEnd
 let meterAttributes = false
+let loadMeters = true
 let outOfBoundsData
 
 $(document).ready(() => {
@@ -51,11 +52,11 @@ $(document).ready(() => {
 
     $(function () {
         let isChecked = false
-        $table.on('change', $('input[name="btSelectItem"]'), function () {
+        $('#table, #out-of-bounds-table').on('change', $('input[name="btSelectItem"]'), function () {
             isChecked = true;
-            data = []
+            meterData = []
         })
-        $button.click(function () {
+        $('#button, #select-meter-alarm').click(function () {
             if (isChecked === false) {
                 alert('Please select a meter')
             }
@@ -85,9 +86,9 @@ $(document).ready(() => {
                 $('.analysisStart').datepicker('setDate', analysisStart)
                 $('.analysisEnd').datepicker('setDate', analysisEnd)
 
-                data.push($table.bootstrapTable('getSelections'))
+                meterData.push($table.bootstrapTable('getSelections'))
                 $('.disabled').attr('disabled', false)
-                $('.meterSelection').html(`${data[0][0].meter}`)
+                $('.meterSelection').html(`${meterData[0][0].meter}`)
 
             }
 
@@ -95,14 +96,9 @@ $(document).ready(() => {
 
     })
 
-    $('.chooseSteward').on('click', function () {
-        $('#filterBuildings').empty()
-        const steward = $(this).text()
-        $.when($.ajax({
-            type: 'POST',
-            url: '/buildings',
-            data: { steward: steward }
-        }), $.ajax({
+    const getMeterAlarm = () => {
+
+        $.ajax({
             url: '/getAlarm',
             type: 'GET',
             data: {
@@ -111,15 +107,79 @@ $(document).ready(() => {
                 outOfBounds: 1,
                 analyst: 'mjones@austin.utexas.edu'
             }
-        })).then(function (response, response2) {
+        }).then((response) => {
             console.log(response)
-            console.log(response2)
-            response[0].map(a => {
+            if (response === 'Request failed with status code 504' || response === 'Request failed with status code 500') {
+                getMeterAlarm()
+            } else {
+                $('.meterAlarm').html(`Out of Bounds Table`)
+                loadMeters = false
+                $('.hide-all-buildings').hide()
+                const table = $(`
+              <div id="oobtToolbar">
+                  <button class="btn btn-primary allBuildings" type="button">
+                      All Buildings Table
+                  </button>
+              </div>
+              <table style="color: white"  data-virtual-scroll="true" data-height="448" data-toolbar="#oobtToolbar" data-toolbar-align="right" id="out-of-bounds-table">
+                <thead style="color: white">
+                  <tr>
+                    <th id="select-meter-alarm" data-radio="true"></th>
+                    <th data-field="meter">Meter</th>
+                    <th data-field="days_out_of_range">Days Out of Range</th>
+                  </tr>
+                </thead>
+              </table>`)
+              $('.out-of-bounds').append(table)
+              $('.out-of-bounds').fadeIn(540)
+                var $oobt = $('#out-of-bounds-table')
+                $(function () {
+                    let meter = response.body.meter
+                    let daysOutOfRange = response.body.out_of_bound_day_count
+                    let oobtData = meter.map((meter, index) => {
+
+                        return {
+                            'meter': meter,
+                            'days_out_of_range': daysOutOfRange[index],                           
+                        }
+                    })
+                    $oobt.bootstrapTable({ data: oobtData })
+                })
+
+                $('.allBuildings').on('click', function () {
+                    $('.out-of-bounds').hide()
+                    $('.hide-all-buildings').fadeIn(540)
+                })
+
+            }
+        })
+
+
+    }
+
+    $('.meterAlarm').on('click', function () {
+        if (loadMeters === true) {
+            $(this).html(` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Loading...`)
+            getMeterAlarm()
+        } else {
+            $('.hide-all-buildings').hide()
+            $('.out-of-bounds').fadeIn(540)
+        }
+
+    })
+
+    $('.chooseSteward').on('click', function () {
+        $('#filterBuildings').empty()
+        const steward = $(this).text()
+        $.ajax({
+            type: 'POST',
+            url: '/buildings',
+            data: { steward: steward }
+        }).then(function (response) {
+            console.log(response)
+            response.map(a => {
                 $('#filterBuildings').append(`<option value=${a.building_id}>${a.building}</option>`)
-            })
-            response2[0].body.meter.map(a => { 
-                console.log(a)
-                $('#filterOobMeters').append(`<option>${a}</option>`)
             })
             $('.dropdown-toggle').text(steward)
         })
@@ -198,13 +258,10 @@ $(document).ready(() => {
             if (response[0] === 'Request failed with status code 504' || response[0] === 'Request failed with status code 500' || response[0] === 'Request failed with status code 503' || response2[0] === 'Request failed with status code 504') {
                 modelApi()
                 $('.overlayMessage').text('Server not responding, trying your search again. Please do not refresh the page')
-            } else if (response === 401) {
+            } else if (response[0].trim() === '{ "statusCode": , "body": , "headers": { } }') {
                 alert('You are not authorized')
             } else {
                 $('.displayData').show()
-                console.log(response)
-                console.log(response2)
-                console.log(response3[0])
                 if (response3[0].length === 0) {
                     $('.attributesSubmitted').html(`<h6 class="text-warning"><strong>Attributes have not been submitted for this meter</strong></h6>`)
                     meterAttributes = true
@@ -476,7 +533,7 @@ $(document).ready(() => {
                                 index
                             }] = activePoints;
 
-                            var $container = $('.scroll'),
+                            var $container = $('.container-fluid'),
                                 $scrollTo = $('#' + config2.data.datasets[0].data[index].y)
                             $container.animate({
                                 scrollTop: $scrollTo.offset().top - $container.offset().top + $container.scrollTop() - ($container.height() / 2)
@@ -693,13 +750,6 @@ $(document).ready(() => {
 
     }
 
-    $('.meterAlarm').on('click', () => {
-        window.open('/oobt')
-
-    })
-
-
-
     $('#reason').on('change', function () {
         $button3.removeAttr('disabled')
     })
@@ -789,9 +839,9 @@ $(document).ready(() => {
                 $('#notes').val('')
                 $('#reason').val('Choose...')
                 $('.successAlert').html(`<div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Success!</strong> Your data has been successfully uploaded!
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>`)
+                    <strong>Success!</strong> Your data has been successfully uploaded!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>`)
 
             })
         }

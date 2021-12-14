@@ -190,11 +190,12 @@ module.exports = {
 
             const meterAlarm = process.env.GET_METER_ALARM_URL + `minimum_out_of_bound_day_count=${outOfBounds}&end_timestamp=${endTimestamp}&start_timestamp=${startTimestamp}&steward_email=${analyst}`
             const response = await axios.get(meterAlarm, config)
+
             return res.json(response.data)
         } catch (error) {
 
-            console.error(error)
-            return res.json(error)
+            console.error(error.message)
+            return res.json(error.message)
             
         }
     }
