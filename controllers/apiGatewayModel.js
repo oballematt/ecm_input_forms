@@ -172,6 +172,36 @@ module.exports = {
 
     getMeterAlarm: async (req, res) => {
         try {
+            const { endTimestamp, startTimestamp} = req.query
+            const email = req.user.email
+
+            const token = await Model_api_authorization.findOne({
+                where: {
+                    email: email
+                },
+                attributes: ['token']
+            })
+
+            const config = {
+                headers: {
+                    'authorizationToken': token.token
+                }
+            }
+
+            const meterAlarm = process.env.GET_METER_ALARM_URL + `end_timestamp=${endTimestamp}&start_timestamp=${startTimestamp}`
+            const response = await axios.get(meterAlarm, config)
+
+            return res.json(response.data)
+        } catch (error) {
+
+            console.error(error.message)
+            return res.json(error.message)
+            
+        }
+    },
+
+    getMeterAlarmBySteward: async (req, res) => {
+        try {
             const { endTimestamp, startTimestamp, analyst } = req.query
             const email = req.user.email
 
@@ -198,5 +228,5 @@ module.exports = {
             return res.json(error.message)
             
         }
-    }
+    },
 }

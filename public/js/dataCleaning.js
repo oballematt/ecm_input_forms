@@ -57,28 +57,27 @@ $(document).ready(() => {
       meterData = [];
     });
     $(".confirmMeter").click(function() {
-      let modelDates = new Date();
       $(".modelStart").datepicker(
         "setDate",
-        new Date(modelDates.getFullYear() - 1, modelDates.getMonth() - 1, 1)
+        new Date(d.getFullYear() - 1, d.getMonth() - 1, 1)
       );
       $(".modelEnd").datepicker(
         "setDate",
-        new Date(modelDates.getFullYear() - 1, modelDates.getMonth() - 1, +364)
+        new Date(d.getFullYear() - 1, d.getMonth() - 1, +364)
       );
       $(".analysisStart").datepicker(
         "setDate",
-        new Date(modelDates.getFullYear(), modelDates.getMonth() - 1, 1)
+        new Date(d.getFullYear(), d.getMonth() - 1, 1)
       );
       $(".analysisEnd").datepicker(
         "setDate",
-        new Date(modelDates.getFullYear(), modelDates.getMonth(), 0)
+        new Date(d.getFullYear(), d.getMonth(), 0)
       );
 
       meterData.push($table.bootstrapTable("getSelections"));
       $(".disabled").attr("disabled", false);
       $(".meterSelection").html(`${meterData[0][0].meter}`);
-      console.log(meterData)
+      console.log(meterData);
     });
   });
 
@@ -93,7 +92,6 @@ $(document).ready(() => {
         endTimestamp: new Date(d.getFullYear(), d.getMonth(), 0)
           .toISOString()
           .slice(0, 10),
-        analyst: "mjones@austin.utexas.edu",
       },
     }).then((response) => {
       console.log(response);
@@ -107,6 +105,16 @@ $(document).ready(() => {
         loadMeters = false;
         $(".hide-all-buildings").hide();
         const table = $(`
+        <div class="input-group mt-3 mb-2">
+           <label class="input-group-text" for="meter-alarm-steward">Steward:</label>
+           <select class="form-select" id="meter-alarm-steward">
+             <option disabled selected>Select a steward</option>
+             <option>All</option>
+             <option value="grace.hsieh@austin.utexas.edu">Grace Hsieh</option>
+             <option value="matt.stevens@austin.utexas.edu">Matt Stevens</option>
+             <option value="mjones@austin.utexas.edu">Meagan Jones</option>
+           </select>
+        </div>
               <div id="oobtToolbar">
                   <button class="btn btn-primary allBuildings" type="button">
                       All Buildings Table
@@ -131,15 +139,15 @@ $(document).ready(() => {
           let meter = response.body.meter;
           let daysOutOfRange = response.body.out_of_bound_day_count;
           let building = response.body.building_abbreviation;
-          let building_number = response.body.building_number
-          let commodity = response.body.commodity_tag
+          let building_number = response.body.building_number;
+          let commodity = response.body.commodity_tag;
           let oobtData = meter.map((meter, index) => {
             return {
               building: building[index],
               meter: meter,
               days_out_of_range: daysOutOfRange[index],
               building_number: building_number[index],
-              commodity_tag: commodity[index]
+              commodity_tag: commodity[index],
             };
           });
           $oobt.bootstrapTable({ data: oobtData });
@@ -154,38 +162,21 @@ $(document).ready(() => {
             }
           );
           $(".confirmAlarmMeter").click(function() {
-            let alarmModelDates = new Date();
             $(".modelStart").datepicker(
               "setDate",
-              new Date(
-                alarmModelDates.getFullYear() - 1,
-                alarmModelDates.getMonth() - 1,
-                1
-              )
+              new Date(d.getFullYear() - 1, d.getMonth() - 1, 1)
             );
             $(".modelEnd").datepicker(
               "setDate",
-              new Date(
-                alarmModelDates.getFullYear() - 1,
-                alarmModelDates.getMonth() - 1,
-                +364
-              )
+              new Date(d.getFullYear() - 1, d.getMonth() - 1, +364)
             );
             $(".analysisStart").datepicker(
               "setDate",
-              new Date(
-                alarmModelDates.getFullYear(),
-                alarmModelDates.getMonth() - 1,
-                1
-              )
+              new Date(d.getFullYear(), d.getMonth() - 1, 1)
             );
             $(".analysisEnd").datepicker(
               "setDate",
-              new Date(
-                alarmModelDates.getFullYear(),
-                alarmModelDates.getMonth(),
-                0
-              )
+              new Date(d.getFullYear(), d.getMonth(), 0)
             );
             meterData.push($oobt.bootstrapTable("getSelections"));
             $(".meterSelection").html(`${meterData[0][0].meter}`);
