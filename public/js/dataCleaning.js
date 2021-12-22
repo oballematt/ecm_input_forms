@@ -14,12 +14,6 @@ let loadMeters = true;
 let outOfBoundsData;
 
 $(document).ready(() => {
-  var tooltipTriggerList = [].slice.call(
-    document.querySelectorAll('[data-bs-toggle="tooltip"]')
-  );
-  var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl);
-  });
   const dateInput_1 = $(".datepicker");
 
   dateInput_1.datepicker({
@@ -31,25 +25,155 @@ $(document).ready(() => {
     $("#overlay").fadeIn();
   });
 
+  let $table = $("#table");
+  let $button3 = $("#button3");
+  let $outOfRange = $(".show-data");
+
+  const getMeterAlarm = () => {
+    $.ajax({
+      url: "/getAlarm",
+      type: "GET",
+      data: {
+        startTimestamp: new Date(d.getFullYear(), d.getMonth() - 1, 1)
+          .toISOString()
+          .slice(0, 10),
+        endTimestamp: new Date(d.getFullYear(), d.getMonth(), 0)
+          .toISOString()
+          .slice(0, 10),
+      },
+    }).then((response) => {
+      console.log(response);
+      if (
+        response === "Request failed with status code 504" ||
+        response === "Request failed with status code 500"
+      ) {
+        getMeterAlarm();
+      } else {
+        $(".hide-meters").show();
+        $(".ring").hide();
+        $(function() {
+          let meter = response.body.meter;
+          let daysOutOfRange = response.body.value_count;
+          let building = response.body.building_abbreviation;
+          let building_number = response.body.building_number;
+          let commodity = response.body.commodity_tag;
+          let saved = response.body.model_update_timestamp;
+          let oobtData = meter.map((meter, index) => {
+            return {
+              building_abbreviation: building[index],
+              meter: meter,
+              value_count:
+                daysOutOfRange[index] === 30 ? "-" : daysOutOfRange[index],
+              model_update_timestamp: saved[index],
+              building_number: building_number[index],
+              commodity_tag: commodity[index],
+            };
+          });
+          $table.bootstrapTable({ data: oobtData });
+        });
+      }
+    });
+  };
+
+  getMeterAlarm();
+
+  $(".apply").on("click", function() {
+    $(this).html(` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`)
+    const analyst = $('#filter-steward').val();
+    if (analyst === "null") {
+      $.ajax({
+        url: "/getAlarm",
+        type: "GET",
+        data: {
+          startTimestamp: new Date(d.getFullYear(), d.getMonth() - 1, 1)
+            .toISOString()
+            .slice(0, 10),
+          endTimestamp: new Date(d.getFullYear(), d.getMonth(), 0)
+            .toISOString()
+            .slice(0, 10),
+        },
+      }).then((response) => {
+        $('.apply').html('Apply')
+        console.log(response);
+        $(function() {
+          let meter = response.body.meter;
+          let daysOutOfRange = response.body.value_count;
+          let building = response.body.building_abbreviation;
+          let building_number = response.body.building_number;
+          let commodity = response.body.commodity_tag;
+          let saved = response.body.model_update_timestamp;
+          let allData = meter.map((meter, index) => {
+            return {
+              building_abbreviation: building[index],
+              meter: meter,
+              value_count:
+                daysOutOfRange[index] === 30 ? "-" : daysOutOfRange[index],
+              model_update_timestamp: saved[index],
+              building_number: building_number[index],
+              commodity_tag: commodity[index],
+            };
+          });
+          $table.bootstrapTable("load", allData);
+        });
+      });
+    } else {
+      $.ajax({
+        type: "GET",
+        url: "/getAlarmSteward",
+        data: {
+          startTimestamp: new Date(d.getFullYear(), d.getMonth() - 1, 1)
+            .toISOString()
+            .slice(0, 10),
+          endTimestamp: new Date(d.getFullYear(), d.getMonth(), 0)
+            .toISOString()
+            .slice(0, 10),
+          analyst: analyst === "null" ? null : analyst,
+        },
+      }).then(function(response) {
+        console.log(response);
+        $('.apply').html('Apply')
+        $(function() {
+          let meter = response.body.meter;
+          let daysOutOfRange = response.body.value_count;
+          let building = response.body.building_abbreviation;
+          let building_number = response.body.building_number;
+          let commodity = response.body.commodity_tag;
+          let saved = response.body.model_update_timestamp;
+          let stewardData = meter.map((meter, index) => {
+            return {
+              building_abbreviation: building[index],
+              meter: meter,
+              value_count:
+                daysOutOfRange[index] === 30 ? "-" : daysOutOfRange[index],
+              model_update_timestamp: saved[index],
+              building_number: building_number[index],
+              commodity_tag: commodity[index],
+            };
+          });
+          $table.bootstrapTable("load", stewardData);
+        });
+      });
+    }
+  });
+
+  $outOfRange.on("click", function() {
+    $table.bootstrapTable("showColumn", "value_count");
+    $table.bootstrapTable("hideColumn", "model_update_timestamp");
+    $(this).hide();
+    $(".all-meters").show();
+  });
+
+  $(".all-meters").on("click", function() {
+    $table.bootstrapTable("hideColumn", "value_count");
+    $table.bootstrapTable("showColumn", "model_update_timestamp");
+    $(this).hide();
+    $outOfRange.show();
+  });
+
   $(".modelStart").on("change", function() {
     let date2 = $(this).datepicker("getDate");
     date2.setDate(date2.getDate() + 364);
     $(".modelEnd").datepicker("setDate", date2);
-  });
-
-  let $table = $("#table");
-  let $table2 = $("#table2");
-  let $button = $("#button");
-  let $button3 = $("#button3");
-
-  $("#filterBuildings").on("change", function() {
-    $table.bootstrapTable("filterBy", {
-      building_number: $(this).val(),
-    });
-  });
-  $(".reset").on("click", function() {
-    $table.bootstrapTable("filterBy", {});
-    $("#filterBuildings").val("Filter By");
   });
 
   $(function() {
@@ -77,152 +201,6 @@ $(document).ready(() => {
       meterData.push($table.bootstrapTable("getSelections"));
       $(".disabled").attr("disabled", false);
       $(".meterSelection").html(`${meterData[0][0].meter}`);
-      console.log(meterData);
-    });
-  });
-
-  const getMeterAlarm = () => {
-    $.ajax({
-      url: "/getAlarm",
-      type: "GET",
-      data: {
-        startTimestamp: new Date(d.getFullYear(), d.getMonth() - 1, 1)
-          .toISOString()
-          .slice(0, 10),
-        endTimestamp: new Date(d.getFullYear(), d.getMonth(), 0)
-          .toISOString()
-          .slice(0, 10),
-      },
-    }).then((response) => {
-      console.log(response);
-      if (
-        response === "Request failed with status code 504" ||
-        response === "Request failed with status code 500"
-      ) {
-        getMeterAlarm();
-      } else {
-        $(".meterAlarm").html(`Out of Bounds Table`);
-        loadMeters = false;
-        $(".hide-all-buildings").hide();
-        const table = $(`
-        <div class="input-group mt-3 mb-2">
-           <label class="input-group-text" for="meter-alarm-steward">Steward:</label>
-           <select class="form-select" id="meter-alarm-steward">
-             <option disabled selected>Select a steward</option>
-             <option>All</option>
-             <option value="grace.hsieh@austin.utexas.edu">Grace Hsieh</option>
-             <option value="matt.stevens@austin.utexas.edu">Matt Stevens</option>
-             <option value="mjones@austin.utexas.edu">Meagan Jones</option>
-           </select>
-        </div>
-              <div id="oobtToolbar">
-                  <button class="btn btn-primary allBuildings" type="button">
-                      All Buildings Table
-                  </button>
-              </div>
-              <table style="color: white" data-sort-name="building" data-sort-order="asc" data-virtual-scroll="true" data-height="448" data-toolbar="#oobtToolbar" data-toolbar-align="right" id="out-of-bounds-table">
-                <thead style="color: white">
-                  <tr>
-                    <th id="select-meter-alarm" data-field="state"  data-radio="true"></th>
-                    <th data-sortable="true" data-field="building">Building</th>
-                    <th data-field="meter">Meter</th>
-                    <th data-sortable="true" data-field="days_out_of_range">Days Out of Range</th>
-                    <th data-visible="false" data-field="building_number">Days Out of Range</th>
-                    <th data-visible="false" data-field="commodity_tag">Days Out of Range</th>
-                  </tr>
-                </thead>
-              </table>`);
-        $(".out-of-bounds").append(table);
-        $(".out-of-bounds").fadeIn(540);
-        var $oobt = $("#out-of-bounds-table");
-        $(function() {
-          let meter = response.body.meter;
-          let daysOutOfRange = response.body.out_of_bound_day_count;
-          let building = response.body.building_abbreviation;
-          let building_number = response.body.building_number;
-          let commodity = response.body.commodity_tag;
-          let oobtData = meter.map((meter, index) => {
-            return {
-              building: building[index],
-              meter: meter,
-              days_out_of_range: daysOutOfRange[index],
-              building_number: building_number[index],
-              commodity_tag: commodity[index],
-            };
-          });
-          $oobt.bootstrapTable({ data: oobtData });
-        });
-
-        $(function() {
-          $("#out-of-bounds-table").on(
-            "change",
-            $("#select-meter-alarm"),
-            function() {
-              meterData = [];
-            }
-          );
-          $(".confirmAlarmMeter").click(function() {
-            $(".modelStart").datepicker(
-              "setDate",
-              new Date(d.getFullYear() - 1, d.getMonth() - 1, 1)
-            );
-            $(".modelEnd").datepicker(
-              "setDate",
-              new Date(d.getFullYear() - 1, d.getMonth() - 1, +364)
-            );
-            $(".analysisStart").datepicker(
-              "setDate",
-              new Date(d.getFullYear(), d.getMonth() - 1, 1)
-            );
-            $(".analysisEnd").datepicker(
-              "setDate",
-              new Date(d.getFullYear(), d.getMonth(), 0)
-            );
-            meterData.push($oobt.bootstrapTable("getSelections"));
-            $(".meterSelection").html(`${meterData[0][0].meter}`);
-            console.log(meterData);
-          });
-        });
-
-        $(".allBuildings").on("click", function() {
-          $(".confirmMeter").show();
-          $(".confirmAlarmMeter").hide();
-          $(".out-of-bounds").hide();
-          $(".hide-all-buildings").fadeIn(540);
-        });
-      }
-    });
-  };
-
-  $(".meterAlarm").on("click", function() {
-    $(".confirmMeter").hide();
-    $(".confirmAlarmMeter").show();
-    if (loadMeters === true) {
-      $(this)
-        .html(` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        Loading...`);
-      getMeterAlarm();
-    } else {
-      $(".hide-all-buildings").hide();
-      $(".out-of-bounds").fadeIn(540);
-    }
-  });
-
-  $(".chooseSteward").on("click", function() {
-    $("#filterBuildings").empty();
-    const steward = $(this).text();
-    $.ajax({
-      type: "POST",
-      url: "/buildings",
-      data: { steward: steward },
-    }).then(function(response) {
-      console.log(response);
-      response.map((a) => {
-        $("#filterBuildings").append(
-          `<option value=${a.building_id}>${a.building}</option>`
-        );
-      });
-      $(".dropdown-toggle").text(steward);
     });
   });
 
@@ -269,7 +247,7 @@ $(document).ready(() => {
           analysisEnd: analysisEnd,
         },
         error: function(xhr, status, error, response) {
-          if (xhr.status === 504) {
+          if (xhr.status === 503) {
             modelApi();
             $(".overlayMessage").text(
               "Server not responding, trying your search again. Please do not refresh the page"

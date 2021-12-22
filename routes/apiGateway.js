@@ -11,6 +11,6 @@ router.get('/getConsumption', gatewayController.getConsumption)
 
 router.get('/getAlarm', gatewayController.getMeterAlarm)
 
-router.get('getAlarmSteward', gatewayController.getMeterAlarmBySteward)
+router.get('/getAlarmSteward', gatewayController.getMeterAlarmBySteward)
 
 module.exports = router
