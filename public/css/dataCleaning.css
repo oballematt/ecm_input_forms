@@ -21,7 +21,9 @@
   border-radius: 50%;
 }
 
-
+.multi-sort{
+    display: none;
+}
 .units {
   display: block;
   text-align: right;
