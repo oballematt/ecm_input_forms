@@ -49,6 +49,8 @@ $(document).ready(() => {
       ) {
         getMeterAlarm();
       } else {
+        $('.multi-sort').empty()
+        $('.multi-sort').html(`<i class="fas fa-sort"></i>`)
         $(".hide-meters").show();
         $(".ring").hide();
         $(function() {
@@ -78,7 +80,8 @@ $(document).ready(() => {
   getMeterAlarm();
 
   $(".apply").on("click", function() {
-    $(this).html(` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`)
+    $(this).html(` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    <span class="visually-hidden">Loading...</span>`)
     const analyst = $('#filter-steward').val();
     if (analyst === "null") {
       $.ajax({
@@ -93,6 +96,7 @@ $(document).ready(() => {
             .slice(0, 10),
         },
       }).then((response) => {
+        
         $('.apply').html('Apply')
         console.log(response);
         $(function() {

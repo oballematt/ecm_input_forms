@@ -22,7 +22,20 @@
 }
 
 .multi-sort{
-    display: none;
+    background-image: url('../images/sort-solid.svg');
+    height: 35px;
+    background-color: #6C757D;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-left: 5px;
+    border-radius: 1px;
+    background-size: 10px;
+    width: 55px;
+}
+
+.dropdown-toggle{
+  margin-right: 10px;
+  border-radius: 1px;
 }
 .units {
   display: block;
@@ -35,6 +48,15 @@
 
 .bordered {
   border: 1px solid;
+}
+
+.ring{
+    border: 1px solid;
+    height: 42%;
+}
+
+.spinner-border{
+    margin-top: 45%;
 }
 
 .page-list .btn-secondary {

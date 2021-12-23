@@ -24,15 +24,15 @@
                 </div>
             </div>
             <div style="display: none;" class="hide-meters">
-                <div id="toolbar">
+                {{!-- <div id="toolbar">
                     <button class="btn btn-primary out-of-range show-data" type="button">
                         Show Days Out of Range
                     </button>
                     <button style="display: none" class="btn btn-primary all-meters " type="button">
                         Hide Days Out of Range
                     </button>
-                </div>
-                <table id="table" data-show-multi-sort="true"
+                </div> --}}
+                <table id="table" data-show-multi-sort="true" data-show-columns="true"
                     data-sort-priority='[{"sortName": "building_abbreviation","sortOrder":"asc"},{"sortName":"meter","sortOrder":"asc"}]'
                     data-toolbar-align="right" data-search-align="left" data-toolbar="#toolbar" data-height="448"
                     data-search="true" data-virtual-scroll="true" style="color: white">
@@ -42,9 +42,8 @@
                             <th data-field="state" data-radio="true"></th>
                             <th data-sortable="true" data-field="building_abbreviation">Building</th>
                             <th data-sortable="true" data-field="meter">Meter Name</th>
-                            <th data-visible="false" data-sortable="true" data-field="value_count">Days out of range
-                            </th>
-                            <th  data-field="model_update_timestamp">Last Saved</th>
+                            <th data-visible="false" data-sortable="true" data-field="value_count">Days out of range</th>
+                            <th data-field="model_update_timestamp">Last Saved</th>
                             <th data-visible='false' data-field="building_number">Building Number</th>
                             <th data-visible="false" data-field="commodity_tag">Commodity</th>
                         </tr>
