@@ -1,23 +1,23 @@
 <div class="container d-flex justify-content-center align-items-center">
     <div class="row margin">
-        {{#with miscSavings}}
+        {{#with savings}}
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb text-white">
                 <li class="breadcrumb-item"><a href="/ecmforms">Back</a></li>
                 <li class="breadcrumb-item" aria-current="page">Edit {{project_id}}</li>
             </ol>
         </nav>
-        <form action='/find/miscsavings/{{id}}' id="formData" method="POST">
+        <form action='/update/savings/{{id}}' id="formData" method="POST">
             <div class="card border-secondary w-100 text-light">
-                <h5 style="background-color: #bf5700;" class="card-header">Misc Savings</h5>
+                <h5 style="background-color: #bf5700;" class="card-header">Savings</h5>
                 <div class="card-body w-100 text-end">
                     <div id="errors" class="text-start"></div>
                     <table id="tableData" class="table text-light text-center mt-3">
                         <thead>
                             <tr>
                                 <th scope="col">Phase</th>
-                                <th scope="col">Owner</th>
-                                <th scope="col">Misc Savings</th>
+                                <th scope="col">Commodity</th>
+                                <th scope="col">Value</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,30 +33,34 @@
                                         <select name="phase" class="form-select phase" id="inputGroupSelect01">
                                             <option disabled selected>{{phase}}</option>
                                             <option value='mv'>MV</option>
-                                            <option vale='predicted'>Predicted</option>
+                                            <option value='predicted'>Predicted</option>
                                         </select>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="input-group mb-3">
-                                        <select name="misc_owner" class="form-select misc_owner" id="inputGroupSelect01">
-                                            <option disabled selected>{{misc_owner}}</option>
-                                            <option value='uem'>UEM</option>
-                                            <option value='nonuem'>NON-UEM</option>
-                                            <option value='aux'>AUX</option>
+                                        <select name="commodity" class="form-select commodity" id="inputGroupSelect01">
+                                            <option disabled selected>{{commodity}}</option>
+                                            <option>CHW</option>
+                                            <option>ELE</option>
+                                            <option>STM</option>
+                                            <option>HHW</option>
+                                            <option>GAS</option>
+                                            <option>WTR</option>
+                                            <option value='peack_CHW'>Peak CHW</option>
+                                            <option value='labor'>Labor</option>
                                         </select>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="input-group mb-3">
-                                        <input value="{{misc_savings}}" name="misc_savings" type="text"
-                                            class="form-control misc_savings">
+                                        <input value="{{value}}" name="value" type="text" class="form-control value">
                                     </div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <button type="button" id={{id}} class="btn btn-success text-light updateMisc">Submit</button>
+                    <button type="button" id={{id}} class="btn btn-success text-light updateSavings">Submit</button>
                 </div>
             </div>
         </form>

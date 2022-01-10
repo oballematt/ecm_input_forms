@@ -385,7 +385,7 @@ $(document).ready(() => {
       value: replacedValue,
     };
     $.ajax({
-      url: "/find_b_s_values",
+      url: "/baseline",
       method: "POST",
       data: data,
     }).then((response) => {
@@ -417,7 +417,7 @@ $(document).ready(() => {
       value: replacedValue,
     };
     $.ajax({
-      url: "/find/baseline/" + id,
+      url: "/update/baseline/" + id,
       method: "POST",
       data: data,
     }).then($("#num" + name).text(value), $("#add" + name).val(value));
@@ -452,7 +452,7 @@ $(document).ready(() => {
       value: replacedValue,
     };
     $.ajax({
-      url: "/find_savings_values",
+      url: "/savings",
       method: "POST",
       data: data,
     }).then((response) => {
@@ -485,7 +485,7 @@ $(document).ready(() => {
       value: replacedValue,
     };
     $.ajax({
-      url: "/find/savings/" + id,
+      url: "/update/savings/" + id,
       method: "POST",
       data: data,
     }).then($("#numPred" + name).text(value), $("#addPred" + name).val(value));
@@ -520,7 +520,7 @@ $(document).ready(() => {
       value: replacedValue,
     };
     $.ajax({
-      url: "/find_savings_values",
+      url: "/savings",
       method: "POST",
       data: data,
     }).then((response) => {
@@ -553,7 +553,7 @@ $(document).ready(() => {
       value: replacedValue,
     };
     $.ajax({
-      url: "/find/savings/" + id,
+      url: "/update/savings/" + id,
       method: "POST",
       data: data,
     }).then($("#numMv" + name).text(value), $("#addMv" + name).val(value));
@@ -612,7 +612,7 @@ $(document).ready(() => {
       }
     } else {
       $.ajax({
-        url: "/find/costs_hours/" + id,
+        url: "/update/costs_hours/" + id,
         type: "POST",
         data: data,
         success: function() {
@@ -660,7 +660,7 @@ $(document).ready(() => {
       }
     } else {
       $.ajax({
-        url: "/find/funding/" + id,
+        url: "/update/funding/" + id,
         type: "POST",
         data: data,
         success: function() {
@@ -701,7 +701,7 @@ $(document).ready(() => {
       }
     } else {
       $.ajax({
-        url: "/find/miscsavings/" + id,
+        url: "/update/miscsavings/" + id,
         type: "POST",
         data: data,
         success: function() {
@@ -741,7 +741,7 @@ $(document).ready(() => {
     };
 
     $("#errors").text("");
-
+    console.log(data)
     if (data.project_id === "undefined" || !data.project_id) {
       errors.push({ text: "Please define a project ID" });
     }
@@ -774,10 +774,11 @@ $(document).ready(() => {
       }
     } else {
       $.ajax({
-        url: "/add_costs_hours",
+        url: "/costs_hours",
         type: "POST",
         data: data,
-      }).then(
+      }).then( response => {
+        console.log(response);
         $tbody
           .find(":input")
           .prop("disabled", true)
@@ -790,6 +791,7 @@ $(document).ready(() => {
         $(".infoMessage").text(
           "Your data was successfully added! Search for your project again to view and edit the data below. Otherwise, continue adding data to the other tables "
         )
+      }
       );
     }
   });
@@ -849,7 +851,7 @@ $(document).ready(() => {
       }
     } else {
       $.ajax({
-        url: "/add_fundings",
+        url: "/funding",
         type: "POST",
         data: data,
       }).then(
@@ -922,7 +924,7 @@ $(document).ready(() => {
       }
     } else {
       $.ajax({
-        url: "/add_miscsavings",
+        url: "/miscsavings",
         type: "POST",
         data: data,
       }).then(

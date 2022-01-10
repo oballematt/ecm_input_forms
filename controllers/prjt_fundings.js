@@ -33,7 +33,7 @@ module.exports = {
                 }
             });
 
-            return res.render('edit/editFundings', {
+            return res.render('ecmForms/edit/editFundings', {
                 funding
             });
 
@@ -61,7 +61,7 @@ module.exports = {
                     }
                 });
 
-            return res.redirect('/ecmprojectsform')
+            return res.redirect('/ecmforms')
 
         } catch (error) {
 

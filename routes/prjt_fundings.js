@@ -3,12 +3,12 @@ const authorization = require('../middleware/authorization')
 
 const fundingController = require('../controllers/prjt_fundings');
 
-router.post('/ecmprojectsform/funding/:id', fundingController.updateFunding);
+router.post('/update/funding/:id', fundingController.updateFunding);
 
 router.delete('/delete/funding/:id', fundingController.deleteFunding);
 
-router.get('/ecmprojectsform/funding/:id', authorization.checkNotAuthenticated, fundingController.getOneFunding);
+router.get('/ecmforms/funding/:id', authorization.checkNotAuthenticated, fundingController.getOneFunding);
 
-router.post('/ecmprojectsform/funding', fundingController.createFunding);
+router.post('/funding', fundingController.createFunding);
 
 module.exports = router;

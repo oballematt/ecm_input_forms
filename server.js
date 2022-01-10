@@ -91,7 +91,7 @@ app.use(cors());
 
 //Express Route
 app.get("/login", authorization.checkAuthenticated, (req, res) =>
-  res.render("login", { error: req.flash("error") })
+  res.render("userInfo/login", { layout:'loginLayout', error: req.flash("error") })
 );
 app.get("/register", authorization.checkAuthenticated, (req, res) =>
   res.render("signup")
@@ -103,14 +103,12 @@ app.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/login");
 });
-app.get("/oobt", authorization.checkNotAuthenticated, (req, res) => {
-  res.render("outOfBoundsTable", { layout: "outOfBounds" });
-});
+
 app.get('/', authorization.checkNotAuthenticated, (req, res) => {
-  res.render('cover', {layout: 'coverLayout'})
+  res.render('landing/landing', {layout: 'landingLayout'})
 })
 app.get("/datacleaning", authorization.checkNotAuthenticated, (req, res) => {
-  res.render("cleaning", { layout: "datacleaning" });
+  res.render("dataCleaning/cleaning", { layout: "datacleaning" });
 });
 
 app.post(

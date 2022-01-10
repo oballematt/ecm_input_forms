@@ -3,12 +3,12 @@ const authorization = require('../middleware/authorization')
 
 const costsHoursController = require('../controllers/prjt_costs_hours');
 
-router.post('/ecmprojectsform/add/costs_hours/:id', costsHoursController.updateCostsHours);
+router.post('/update/costs_hours/:id', costsHoursController.updateCostsHours);
 
 router.delete('/delete/costs_hours/:id', costsHoursController.deleteCostsHours);
 
-router.get('/ecmprojectsform/costs_hours/:id',  authorization.checkNotAuthenticated, costsHoursController.getOneCostsHours);
+router.get('/ecmforms/costs_hours/:id',  authorization.checkNotAuthenticated, costsHoursController.getOneCostsHours);
 
-router.post('/ecmprojectsform/costs_hours', costsHoursController.createCostsHours);
+router.post('/costs_hours', costsHoursController.createCostsHours);
 
 module.exports = router;

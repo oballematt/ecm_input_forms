@@ -68,7 +68,7 @@ module.exports = {
             };
 
             if (errors.length > 0) {
-                res.render('add/metadata', {
+                res.render('ecmForms/add/metadata', {
                     errors,
                     prjt_status,
                     measure_types,
@@ -95,7 +95,7 @@ module.exports = {
                 });
 
 
-                return res.redirect('/ecmprojectsform');
+                return res.redirect('/ecmforms');
 
             }
 
@@ -130,7 +130,7 @@ module.exports = {
                 ]
             });
 
-            return res.render('add/metadata', {
+            return res.render('ecmForms/add/metadata', {
                 bldgs,
                 prjt_status,
                 measure_types
@@ -174,7 +174,7 @@ module.exports = {
                 ]
             });
 
-            return res.render('edit/edit', {
+            return res.render('ecmForms/edit/edit', {
                 metadata,
                 bldgs,
                 prjt_status,
@@ -220,7 +220,7 @@ module.exports = {
             };
 
             if (errors.length > 0) {
-                res.render('edit/edit', {
+                res.render('ecmForms/edit/edit', {
                     metadata,
                     errors,
                     baseline_start_date,
@@ -251,7 +251,7 @@ module.exports = {
                         }
                     });
 
-                return res.redirect('/ecmprojectsform')
+                return res.redirect('/ecmforms')
             }
 
         } catch (error) {
@@ -273,7 +273,7 @@ module.exports = {
                 }
             });
 
-            return res.redirect('/')
+            return res.redirect('/ecmforms')
 
         } catch (error) {
 
