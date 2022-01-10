@@ -694,7 +694,7 @@ $(document).ready(() => {
             let upperBound = $(this)
               .find(".upperBound")
               .html();
-            if (parseInt(meterReading, 10) < parseInt(lowerBound, 10)) {
+            if (parseInt(meterReading, 10) < parseInt(lowerBound, 10) || parseInt(meterReading, 10) === parseInt(lowerBound, 10)) {
               $(this).css("background-color", "#F0AD4E");
               if ($(this).index() === 0) {
                 $(this)
@@ -711,7 +711,7 @@ $(document).ready(() => {
               }
             }
 
-            if (parseInt(meterReading, 10) > parseInt(upperBound, 10)) {
+            if (parseInt(meterReading, 10) > parseInt(upperBound, 10) || parseInt(meterReading, 10) === parseInt(upperBound, 10)) {
               $(this).css("background-color", "#d9534f");
               if ($(this).index() === 0) {
                 $(this)
