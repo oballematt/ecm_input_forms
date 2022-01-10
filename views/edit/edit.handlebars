@@ -1,169 +1,171 @@
-<div class="row margin">
-    {{#with metadata}}
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Edit {{project_id}}</li>
-        </ol>
-    </nav>
-    <form action="/find/{{project_id}}" method="POST">
-        <div class="card border-secondary mt-3 w-100 text-light" style="background-color: #333f48;">
-            <h5 style="background-color: #bf5700;" class="card-header">Project Info</h5>
-            <div class="card-body text-black">
-                {{/with}}
-                {{#each errors}}
-                <div class="mb-3 text-start" style="color:red; font-size: 20px">
-                    <p>{{text}}</p>
-                </div>
-                {{/each}}
-                {{#with metadata}}
-                <section class="row">
-                    <div class="col-md-4">
-                        <div class="input-group mb-3">
-                            <label class="input-group-text" for="inputGroupSelect01">Building:</label>
-                            <select name="building" class="form-select" id="inputGroupSelect01">
-                                <option disabled selected>{{building}}</option>
-                                {{/with}}
-                                {{#each bldgs}}
-                                <option>{{building}}</option>
-                                {{/each}}
-                            </select>
+<div class="container">
+    <div class="row margin">
+        {{#with metadata}}
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb text-white">
+                <li class="breadcrumb-item"><a href="/ecmforms">Back</a></li>
+                <li class="breadcrumb-item" aria-current="page">Edit {{project_id}}</li>
+            </ol>
+        </nav>
+        <form action="/find/{{project_id}}" method="POST">
+            <div class="card border-secondary mt-3 w-100 text-light">
+                <h5 style="background-color: #bf5700;" class="card-header">Project Info</h5>
+                <div class="card-body text-black">
+                    {{/with}}
+                    {{#each errors}}
+                    <div class="mb-3 text-start" style="color:red; font-size: 20px">
+                        <p>{{text}}</p>
+                    </div>
+                    {{/each}}
+                    {{#with metadata}}
+                    <section class="row">
+                        <div class="col-md-4">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Building:</label>
+                                <select name="building" class="form-select" id="inputGroupSelect01">
+                                    <option disabled selected>{{building}}</option>
+                                    {{/with}}
+                                    {{#each bldgs}}
+                                    <option>{{building}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Measure Type:</label>
+                                <select name="measure_type" class="form-select" id="inputGroupSelect01">
+                                    {{#with metadata}}
+                                    <option disabled selected>{{measure_type}}</option>
+                                    {{/with}}
+                                    {{#each measure_types}}
+                                    <option>{{measure_type}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Status:</label>
+                                <select name="status" class="form-select" id="inputGroupSelect01">
+                                    {{#with metadata}}
+                                    <option disabled selected>{{status}}</option>
+                                    {{/with}}
+                                    {{#each prjt_status}}
+                                    <option>{{status}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                            {{#with metadata}}
+                            <div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">Project Fiscal
+                                            Year:</span>
+                                    </div>
+                                    <input disabled name="fiscal_year" value='{{fiscal_year}}' type="text"
+                                        class="form-control">
+                                </div>
+                            </div>
                         </div>
-                        <div class="input-group mb-3">
-                            <label class="input-group-text" for="inputGroupSelect01">Measure Type:</label>
-                            <select name="measure_type" class="form-select" id="inputGroupSelect01">
-                                {{#with metadata}}
-                                <option disabled selected>{{measure_type}}</option>
-                                {{/with}}
-                                {{#each measure_types}}
-                                <option>{{measure_type}}</option>
-                               {{/each}}
-                            </select>
-                        </div>
-                        <div class="input-group mb-3">
-                            <label class="input-group-text" for="inputGroupSelect01">Status:</label>
-                            <select name="status" class="form-select" id="inputGroupSelect01">
-                                {{#with metadata}}
-                                <option disabled selected>{{status}}</option>
-                                {{/with}}
-                                {{#each prjt_status}}
-                                <option>{{status}}</option>
-                                {{/each}}
-                            </select>
-                        </div>
-                        {{#with metadata}}
-                        <div>
+                        <div class="col-md-4 mt-5">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroup-sizing-default">Project Fiscal
-                                        Year:</span>
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Start Date:</span>
                                 </div>
-                                <input disabled name="fiscal_year" value='{{fiscal_year}}' type="text"
-                                    class="form-control">
+                                <input placeholder="mm/dd/yy" value='{{baseline_start_date}}' name="baseline_start_date"
+                                    type="text" class="form-control datepicker" />
+                                <input placeholder="mm/yy/dd" value='{{reporting_period_start_date}}'
+                                    name="reporting_period_start_date" type="text" class="form-control datepicker" />
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default"># of Days:</span>
+                                </div>
+                                <input placeholder="mm/dd/yy" value='{{length_baseline_period_days}}'
+                                    name="length_baseline_period_days" type="text" class="form-control" />
+                                <input placeholder="mm/dd/yy" value='{{length_reporting_period_days}}'
+                                    name="length_reporting_period_days" type="text" class="form-control" />
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">End Date:</span>
+                                </div>
+                                <input disabled name="baseline_end_date" value='{{baseline_end_date}}' type="text"
+                                    class="form-control" />
+                                <input disabled name="reporting_period_end_date" value='{{reporting_period_end_date}}'
+                                    type="text" class="form-control" />
                             </div>
                         </div>
+                        <div class="col-md-4 mt-5">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Staff Lead:</span>
+                                </div>
+                                <select name="staff_lead" class="form-select" id="inputGroupSelect01">
+                                    <option disabled selected>{{staff_lead}}</option>
+                                    <option>Adam Keeling</option>
+                                    <option>Amanda Berens</option>
+                                    <option>Buddy Bishop</option>
+                                    <option>Dave Cooper</option>
+                                    <option>Grace Hsieh</option>
+                                    <option>John Milton</option>
+                                    <option>Matt Stevens</option>
+                                    <option>Meagan Jones</option>
+                                    <option>Pat Mazur</option>
+                                    <option>Richard Shearman</option>
+                                    <option>Travis Isakson</option>
+                                </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Staff Support:</span>
+                                </div>
+                                <select name="staff_colead" class="form-select" id="inputGroupSelect01">
+                                    <option disabled selected>{{staff_colead}}</option>
+                                    <option>Adam Keeling</option>
+                                    <option>Amanda Berens</option>
+                                    <option>Buddy Bishop</option>
+                                    <option>Dave Cooper</option>
+                                    <option>Grace Hsieh</option>
+                                    <option>John Milton</option>
+                                    <option>Matt Stevens</option>
+                                    <option>Meagan Jones</option>
+                                    <option>Pat Mazur</option>
+                                    <option>Richard Shearman</option>
+                                    <option>Travis Isakson</option>
+                                </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Analyst:</span>
+                                </div>
+                                <select name="analyst" class="form-select" id="inputGroupSelect01">
+                                    <option disabled selected>{{analyst}}</option>
+                                    <option>Jeff McComas</option>
+                                    <option>Josh Butler</option>
+                                    <option>Laura Chiasson</option>
+                                    <option>Terrell McRee</option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="input-group mt-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Project Description:</span>
+                        </div>
+                        <textarea rows='5' name="project_description" class="form-control"
+                            aria-label="With textarea">{{project_description}}</textarea>
+                    </section>
+                    <section class="input-group mt-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Nonenergy Benefits:</span>
+                        </div>
+                        <textarea rows='2' name="nonenergy_benefits" class="form-control"
+                            aria-label="With textarea">{{nonenergy_benefits}}</textarea>
+                    </section>
+                    {{/with}}
+                    <div class='text-end text-white mt-3'>
+                        <button class="btn btn-success">Submit</button>
                     </div>
-                    <div class="col-md-4 mt-5">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-default">Start Date:</span>
-                            </div>
-                            <input placeholder="mm/dd/yy" value='{{baseline_start_date}}' name="baseline_start_date"
-                                type="text" class="form-control datepicker" />
-                            <input placeholder="mm/yy/dd" value='{{reporting_period_start_date}}'
-                                name="reporting_period_start_date" type="text" class="form-control datepicker" />
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-default"># of Days:</span>
-                            </div>
-                            <input placeholder="mm/dd/yy" value='{{length_baseline_period_days}}'
-                                name="length_baseline_period_days" type="text" class="form-control" />
-                            <input placeholder="mm/dd/yy" value='{{length_reporting_period_days}}'
-                                name="length_reporting_period_days" type="text" class="form-control" />
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-default">End Date:</span>
-                            </div>
-                            <input disabled name="baseline_end_date" value='{{baseline_end_date}}' type="text"
-                                class="form-control" />
-                            <input disabled name="reporting_period_end_date" value='{{reporting_period_end_date}}'
-                                type="text" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-md-4 mt-5">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-default">Staff Lead:</span>
-                            </div>
-                            <select name="staff_lead" class="form-select" id="inputGroupSelect01">
-                                <option disabled selected>{{staff_lead}}</option>
-                                <option>Adam Keeling</option>
-                                <option>Amanda Berens</option>
-                                <option>Buddy Bishop</option>
-                                <option>Dave Cooper</option>
-                                <option>Grace Hsieh</option>
-                                <option>John Milton</option>
-                                <option>Matt Stevens</option>
-                                <option>Meagan Jones</option>
-                                <option>Pat Mazur</option>
-                                <option>Richard Shearman</option>
-                                <option>Travis Isakson</option>
-                            </select>
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-default">Staff Support:</span>
-                            </div>
-                            <select name="staff_colead" class="form-select" id="inputGroupSelect01">
-                                <option disabled selected>{{staff_colead}}</option>
-                                <option>Adam Keeling</option>
-                                <option>Amanda Berens</option>
-                                <option>Buddy Bishop</option>
-                                <option>Dave Cooper</option>
-                                <option>Grace Hsieh</option>
-                                <option>John Milton</option>
-                                <option>Matt Stevens</option>
-                                <option>Meagan Jones</option>
-                                <option>Pat Mazur</option>
-                                <option>Richard Shearman</option>
-                                <option>Travis Isakson</option>
-                            </select>
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-default">Analyst:</span>
-                            </div>
-                            <select name="analyst" class="form-select" id="inputGroupSelect01">
-                                <option disabled selected>{{analyst}}</option>
-                                <option>Jeff McComas</option>
-                                <option>Josh Butler</option>
-                                <option>Laura Chiasson</option>
-                                <option>Terrell McRee</option>
-                            </select>
-                        </div>
-                    </div>
-                </section>
-                <section class="input-group mt-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Project Description:</span>
-                    </div>
-                    <textarea rows='5' name="project_description" class="form-control"
-                        aria-label="With textarea">{{project_description}}</textarea>
-                </section>
-                <section class="input-group mt-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Nonenergy Benefits:</span>
-                    </div>
-                    <textarea rows='2' name="nonenergy_benefits" class="form-control"
-                        aria-label="With textarea">{{nonenergy_benefits}}</textarea>
-                </section>
-                {{/with}}
-                <div class='text-end text-white mt-3'>
-                    <button class="btn btn-success">Submit</button>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>

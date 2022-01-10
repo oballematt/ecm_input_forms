@@ -2,13 +2,13 @@
     <div class="row margin">
         {{#with costHours}}
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Edit {{project_id}}</li>
+            <ol class="breadcrumb text-white">
+                <li class="breadcrumb-item"><a href="/ecmforms">Back</a></li>
+                <li class="breadcrumb-item" aria-current="page">Edit {{project_id}}</li>
             </ol>
         </nav>
         <form action='/find/costs_hours/{{id}}' id="formData" method="POST">
-            <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
+            <div class="card border-secondary w-100 text-light">
                 <h5 style="background-color: #bf5700;" class="card-header">Costs &amp; Hours</h5>
                 <div class="card-body w-100 text-end">
                     <div id="errors" class="text-start"></div>

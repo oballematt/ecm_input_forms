@@ -616,7 +616,7 @@ $(document).ready(() => {
         type: "POST",
         data: data,
         success: function() {
-          window.location = "/";
+          window.location = "/ecmforms";
         },
       });
     }
@@ -664,7 +664,7 @@ $(document).ready(() => {
         type: "POST",
         data: data,
         success: function() {
-          window.location = "/";
+          window.location = "/ecmforms";
         },
       });
     }
@@ -705,7 +705,7 @@ $(document).ready(() => {
         type: "POST",
         data: data,
         success: function() {
-          window.location = "/";
+          window.location = "/ecmforms";
         },
       });
     }

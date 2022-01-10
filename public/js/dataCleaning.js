@@ -14,6 +14,7 @@ let loadMeters = true;
 let outOfBoundsData;
 
 $(document).ready(() => {
+
   const dateInput_1 = $(".datepicker");
 
   dateInput_1.datepicker({
@@ -49,8 +50,8 @@ $(document).ready(() => {
       ) {
         getMeterAlarm();
       } else {
-        $('.multi-sort').empty()
-        $('.multi-sort').html(`<i class="fas fa-sort"></i>`)
+        $(".multi-sort").empty();
+        $(".multi-sort").html(`<i class="fas fa-sort"></i>`);
         $(".hide-meters").show();
         $(".ring").hide();
         $(function() {
@@ -59,7 +60,7 @@ $(document).ready(() => {
           let building = response.body.building_abbreviation;
           let building_number = response.body.building_number;
           let commodity = response.body.commodity_tag;
-          let saved = response.body.model_update_timestamp;
+          let saved = response.body.model_train_start_timestamp;
           let oobtData = meter.map((meter, index) => {
             return {
               building_abbreviation: building[index],
@@ -80,9 +81,11 @@ $(document).ready(() => {
   getMeterAlarm();
 
   $(".apply").on("click", function() {
-    $(this).html(` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-    <span class="visually-hidden">Loading...</span>`)
-    const analyst = $('#filter-steward').val();
+    $(
+      this
+    ).html(` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    <span class="visually-hidden">Loading...</span>`);
+    const analyst = $("#filter-steward").val();
     if (analyst === "null") {
       $.ajax({
         url: "/getAlarm",
@@ -96,8 +99,7 @@ $(document).ready(() => {
             .slice(0, 10),
         },
       }).then((response) => {
-        
-        $('.apply').html('Apply')
+        $(".apply").html("Apply");
         console.log(response);
         $(function() {
           let meter = response.body.meter;
@@ -135,7 +137,7 @@ $(document).ready(() => {
         },
       }).then(function(response) {
         console.log(response);
-        $('.apply').html('Apply')
+        $(".apply").html("Apply");
         $(function() {
           let meter = response.body.meter;
           let daysOutOfRange = response.body.value_count;
