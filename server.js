@@ -90,7 +90,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 //Express Route
-<<<<<<< HEAD
 app.get("/login", authorization.checkAuthenticated, (req, res) =>
   res.render("login", { error: req.flash("error") })
 );
@@ -140,40 +139,3 @@ app.listen(port, async () => {
   await sequelize.sync();
   console.log("Database connection established");
 });
-=======
-app.get('/', authorization.checkNotAuthenticated, (req, res) => res.render('home', {layout: 'landing'}))
-app.get('/login', authorization.checkAuthenticated,(req, res) => res.render('login', {error: req.flash('error')}));                                             
-app.get('/register', authorization.checkAuthenticated, (req, res) => res.render('signup'));                                             
-app.get('/reset', authorization.checkAuthenticated, (req, res) => res.render('reset'))                                             
-app.get("/logout", (req, res) => {                                             
-  req.logout();                                             
-  res.redirect('/login')                                             
-});                                             
-                                             
-app.post(                                             
-  "/login",                                             
-  passport.authenticate("local", {                                             
-    successRedirect: "/",                                             
-    failureRedirect: "/login",                                             
-    failureFlash: true                                             
-  })                                             
-);                                             
-                                             
-app.use('/', require("./routes/prjt_metadata"));                                             
-app.use('/', require('./routes/prjt_costs_hours'));                                             
-app.use('/', require('./routes/prjt_savings'));                                             
-app.use('/', require('./routes/prjt_fundings'));                                             
-app.use('/', require('./routes/prjt_baseline'));                                             
-app.use('/', require('./routes/getDataById'));                                             
-app.use('/', require('./routes/prjt_misc_savings'));                                             
-app.use('/', require('./routes/users'));                                             
-                                             
-app.listen(port, async () => {                                             
-  console.log(`Server started on port ${port}`);                                             
-  await sequelize.sync();                                             
-  console.log('Database connection established');                                             
-});                                             
-                                             
-                                             
-                                             
->>>>>>> 36b641ec3880609cf88e1aef1dd7d217bbd72a9d
