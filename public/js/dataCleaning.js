@@ -107,7 +107,7 @@ $(document).ready(() => {
           let building = response.body.building_abbreviation;
           let building_number = response.body.building_number;
           let commodity = response.body.commodity_tag;
-          let saved = response.body.model_update_timestamp;
+          let saved = response.body.model_train_start_timestamp;
           let allData = meter.map((meter, index) => {
             return {
               building_abbreviation: building[index],
@@ -144,7 +144,7 @@ $(document).ready(() => {
           let building = response.body.building_abbreviation;
           let building_number = response.body.building_number;
           let commodity = response.body.commodity_tag;
-          let saved = response.body.model_update_timestamp;
+          let saved = response.body.model_train_start_timestamp;
           let stewardData = meter.map((meter, index) => {
             return {
               building_abbreviation: building[index],
