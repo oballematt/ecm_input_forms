@@ -163,13 +163,7 @@ img{
 .carousel-item {
   height: 32rem;
 } 
- /* .carousel-item > img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  height: 32rem;
-} */
+
 .bgimage{
   position: relative;
   top: 0;
@@ -178,7 +172,7 @@ img{
 
 .fgimage{
   position: absolute;
-  left: 45%;
+  left: 2%;
   top: -410px;
   width: 800px;
   height: 1000px;
