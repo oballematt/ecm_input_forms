@@ -2,6 +2,7 @@
     <div class="row margin">
         {{#with miscSavings}}
         <nav aria-label="breadcrumb">
+<<<<<<< HEAD
             <ol class="breadcrumb text-white">
                 <li class="breadcrumb-item"><a href="/ecmforms">Back</a></li>
                 <li class="breadcrumb-item" aria-current="page">Edit {{project_id}}</li>
@@ -9,6 +10,15 @@
         </nav>
         <form action='/find/miscsavings/{{id}}' id="formData" method="POST">
             <div class="card border-secondary w-100 text-light">
+=======
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/ecmprojectsform">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit {{project_id}}</li>
+            </ol>
+        </nav>
+        <form action='/ecmprojectsform/miscsavings/{{id}}' id="formData" method="POST">
+            <div class="card border-secondary w-100 text-light" style="background-color: #333f48">
+>>>>>>> 36b641ec3880609cf88e1aef1dd7d217bbd72a9d
                 <h5 style="background-color: #bf5700;" class="card-header">Misc Savings</h5>
                 <div class="card-body w-100 text-end">
                     <div id="errors" class="text-start"></div>

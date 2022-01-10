@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="container">
     <div class="row margin">
         {{#with metadata}}
@@ -63,6 +64,38 @@
                                         class="form-control">
                                 </div>
                             </div>
+=======
+<div class="row margin">
+    {{#with metadata}}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/ecmprojectsform">Back</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Edit {{project_id}}</li>
+        </ol>
+    </nav>
+    <form action="/ecmprojectsform/{{project_id}}" method="POST">
+        <div class="card border-secondary mt-3 w-100 text-light" style="background-color: #333f48;">
+            <h5 style="background-color: #bf5700;" class="card-header">Project Info</h5>
+            <div class="card-body text-black">
+                {{/with}}
+                {{#each errors}}
+                <div class="mb-3 text-start" style="color:red; font-size: 20px">
+                    <p>{{text}}</p>
+                </div>
+                {{/each}}
+                {{#with metadata}}
+                <section class="row">
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="inputGroupSelect01">Building:</label>
+                            <select name="building" class="form-select" id="inputGroupSelect01">
+                                <option disabled selected>{{building}}</option>
+                                {{/with}}
+                                {{#each bldgs}}
+                                <option>{{building}}</option>
+                                {{/each}}
+                            </select>
+>>>>>>> 36b641ec3880609cf88e1aef1dd7d217bbd72a9d
                         </div>
                         <div class="col-md-4 mt-5">
                             <div class="input-group mb-3">
