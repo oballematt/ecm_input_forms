@@ -297,6 +297,7 @@ $(document).ready(() => {
           "Server not responding, trying your search again. Please do not refresh the page"
         );
       } else {
+        console.log(response)
         $(".displayData").show();
         if (response3[0].length === 0) {
           $(".attributesSubmitted").html(

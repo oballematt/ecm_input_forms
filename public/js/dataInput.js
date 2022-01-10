@@ -1,11 +1,11 @@
 $(document).ready(() => {
   //Tooltip information for delete button. Gives general idea to user when the hover over the delete project button at the bottom of the page
-  $(function() {
+  $(function () {
     $('[data-toggle="tooltip"]').tooltip();
   });
 
   // Click event listener for the spinner when loading data
-  $(".load").on("click", function() {
+  $(".load").on("click", function () {
     $("#overlay")
       .fadeIn()
       .delay(8000)
@@ -79,7 +79,7 @@ $(document).ready(() => {
     ids.forEach((id) => $("#" + id).val(dataObj[id] || "Choose..."));
   }
 
-  $(".percent").text(function(i, curr) {
+  $(".percent").text(function (i, curr) {
     if (
       !$(this)
         .text()
@@ -91,7 +91,7 @@ $(document).ready(() => {
     }
   });
 
-  $(".years").text(function(i, curr) {
+  $(".years").text(function (i, curr) {
     if (
       !$(this)
         .text()
@@ -103,7 +103,7 @@ $(document).ready(() => {
     }
   });
 
-  $(".whole").each(function() {
+  $(".whole").each(function () {
     if (
       !$(this)
         .text()
@@ -117,7 +117,7 @@ $(document).ready(() => {
     }
   });
 
-  $(".whole_dollar").each(function() {
+  $(".whole_dollar").each(function () {
     if (
       !$(this)
         .text()
@@ -131,7 +131,7 @@ $(document).ready(() => {
     }
   });
 
-  $(".commas").each(function() {
+  $(".commas").each(function () {
     let num = $(this).text();
     let commaNum = numberWithCommas(num);
     $(this).text(commaNum);
@@ -170,7 +170,7 @@ $(document).ready(() => {
 
   let costAnnTotal = costAnnValues.reduce((a, b) => a + b, 0);
 
-  $(".impFunds").each(function() {
+  $(".impFunds").each(function () {
     let values = parseInt(
       $(this)
         .text()
@@ -179,7 +179,7 @@ $(document).ready(() => {
     impFundsArray.push(values);
   });
 
-  $(".annFunds").each(function() {
+  $(".annFunds").each(function () {
     let values = parseInt(
       $(this)
         .text()
@@ -259,10 +259,10 @@ $(document).ready(() => {
     "#travisBtn": ".travis",
   };
 
-  Object.keys(filterObjs).forEach(function(key) {
+  Object.keys(filterObjs).forEach(function (key) {
     let value = filterObjs[key];
     let check = $(value).attr("name");
-    $(key).on("click", function() {
+    $(key).on("click", function () {
       $(value).removeAttr("style");
       $("#filterOptions").html(check);
       switch (check) {
@@ -362,7 +362,7 @@ $(document).ready(() => {
     "#numMvLabor": "#addMvLabor",
   };
 
-  Object.keys(valueObjs).forEach(function(key) {
+  Object.keys(valueObjs).forEach(function (key) {
     let value = valueObjs[key];
     if (
       $(key)
@@ -373,7 +373,7 @@ $(document).ready(() => {
     }
   });
 
-  $(".addBaseline").on("click", function(e) {
+  $(".addBaseline").on("click", function (e) {
     e.preventDefault();
     let commodity = $(this).attr("data-comm-name");
     let name = $(this).attr("name");
@@ -403,7 +403,7 @@ $(document).ready(() => {
     });
   });
 
-  $(".editBaseline").on("click", function(e) {
+  $(".editBaseline").on("click", function (e) {
     e.preventDefault();
     let id = $(this).attr("id");
     let commodity = $(this).attr("data-comm-name");
@@ -423,7 +423,7 @@ $(document).ready(() => {
     }).then($("#num" + name).text(value), $("#add" + name).val(value));
   });
 
-  $(".deleteBaseline").on("click", function(e) {
+  $(".deleteBaseline").on("click", function (e) {
     e.preventDefault();
     const id = $(this).attr("id");
     let name = $(this).attr("name");
@@ -438,7 +438,7 @@ $(document).ready(() => {
     );
   });
 
-  $(".addPredicted").on("click", function(e) {
+  $(".addPredicted").on("click", function (e) {
     e.preventDefault();
     let commodity = $(this).attr("data-comm-name");
     let name = $(this).attr("name");
@@ -470,7 +470,7 @@ $(document).ready(() => {
     });
   });
 
-  $(".editPredicted").on("click", function(e) {
+  $(".editPredicted").on("click", function (e) {
     e.preventDefault();
     let id = $(this).attr("id");
     let commodity = $(this).attr("data-comm-name");
@@ -491,7 +491,7 @@ $(document).ready(() => {
     }).then($("#numPred" + name).text(value), $("#addPred" + name).val(value));
   });
 
-  $(".deletePredicted").on("click", function(e) {
+  $(".deletePredicted").on("click", function (e) {
     e.preventDefault();
     const id = $(this).attr("id");
     let name = $(this).attr("name");
@@ -506,7 +506,7 @@ $(document).ready(() => {
     );
   });
 
-  $(".addMv").on("click", function(e) {
+  $(".addMv").on("click", function (e) {
     e.preventDefault();
     let commodity = $(this).attr("data-comm-name");
     let name = $(this).attr("name");
@@ -538,7 +538,7 @@ $(document).ready(() => {
     });
   });
 
-  $(".editMv").on("click", function(e) {
+  $(".editMv").on("click", function (e) {
     e.preventDefault();
     let id = $(this).attr("id");
     let commodity = $(this).attr("data-comm-name");
@@ -559,7 +559,7 @@ $(document).ready(() => {
     }).then($("#numMv" + name).text(value), $("#addMv" + name).val(value));
   });
 
-  $(".deleteMv").on("click", function(e) {
+  $(".deleteMv").on("click", function (e) {
     e.preventDefault();
     const id = $(this).attr("id");
     let name = $(this).attr("name");
@@ -576,7 +576,7 @@ $(document).ready(() => {
 
   // ajax calls for updating a specific table on an existing project ID, ajax call necessary so that if a user
   //inputs a number with comma separators, the ajax call will remove the commas when submitted to the database to avoid NaN errors.
-  $("#formData").on("click", "button.updateCost", function() {
+  $("#formData").on("click", "button.updateCost", function () {
     const id = $(this).attr("id");
     const imp_or_ann = $(".imp_or_ann").attr("value");
     const category = $(".category").attr("value");
@@ -606,8 +606,8 @@ $(document).ready(() => {
       for (var item in errors) {
         $("#errors").append(
           '<p style="border: 1px solid black; font-weight: bold">' +
-            errors[item].text +
-            "</p>"
+          errors[item].text +
+          "</p>"
         );
       }
     } else {
@@ -615,14 +615,14 @@ $(document).ready(() => {
         url: "/update/costs_hours/" + id,
         type: "POST",
         data: data,
-        success: function() {
+        success: function () {
           window.location = "/ecmforms";
         },
       });
     }
   });
 
-  $("#formData").on("click", "button.updateFunding", function() {
+  $("#formData").on("click", "button.updateFunding", function () {
     const id = $(this).attr("id");
     const source = $(".source").attr("value");
     let errors = [];
@@ -654,8 +654,8 @@ $(document).ready(() => {
       for (var item in errors) {
         $("#errors").append(
           '<p style="border: 1px solid black; font-weight: bold">' +
-            errors[item].text +
-            "</p>"
+          errors[item].text +
+          "</p>"
         );
       }
     } else {
@@ -663,14 +663,14 @@ $(document).ready(() => {
         url: "/update/funding/" + id,
         type: "POST",
         data: data,
-        success: function() {
+        success: function () {
           window.location = "/ecmforms";
         },
       });
     }
   });
 
-  $("#formData").on("click", "button.updateMisc", function() {
+  $("#formData").on("click", "button.updateMisc", function () {
     const id = $(this).attr("id");
     const phase = $(".phase").attr("value");
     const owner = $(".misc_owner").attr("value");
@@ -695,8 +695,8 @@ $(document).ready(() => {
       for (var item in errors) {
         $("#errors").append(
           '<p style="border: 1px solid black; font-weight: bold">' +
-            errors[item].text +
-            "</p>"
+          errors[item].text +
+          "</p>"
         );
       }
     } else {
@@ -704,7 +704,7 @@ $(document).ready(() => {
         url: "/update/miscsavings/" + id,
         type: "POST",
         data: data,
-        success: function() {
+        success: function () {
           window.location = "/ecmforms";
         },
       });
@@ -720,7 +720,7 @@ $(document).ready(() => {
       .first()
       .clone();
 
-  $table.on("click", "button.addRow", function(e) {
+  $table.on("click", "button.addRow", function (e) {
     e.preventDefault();
     let errors = [];
     let data = {
@@ -768,8 +768,8 @@ $(document).ready(() => {
       for (var item in errors) {
         $("#errors").append(
           '<p style="border: 1px solid black; font-weight: bold">' +
-            errors[item].text +
-            "</p>"
+          errors[item].text +
+          "</p>"
         );
       }
     } else {
@@ -777,20 +777,21 @@ $(document).ready(() => {
         url: "/costs_hours",
         type: "POST",
         data: data,
-      }).then( response => {
-        console.log(response);
+      }).then(response => {
+        console.log(data);
         $tbody
           .find(":input")
           .prop("disabled", true)
           .css("background-color", "green"),
-        $tbody.append($cloneRow.clone()),
-        $("#next").removeAttr("disabled"),
-        $("#link").attr("href", "/fundings"),
-        $("#errors").text(""),
-        $(".info").removeAttr("style"),
-        $(".infoMessage").text(
-          "Your data was successfully added! Search for your project again to view and edit the data below. Otherwise, continue adding data to the other tables "
-        )
+          $tbody.append($cloneRow.clone()),
+          $("#next").removeAttr("disabled"),
+          $("#link").attr("href", "/fundings"),
+          $("#errors").text(""),
+          $(".info").removeAttr("style"),
+          $(".infoMessage").text(
+            "Your data was successfully added! Search for your project again to view and edit the data below. Otherwise, continue adding data to the other tables "
+          )
+
       }
       );
     }
@@ -845,8 +846,8 @@ $(document).ready(() => {
       for (var item in errors) {
         $("#errorsF").append(
           '<p style="border: 1px solid black; font-weight: bold">' +
-            errors[item].text +
-            "</p>"
+          errors[item].text +
+          "</p>"
         );
       }
     } else {
@@ -878,7 +879,7 @@ $(document).ready(() => {
       .first()
       .clone();
 
-  $tableM.on("click", "button.addRowM", function(e) {
+  $tableM.on("click", "button.addRowM", function (e) {
     e.preventDefault();
     let errors = [];
     let data = {
@@ -918,8 +919,8 @@ $(document).ready(() => {
       for (var item in errors) {
         $("#errorsM").append(
           '<p style="border: 1px solid black; font-weight: bold">' +
-            errors[item].text +
-            "</p>"
+          errors[item].text +
+          "</p>"
         );
       }
     } else {
@@ -945,7 +946,7 @@ $(document).ready(() => {
   });
 
   //Ajax calls to delete data records from tables without page refresh after every delete.
-  $(".deleteCostsHours").on("click", function(e) {
+  $(".deleteCostsHours").on("click", function (e) {
     e.preventDefault();
     const id = $(this).attr("id");
     $.ajax({
@@ -958,7 +959,7 @@ $(document).ready(() => {
     );
   });
 
-  $(".deleteFundings").on("click", function(e) {
+  $(".deleteFundings").on("click", function (e) {
     e.preventDefault();
     const id = $(this).attr("id");
     $.ajax({
@@ -971,7 +972,7 @@ $(document).ready(() => {
     );
   });
 
-  $(".deleteMiscSavings").on("click", function(e) {
+  $(".deleteMiscSavings").on("click", function (e) {
     e.preventDefault();
     const id = $(this).attr("id");
     $.ajax({
@@ -984,7 +985,7 @@ $(document).ready(() => {
     );
   });
 
-  $(".register").on("click", function() {
+  $(".register").on("click", function () {
     $(".registerMessage").empty();
     let data = {
       name: $(".registerName").val(),
@@ -996,7 +997,7 @@ $(document).ready(() => {
       type: "POST",
       url: "/register",
       data: data,
-    }).then(function(response) {
+    }).then(function (response) {
       console.log(response);
       if (response.length > 0) {
         $(".registerMessage").append(
