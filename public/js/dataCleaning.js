@@ -14,7 +14,6 @@ let loadMeters = true;
 let outOfBoundsData;
 
 $(document).ready(() => {
-
   const dateInput_1 = $(".datepicker");
 
   dateInput_1.datepicker({
@@ -43,7 +42,6 @@ $(document).ready(() => {
           .slice(0, 10),
       },
     }).then((response) => {
-      console.log(response);
       if (
         response === "Request failed with status code 504" ||
         response === "Request failed with status code 500"
@@ -100,7 +98,6 @@ $(document).ready(() => {
         },
       }).then((response) => {
         $(".apply").html("Apply");
-        console.log(response);
         $(function() {
           let meter = response.body.meter;
           let daysOutOfRange = response.body.value_count;
@@ -136,7 +133,6 @@ $(document).ready(() => {
           analyst: analyst === "null" ? null : analyst,
         },
       }).then(function(response) {
-        console.log(response);
         $(".apply").html("Apply");
         $(function() {
           let meter = response.body.meter;
@@ -297,12 +293,8 @@ $(document).ready(() => {
           "Server not responding, trying your search again. Please do not refresh the page"
         );
       } else {
-        console.log(response)
         $(".displayData").show();
         if (response3[0].length === 0) {
-          $(".attributesSubmitted").html(
-            `<h6 class="text-warning"><strong>Attributes have not been submitted for this meter</strong></h6>`
-          );
           meterAttributes = true;
         } else if (
           response3[0][0].train_start === $(".currentStart").text() &&
@@ -365,12 +357,6 @@ $(document).ready(() => {
         $(".currentVariable").text(response[0].body.model.x);
         $(".currentStart").text(modelStart);
         $(".currentEnd").text(modelEnd);
-
-        console.log(xTemp);
-        const toFindDuplicates = (xTemp) =>
-          xTemp.filter((item, index) => xTemp.indexOf(item) !== index);
-        const duplicateElements = toFindDuplicates(xTemp);
-        console.log(duplicateElements);
 
         xTemp.forEach((key, i) => (result[key] = lowLimit[i]));
 
@@ -697,7 +683,10 @@ $(document).ready(() => {
             let upperBound = $(this)
               .find(".upperBound")
               .html();
-            if (parseInt(meterReading, 10) < parseInt(lowerBound, 10) || parseInt(meterReading, 10) === parseInt(lowerBound, 10)) {
+            if (
+              parseInt(meterReading, 10) < parseInt(lowerBound, 10) ||
+              parseInt(meterReading, 10) === parseInt(lowerBound, 10)
+            ) {
               $(this).css("background-color", "#F0AD4E");
               if ($(this).index() === 0) {
                 $(this)
@@ -714,7 +703,10 @@ $(document).ready(() => {
               }
             }
 
-            if (parseInt(meterReading, 10) > parseInt(upperBound, 10) || parseInt(meterReading, 10) === parseInt(upperBound, 10)) {
+            if (
+              parseInt(meterReading, 10) > parseInt(upperBound, 10) ||
+              parseInt(meterReading, 10) === parseInt(upperBound, 10)
+            ) {
               $(this).css("background-color", "#d9534f");
               if ($(this).index() === 0) {
                 $(this)
@@ -995,6 +987,10 @@ $(document).ready(() => {
                     <strong>Success!</strong> Your data has been successfully uploaded!
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>`);
+
+        setTimeout(() => {
+          $(".successAlert").empty();
+        }, 3000);
       });
     }
   });
