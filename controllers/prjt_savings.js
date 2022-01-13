@@ -22,30 +22,6 @@ module.exports = {
         }
     },
 
-
-    getOneSavings: async (req, res) => {
-        const { id } = req.params
-
-        try {
-
-            const savings = await Prjt_savings.findOne({
-                where: {
-                    id
-                }
-            });
-
-            return res.render('edit/editSavings', {
-                savings
-            });
-
-        } catch (error) {
-
-            console.error(error.message);
-            return res.status(500).json(error);
-
-        };
-    },
-
     updateSavings: async (req, res) => {
         try {
 
@@ -61,7 +37,7 @@ module.exports = {
                     }
                 });
 
-            return res.redirect('/')
+            return res.redirect('/ecmforms')
 
         } catch (error) {
 

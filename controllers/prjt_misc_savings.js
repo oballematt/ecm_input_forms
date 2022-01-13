@@ -33,7 +33,7 @@ module.exports = {
                 }
             });
 
-            return res.render('edit/editMiscSavings', {
+            return res.render('ecmForms/edit/editMiscSavings', {
                 miscSavings
             });
 
@@ -60,7 +60,7 @@ module.exports = {
                     }
                 });
 
-            return res.redirect('/')
+            return res.redirect('/ecmforms')
 
         } catch (error) {
 

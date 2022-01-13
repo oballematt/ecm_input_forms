@@ -36,7 +36,7 @@ module.exports = {
             }
 
             if (errors.length > 0) {
-                res.render('edit/allForms', {
+                res.render('ecmForms/edit/allForms', {
                     errors,
                     projectId,
                     staffLead
@@ -199,7 +199,7 @@ module.exports = {
                     }
                 });
 
-                return res.render('edit/allForms', {
+                return res.render('ecmForms/edit/allForms', {
                     metadata,                                                                           
                     costsHours,                                                                           
                     baseline,                                                                           
@@ -251,7 +251,7 @@ module.exports = {
                 ]
             })
 
-            return res.render('edit/allForms', {
+            return res.render('ecmForms/edit/allForms', {
                 projectId,
                 staffLead
             });
@@ -306,7 +306,7 @@ module.exports = {
                 }
             });
 
-            return res.redirect('/')
+            return res.redirect('/ecmforms')
 
         } catch (error) {
 

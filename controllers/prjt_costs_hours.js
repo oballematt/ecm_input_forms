@@ -37,7 +37,7 @@ module.exports = {
                 }
             });
 
-            return res.render('edit/editCostsHours', {
+            return res.render('ecmForms/edit/editCostsHours', {
                 costHours
             });
 
@@ -64,7 +64,7 @@ module.exports = {
                     }
                 });
 
-            return res.redirect('/')
+            return res.redirect('/ecmforms')
 
         } catch (error) {
 
