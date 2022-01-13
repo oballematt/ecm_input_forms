@@ -309,6 +309,7 @@ $(document).ready(() => {
           );
           meterAttributes = true;
         }
+        console.log(response3)
         attributes = response3[0];
         const analysisIndex = response[0].body.model.data.timestamp.indexOf(
           $(".analysisStart").val()
@@ -349,10 +350,11 @@ $(document).ready(() => {
           parseFloat(response[0].body.model.std.train).toFixed(2)
         );
         $(".meterVariable").html(
-          `Variable: ${response[0].body.model.x.toUpperCase()}`
+          response[0].body.model.x.toUpperCase()
         );
         $(".currentMeter").text(meterData[0][0].meter);
         $(".currentBuilding").text(meterData[0][0].building_number);
+        $(".currentBuildingName").text(meterData[0][0].building_abbreviation);
         $(".currentCommodity").text(meterData[0][0].commodity_tag);
         $(".currentVariable").text(response[0].body.model.x);
         $(".currentStart").text(modelStart);
