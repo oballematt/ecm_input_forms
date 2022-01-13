@@ -1,18 +1,9 @@
-# ecm_input_forms
+# UT Energy Hub
 
-ECM input forms designed for utilities and energy management stewards at UT to be able to enter data into the postgres database.
+This portal is designed to replace the old energy hub that is currently being used by the Utilities and Energy Management department. Using this portal, you can access the ecm input forms and the meter valdation app. The ecm input forms allowsw the energy stewards use to create and edit projects for buildings. The meter validation app allows the stewards to investigate any discrepancies with certain meters  either clean the meter so it will contain the correct data or make a note on the meter to investiage later.
 
 ## Link
-[Link to deployed app](https://ecm-input-form.herokuapp.com/)
-
-## Installation
-
-- git clone the repo.
-- cd into root folder.
-- Use the package manager npm to install ecm_input_forms
-```bash
-npm install
-```
+[Link to deployed app](https://utenergyhub.herokuapp.com/)
 
 ## Built With
 - JavaScript
