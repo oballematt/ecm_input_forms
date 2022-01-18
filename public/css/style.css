@@ -123,7 +123,6 @@ h1 {
 .sidebar-logo {
   padding: 10px 15px 10px 30px;
   font-size: 20px;
-
 }
 
 .sidebar-navigation {
@@ -148,7 +147,9 @@ h1 {
   text-decoration: none;
 }
 
-.sidebar-navigation li .fas, .fa, .far {
+.sidebar-navigation li .fas,
+.fa,
+.far {
   margin-right: 10px;
 }
 
@@ -162,7 +163,7 @@ h1 {
 .sidebar-navigation li::before {
   background-color: #bf5700;
   position: absolute;
-  content: '';
+  content: "";
   height: 100%;
   left: 0;
   top: 0;
@@ -173,9 +174,9 @@ h1 {
 }
 
 .sidebar-navigation .logout::before {
-  background-color: #DC3545;
+  background-color: #dc3545;
   position: absolute;
-  content: '';
+  content: "";
   height: 100%;
   left: 0;
   top: 0;
@@ -206,6 +207,7 @@ h1 {
   background-color: rgba(156, 173, 183, 0.2);
   color: white;
 }
+
 
 @keyframes rotate {
   0% {

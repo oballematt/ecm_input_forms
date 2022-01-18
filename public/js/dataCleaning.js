@@ -54,7 +54,7 @@ $(document).ready(() => {
         $(".ring").hide();
         $(function() {
           let meter = response.body.meter;
-          let daysOutOfRange = response.body.value_count;
+          let daysOutOfRange = response.body.flag_count;
           let building = response.body.building_abbreviation;
           let building_number = response.body.building_number;
           let commodity = response.body.commodity_tag;
