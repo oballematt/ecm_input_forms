@@ -48,6 +48,7 @@ $(document).ready(() => {
       ) {
         getMeterAlarm();
       } else {
+        $(".apply").html("Apply");
         $(".multi-sort").empty();
         $(".multi-sort").html(`<i class="fas fa-sort"></i>`);
         $(".hide-meters").show();
@@ -58,7 +59,7 @@ $(document).ready(() => {
           let building = response.body.building_abbreviation;
           let building_number = response.body.building_number;
           let commodity = response.body.commodity_tag;
-          let saved = response.body.model_train_start_timestamp;
+          let saved = response.body.model_update_timestamp;
           let oobtData = meter.map((meter, index) => {
             return {
               building_abbreviation: building[index],
@@ -100,7 +101,7 @@ $(document).ready(() => {
         $(".apply").html("Apply");
         $(function() {
           let meter = response.body.meter;
-          let daysOutOfRange = response.body.value_count;
+          let daysOutOfRange = response.body.flag_count;
           let building = response.body.building_abbreviation;
           let building_number = response.body.building_number;
           let commodity = response.body.commodity_tag;
@@ -136,7 +137,7 @@ $(document).ready(() => {
         $(".apply").html("Apply");
         $(function() {
           let meter = response.body.meter;
-          let daysOutOfRange = response.body.value_count;
+          let daysOutOfRange = response.body.flag_count;
           let building = response.body.building_abbreviation;
           let building_number = response.body.building_number;
           let commodity = response.body.commodity_tag;
@@ -309,7 +310,7 @@ $(document).ready(() => {
           );
           meterAttributes = true;
         }
-        console.log(response3)
+        console.log(response3);
         attributes = response3[0];
         const analysisIndex = response[0].body.model.data.timestamp.indexOf(
           $(".analysisStart").val()
@@ -349,9 +350,17 @@ $(document).ready(() => {
         $(".stdDev").html(
           parseFloat(response[0].body.model.std.train).toFixed(2)
         );
-        $(".meterVariable").html(
-          response[0].body.model.x.toUpperCase()
-        );
+        $('.start').html(analysisStart)
+        $('.end').html(analysisEnd)
+        $(".meterVariable").html(response[0].body.model.x.toUpperCase());
+        $(".savedBaseTemp").html(response3[0][0].base_temperature);
+        $(".savedAutoIgnored").html(response3[0][0].auto_ignored_percentage + '%');
+        $(".savedSlope").html(response3[0][0].slope);
+        $(".savedIntercept").html(response3[0][0].intercept);
+        $(".savedR2").html(response3[0][0].r2);
+        $(".savedStdDev").html(response3[0][0].std);
+        $(".savedStart").html(response3[0][0].train_start);
+        $(".savedEnd").html(response3[0][0].train_end);
         $(".currentMeter").text(meterData[0][0].meter);
         $(".currentBuilding").text(meterData[0][0].building_number);
         $(".currentBuildingName").text(meterData[0][0].building_abbreviation);
@@ -416,7 +425,7 @@ $(document).ready(() => {
                 fill: false,
                 pointRadius: 0,
                 tension: 0.1,
-                borderColor: "white",
+                borderColor: "#d9534f",
               },
               {
                 type: "line",
@@ -532,7 +541,7 @@ $(document).ready(() => {
                 }),
                 fill: false,
                 pointRadius: 0,
-                borderColor: "white",
+                borderColor: "#d9534f",
                 tension: 0.1,
               },
               {
@@ -873,11 +882,15 @@ $(document).ready(() => {
           );
         }
 
-        $(".clickbutton").on("click", () => {
+        $(".copyModelDates").on("click", () => {
           $(".modelStart").val(updateModelStart);
           $(".modelEnd").val(updateModelEnd);
         });
       }
+      $(".loadAttributes").on("click", () => {
+        $(".modelStart").val(response3[0][0].train_start);
+        $(".modelEnd").val(response3[0][0].train_end);
+      });
     });
   };
 

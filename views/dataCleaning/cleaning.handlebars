@@ -49,7 +49,7 @@
                             <th data-field="state" data-radio="true"></th>
                             <th data-sortable="true" data-field="building_abbreviation">Building</th>
                             <th data-sortable="true" data-field="meter">Meter</th>
-                            <th data-sortable="true" data-field="value_count">Days out of range
+                            <th data-sortable="true" data-field="value_count"># Flagged Days
                             </th>
                             <th data-sortable="true" data-field="model_update_timestamp">Last Model</th>
                             <th data-visible='false' data-field="building_number">Building Number</th>
@@ -110,55 +110,124 @@
             </div>
         </div>
         <div style='width: 69.5%' class="col-xxl-8 col-lg-8">
-            <nav class="nav">
-                <li class='nav-item'>
-                    <h6 style='color: white' class="nav-link">Meter:
-                        <span class="units currentMeter">--</span>
+            <header>
+                <li class='headings'>
+                    <h6 style='color: white;'>Current Model:
+                        <span style='color: transparent' class="units ">.</span>
                     </h6>
                 </li>
-                 <li class='nav-item'>
-                    <h6 style='color: white' class="nav-link">Building:
-                        <span class="units currentBuildingName">--</span>
-                    </h6>
-                </li>
-                <li class='nav-item'>
-                    <h6 style='color: white' class="nav-link">Variable:
-                        <span class="units meterVariable"> --</span>
-                    </h6>
-                </li>
-                <li class='nav-item'>
-                    <h6 style='color: white' class="nav-link">Base Temp:
+                <li class='headings'>
+                    <h6 style='color: white'>Base Temp:
                         <span class="units baseTemp">--</span>
                     </h6>
                 </li>
-                <li class='nav-item'>
-                    <h6 style='color: white' class="nav-link">% Auto Ignored:
+                <li class='headings'>
+                    <h6 style='color: white'>% Auto Ignored:
                         <span class="units autoIgnored">--</span>
                     </h6>
                 </li>
-                <li class='nav-item'>
-                    <h6 style='color: white' class="nav-link">Slope:
+                <li class='headings'>
+                    <h6 style='color: white'>Slope:
                         <span class="units slope">--</span>
                     </h6>
                 </li>
-                <li class='nav-item'>
-                    <h6 style='color: white' class="nav-link">Intercept:
+                <li class='headings'>
+                    <h6 style='color: white'>Intercept:
                         <span class="units intercept">--</span>
                     </h6>
                 </li>
-                <li class='nav-item'>
-                    <h6 style='color: white' class="nav-link">R-Squared:
+                <li class='headings'>
+                    <h6 style='color: white'>R-Squared:
                         <span class="units r2">--</span>
                     </h6>
                 </li>
-                <li class='nav-item'>
-                    <h6 style='color: white' class="nav-link">Std Dev:
+                <li class='headings'>
+                    <h6 style='color: white'>Std Dev:
                         <span class="units stdDev">--</span>
                     </h6>
                 </li>
-                 
-            </nav>
+                <li class='headings'>
+                    <h6 style='color: white'>Start Date:
+                        <span class="units start">--</span>
+                    </h6>
+                </li>
+                <li class='headings'>
+                    <h6 style='color: white'>End Date:
+                        <span class="units end">--</span>
+                    </h6>
+                </li>
+                <li class='headings'>
+                    <button style='margin-bottom: 20px' type="button" class="btn btn-success headings">Save</button>
+                </li>
+
+            </header>
+            <header>
+                <li class='headings'>
+                    <h6 style='color: white'>Saved Model:
+                        <span style='color: transparent' class="units">.</span>
+                    </h6>
+                </li>
+
+                <li class='headings'>
+                    <h6 style='color: white'>Base Temp:
+                        <span class="units savedBaseTemp">--</span>
+                    </h6>
+                </li>
+                <li class='headings'>
+                    <h6 style='color: white'>% Auto Ignored:
+                        <span class="units savedAutoIgnored">--</span>
+                    </h6>
+                </li>
+                <li class='headings'>
+                    <h6 style='color: white'>Slope:
+                        <span class="units savedSlope">--</span>
+                    </h6>
+                </li>
+                <li class='headings'>
+                    <h6 style='color: white'>Intercept:
+                        <span class="units savedIntercept">--</span>
+                    </h6>
+                </li>
+                <li class='headings'>
+                    <h6 style='color: white'>R-Squared:
+                        <span class="units savedR2">--</span>
+                    </h6>
+                </li>
+                <li class='headings'>
+                    <h6 style='color: white'>Std Dev:
+                        <span class="units savedStdDev">--</span>
+                    </h6>
+                </li>
+                <li class='headings'>
+                    <h6 style='color: white'>Start Date:
+                        <span class="units savedStart">--</span>
+                    </h6>
+                </li>
+                <li class='headings'>
+                    <h6 style='color: white'>End Date:
+                        <span class="units savedEnd">--</span>
+                    </h6>
+                </li>
+                <li class='headings'>
+                    <button style='margin-bottom: 20px; margin-left: 11px' type="button"
+                        class="btn btn-primary headings loadAttributes">Load</button>
+                </li>
+
+            </header>
+
             <div style="display: none;" class="displayData">
+
+                <li class='headings'>
+                    <h6 style='color: white'>Building:
+                        <span class="units currentBuildingName">--</span>
+                    </h6>
+                </li>
+                <li class='headings'>
+                    <h6 style='color: white'>Meter:
+                        <span class="units currentMeter">--</span>
+                    </h6>
+                </li>
+
                 <div style="width: 100%;" id="collapseRow">
                     <div class="row mt-3">
                         <div class="col-md-3 collapseButton">
@@ -177,7 +246,7 @@
                                     <h4 class='text-center mt-3' style="color: white"><span id='dbgchart'></span>
                                     </h4>
                                     <div class="div text-center">
-                                        <button type="button" class="btn btn-success clickbutton">Copy selected
+                                        <button type="button" class="btn btn-success copyModelDates">Copy selected
                                             dates to
                                             Model</button>
                                     </div>
@@ -211,10 +280,12 @@
                                 <ul class="list-group list-group-horizontal mb-3">
                                     <li style="color: white; border: .5px solid; border-color: black"
                                         class="list-group-item bg-transparent"><i style="color: #F0AD4E"
-                                            class="fas fa-square"></i> Value <i class="fas fa-less-than-equal"></i> Low Limit</li>
+                                            class="fas fa-square"></i> Value <i class="fas fa-less-than-equal"></i> Low
+                                        Limit</li>
                                     <li style="color: white; border: .5px solid; border-color: black"
                                         class="list-group-item bg-transparent"><i style="color: #d9534f"
-                                            class="fas fa-square"></i> Value <i class="fas fa-greater-than-equal"></i> High Limit</li>
+                                            class="fas fa-square"></i> Value <i class="fas fa-greater-than-equal"></i>
+                                        High Limit</li>
                                     <li style="color: white; border: .5px solid; border-color: black"
                                         class="list-group-item bg-transparent"><i style="color: #0275d8"
                                             class="fas fa-square"></i> Value same as previous day</li>

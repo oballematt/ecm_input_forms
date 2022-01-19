@@ -21,6 +21,11 @@
   border-radius: 50%;
 }
 
+.headings{
+  display: inline-block;
+  padding: 0.5rem 0.8rem;
+}
+
 .sidebar-container {
   position: fixed;
   width: 400px;
@@ -220,7 +225,7 @@
 }
 
 .btn-success {
-  background-color: #00b74a;
+  background-color: #00b74a !important;
 }
 
 table {
