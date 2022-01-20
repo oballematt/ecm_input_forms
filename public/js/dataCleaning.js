@@ -27,7 +27,7 @@ $(document).ready(() => {
 
   let $table = $("#table");
   let $button3 = $("#button3");
-  let $outOfRange = $(".show-data");
+
 
   const getMeterAlarm = () => {
     $.ajax({
@@ -65,7 +65,7 @@ $(document).ready(() => {
               building_abbreviation: building[index],
               meter: meter,
               value_count:
-                daysOutOfRange[index] === 30 ? "-" : daysOutOfRange[index],
+                daysOutOfRange[index] === 30 || daysOutOfRange[index] === 31 || daysOutOfRange[index] === 0 ? "-" : daysOutOfRange[index],
               model_update_timestamp: saved[index],
               building_number: building_number[index],
               commodity_tag: commodity[index],
@@ -111,7 +111,7 @@ $(document).ready(() => {
               building_abbreviation: building[index],
               meter: meter,
               value_count:
-                daysOutOfRange[index] === 30 ? "-" : daysOutOfRange[index],
+              daysOutOfRange[index] === 30 || daysOutOfRange[index] === 31 || daysOutOfRange[index] === 0 ? "-" : daysOutOfRange[index],
               model_update_timestamp: saved[index],
               building_number: building_number[index],
               commodity_tag: commodity[index],
@@ -159,20 +159,7 @@ $(document).ready(() => {
     }
   });
 
-  $outOfRange.on("click", function() {
-    $table.bootstrapTable("showColumn", "value_count");
-    $table.bootstrapTable("hideColumn", "model_update_timestamp");
-    $(this).hide();
-    $(".all-meters").show();
-  });
-
-  $(".all-meters").on("click", function() {
-    $table.bootstrapTable("hideColumn", "value_count");
-    $table.bootstrapTable("showColumn", "model_update_timestamp");
-    $(this).hide();
-    $outOfRange.show();
-  });
-
+  
   $(".modelStart").on("change", function() {
     let date2 = $(this).datepicker("getDate");
     date2.setDate(date2.getDate() + 364);
@@ -283,6 +270,7 @@ $(document).ready(() => {
         },
       })
     ).then((response, response2, response3) => {
+      console.log(response)
       if (
         response[0] === "Request failed with status code 504" ||
         response[0] === "Request failed with status code 500" ||
@@ -297,11 +285,24 @@ $(document).ready(() => {
         $(".displayData").show();
         if (response3[0].length === 0) {
           meterAttributes = true;
+          $(".savedAttributes").hide();
         } else if (
           response3[0][0].train_start === $(".currentStart").text() &&
           response3[0][0].train_end === $(".currentEnd").text()
         ) {
           meterAttributes = false;
+        } else {
+          $(".savedBaseTemp").html(response3[0][0].base_temperature === null ? '--' : response3[0][0].base_temperature);
+          $(".savedAutoIgnored").html(
+            response3[0][0].auto_ignored_percentage + "%"
+          );
+          $(".savedAttributes").show();
+          $(".savedSlope").html(response3[0][0].slope);
+          $(".savedIntercept").html(response3[0][0].intercept);
+          $(".savedR2").html(response3[0][0].r2);
+          $(".savedStdDev").html(response3[0][0].std);
+          $(".savedStart").html(response3[0][0].train_start);
+          $(".savedEnd").html(response3[0][0].train_end);
         }
 
         if (response3[0].length === 1) {
@@ -334,7 +335,7 @@ $(document).ready(() => {
         let result2 = {};
         $(".overlayMessage").text("Getting data, this will take a few seconds");
         $("#overlay").fadeOut();
-        $(".baseTemp").html(response[0].body.model.base_temperature);
+        $(".baseTemp").html(response[0].body.model.base_temperature === null ? "--" : response[0].body.model.base_temperature);
         $(".autoIgnored").html(
           parseFloat(
             response[0].body.model.missing_value.auto_ignored_percentage
@@ -350,17 +351,10 @@ $(document).ready(() => {
         $(".stdDev").html(
           parseFloat(response[0].body.model.std.train).toFixed(2)
         );
-        $('.start').html(analysisStart)
-        $('.end').html(analysisEnd)
+        $(".start").html(analysisStart);
+        $(".end").html(analysisEnd);
         $(".meterVariable").html(response[0].body.model.x.toUpperCase());
-        $(".savedBaseTemp").html(response3[0][0].base_temperature);
-        $(".savedAutoIgnored").html(response3[0][0].auto_ignored_percentage + '%');
-        $(".savedSlope").html(response3[0][0].slope);
-        $(".savedIntercept").html(response3[0][0].intercept);
-        $(".savedR2").html(response3[0][0].r2);
-        $(".savedStdDev").html(response3[0][0].std);
-        $(".savedStart").html(response3[0][0].train_start);
-        $(".savedEnd").html(response3[0][0].train_end);
+
         $(".currentMeter").text(meterData[0][0].meter);
         $(".currentBuilding").text(meterData[0][0].building_number);
         $(".currentBuildingName").text(meterData[0][0].building_abbreviation);
@@ -891,6 +885,10 @@ $(document).ready(() => {
         $(".modelStart").val(response3[0][0].train_start);
         $(".modelEnd").val(response3[0][0].train_end);
       });
+
+      // $('.saveAttributes').on("click", () => {
+
+      // })
     });
   };
 
