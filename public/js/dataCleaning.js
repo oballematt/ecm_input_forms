@@ -28,7 +28,6 @@ $(document).ready(() => {
   let $table = $("#table");
   let $button3 = $("#button3");
 
-
   const getMeterAlarm = () => {
     $.ajax({
       url: "/getAlarm",
@@ -65,7 +64,11 @@ $(document).ready(() => {
               building_abbreviation: building[index],
               meter: meter,
               value_count:
-                daysOutOfRange[index] === 30 || daysOutOfRange[index] === 31 || daysOutOfRange[index] === 0 ? "-" : daysOutOfRange[index],
+                daysOutOfRange[index] === 30 ||
+                daysOutOfRange[index] === 31 ||
+                daysOutOfRange[index] === 0
+                  ? "-"
+                  : daysOutOfRange[index],
               model_update_timestamp: saved[index],
               building_number: building_number[index],
               commodity_tag: commodity[index],
@@ -111,7 +114,11 @@ $(document).ready(() => {
               building_abbreviation: building[index],
               meter: meter,
               value_count:
-              daysOutOfRange[index] === 30 || daysOutOfRange[index] === 31 || daysOutOfRange[index] === 0 ? "-" : daysOutOfRange[index],
+                daysOutOfRange[index] === 30 ||
+                daysOutOfRange[index] === 31 ||
+                daysOutOfRange[index] === 0
+                  ? "-"
+                  : daysOutOfRange[index],
               model_update_timestamp: saved[index],
               building_number: building_number[index],
               commodity_tag: commodity[index],
@@ -159,7 +166,6 @@ $(document).ready(() => {
     }
   });
 
-  
   $(".modelStart").on("change", function() {
     let date2 = $(this).datepicker("getDate");
     date2.setDate(date2.getDate() + 364);
@@ -270,7 +276,7 @@ $(document).ready(() => {
         },
       })
     ).then((response, response2, response3) => {
-      console.log(response)
+      console.log(response);
       if (
         response[0] === "Request failed with status code 504" ||
         response[0] === "Request failed with status code 500" ||
@@ -292,7 +298,11 @@ $(document).ready(() => {
         ) {
           meterAttributes = false;
         } else {
-          $(".savedBaseTemp").html(response3[0][0].base_temperature === null ? '--' : response3[0][0].base_temperature);
+          $(".savedBaseTemp").html(
+            response3[0][0].base_temperature === null
+              ? "--"
+              : response3[0][0].base_temperature
+          );
           $(".savedAutoIgnored").html(
             response3[0][0].auto_ignored_percentage + "%"
           );
@@ -335,7 +345,11 @@ $(document).ready(() => {
         let result2 = {};
         $(".overlayMessage").text("Getting data, this will take a few seconds");
         $("#overlay").fadeOut();
-        $(".baseTemp").html(response[0].body.model.base_temperature === null ? "--" : response[0].body.model.base_temperature);
+        $(".baseTemp").html(
+          response[0].body.model.base_temperature === null
+            ? "--"
+            : response[0].body.model.base_temperature
+        );
         $(".autoIgnored").html(
           parseFloat(
             response[0].body.model.missing_value.auto_ignored_percentage
@@ -354,7 +368,7 @@ $(document).ready(() => {
         $(".start").html(analysisStart);
         $(".end").html(analysisEnd);
         $(".meterVariable").html(response[0].body.model.x.toUpperCase());
-
+        $(".currentMeter").text(meterData[0][0].meter);
         $(".currentMeter").text(meterData[0][0].meter);
         $(".currentBuilding").text(meterData[0][0].building_number);
         $(".currentBuildingName").text(meterData[0][0].building_abbreviation);
@@ -881,16 +895,50 @@ $(document).ready(() => {
           $(".modelEnd").val(updateModelEnd);
         });
       }
-      $(".loadAttributes").on("click", () => {
-        $(".modelStart").val(response3[0][0].train_start);
-        $(".modelEnd").val(response3[0][0].train_end);
-      });
-
-      // $('.saveAttributes').on("click", () => {
-
-      // })
     });
   };
+
+  $(".copyAttributeDates").on("click", () => {
+    $(".modelStart").val($(".savedStart").html());
+    $(".modelEnd").val($(".savedEnd").html());
+  });
+
+  $(".saveAttributes").on("click", () => {
+    let str = $(".autoIgnored").text();
+    let newStr = str.substring(0, str.length - 1);
+    const building_number = $(".currentBuilding").text();
+    const meter = $(".currentMeter").text();
+    const commodity_tag = $(".currentCommodity").text();
+    const x = $(".currentVariable").text();
+    let base_temperature = $(".baseTemp").text();
+    const auto_ignored_percentage = Number(newStr);
+    const slope = Number($(".slope").text());
+    const intercept = Number($(".intercept").text());
+    const r2 = Number($(".r2").text());
+    const std = Number($(".stdDev").text());
+    const train_start = $(".currentStart").text();
+    const train_end = $(".currentEnd").text();
+    console.log(meter);
+    meterAttributes = false;
+    $.ajax({
+      type: "POST",
+      url: "/postAttributes",
+      data: {
+        building_number: building_number,
+        meter: meter,
+        commodity_tag: commodity_tag,
+        train_start: train_start,
+        train_end: train_end,
+        x: x,
+        auto_ignored_percentage: auto_ignored_percentage,
+        base_temperature: base_temperature === 0 ? null : base_temperature,
+        r2: r2,
+        slope: slope,
+        intercept: intercept,
+        std: std,
+      },
+    });
+  });
 
   $("#reason").on("change", function() {
     $button3.removeAttr("disabled");

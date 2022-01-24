@@ -101,7 +101,7 @@
 
 
             <div style="display: none;">
-                <p class="currentMeter"></p>
+                {{!-- <p class="currentMeter"></p> --}}
                 <p class="currentBuilding"></p>
                 <p class="currentCommodity"></p>
                 <p class="currentVariable"></p>
@@ -110,6 +110,21 @@
             </div>
         </div>
         <div style='width: 69.5%' class="col-xxl-8 col-lg-8">
+             <li class='headings'>
+                    <h6 style='color: white'>Building:
+                        <span class="units currentBuildingName">--</span>
+                    </h6>
+                </li>
+                <li class='headings'>
+                    <h6 style='color: white'>Meter:
+                        <span class="units currentMeter">--</span>
+                    </h6>
+                </li>
+                <li class='headings'>
+                    <h6 style='color: white'>Variable:
+                        <span class="units meterVariable">--</span>
+                    </h6>
+                </li>
             <header class='currentAttributes'>
                 <li class='headings'>
                     <h6 style='color: white;'>Current Model:
@@ -157,7 +172,7 @@
                     </h6>
                 </li>
                 <li class='headings'>
-                    <button style='margin-bottom: 20px' type="button" class="btn btn-success headings">Save</button>
+                    <button style='margin-bottom: 20px' type="button" class="btn btn-success headings saveAttributes">Save</button>
                 </li>
 
             </header>
@@ -210,24 +225,12 @@
                 </li>
                 <li class='headings'>
                     <button style='margin-bottom: 20px; margin-left: 11px' type="button"
-                        class="btn btn-primary headings loadAttributes">Load</button>
+                        class="btn btn-primary headings copyAttributeDates">Copy Dates</button>
                 </li>
 
             </header>
 
             <div style="display: none;" class="displayData">
-
-                <li class='headings'>
-                    <h6 style='color: white'>Building:
-                        <span class="units currentBuildingName">--</span>
-                    </h6>
-                </li>
-                <li class='headings'>
-                    <h6 style='color: white'>Meter:
-                        <span class="units currentMeter">--</span>
-                    </h6>
-                </li>
-
                 <div style="width: 100%;" id="collapseRow">
                     <div class="row mt-3">
                         <div class="col-md-3 collapseButton">
