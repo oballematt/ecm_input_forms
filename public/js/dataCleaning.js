@@ -903,7 +903,9 @@ $(document).ready(() => {
     $(".modelEnd").val($(".savedEnd").html());
   });
 
-  $(".saveAttributes").on("click", () => {
+  $(".saveAttributes").on("click", function()  {
+    $(this).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    <span class="visually-hidden">Loading...</span>`)
     let str = $(".autoIgnored").text();
     let newStr = str.substring(0, str.length - 1);
     const building_number = $(".currentBuilding").text();
@@ -937,6 +939,11 @@ $(document).ready(() => {
         intercept: intercept,
         std: std,
       },
+    }).then(() => {
+      $('.saveAttributes').html(`<i style="margin: 0 auto" class="far fa-check-circle fa-2x text-center"></i>`).fadeIn()
+      setTimeout(() => {
+        $('.saveAttributes').html('Save')
+      }, 4000)
     });
   });
 
