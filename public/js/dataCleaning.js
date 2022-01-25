@@ -47,6 +47,7 @@ $(document).ready(() => {
       ) {
         getMeterAlarm();
       } else {
+        console.log(response)
         $(".apply").html("Apply");
         $(".multi-sort").empty();
         $(".multi-sort").html(`<i class="fas fa-sort"></i>`);
@@ -141,6 +142,7 @@ $(document).ready(() => {
           analyst: analyst === "null" ? null : analyst,
         },
       }).then(function(response) {
+        console.log(response)
         $(".apply").html("Apply");
         $(function() {
           let meter = response.body.meter;

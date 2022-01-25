@@ -224,8 +224,8 @@ module.exports = {
             return res.json(response.data)
         } catch (error) {
 
-            console.error(error.message)
-            return res.json(error.message)
+            console.error(error)
+            return res.json(error)
             
         }
     },
