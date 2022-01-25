@@ -365,8 +365,8 @@ $(document).ready(() => {
         $(".stdDev").html(
           parseFloat(response[0].body.model.std.train).toFixed(2)
         );
-        $(".start").html(analysisStart);
-        $(".end").html(analysisEnd);
+        $(".start").html(modelStart);
+        $(".end").html(modelEnd);
         $(".meterVariable").html(response[0].body.model.x.toUpperCase());
         $(".currentMeter").text(meterData[0][0].meter);
         $(".currentMeter").text(meterData[0][0].meter);
@@ -757,6 +757,29 @@ $(document).ready(() => {
                 .css("background-color", "#0275d8");
             }
           });
+          const checkboxes = document.querySelectorAll(
+            '.tableData input[type="checkbox"]'
+          );
+          let lastChecked;
+
+          function handleCheck(e) {
+            let inBetween = false;
+            if (e.shiftKey && this.checked) {
+              checkboxes.forEach((checkbox) => {
+                if (checkbox === this || checkbox === lastChecked) {
+                  inBetween = !inBetween;
+                }
+                if (inBetween) {
+                  checkbox.checked = true;
+                }
+              });
+            }
+            lastChecked = this;
+          }
+
+          checkboxes.forEach((checkbox) =>
+            checkbox.addEventListener("click", handleCheck)
+          );
         });
 
         const result3 = {};
@@ -903,9 +926,11 @@ $(document).ready(() => {
     $(".modelEnd").val($(".savedEnd").html());
   });
 
-  $(".saveAttributes").on("click", function()  {
-    $(this).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-    <span class="visually-hidden">Loading...</span>`)
+  $(".saveAttributes").on("click", function() {
+    $(
+      this
+    ).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    <span class="visually-hidden">Loading...</span>`);
     let str = $(".autoIgnored").text();
     let newStr = str.substring(0, str.length - 1);
     const building_number = $(".currentBuilding").text();
@@ -940,16 +965,21 @@ $(document).ready(() => {
         std: std,
       },
     }).then(() => {
-      $('.saveAttributes').html(`<i style="margin: 0 auto" class="far fa-check-circle fa-2x text-center"></i>`).fadeIn()
+      $(".saveAttributes")
+        .html(
+          `<i style="margin: 0 auto" class="far fa-check-circle fa-2x text-center"></i>`
+        )
+        .fadeIn();
       setTimeout(() => {
-        $('.saveAttributes').html('Save')
-      }, 4000)
+        $(".saveAttributes").html("Save");
+      }, 4000);
     });
   });
 
   $("#reason").on("change", function() {
     $button3.removeAttr("disabled");
   });
+
   $button3.click(function() {
     $("input:checkbox:checked", $(".tableData"))
       .each(function() {

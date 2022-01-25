@@ -75,6 +75,9 @@
                     </div>
                 </li>
             </ul>
+            {{!-- <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#savedModels">
+                    Previously Saved Models (0)
+                </button> --}}
             <div class="input-group flex-nowrap mt-3">
                 <span style='width: 120px' class="input-group-text" id="addon-wrapping">Model Start:</span>
                 <input autocomplete="off" disabled='true' id="modelStart" type="text"
@@ -110,21 +113,21 @@
             </div>
         </div>
         <div style='width: 69.5%' class="col-xxl-8 col-lg-8">
-             <li class='headings'>
-                    <h6 style='color: white'>Building:
-                        <span class="units currentBuildingName">--</span>
-                    </h6>
-                </li>
-                <li class='headings'>
-                    <h6 style='color: white'>Meter:
-                        <span class="units currentMeter">--</span>
-                    </h6>
-                </li>
-                <li class='headings'>
-                    <h6 style='color: white'>Variable:
-                        <span class="units meterVariable">--</span>
-                    </h6>
-                </li>
+            <li class='headings'>
+                <h6 style='color: white'>Building:
+                    <span class="units currentBuildingName">--</span>
+                </h6>
+            </li>
+            <li class='headings'>
+                <h6 style='color: white'>Meter:
+                    <span class="units currentMeter">--</span>
+                </h6>
+            </li>
+            <li class='headings'>
+                <h6 style='color: white'>Variable:
+                    <span class="units meterVariable">--</span>
+                </h6>
+            </li>
             <header class='currentAttributes'>
                 <li class='headings'>
                     <h6 style='color: white;'>Current Model:
@@ -172,7 +175,8 @@
                     </h6>
                 </li>
                 <li class='headings'>
-                    <button style='margin-bottom: 20px' type="button" class="btn btn-success headings saveAttributes text-center">Save</button>
+                    <button style='margin-bottom: 20px' type="button"
+                        class="btn btn-success headings saveAttributes text-center">Save</button>
                 </li>
 
             </header>
