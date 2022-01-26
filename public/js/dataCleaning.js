@@ -960,7 +960,7 @@ $(document).ready(() => {
         train_end: train_end,
         x: x,
         auto_ignored_percentage: auto_ignored_percentage,
-        base_temperature: base_temperature === 0 ? null : base_temperature,
+        base_temperature: base_temperature,
         r2: r2,
         slope: slope,
         intercept: intercept,
@@ -1109,7 +1109,7 @@ $(document).ready(() => {
     const commodity_tag = $(".currentCommodity").text();
     const meterVariable = $(".meterVariable").text();
     const x = $(".currentVariable").text();
-    let base_temperature = $(".baseTemp").text();
+    const base_temperature = $(".baseTemp").text();
     const auto_ignored_percentage = Number(newStr);
     const slope = Number($(".slope").text());
     const intercept = Number($(".intercept").text());
@@ -1117,13 +1117,6 @@ $(document).ready(() => {
     const std = Number($(".stdDev").text());
     const train_start = $(".currentStart").text();
     const train_end = $(".currentEnd").text();
-
-    if (base_temperature === "") {
-      base_temperature = null;
-    } else {
-      base_temperature = Number($(".baseTemp").text());
-    }
-
     if (
       attributes.length === 0 ||
       attributes[0].base_temperature !== base_temperature ||
@@ -1159,7 +1152,7 @@ $(document).ready(() => {
             train_end: train_end,
             x: x,
             auto_ignored_percentage: auto_ignored_percentage,
-            base_temperature: base_temperature === 0 ? null : base_temperature,
+            base_temperature: base_temperature,
             r2: r2,
             slope: slope,
             intercept: intercept,

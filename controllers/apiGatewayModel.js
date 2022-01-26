@@ -103,12 +103,6 @@ module.exports = {
                 'authorizationToken': token.token
             }
 
-            if (base_temperature === '') {
-                base_temperature = null
-            } else {
-                base_temperature = Number(base_temperature)
-            }
-
             const attrdata = JSON.stringify({
                 'building_number': building_number,
                 'meter': meter,
@@ -117,7 +111,7 @@ module.exports = {
                 'train_end': train_end,
                 'x': x,
                 'auto_ignored_percentage': Number(auto_ignored_percentage),
-                'base_temperature': Number(base_temperature) === 0 ? null : Number(base_temperature),
+                'base_temperature': Number(base_temperature) === '--' ? null : Number(base_temperature),
                 'r2': Number(r2),
                 'slope': Number(slope),
                 'intercept': Number(intercept),
