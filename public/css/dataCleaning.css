@@ -164,11 +164,6 @@ outline: 0;
   border: 1px solid;
 }
 
-.ring{
-    border: 1px solid;
-    height: 42%;
-}
-
 .spinner-border{
     margin-top: 30%;
 }
@@ -274,13 +269,13 @@ table {
   margin-left: 1em;
 }
 
-.tableData {
+.tableData, .meterData {
   display: flex;
   flex-flow: column;
   width: 100%;
 }
 
-.tableData thead {
+.tableData thead, .meterData thead {
   flex: 0 0 auto;
   position: sticky;
   top: 0;
@@ -288,18 +283,19 @@ table {
   background-color: #333f48;
 }
 
-.tableData tbody {
+.tableData tbody, .meterData tbody {
   flex: 1 1 auto;
   display: block;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-.tableData tr {
+.tableData tr, .meterData tr {
   width: 100%;
   display: table;
   table-layout: fixed;
 }
+
 
 a[data-tool-tip] {
   position: relative;

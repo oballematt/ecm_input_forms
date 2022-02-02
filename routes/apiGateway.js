@@ -9,8 +9,6 @@ router.post('/postAttributes', gatewayController.postAttributes)
 
 router.get('/getConsumption', gatewayController.getConsumption)
 
-router.get('/getAlarm', gatewayController.getMeterAlarm)
-
-router.get('/getAlarmSteward', gatewayController.getMeterAlarmBySteward)
+router.post('/getAlarm', gatewayController.getMeterAlarm)
 
 module.exports = router

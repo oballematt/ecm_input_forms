@@ -20,11 +20,11 @@
                 aria-controls="offcanvasExample">
                 <i class="fas fa-chevron-right"></i>
             </button>
-            <div class="input-group mb-2 mt-3">
+            <div class="input-group mb-3 mt-3">
                 <label class="input-group-text" for="filter-steward">Steward:</label>
                 <select class="form-select" id="filter-steward">
                     <option disabled selected>Select Steward</option>
-                    <option value='null'>All</option>
+                    <option value='All'>All</option>
                     <option value='adam.keeling@austin.utexas.edu'>Adam Keeling</option>
                     <option value="grace.hsieh@austin.utexas.edu">Grace Hsieh</option>
                     <option value="matt.stevens@austin.utexas.edu">Matt Stevens</option>
@@ -32,41 +32,31 @@
                 </select>
                 <button type='button' class="btn btn-primary apply">Apply</button>
             </div>
-            <div class="ring text-center mt-3 mb-3">
-                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-            </div>
-            <div style="display: none;" class="hide-meters">
-
-                <table id="table" data-show-multi-sort="true"
-                    data-sort-priority='[{"sortName": "building_abbreviation","sortOrder":"asc"},{"sortName":"meter","sortOrder":"asc"}]'
-                    data-toolbar-align="right" data-search-align="left" data-toolbar="#toolbar" data-height="448"
-                    data-search="true" data-virtual-scroll="true" style="color: white">
-
-                    <thead style="color: white">
-                        <tr class="rowData">
-                            <th data-field="state" data-radio="true"></th>
-                            <th data-sortable="true" data-field="building_abbreviation">Building</th>
-                            <th data-sortable="true" data-field="meter">Meter</th>
-                            <th data-sortable="true" data-field="value_count"># Flagged Days
-                            </th>
-                            <th data-sortable="true" data-field="model_update_timestamp">Last Model</th>
-                            <th data-visible='false' data-field="building_number">Building Number</th>
-                            <th data-visible="false" data-field="commodity_tag">Commodity</th>
+            <input id='search' style="width: 20%" class="form-control headings mb-3" type="text" placeholder="Search" aria-label="default input example">
+            <div style="height: 500px; overflow: scroll; overflow-x: hidden">
+                <table class="table meterData text-light">
+                    <thead>
+                        <tr>
+                            <th style="width: 15px" scope="col"></th>
+                            <th scope="col">Building</th>
+                            <th scope="col">Meter</th>
+                            <th scope="col"># Flagged Days</th>
+                            <th scope="col">Reviewed</th>
                         </tr>
                     </thead>
+                    <tbody class='meterList'>
+                    </tbody>
                 </table>
+                <div class="ring text-center">
+                    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
             </div>
-            <div class="out-of-bounds"></div>
             <button style=" color:white" type="button" id="button" class="confirmMeter btn btn-success mt-3">Confirm
                 Meter
                 Selection</button>
-            <button style=" color:white; display: none" type="button" id="button"
-                class="confirmAlarmMeter btn btn-success mt-3">Confirm
-                Meter
-                Selection
-            </button>
+
             <ul class="list-group mt-3 mb-3">
                 <li class="list-group-item listGroupColor">
                     <div class="ms-2 me-auto">
@@ -75,9 +65,6 @@
                     </div>
                 </li>
             </ul>
-            {{!-- <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#savedModels">
-                    Previously Saved Models (0)
-                </button> --}}
             <div class="input-group flex-nowrap mt-3">
                 <span style='width: 120px' class="input-group-text" id="addon-wrapping">Model Start:</span>
                 <input autocomplete="off" disabled='true' id="modelStart" type="text"
@@ -101,15 +88,6 @@
             </div>
             <button style="background-color: #bf5700;" class="btn btn-primary apiGateway mt-3 mb-3 w-100 load"
                 type="button">Run Model</button>
-
-
-            <div style="display: none;">
-                <p class="currentBuilding"></p>
-                <p class="currentCommodity"></p>
-                <p class="currentVariable"></p>
-                <p class="currentStart"></p>
-                <p class="currentEnd"></p>
-            </div>
         </div>
         <div style='width: 69.5%' class="col-xxl-8 col-lg-8">
             <li class='headings'>
@@ -174,8 +152,11 @@
                     </h6>
                 </li>
                 <li class='headings'>
-                    <button style='margin-bottom: 20px' type="button"
-                        class="btn btn-success headings saveAttributes text-center">Save</button>
+                    <button style='margin-bottom: 20px; display: none' type="button"
+                        class="btn btn-success saveAttributes headerButton text-center">Save</button>
+                </li>
+                <li class='headings reviewedButton'>
+
                 </li>
 
             </header>
@@ -297,7 +278,7 @@
                                             class="fas fa-square"></i> Value same as previous day</li>
                                 </ul>
                                 <div class='scroll' style="height: 1000px; overflow: scroll; overflow-x: hidden">
-                                    <table class="table text-light tableData table-fixed">
+                                    <table class="table text-light tableData">
                                         <thead>
                                             <tr>
                                                 <th scope="col">Edit</th>
@@ -346,8 +327,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3 ms-auto">
-                                        <button disabled style="background-color: #bf5700; color: white" id="button3"
-                                            class="btn w-100 load" type="button">Submit
+                                        <button disabled style="background-color: #bf5700; color: white"
+                                            id="submitReplacement" class="btn w-100 load" type="button">Submit
                                         </button>
                                     </div>
                                 </div>
