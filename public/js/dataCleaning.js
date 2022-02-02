@@ -145,7 +145,7 @@ $(document).ready(() => {
     date2.setDate(date2.getDate() + 364);
     $(".modelEnd").datepicker("setDate", date2);
   });
-$(function() {
+
   $(".meterData").on("change", $('input[name="meterSelect"]'), function() {
     meterData = [];
   });
@@ -183,8 +183,9 @@ $(function() {
           .text(),
       });
     });
+    $('.disabled').attr('disabled', false)
     $(".meterSelection").text(meterData[0].meter);
-  });
+
 
   $(".apiGateway").on("click", function(e) {
     e.preventDefault();
