@@ -167,25 +167,25 @@ $(document).ready(() => {
       "setDate",
       new Date(d.getFullYear(), d.getMonth(), 0)
     );
-  });
-  $('input[name="meterSelect"]:checked', $(".meterData")).each(function() {
-    meterData.push({
-      meter: $(this)
-        .closest("tr")
-        .children("td:eq(2)")
-        .text(),
-      building_number: $(this)
-        .closest("tr")
-        .children("td:eq(5)")
-        .text(),
-      commodity_tag: $(this)
-        .closest("tr")
-        .children("td:eq(6)")
-        .text(),
-    });
-  });
 
-  $(".meterSelection").text(meterData[0].meter);
+    $('input[name="meterSelect"]:checked', $(".meterData")).each(function() {
+      meterData.push({
+        meter: $(this)
+          .closest("tr")
+          .children("td:eq(2)")
+          .text(),
+        building_number: $(this)
+          .closest("tr")
+          .children("td:eq(5)")
+          .text(),
+        commodity_tag: $(this)
+          .closest("tr")
+          .children("td:eq(6)")
+          .text(),
+      });
+    });
+    $(".meterSelection").text(meterData[0].meter);
+  });
 
   $(".apiGateway").on("click", function(e) {
     e.preventDefault();
