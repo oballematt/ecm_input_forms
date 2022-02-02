@@ -354,6 +354,7 @@ $(document).ready(() => {
           response[0].body.building.building_abbreviation
         );
         $(".currentMeter").text(response[0].body.meter);
+        $(".currentCommodity").text(response[0].body.commodity.tag);
         $(".headerButton").show();
         xTemp.forEach((key, i) => (result[key] = lowLimit[i]));
 
@@ -1036,18 +1037,18 @@ $(document).ready(() => {
   const submitAttributes = () => {
     let str = $(".autoIgnored").text();
     let newStr = str.substring(0, str.length - 1);
-    const building_number = $(".currentBuilding").text();
+    const building_number = $(".currentBuildingName").text();
     const meter = $(".currentMeter").text();
     const commodity_tag = $(".currentCommodity").text();
-    const x = $(".currentVariable").text();
+    const x = $(".meterVariable").text();
     const base_temperature = $(".baseTemp").text();
     const auto_ignored_percentage = Number(newStr);
     const slope = Number($(".slope").text());
     const intercept = Number($(".intercept").text());
     const r2 = Number($(".r2").text());
     const std = Number($(".stdDev").text());
-    const train_start = $(".currentStart").text();
-    const train_end = $(".currentEnd").text();
+    const train_start = $(".start").text();
+    const train_end = $(".end").text();
 
     $.ajax({
       type: "POST",
