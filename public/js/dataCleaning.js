@@ -145,7 +145,7 @@ $(document).ready(() => {
     date2.setDate(date2.getDate() + 364);
     $(".modelEnd").datepicker("setDate", date2);
   });
-
+$(function() {
   $(".meterData").on("change", $('input[name="meterSelect"]'), function() {
     meterData = [];
   });
@@ -166,7 +166,7 @@ $(document).ready(() => {
       "setDate",
       new Date(d.getFullYear(), d.getMonth(), 0)
     );
-
+  })
     $('input[name="meterSelect"]:checked', $(".meterData")).each(function() {
       meterData.push({
         meter: $(this)
