@@ -151,27 +151,22 @@ $(document).ready(() => {
     meterData = [];
   });
   $(".confirmMeter").click(function() {
-    if (meterData.length === 0) {
-      alert("Please select a meter");
-    } else {
-      $(".disabled").attr("disabled", false);
-      $(".modelStart").datepicker(
-        "setDate",
-        new Date(d.getFullYear() - 1, d.getMonth() - 1, 1)
-      );
-      $(".modelEnd").datepicker(
-        "setDate",
-        new Date(d.getFullYear() - 1, d.getMonth() - 1, +364)
-      );
-      $(".analysisStart").datepicker(
-        "setDate",
-        new Date(d.getFullYear(), d.getMonth() - 1, 1)
-      );
-      $(".analysisEnd").datepicker(
-        "setDate",
-        new Date(d.getFullYear(), d.getMonth(), 0)
-      );
-    }
+    $(".modelStart").datepicker(
+      "setDate",
+      new Date(d.getFullYear() - 1, d.getMonth() - 1, 1)
+    );
+    $(".modelEnd").datepicker(
+      "setDate",
+      new Date(d.getFullYear() - 1, d.getMonth() - 1, +364)
+    );
+    $(".analysisStart").datepicker(
+      "setDate",
+      new Date(d.getFullYear(), d.getMonth() - 1, 1)
+    );
+    $(".analysisEnd").datepicker(
+      "setDate",
+      new Date(d.getFullYear(), d.getMonth(), 0)
+    );
   });
   $('input[name="meterSelect"]:checked', $(".meterData")).each(function() {
     meterData.push({
