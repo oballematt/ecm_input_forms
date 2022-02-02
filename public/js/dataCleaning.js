@@ -93,13 +93,14 @@ $(document).ready(() => {
           )
           .map((tr) => $(".meterList").append(tr));
         $("#search").on("keyup", function() {
-          let value = $(this)
-            .val()
+          let value = $(this).val();
           $(".meterList tr").each(function() {
             $row = $(this);
 
             $row.find("td").each(function() {
-              var id = $(this).text().toLowerCase();
+              var id = $(this)
+                .text()
+                .toLowerCase();
               if (id.indexOf(value) !== 0) {
                 $row.hide();
               } else {
@@ -150,42 +151,46 @@ $(document).ready(() => {
     meterData = [];
   });
   $(".confirmMeter").click(function() {
-    $(".modelStart").datepicker(
-      "setDate",
-      new Date(d.getFullYear() - 1, d.getMonth() - 1, 1)
-    );
-    $(".modelEnd").datepicker(
-      "setDate",
-      new Date(d.getFullYear() - 1, d.getMonth() - 1, +364)
-    );
-    $(".analysisStart").datepicker(
-      "setDate",
-      new Date(d.getFullYear(), d.getMonth() - 1, 1)
-    );
-    $(".analysisEnd").datepicker(
-      "setDate",
-      new Date(d.getFullYear(), d.getMonth(), 0)
-    );
-  })
-    $('input[name="meterSelect"]:checked', $(".meterData")).each(function() {
-      meterData.push({
-        meter: $(this)
-          .closest("tr")
-          .children("td:eq(2)")
-          .text(),
-        building_number: $(this)
-          .closest("tr")
-          .children("td:eq(5)")
-          .text(),
-        commodity_tag: $(this)
-          .closest("tr")
-          .children("td:eq(6)")
-          .text(),
-      });
+    if (meterData.length === 0) {
+      alert("Please select a meter");
+    } else {
+      $(".disabled").attr("disabled", false);
+      $(".modelStart").datepicker(
+        "setDate",
+        new Date(d.getFullYear() - 1, d.getMonth() - 1, 1)
+      );
+      $(".modelEnd").datepicker(
+        "setDate",
+        new Date(d.getFullYear() - 1, d.getMonth() - 1, +364)
+      );
+      $(".analysisStart").datepicker(
+        "setDate",
+        new Date(d.getFullYear(), d.getMonth() - 1, 1)
+      );
+      $(".analysisEnd").datepicker(
+        "setDate",
+        new Date(d.getFullYear(), d.getMonth(), 0)
+      );
+    }
+  });
+  $('input[name="meterSelect"]:checked', $(".meterData")).each(function() {
+    meterData.push({
+      meter: $(this)
+        .closest("tr")
+        .children("td:eq(2)")
+        .text(),
+      building_number: $(this)
+        .closest("tr")
+        .children("td:eq(5)")
+        .text(),
+      commodity_tag: $(this)
+        .closest("tr")
+        .children("td:eq(6)")
+        .text(),
     });
-    $('.disabled').attr('disabled', false)
-    $(".meterSelection").text(meterData[0].meter);
+  });
 
+  $(".meterSelection").text(meterData[0].meter);
 
   $(".apiGateway").on("click", function(e) {
     e.preventDefault();
