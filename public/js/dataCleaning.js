@@ -2,11 +2,7 @@ let meterData = [];
 let reviewedModels = [];
 let analysisIndex;
 let replaceData = [];
-let d = new Date();
-let endTime = new Date().toISOString().slice(0, 10);
-let startTime = new Date(d.getFullYear() - 2, d.getMonth() - 1, 1)
-  .toISOString()
-  .slice(0, 10);
+const d = new Date();
 let updateModelStart;
 let updateModelEnd;
 
@@ -22,7 +18,7 @@ $(document).ready(() => {
     $("#overlay").fadeIn();
   });
 
-  let lastDay = new Date(d.getFullYear(), d.getMonth() + 1, 1);
+  const lastDay = new Date(d.getFullYear(), d.getMonth() + 1, 1);
 
   if (d === lastDay) {
     $.ajax({
@@ -60,11 +56,11 @@ $(document).ready(() => {
         console.log(response2);
         $(".ring").hide();
         $(".apply").html("Apply");
-        let meter = response[0].body.meter;
-        let flagCount = response[0].body.flag_count;
-        let building = response[0].body.building_abbreviation;
-        let building_number = response[0].body.building_number;
-        let commodity = response[0].body.commodity_tag;
+        const meter = response[0].body.meter;
+        const flagCount = response[0].body.flag_count;
+        const building = response[0].body.building_abbreviation;
+        const building_number = response[0].body.building_number;
+        const commodity = response[0].body.commodity_tag;
         meter.map((meter, index) => {
           $(".meterList").append(`
             <tr>
@@ -93,14 +89,14 @@ $(document).ready(() => {
           )
           .map((tr) => $(".meterList").append(tr));
         $("#search").on("keyup", function() {
-          let value = $(this).val();
+          const value = $(this)
+            .val()
+            .toUpperCase();
           $(".meterList tr").each(function() {
             $row = $(this);
 
             $row.find("td").each(function() {
-              var id = $(this)
-                .text()
-                .toLowerCase();
+              const id = $(this).text();
               if (id.indexOf(value) !== 0) {
                 $row.hide();
               } else {
@@ -142,9 +138,9 @@ $(document).ready(() => {
   };
 
   $(".modelStart").on("change", function() {
-    let date2 = $(this).datepicker("getDate");
-    date2.setDate(date2.getDate() + 364);
-    $(".modelEnd").datepicker("setDate", date2);
+    const modelStartDate = $(this).datepicker("getDate");
+    modelStartDate.setDate(modelStartDate.getDate() + 364);
+    $(".modelEnd").datepicker("setDate", modelStartDate);
   });
 
   $(".meterData").on("change", $('input[name="meterSelect"]'), function() {
@@ -196,8 +192,6 @@ $(document).ready(() => {
       $("#overlay").hide();
     } else {
       $("#chartData").load(location.href + " #chartData");
-      $("#chartData2").load(location.href + " #chartData2");
-      $("#chartData3").load(location.href + " #chartData3");
       $(".tableData").load(location.href + " .tableData");
       $("#collapseRow").load(location.href + " #collapseRow");
       modelApi();
@@ -205,6 +199,10 @@ $(document).ready(() => {
   });
 
   const modelApi = function() {
+    const endTime = new Date().toISOString().slice(0, 10);
+    const startTime = new Date(d.getFullYear() - 3, d.getMonth() - 1, 1)
+      .toISOString()
+      .slice(0, 10);
     const modelStart = $(".modelStart").val();
     const modelEnd = $(".modelEnd").val();
     const analysisStart = $(".analysisStart").val();
@@ -260,7 +258,7 @@ $(document).ready(() => {
         },
       })
     ).then((response, response2, response3) => {
-      console.log(response);
+      console.log(response2);
       if (
         response[0] === "Request failed with status code 504" ||
         response[0] === "Request failed with status code 500" ||
@@ -305,27 +303,24 @@ $(document).ready(() => {
           $(".reviewed").html('Reviewed <i class="far fa-check-circle"></i>');
         }
 
-        console.log(response3);
         const analysisIndex = response[0].body.model.data.timestamp.indexOf(
           $(".analysisStart").val()
         );
-        let lowLimit = response[0].body.model.data.predicted_value_lower_bound.slice(
+        const lowLimit = response[0].body.model.data.predicted_value_lower_bound.slice(
           analysisIndex
         );
-        let xTemp = response[0].body.model.data.average_dry_bulb_temperature.slice(
+        const xTemp = response[0].body.model.data.average_dry_bulb_temperature.slice(
           analysisIndex
         );
-        let highLimit = response[0].body.model.data.predicted_value_upper_bound.slice(
+        const highLimit = response[0].body.model.data.predicted_value_upper_bound.slice(
           analysisIndex
         );
-        let rawValue = response[0].body.model.data.raw_value.slice(
+        const rawValue = response[0].body.model.data.raw_value.slice(
           analysisIndex
         );
-        let xtimestamp = response[0].body.model.data.timestamp.slice(
+        const xTimestamp = response[0].body.model.data.timestamp.slice(
           analysisIndex
         );
-        let result = {};
-        let result2 = {};
         $(".overlayMessage").text("Getting data, this will take a few seconds");
         $("#overlay").fadeOut();
         $(".baseTemp").html(
@@ -357,36 +352,24 @@ $(document).ready(() => {
         $(".currentMeter").text(response[0].body.meter);
         $(".currentCommodity").text(response[0].body.commodity.tag);
         $(".headerButton").show();
-        xTemp.forEach((key, i) => (result[key] = lowLimit[i]));
 
-        var lowLimitArr = Object.keys(result).map(function(key) {
-          return [Number(key), result[key]];
-        });
-        lowLimitArr.sort(function(a, b) {
-          return a[0] - b[0];
-        });
+        const chartData = (x, y, type) => {
+          let result = {};
 
-        xTemp.forEach((key, i) => (result[key] = highLimit[i]));
+          x.forEach((key, i) => (result[key] = y[i]));
 
-        let highLimitArr = Object.keys(result).map(function(key) {
-          return [Number(key), result[key]];
-        });
+          const dataPoints = Object.keys(result).map(function(key) {
+            return [type(key), result[key]];
+          });
 
-        highLimitArr.sort(function(a, b) {
-          return a[0] - b[0];
-        });
+          dataPoints.sort(function(a, b) {
+            return a[0] - b[0];
+          });
 
-        xTemp.forEach((key, i) => {
-          result[key] = rawValue[i];
-        });
-
-        let RawValueArr = Object.keys(result).map(function(key) {
-          return [Number(key), result[key]];
-        });
-
-        RawValueArr.sort(function(a, b) {
-          return a[0] - b[0];
-        });
+          return dataPoints.map((a) => {
+            return { x: a[0], y: a[1] };
+          });
+        };
 
         if (meterData[0].commodity_tag === "W") {
           $("#hideIfWater").hide();
@@ -398,18 +381,14 @@ $(document).ready(() => {
               {
                 type: "scatter",
                 label: "Meter VS. Temp",
-                data: RawValueArr.map((a) => {
-                  return { x: a[0], y: Math.trunc(a[1]) };
-                }),
+                data: chartData(xTemp, rawValue, Number),
                 backgroundColor: "#00FFFF",
                 pointRadius: 5,
               },
               {
                 type: "line",
                 label: "High Limit",
-                data: highLimitArr.map((a) => {
-                  return { x: a[0], y: a[1] };
-                }),
+                data: chartData(xTemp, highLimit, Number),
                 fill: false,
                 pointRadius: 0,
                 tension: 0.1,
@@ -418,9 +397,7 @@ $(document).ready(() => {
               {
                 type: "line",
                 label: "Low Limit",
-                data: lowLimitArr.map((a) => {
-                  return { x: a[0], y: a[1] };
-                }),
+                data: chartData(xTemp, lowLimit, Number),
                 fill: false,
                 pointRadius: 0,
                 tension: 0.1,
@@ -457,76 +434,25 @@ $(document).ready(() => {
                 },
               },
             },
-            onClick(e) {
-              const activePoints = myChart.getElementsAtEventForMode(
-                e,
-                "nearest",
-                {
-                  intersect: true,
-                },
-                false
-              );
-              const [{ index }] = activePoints;
-
-              var $container = $(".scroll"),
-                $scrollTo = $("#" + config.data.datasets[0].data[index].y);
-              $container.animate({
-                scrollTop:
-                  $scrollTo.offset().top -
-                  $container.offset().top +
-                  $container.scrollTop() -
-                  $container.height() / 2,
-              });
-              $scrollTo.parent("tr").effect("highlight", {}, 3000);
-            },
           },
         };
-        let ctx = document.getElementById("myChart").getContext("2d");
-        let myChart = new Chart(ctx, config);
+        const ctx = document.getElementById("myChart").getContext("2d");
+        const myChart = new Chart(ctx, config);
 
-        xtimestamp.forEach((key, i) => (result2[key] = rawValue[i]));
-
-        let rawValueArr2 = Object.keys(result2).map(function(key) {
-          return [String(key), result2[key]];
-        });
-
-        rawValueArr2.sort(function(a, b) {
-          return a[0] - b[0];
-        });
-
-        xtimestamp.forEach((key, i) => (result2[key] = highLimit[i]));
-        let highLimitArr2 = Object.keys(result2).map(function(key) {
-          return [String(key), result2[key]];
-        });
-        highLimitArr2.sort(function(a, b) {
-          return a[0] - b[0];
-        });
-
-        xtimestamp.forEach((key, i) => (result2[key] = lowLimit[i]));
-        var lowLimitArr2 = Object.keys(result2).map(function(key) {
-          return [String(key), result2[key]];
-        });
-        lowLimitArr2.sort(function(a, b) {
-          return a[0] - b[0];
-        });
         const config2 = {
           data: {
             datasets: [
               {
                 type: "scatter",
                 label: "Meter VS. Dates",
-                data: rawValueArr2.map((a) => {
-                  return { x: a[0], y: Math.trunc(a[1]) };
-                }),
+                data: chartData(xTimestamp, rawValue, String),
                 pointRadius: 5,
                 backgroundColor: "#00FFFF",
               },
               {
                 type: "line",
                 label: "High Limit",
-                data: highLimitArr2.map((a) => {
-                  return { x: a[0], y: a[1] };
-                }),
+                data: chartData(xTimestamp, highLimit, String),
                 fill: false,
                 pointRadius: 0,
                 borderColor: "#d9534f",
@@ -535,9 +461,7 @@ $(document).ready(() => {
               {
                 type: "line",
                 label: "Low Limit",
-                data: lowLimitArr2.map((a) => {
-                  return { x: a[0], y: a[1] };
-                }),
+                data: chartData(xTimestamp, lowLimit, String),
                 fill: false,
                 pointRadius: 0,
                 borderColor: "#ffcc66",
@@ -579,196 +503,22 @@ $(document).ready(() => {
                 },
               },
             },
-            onClick(e) {
-              const activePoints = myChart2.getElementsAtEventForMode(
-                e,
-                "nearest",
-                {
-                  intersect: true,
-                },
-                false
-              );
-              const [{ index }] = activePoints;
-
-              var $container = $(".scroll"),
-                $scrollTo = $("#" + config2.data.datasets[0].data[index].y);
-              $container.animate({
-                scrollTop:
-                  $scrollTo.offset().top -
-                  $container.offset().top +
-                  $container.scrollTop() -
-                  $container.height() / 2,
-              });
-              $scrollTo.parent("tr").effect("highlight", {}, 3000);
-            },
           },
         };
-        let ctx2 = document.getElementById("myChart2").getContext("2d");
-        let myChart2 = new Chart(ctx2, config2);
+        const ctx2 = document.getElementById("myChart2").getContext("2d");
+        const myChart2 = new Chart(ctx2, config2);
 
-        $(function() {
-          const dates = response[0].body.model.data.timestamp.slice(
-            analysisIndex
-          );
-          const temperature = response[0].body.model.data.average_dry_bulb_temperature.slice(
-            analysisIndex
-          );
-          const x = response[0].body.model.data.degree_day.slice(analysisIndex);
-          const occ = response[0].body.model.data.is_occupied.slice(
-            analysisIndex
-          );
-          const meter = response[0].body.model.data.raw_value.slice(
-            analysisIndex
-          );
-          const expected = response[0].body.model.data.predicted_value.slice(
-            analysisIndex
-          );
-          const replacement = response[0].body.model.data.replacement_value.slice(
-            analysisIndex
-          );
-          const reason = response[0].body.model.data.replacement_reason.slice(
-            analysisIndex
-          );
-          const notes = response[0].body.model.data.replacement_notes.slice(
-            analysisIndex
-          );
-          const lowerBound = response[0].body.model.data.predicted_value_lower_bound.slice(
-            analysisIndex
-          );
-          const upperBound = response[0].body.model.data.predicted_value_upper_bound.slice(
-            analysisIndex
-          );
+        const consumptionResult = {};
+        const consumptionTimestamp = response2[0].body.timestamp;
+        const consumptionValue = response2[0].body.value;
+        consumptionTimestamp.forEach(
+          (key, i) => (consumptionResult[key] = consumptionValue[i])
+        );
 
-          dates.map((date, index) => {
-            $(".tableBody").append(`
-                    <tr>
-                        <td class='position'><input class="form-check-input edit" name='edit' type="checkbox"></td>
-                        <td class='date'>${date}</td>
-                        <td>${temperature[index]}</td>
-                        <td>${
-                          $(".meterVariable").text() === "OCC"
-                            ? occ[index]
-                            : parseFloat(x[index]).toFixed(0)
-                        }</td>
-                        <td id=${Math.trunc(
-                          meter[index]
-                        )} class='meterReading'>${Math.trunc(meter[index])}</td>
-                        <td class='expected'>${parseFloat(
-                          expected[index]
-                        ).toFixed(0)}</td>
-                        <td >${
-                          replacement[index] === null
-                            ? "-"
-                            : parseFloat(replacement[index]).toFixed(0)
-                        }</td>
-                        <td>${reason[index] === null ? "-" : reason[index]}</td>
-                        <td>${notes[index] === null ? "-" : notes[index]}</td>
-                        <td class="upperBound" style='display: none'>${parseFloat(
-                          upperBound[index]
-                        ).toFixed(0)}</td>
-                        <td class="lowerBound" style='display: none'>${parseFloat(
-                          lowerBound[index]
-                        ).toFixed(0)}</td>
-                    </tr>`);
-          });
-          $(".x").html(response[0].body.model.x.toUpperCase());
-          $(".tableData tbody tr").each(function() {
-            let meterReading = $(this)
-              .find(".meterReading")
-              .html();
-            let lowerBound = $(this)
-              .find(".lowerBound")
-              .html();
-            let upperBound = $(this)
-              .find(".upperBound")
-              .html();
-            if (
-              parseInt(meterReading, 10) < parseInt(lowerBound, 10) ||
-              parseInt(meterReading, 10) === parseInt(lowerBound, 10)
-            ) {
-              $(this).css("background-color", "#F0AD4E");
-              if ($(this).index() === 0) {
-                $(this)
-                  .children("td:eq(0)")
-                  .append(
-                    `<a  href="#" class="warning firstRow" data-tool-tip="Low Limit: ${lowerBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`
-                  );
-              } else {
-                $(this)
-                  .children("td:eq(0)")
-                  .append(
-                    `<a  href="#" class="warning" data-tool-tip="Low Limit: ${lowerBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`
-                  );
-              }
-            }
-
-            if (
-              parseInt(meterReading, 10) > parseInt(upperBound, 10) ||
-              parseInt(meterReading, 10) === parseInt(upperBound, 10)
-            ) {
-              $(this).css("background-color", "#d9534f");
-              if ($(this).index() === 0) {
-                $(this)
-                  .children("td:eq(0)")
-                  .append(
-                    `<a  href="#" class="warning firstRow" data-tool-tip="High Limit: ${upperBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`
-                  );
-              } else {
-                $(this)
-                  .children("td:eq(0)")
-                  .append(
-                    `<a  href="#" class="warning" data-tool-tip="High Limit: ${upperBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`
-                  );
-              }
-            }
-
-            if (
-              $(this)
-                .children("td:eq(4)")
-                .text() ===
-              $(this)
-                .next()
-                .children("td:eq(4)")
-                .text()
-            ) {
-              $(this).css("background-color", "#0275d8");
-              $(this)
-                .next()
-                .css("background-color", "#0275d8");
-            }
-          });
-          const checkboxes = document.querySelectorAll(
-            '.tableData input[type="checkbox"]'
-          );
-          let lastChecked;
-
-          function handleCheck(e) {
-            let inBetween = false;
-            if (e.shiftKey && this.checked) {
-              checkboxes.forEach((checkbox) => {
-                if (checkbox === this || checkbox === lastChecked) {
-                  inBetween = !inBetween;
-                }
-                if (inBetween) {
-                  checkbox.checked = true;
-                }
-              });
-            }
-            lastChecked = this;
-          }
-
-          checkboxes.forEach((checkbox) =>
-            checkbox.addEventListener("click", handleCheck)
-          );
-        });
-
-        const result3 = {};
-        const xTimestamp2 = response2[0].body.timestamp;
-        const yValue = response2[0].body.value;
-        xTimestamp2.forEach((key, i) => (result3[key] = yValue[i]));
-
-        const newArr = Object.keys(result3).map(function(key) {
-          return [String(key), result3[key]];
+        const newConsumptionArr = Object.keys(consumptionResult).map(function(
+          key
+        ) {
+          return [String(key), consumptionResult[key]];
         });
 
         google.load("visualization", "1", {
@@ -777,19 +527,19 @@ $(document).ready(() => {
         google.setOnLoadCallback(drawChart);
 
         function drawChart() {
-          var data = new google.visualization.DataTable();
+          const data = new google.visualization.DataTable();
           data.addColumn("date");
           data.addColumn("number");
 
-          newArr.forEach((item) => {
+          newConsumptionArr.forEach((item) => {
             data.addRow([new Date(item[0]), item[1]]);
           });
 
-          var dash = new google.visualization.Dashboard(
+          const dash = new google.visualization.Dashboard(
             document.getElementById("dashboard")
           );
 
-          var control = new google.visualization.ControlWrapper({
+          const control = new google.visualization.ControlWrapper({
             controlType: "ChartRangeFilter",
             containerId: "control_div",
             state: {
@@ -848,7 +598,7 @@ $(document).ready(() => {
             },
           };
 
-          var chart = new google.visualization.ChartWrapper({
+          const chart = new google.visualization.ChartWrapper({
             chartType: "ScatterChart",
             containerId: "chart_div",
             options: chartOptions,
@@ -881,7 +631,7 @@ $(document).ready(() => {
             control,
             "statechange",
             function() {
-              var v = control.getState();
+              const v = control.getState();
               document.getElementById("dbgchart").innerHTML =
                 v.range.start.toISOString().slice(0, 10) +
                 " to " +
@@ -896,6 +646,161 @@ $(document).ready(() => {
         $(".copyModelDates").on("click", () => {
           $(".modelStart").val(updateModelStart);
           $(".modelEnd").val(updateModelEnd);
+        });
+
+        $(function() {
+          const dates = response[0].body.model.data.timestamp.slice(
+            analysisIndex
+          );
+          const temperature = response[0].body.model.data.average_dry_bulb_temperature.slice(
+            analysisIndex
+          );
+          const x = response[0].body.model.data.degree_day.slice(analysisIndex);
+          const occ = response[0].body.model.data.is_occupied.slice(
+            analysisIndex
+          );
+          const meter = response[0].body.model.data.raw_value.slice(
+            analysisIndex
+          );
+          const expected = response[0].body.model.data.predicted_value.slice(
+            analysisIndex
+          );
+          const replacement = response[0].body.model.data.replacement_value.slice(
+            analysisIndex
+          );
+          const reason = response[0].body.model.data.replacement_reason.slice(
+            analysisIndex
+          );
+          const notes = response[0].body.model.data.replacement_notes.slice(
+            analysisIndex
+          );
+          const lowerBound = response[0].body.model.data.predicted_value_lower_bound.slice(
+            analysisIndex
+          );
+          const upperBound = response[0].body.model.data.predicted_value_upper_bound.slice(
+            analysisIndex
+          );
+
+          dates.map((date, index) => {
+            $(".tableBody").append(`
+              <tr>
+                <td class='position'><input class="form-check-input edit" name='edit' type="checkbox"></td>
+                <td class='date'>${date}</td>
+                <td>${temperature[index]}</td>
+                <td>${
+                  $(".meterVariable").text() === "OCC"
+                    ? occ[index]
+                    : parseFloat(x[index]).toFixed(0)
+                }</td>
+                <td id=${Math.trunc(
+                  meter[index]
+                )} class='meterReading'>${Math.trunc(meter[index])}</td>
+                <td class='expected'>${parseFloat(expected[index]).toFixed(
+                  0
+                )}</td>
+                <td >${
+                  replacement[index] === null
+                    ? "-"
+                    : parseFloat(replacement[index]).toFixed(0)
+                }</td>
+                <td>${reason[index] === null ? "-" : reason[index]}</td>
+                <td>${notes[index] === null ? "-" : notes[index]}</td>
+                <td class="upperBound" style='display: none'>${parseFloat(
+                  upperBound[index]
+                ).toFixed(0)}</td>
+                <td class="lowerBound" style='display: none'>${parseFloat(
+                  lowerBound[index]
+                ).toFixed(0)}</td>
+              </tr>`);
+          });
+          $(".x").html(response[0].body.model.x.toUpperCase());
+          $(".tableData tbody tr").each(function() {
+            const meterReading = $(this)
+              .find(".meterReading")
+              .html();
+            const lowerBound = $(this)
+              .find(".lowerBound")
+              .html();
+            const upperBound = $(this)
+              .find(".upperBound")
+              .html();
+            if (
+              parseInt(meterReading, 10) < parseInt(lowerBound, 10) ||
+              parseInt(meterReading, 10) === parseInt(lowerBound, 10)
+            ) {
+              $(this).css("background-color", "#F0AD4E");
+              if ($(this).index() === 0) {
+                $(this)
+                  .children("td:eq(0)")
+                  .append(
+                    `<a  href="#" class="warning firstRow" data-tool-tip="Low Limit: ${lowerBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`
+                  );
+              } else {
+                $(this)
+                  .children("td:eq(0)")
+                  .append(
+                    `<a  href="#" class="warning" data-tool-tip="Low Limit: ${lowerBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`
+                  );
+              }
+            }
+
+            if (
+              parseInt(meterReading, 10) > parseInt(upperBound, 10) ||
+              parseInt(meterReading, 10) === parseInt(upperBound, 10)
+            ) {
+              $(this).css("background-color", "#d9534f");
+              if ($(this).index() === 0) {
+                $(this)
+                  .children("td:eq(0)")
+                  .append(
+                    `<a  href="#" class="warning firstRow" data-tool-tip="High Limit: ${upperBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`
+                  );
+              } else {
+                $(this)
+                  .children("td:eq(0)")
+                  .append(
+                    `<a  href="#" class="warning" data-tool-tip="High Limit: ${upperBound}"><i class="fas fa-exclamation-circle fa-2x"></i></a>`
+                  );
+              }
+            }
+
+            if (
+              $(this)
+                .children("td:eq(4)")
+                .text() ===
+              $(this)
+                .next()
+                .children("td:eq(4)")
+                .text()
+            ) {
+              $(this)
+                .next()
+                .css("background-color", "#0275d8");
+            }
+          });
+          const checkboxes = document.querySelectorAll(
+            '.tableData input[type="checkbox"]'
+          );
+          let lastChecked;
+
+          function handleCheck(e) {
+            let inBetween = false;
+            if (e.shiftKey && this.checked) {
+              checkboxes.forEach((checkbox) => {
+                if (checkbox === this || checkbox === lastChecked) {
+                  inBetween = !inBetween;
+                }
+                if (inBetween) {
+                  checkbox.checked = true;
+                }
+              });
+            }
+            lastChecked = this;
+          }
+
+          checkboxes.forEach((checkbox) =>
+            checkbox.addEventListener("click", handleCheck)
+          );
         });
       }
     });
@@ -929,7 +834,7 @@ $(document).ready(() => {
       })
       .get();
 
-    let checked = $("#replace").is(":checked");
+    const checked = $("#replace").is(":checked");
     let notes = [];
     let reason = [];
     let values = [];
@@ -1036,7 +941,7 @@ $(document).ready(() => {
   });
 
   const submitAttributes = () => {
-    let str = $(".autoIgnored").text();
+    const str = $(".autoIgnored").text();
     let newStr = str.substring(0, str.length - 1);
     const building_number = $(".currentBuildingName").text();
     const meter = $(".currentMeter").text();
