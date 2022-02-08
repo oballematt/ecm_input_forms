@@ -7,6 +7,7 @@ let updateModelStart;
 let updateModelEnd;
 
 $(document).ready(() => {
+  //Initialize Datepicker for model start and end and analysis start and end
   const dateInput_1 = $(".datepicker");
 
   dateInput_1.datepicker({
@@ -14,10 +15,13 @@ $(document).ready(() => {
     dateFormat: "yy-mm-dd",
   });
 
+  //initializes the overlay and loading spinner when searching for a model
   $(".load").on("click", function() {
     $("#overlay").fadeIn();
   });
 
+  // This compares todays date to midnight and the start of next month. If both dates match then the /deleteModels route is called
+  // deleting all records from the reviewed_models table from postgres.
   const lastDay = new Date(d.getFullYear(), d.getMonth() + 1, 1);
 
   if (d === lastDay) {
@@ -27,6 +31,9 @@ $(document).ready(() => {
     });
   }
 
+
+  //this function is responsible for using the ajax call on page load to populate the meter selection table.
+  //it also pulls data from the reviewed_models table in postgres
   const getMeterAlarm = () => {
     $.when(
       $.ajax({
@@ -54,7 +61,7 @@ $(document).ready(() => {
         getMeterAlarm();
       } else {
         console.log(response2);
-        $(".ring").hide();
+        $(".meterSelectionSpinner").hide();
         $(".apply").html("Apply");
         const meter = response[0].body.meter;
         const flagCount = response[0].body.flag_count;
@@ -73,6 +80,9 @@ $(document).ready(() => {
             <td style="display: none">${commodity[index]}</td>
             </tr>`);
         });
+        //maps through the reviewed_model table data in the combined ajax calls.
+        //each cell in the third index position in the table above has a unqiue id containing the meter name.
+        //if the meter in response2 matches any of the id's in the table cell, it applies the modifications below.
         response2[0].map((item) => {
           $(`#${item.meter}`).text("Yes");
           $(`#${item.meter}`)
@@ -80,6 +90,8 @@ $(document).ready(() => {
             .css("background-color", "#00b74a");
           reviewedModels.push(item.meter);
         });
+
+        //This function automatically sorts the meter selection table by building and meter ASC every time the table loads.
         const t = (tr, i) => tr.cells[i].textContent;
         $(".meterList tr")
           .get()
@@ -88,6 +100,9 @@ $(document).ready(() => {
               t(a, 1).localeCompare(t(b, 1)) || t(a, 2).localeCompare(t(b, 2))
           )
           .map((tr) => $(".meterList").append(tr));
+
+          //initialize the search box above the meter selection table.
+          //the value of the search box is transformed to uppercase so the user doesnt have to do it themselves.
         $("#search").on("keyup", function() {
           const value = $(this)
             .val()
@@ -106,13 +121,40 @@ $(document).ready(() => {
             });
           });
         });
+        $('.reviewedFilter').on('change', function() {
+          const value = $(this).val()
+          $('.meterData tbody tr').each(function() {
+            if (value === 'No') {
+              $(this).find('td:eq(4):contains(No)').closest('tr').show()
+              $(this).find('td:eq(4):contains(Yes)').closest('tr').hide()
+            } else if (value === 'Yes') {
+              $(this).find('td:eq(4):contains(No)').closest('tr').hide()
+              $(this).find('td:eq(4):contains(Yes)').closest('tr').show()
+            } else {
+              $(this).find('td:eq(4):contains(No)').closest('tr').show()
+              $(this).find('td:eq(4):contains(Yes)').closest('tr').show()
+            }
+          })
+        })
+        $('.remove0').on('change', function() {
+          const value = $(this).val()
+          $('.meterData tbody tr').each(function() {
+            if (value === 'Yes') {
+              $(this).find('td:eq(3):contains(0)').closest('tr').hide()
+            } else {
+              $(this).find('td:eq(3):contains(0)').closest('tr').show()
+            }
+          })
+        })
+        
       }
     });
   };
 
   getMeterAlarm();
 
-  $(".apply").on("click", function() {
+  //Calls the getMeterAlarm function only if the user wants to filter by a specific steward.
+  $(".filterBySteward").on("click", function() {
     $(".ring").show();
     $(".meterData").load(location.href + " .meterData");
     getMeterAlarm();
@@ -183,7 +225,7 @@ $(document).ready(() => {
     $(".meterSelection").text(meterData[0].meter);
   });
 
-  $(".apiGateway").on("click", function(e) {
+  $(".loadModel").on("click", function(e) {
     e.preventDefault();
     if (meterData.length === 0) {
       alert(
@@ -872,7 +914,7 @@ $(document).ready(() => {
 
       $(".overlayMessage").text("Submitting Data. Please wait...");
       $.ajax({
-        url: "/postModel",
+        url: "/postReplacement",
         method: "POST",
         data: {
           building_number: building_number,

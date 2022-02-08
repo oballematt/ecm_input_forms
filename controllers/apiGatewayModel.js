@@ -38,7 +38,7 @@ module.exports = {
     }
   },
 
-  postModel: async (req, res) => {
+  postReplacement: async (req, res) => {
     const {
       building_number,
       commodity_tag,
@@ -76,9 +76,9 @@ module.exports = {
         },
       });
 
-      const postModel = process.env.POST_REPLACEMENT_URL;
+      const postReplacement = process.env.POST_REPLACEMENT_URL;
 
-      const response = await axios.post(postModel, postdata, {
+      const response = await axios.post(postReplacement, postdata, {
         headers: headers,
       });
 
@@ -105,7 +105,6 @@ module.exports = {
       intercept,
       std,
     } = req.body;
-    console.log(req.body);
     try {
       const token = await Model_api_authorization.findOne({
         where: {

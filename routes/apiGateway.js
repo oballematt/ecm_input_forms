@@ -3,7 +3,7 @@ const gatewayController = require('../controllers/apiGatewayModel')
 
 router.get('/getModel', gatewayController.getModel);
 
-router.post('/postModel', gatewayController.postModel)
+router.post('/postReplacement', gatewayController.postReplacement)
 
 router.post('/postAttributes', gatewayController.postAttributes)
 

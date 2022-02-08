@@ -22,7 +22,7 @@ initializePassport(passport);
 app.engine(
   "handlebars",
   exphbs({
-    defaultLayout: "main",
+    defaultLayout: "ecmforms",
     runtimeOptions: {
       allowProtoPropertiesByDefault: true,
       allowProtoMethodsByDefault: true,
@@ -108,7 +108,7 @@ app.get('/', authorization.checkNotAuthenticated, (req, res) => {
   res.render('landing/landing', {layout: 'landingLayout'})
 })
 app.get("/datacleaning", authorization.checkNotAuthenticated, (req, res) => {
-  res.render("dataCleaning/cleaning", { layout: "datacleaning" });
+  res.render("meterValidation/cleaning", { layout: "metervalidation" });
 });
 
 app.post(

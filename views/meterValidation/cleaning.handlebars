@@ -30,9 +30,25 @@
                     <option value="matt.stevens@austin.utexas.edu">Matt Stevens</option>
                     <option value="mjones@austin.utexas.edu">Meagan Jones</option>
                 </select>
-                <button type='button' class="btn btn-primary apply">Apply</button>
+                <button type='button' class="btn btn-primary filterBySteward">Apply</button>
             </div>
-            <input id='search' style="width: 20%" class="form-control headings mb-3" type="text" placeholder="Search" aria-label="default input example">
+
+            <input id='search' style="width: 20%; display: inline-block" class="form-control headings mb-3" type="text"
+                placeholder="Search" aria-label="default input example">
+            <select style="width: 26%; display: inline-block; margin-left: 20%" class="form-select remove0"
+                aria-label="Default select example">
+                <option disabled selected>Remove 0's</option>
+                <option>Yes</option>
+                <option>No</option>
+            </select>
+
+            <select style="width: 29%; display: inline-block" class="reviewedFilter form-select ms-3"
+                aria-label="Default select example">
+                <option disabled selected>Show Reviewed</option>
+                <option>All</option>
+                <option>Yes</option>
+                <option>No</option>
+            </select>
             <div style="height: 500px; overflow: scroll; overflow-x: hidden">
                 <table class="table meterData text-light">
                     <thead>
@@ -47,7 +63,7 @@
                     <tbody class='meterList'>
                     </tbody>
                 </table>
-                <div class="ring text-center">
+                <div class="meterSelectionSpinner text-center">
                     <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
@@ -67,26 +83,25 @@
             </ul>
             <div class="input-group flex-nowrap mt-3">
                 <span style='width: 120px' class="input-group-text" id="addon-wrapping">Model Start:</span>
-                <input autocomplete="off" id="modelStart" type="text"
-                    class="form-control datepicker  modelStart" placeholder="yyyy/mm/dd"
-                    aria-label="Model Start Date" aria-describedby="addon-wrapping">
+                <input autocomplete="off" id="modelStart" type="text" class="form-control datepicker  modelStart"
+                    placeholder="yyyy/mm/dd" aria-label="Model Start Date" aria-describedby="addon-wrapping">
             </div>
             <div class="input-group flex-nowrap mt-3">
                 <span style='width: 120px' class="input-group-text" id="addon-wrapping">Model End:</span>
-                <input type="text" class="form-control datepicker  modelEnd"
-                    placeholder="yyyy/mm/dd" aria-label="Model End Date" aria-describedby="addon-wrapping">
+                <input type="text" class="form-control datepicker  modelEnd" placeholder="yyyy/mm/dd"
+                    aria-label="Model End Date" aria-describedby="addon-wrapping">
             </div>
             <div class="input-group flex-nowrap mt-3">
                 <span style='width: 120px' class="input-group-text" id="addon-wrapping">Analysis Start:</span>
-                <input type="text" class="form-control datepicker  analysisStart"
-                    placeholder="yyyy/mm/dd" aria-label="Analysis Start Date" aria-describedby="addon-wrapping">
+                <input type="text" class="form-control datepicker  analysisStart" placeholder="yyyy/mm/dd"
+                    aria-label="Analysis Start Date" aria-describedby="addon-wrapping">
             </div>
             <div class="input-group flex-nowrap mt-3">
                 <span style='width: 120px' class="input-group-text" id="addon-wrapping">Analysis End:</span>
-                <input type="text" class="form-control datepicker  analysisEnd"
-                    placeholder="yyyy/mm/dd" aria-label="Analysis End Date" aria-describedby="addon-wrapping">
+                <input type="text" class="form-control datepicker  analysisEnd" placeholder="yyyy/mm/dd"
+                    aria-label="Analysis End Date" aria-describedby="addon-wrapping">
             </div>
-            <button style="background-color: #bf5700;" class="btn btn-primary apiGateway mt-3 mb-3 w-100 load"
+            <button style="background-color: #bf5700;" class="btn btn-primary loadModel mt-3 mb-3 w-100 load"
                 type="button">Run Model</button>
         </div>
         <div style='width: 69.5%' class="col-xxl-8 col-lg-8">
