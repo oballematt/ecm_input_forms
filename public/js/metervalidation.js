@@ -7,6 +7,12 @@ let updateModelStart;
 let updateModelEnd;
 
 $(document).ready(() => {
+  var popoverTriggerList = [].slice.call(
+    document.querySelectorAll('[data-bs-toggle="popover"]')
+  );
+  var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl);
+  });
   //Initialize Datepicker for model start and end and analysis start and end
   const dateInput_1 = $(".datepicker");
 
@@ -30,7 +36,6 @@ $(document).ready(() => {
       type: "DELETE",
     });
   }
-
 
   //this function is responsible for using the ajax call on page load to populate the meter selection table.
   //it also pulls data from the reviewed_models table in postgres
@@ -101,8 +106,8 @@ $(document).ready(() => {
           )
           .map((tr) => $(".meterList").append(tr));
 
-          //initialize the search box above the meter selection table.
-          //the value of the search box is transformed to uppercase so the user doesnt have to do it themselves.
+        //initialize the search box above the meter selection table.
+        //the value of the search box is transformed to uppercase so the user doesnt have to do it themselves.
         $("#search").on("keyup", function() {
           const value = $(this)
             .val()
@@ -121,32 +126,55 @@ $(document).ready(() => {
             });
           });
         });
-        $('.reviewedFilter').on('change', function() {
-          const value = $(this).val()
-          $('.meterData tbody tr').each(function() {
-            if (value === 'No') {
-              $(this).find('td:eq(4):contains(No)').closest('tr').show()
-              $(this).find('td:eq(4):contains(Yes)').closest('tr').hide()
-            } else if (value === 'Yes') {
-              $(this).find('td:eq(4):contains(No)').closest('tr').hide()
-              $(this).find('td:eq(4):contains(Yes)').closest('tr').show()
+        $(".reviewedFilter").on("change", function() {
+          const value = $(this).val();
+          $(".meterData tbody tr").each(function() {
+            if (value === "No") {
+              $(this)
+                .find("td:eq(4):contains(No)")
+                .closest("tr")
+                .show();
+              $(this)
+                .find("td:eq(4):contains(Yes)")
+                .closest("tr")
+                .hide();
+            } else if (value === "Yes") {
+              $(this)
+                .find("td:eq(4):contains(No)")
+                .closest("tr")
+                .hide();
+              $(this)
+                .find("td:eq(4):contains(Yes)")
+                .closest("tr")
+                .show();
             } else {
-              $(this).find('td:eq(4):contains(No)').closest('tr').show()
-              $(this).find('td:eq(4):contains(Yes)').closest('tr').show()
+              $(this)
+                .find("td:eq(4):contains(No)")
+                .closest("tr")
+                .show();
+              $(this)
+                .find("td:eq(4):contains(Yes)")
+                .closest("tr")
+                .show();
             }
-          })
-        })
-        $('.remove0').on('change', function() {
-          const value = $(this).val()
-          $('.meterData tbody tr').each(function() {
-            if (value === 'Yes') {
-              $(this).find('td:eq(3):contains(0)').closest('tr').hide()
+          });
+        });
+        $(".remove0").on("change", function() {
+          const value = $(this).val();
+          $(".meterData tbody tr").each(function() {
+            if (value === "Yes") {
+              $(this)
+                .find("td:eq(3):contains(0)")
+                .closest("tr")
+                .hide();
             } else {
-              $(this).find('td:eq(3):contains(0)').closest('tr').show()
+              $(this)
+                .find("td:eq(3):contains(0)")
+                .closest("tr")
+                .show();
             }
-          })
-        })
-        
+          });
+        });
       }
     });
   };
@@ -155,7 +183,7 @@ $(document).ready(() => {
 
   //Calls the getMeterAlarm function only if the user wants to filter by a specific steward.
   $(".filterBySteward").on("click", function() {
-    $(".ring").show();
+    $(".meterSelectionSpinner").show();
     $(".meterData").load(location.href + " .meterData");
     getMeterAlarm();
   });
