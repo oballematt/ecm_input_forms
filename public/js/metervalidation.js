@@ -80,7 +80,7 @@ $(document).ready(() => {
             <td>${building[index]}</td>
             <td>${meter}</td>
             <td>${flagCount[index]}</td>
-            <td id=${meter}>No</td>
+            <td> id=${meter}>No</td>
             <td style="display: none">${building_number[index]}</td>
             <td style="display: none">${commodity[index]}</td>
             </tr>`);
@@ -1013,7 +1013,7 @@ $(document).ready(() => {
   const submitAttributes = () => {
     const str = $(".autoIgnored").text();
     let newStr = str.substring(0, str.length - 1);
-    const building_number = $(".currentBuildingName").text();
+    const building_number = meterData[0].building_number
     const meter = $(".currentMeter").text();
     const commodity_tag = $(".currentCommodity").text();
     const x = $(".meterVariable").text();
