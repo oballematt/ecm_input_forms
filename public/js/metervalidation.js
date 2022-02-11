@@ -1044,16 +1044,14 @@ $(document).ready(() => {
         std: std,
       },
     }).then((response) => {
-      if (response === "Request failed with status code 502") {
-        submitAttributes();
-      } else {
+      console.log(response)
         $(".saveAttributes").html(
           `<i style="margin: 0 auto" class="far fa-check-circle fa-2x text-center"></i>`
         );
         setTimeout(() => {
           $(".saveAttributes").html("Save");
         }, 4000);
-      }
+      
     });
   };
 });
