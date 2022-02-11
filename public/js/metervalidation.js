@@ -1013,7 +1013,7 @@ $(document).ready(() => {
   const submitAttributes = () => {
     const str = $(".autoIgnored").text();
     let newStr = str.substring(0, str.length - 1);
-    const building_number = meterData[0].building_number
+    const building_number = meterData[0].building_number;
     const meter = $(".currentMeter").text();
     const commodity_tag = $(".currentCommodity").text();
     const x = $(".meterVariable").text();
@@ -1043,13 +1043,17 @@ $(document).ready(() => {
         intercept: intercept,
         std: std,
       },
-    }).then(() => {
-      $(".saveAttributes").html(
-        `<i style="margin: 0 auto" class="far fa-check-circle fa-2x text-center"></i>`
-      );
-      setTimeout(() => {
-        $(".saveAttributes").html("Save");
-      }, 4000);
+    }).then((response) => {
+      if (response === "Request failed with status code 502") {
+        submitAttributes();
+      } else {
+        $(".saveAttributes").html(
+          `<i style="margin: 0 auto" class="far fa-check-circle fa-2x text-center"></i>`
+        );
+        setTimeout(() => {
+          $(".saveAttributes").html("Save");
+        }, 4000);
+      }
     });
   };
 });
