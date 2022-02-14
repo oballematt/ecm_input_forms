@@ -124,7 +124,7 @@ module.exports = {
         commodity_tag: commodity_tag,
         train_start: train_start,
         train_end: train_end,
-        x: x,
+        x: x.toLowerCase(),
         auto_ignored_percentage: Number(auto_ignored_percentage),
         base_temperature:
           Number(base_temperature) === "--" ? null : Number(base_temperature),
@@ -141,8 +141,8 @@ module.exports = {
 
       return res.json(response.data);
     } catch (error) {
-      console.error(error.message);
-      return res.json(error.message);
+      console.error(error);
+      return res.json(error);
     }
   },
 
