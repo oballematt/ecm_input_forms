@@ -7,12 +7,6 @@ let updateModelStart;
 let updateModelEnd;
 
 $(document).ready(() => {
-  var popoverTriggerList = [].slice.call(
-    document.querySelectorAll('[data-bs-toggle="popover"]')
-  );
-  var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
-    return new bootstrap.Popover(popoverTriggerEl);
-  });
   //Initialize Datepicker for model start and end and analysis start and end
   const dateInput_1 = $(".datepicker");
 
@@ -81,6 +75,7 @@ $(document).ready(() => {
             <td>${meter}</td>
             <td>${flagCount[index]}</td>
             <td id=${meter}>No</td>
+            <td><i class="fa-solid fa-note"></i></td>
             <td style="display: none">${building_number[index]}</td>
             <td style="display: none">${commodity[index]}</td>
             </tr>`);
