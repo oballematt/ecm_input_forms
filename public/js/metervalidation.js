@@ -75,7 +75,6 @@ $(document).ready(() => {
             <td>${meter}</td>
             <td>${flagCount[index]}</td>
             <td id=${meter}>No</td>
-            <td><i class="fa-solid fa-note"></i></td>
             <td style="display: none">${building_number[index]}</td>
             <td style="display: none">${commodity[index]}</td>
             </tr>`);
