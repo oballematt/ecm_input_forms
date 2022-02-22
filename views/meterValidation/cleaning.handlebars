@@ -13,7 +13,6 @@
 
 </div>
 <div class="container-fluid" style='height: 100%'>
-
     <div style="height: 100%;" class="row">
         <div style="width: 30.5%" class="col-xxl-4 col-lg-4 searchBox">
             <button class="btn btn-dark sidebar" type="button" data-bs-toggle="offcanvas" data-bs-target="#sideNav"
@@ -35,7 +34,6 @@
 
             <input id='search' style="width: 20%; display: inline-block" class="form-control headings mb-3" type="text"
                 placeholder="Search" aria-label="default input example">
-            
 
             <select style="width: 26%; display: inline-block; margin-left: 20%" class="form-select remove0"
                 aria-label="Default select example">
@@ -51,6 +49,7 @@
                 <option>Yes</option>
                 <option>No</option>
             </select>
+
             <div style="height: 500px; overflow: scroll; overflow-x: hidden">
                 <table class="table meterData text-light">
                     <thead>
@@ -74,7 +73,13 @@
             <button style=" color:white" type="button" id="button" class="confirmMeter btn btn-success mt-3">Confirm
                 Meter
                 Selection</button>
-
+            <div id="modelNotes" style="display: none; position: relative" class="form-floating mt-3">
+                <textarea  disabled class="form-control modelNotes" id="floatingTextarea2"
+                    style="height: 100px"></textarea>
+                <label class='text-dark notesLabel' for="floatingTextarea2"></label>
+                <label style="display: none" class='text-dark notesLabelBuildingNumber' for="floatingTextarea2"></label>
+                <button style="display: none; position: absolute; bottom: 3%; right:.2%" type="button" class="btn btn-success editModelNote">Submit Note</button>
+            </div>
             <ul class="list-group mt-3 mb-3">
                 <li class="list-group-item listGroupColor">
                     <div class="ms-2 me-auto">

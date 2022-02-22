@@ -59,7 +59,7 @@ $(document).ready(() => {
       ) {
         getMeterAlarm();
       } else {
-        console.log(response2);
+        console.log(response);
         $(".meterSelectionSpinner").hide();
         $(".apply").html("Apply");
         const meter = response[0].body.meter;
@@ -67,18 +67,43 @@ $(document).ready(() => {
         const building = response[0].body.building_abbreviation;
         const building_number = response[0].body.building_number;
         const commodity = response[0].body.commodity_tag;
+        const notes = response[0].body.notes;
+
         meter.map((meter, index) => {
           $(".meterList").append(`
             <tr>
-            <td style="width: 10px;" class='position text-center'><input class="form-check-input" type="radio" name="meterSelect" id="radioNoLabel1" aria-label="Select a meter"></td>
-            <td>${building[index]}</td>
-            <td>${meter}</td>
-            <td>${flagCount[index]}</td>
-            <td id=${meter}>No</td>
-            <td style="display: none">${building_number[index]}</td>
-            <td style="display: none">${commodity[index]}</td>
-            </tr>`);
+              <td style="width: 10px;" class='position text-center'><input class="form-check-input" type="radio" name="meterSelect" id="radioNoLabel1" aria-label="Select a meter"></td>
+              <td>${building[index]}</td>
+              <td>${meter}</td>
+              <td>${flagCount[index]}</td>
+              <td id=${meter}>No</td>
+              <td style="display: none">${notes[index]}</td>
+              <td style="display: none">${building_number[index]}</td>
+              <td style="display: none">${commodity[index]}</td>
+            </tr>
+            `);
         });
+
+        $('input[name="meterSelect"]').on("click", function() {
+          const notes = $(this)
+            .closest("tr")
+            .children("td:eq(5)")
+            .text();
+          const meter = $(this)
+            .closest("tr")
+            .children("td:eq(2)")
+            .text();
+          const buildingNumber = $(this).closest('tr').children('td:eq(6)').text()
+          $("#modelNotes").show();
+          $(".notesLabel").html(meter);
+          $(".notesLabelBuildingNumber").html(buildingNumber);
+          if (notes === "null") {
+            $(".modelNotes").val("No Notes");
+          } else {
+            $(".modelNotes").val(notes);
+          }
+        });
+
         //maps through the reviewed_model table data in the combined ajax calls.
         //each cell in the third index position in the table above has a unqiue id containing the meter name.
         //if the meter in response2 matches any of the id's in the table cell, it applies the modifications below.
@@ -236,11 +261,15 @@ $(document).ready(() => {
           .text(),
         building_number: $(this)
           .closest("tr")
-          .children("td:eq(5)")
+          .children("td:eq(6)")
           .text(),
         commodity_tag: $(this)
           .closest("tr")
-          .children("td:eq(6)")
+          .children("td:eq(7)")
+          .text(),
+        note: $(this)
+          .closest("tr")
+          .children("td:eq(5)")
           .text(),
       });
     });
@@ -322,7 +351,7 @@ $(document).ready(() => {
         },
       })
     ).then((response, response2, response3) => {
-      console.log(response2);
+      console.log(response);
       if (
         response[0] === "Request failed with status code 504" ||
         response[0] === "Request failed with status code 500" ||
@@ -333,8 +362,10 @@ $(document).ready(() => {
         $(".overlayMessage").text(
           "Server not responding, trying your search again. Please do not refresh the page"
         );
-      } else {
-        $(".displayData").show();
+      } else {  
+        $('.displayData').show()
+        $(".modelNotes").attr("disabled", false);
+        $(".editModelNote").show();
         if (response3[0].length === 0) {
           $(".savedAttributes").hide();
         } else {
@@ -870,6 +901,34 @@ $(document).ready(() => {
     });
   };
 
+  const submitModelNotes = () => {
+    $.ajax({
+      url: '/postModelNotes',
+      type: 'POST',
+      data:{ 
+        building_number: JSON.stringify([$('.notesLabelBuildingNumber').html()]),
+        meter: JSON.stringify([$('.notesLabel').html()]),
+        notes: JSON.stringify([$('.modelNotes').val()])
+      }
+    }).then( () => {
+      $(`#${$('.notesLabel').html()}`).siblings('td:eq(5)').text($('.modelNotes').val())
+      $(".editModelNote").html(
+        `<i style="margin: 0 auto" class="far fa-check-circle fa-2x text-center"></i>`
+      );
+      setTimeout(() => {
+        $(".editModelNote").html("Submit Note");
+      }, 4000);
+    })
+  }
+
+  $('.editModelNote').on('click', () => {
+    $(
+      this
+    ).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    <span class="visually-hidden">Loading...</span>`);
+    submitModelNotes()
+  })
+
   $(".copyAttributeDates").on("click", () => {
     $(".modelStart").val($(".savedStart").html());
     $(".modelEnd").val($(".savedEnd").html());
@@ -1038,14 +1097,13 @@ $(document).ready(() => {
         std: std,
       },
     }).then((response) => {
-      console.log(response)
-        $(".saveAttributes").html(
-          `<i style="margin: 0 auto" class="far fa-check-circle fa-2x text-center"></i>`
-        );
-        setTimeout(() => {
-          $(".saveAttributes").html("Save");
-        }, 4000);
-      
+      console.log(response);
+      $(".saveAttributes").html(
+        `<i style="margin: 0 auto" class="far fa-check-circle fa-2x text-center"></i>`
+      );
+      setTimeout(() => {
+        $(".saveAttributes").html("Save");
+      }, 4000);
     });
   };
 });

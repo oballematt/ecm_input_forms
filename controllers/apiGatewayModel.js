@@ -233,4 +233,44 @@ module.exports = {
       return res.json(error.message);
     }
   },
+
+  postModelNotes: async (req, res) => {
+    const { building_number, meter, notes } = req.body
+    const email = req.user.email;
+    try {
+
+      const token = await Model_api_authorization.findOne({
+        where: {
+          email: email,
+        },
+        attributes: ["token"],
+      });
+
+      const headers = {
+        "Content-Type": "application/json",
+        authorizationToken: token.token,
+      };
+
+     const modelNotesData = {
+       data: {
+        building_number: JSON.parse(building_number),
+        meter: JSON.parse(meter),
+        notes: JSON.parse(notes)
+       }
+       
+      }
+
+      const modelNotes = process.env.POST_MODEL_NOTES
+
+      const response = await axios.post(modelNotes, modelNotesData, {
+        headers: headers,
+      });
+
+      return res.json(response.data)
+      
+    } catch (error) {
+      console.error(error);
+      return res.json(error);
+    }
+  }
 };

@@ -1,3 +1,5 @@
+
+
 #overlay {
   background-color: rgba(255, 255, 255, 0.8);
   color: #666666;
@@ -36,6 +38,7 @@
   background: #1a1a1a;
   color: #fff;
 }
+
 
 .sidebar-logo {
   padding: 10px 15px 10px 30px;
@@ -275,6 +278,7 @@ a[data-tool-tip] {
   position: relative;
   text-decoration: none;
   color: black;
+  z-index: 3;
 }
 
 a[data-tool-tip]::after {
