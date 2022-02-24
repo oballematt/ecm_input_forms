@@ -10,7 +10,16 @@ const checkNotAuthenticated = (req, res, next) => {
       return next();                                                                 
     }                                                                 
     res.redirect("/login");                                                                 
-  }                                                                 
+  } 
+  
+  const checkIfAdmin = (req, res, next) => {
+    if (req.user.role !== 'Admin') {
+      res.status(403) 
+      return res.send('Not Authorized') 
+    }
+    next()
+  }
                                                                  
   exports.checkAuthenticated = checkAuthenticated;                                                                 
-  exports.checkNotAuthenticated = checkNotAuthenticated;                                                                 
+  exports.checkNotAuthenticated = checkNotAuthenticated;      
+  exports.checkIfAdmin = checkIfAdmin                                                           

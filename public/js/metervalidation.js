@@ -93,7 +93,10 @@ $(document).ready(() => {
             .closest("tr")
             .children("td:eq(2)")
             .text();
-          const buildingNumber = $(this).closest('tr').children('td:eq(6)').text()
+          const buildingNumber = $(this)
+            .closest("tr")
+            .children("td:eq(6)")
+            .text();
           $("#modelNotes").show();
           $(".notesLabel").html(meter);
           $(".notesLabelBuildingNumber").html(buildingNumber);
@@ -362,8 +365,8 @@ $(document).ready(() => {
         $(".overlayMessage").text(
           "Server not responding, trying your search again. Please do not refresh the page"
         );
-      } else {  
-        $('.displayData').show()
+      } else {
+        $(".displayData").show();
         $(".modelNotes").attr("disabled", false);
         $(".editModelNote").show();
         if (response3[0].length === 0) {
@@ -903,31 +906,34 @@ $(document).ready(() => {
 
   const submitModelNotes = () => {
     $.ajax({
-      url: '/postModelNotes',
-      type: 'POST',
-      data:{ 
-        building_number: JSON.stringify([$('.notesLabelBuildingNumber').html()]),
-        meter: JSON.stringify([$('.notesLabel').html()]),
-        notes: JSON.stringify([$('.modelNotes').val()])
-      }
-    }).then( () => {
-      $(`#${$('.notesLabel').html()}`).siblings('td:eq(5)').text($('.modelNotes').val())
+      url: "/postModelNotes",
+      type: "POST",
+      data: {
+        building_number: JSON.stringify([
+          $(".notesLabelBuildingNumber").html(),
+        ]),
+        meter: JSON.stringify([$(".notesLabel").html()]),
+        notes: JSON.stringify([$(".modelNotes").val()]),
+      },
+    }).then(() => {
+      $(`#${$(".notesLabel").html()}`)
+        .siblings("td:eq(5)")
+        .text($(".modelNotes").val());
       $(".editModelNote").html(
         `<i style="margin: 0 auto" class="far fa-check-circle fa-2x text-center"></i>`
       );
       setTimeout(() => {
         $(".editModelNote").html("Submit Note");
       }, 4000);
-    })
-  }
+    });
+  };
 
-  $('.editModelNote').on('click', () => {
-    $(
-      this
-    ).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  $(".editModelNote").on("click", () => {
+    $(this)
+      .html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
     <span class="visually-hidden">Loading...</span>`);
-    submitModelNotes()
-  })
+    submitModelNotes();
+  });
 
   $(".copyAttributeDates").on("click", () => {
     $(".modelStart").val($(".savedStart").html());

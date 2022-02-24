@@ -91,7 +91,10 @@ app.use(cors());
 
 //Express Route
 app.get("/login", authorization.checkAuthenticated, (req, res) =>
-  res.render("userInfo/login", { layout:'loginLayout', error: req.flash("error") })
+  res.render("userInfo/login", {
+    layout: "loginLayout",
+    error: req.flash("error"),
+  })
 );
 app.get("/register", authorization.checkAuthenticated, (req, res) =>
   res.render("signup")
@@ -104,12 +107,21 @@ app.get("/logout", (req, res) => {
   res.redirect("/login");
 });
 
-app.get('/', authorization.checkNotAuthenticated, (req, res) => {
-  res.render('landing/landing', {layout: 'landingLayout'})
-})
-app.get("/datacleaning", authorization.checkNotAuthenticated, (req, res) => {
-  res.render("meterValidation/cleaning", { layout: "metervalidation" });
+app.get("/", authorization.checkNotAuthenticated, (req, res) => {
+  if (req.user.role !== "Admin") {
+    res.render('landing/landingPublic', {layout: 'landingLayout'})
+  } else {
+    res.render("landing/landingAdmin", { layout: "landingLayout" });
+  }
 });
+app.get(
+  "/datacleaning",
+  authorization.checkNotAuthenticated,
+  authorization.checkIfAdmin,
+  (req, res) => {
+    res.render("meterValidation/cleaning", { layout: "metervalidation" });
+  }
+);
 
 app.post(
   "/login",
@@ -120,18 +132,18 @@ app.post(
   })
 );
 
-app.use("/", require("./routes/prjt_metadata"))
-app.use("/", require("./routes/prjt_costs_hours"))
-app.use("/", require("./routes/prjt_savings"))
-app.use("/", require("./routes/prjt_fundings"))
-app.use("/", require("./routes/prjt_baseline"))
-app.use("/", require("./routes/getDataById"))
-app.use("/", require("./routes/prjt_misc_savings"))
-app.use("/", require("./routes/users"))
-app.use("/", require("./routes/athenaData"))
-app.use("/", require("./routes/meterAttributes"))
-app.use("/", require("./routes/apiGateway"))
-app.use("/", require("./routes/reviewedModels"))
+app.use("/", require("./routes/prjt_metadata"));
+app.use("/", require("./routes/prjt_costs_hours"));
+app.use("/", require("./routes/prjt_savings"));
+app.use("/", require("./routes/prjt_fundings"));
+app.use("/", require("./routes/prjt_baseline"));
+app.use("/", require("./routes/getDataById"));
+app.use("/", require("./routes/prjt_misc_savings"));
+app.use("/", require("./routes/users"));
+app.use("/", require("./routes/athenaData"));
+app.use("/", require("./routes/meterAttributes"));
+app.use("/", require("./routes/apiGateway"));
+app.use("/", require("./routes/reviewedModels"));
 
 app.listen(port, async () => {
   console.log(`Server started on port ${port}`);

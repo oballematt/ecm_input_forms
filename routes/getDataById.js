@@ -4,7 +4,7 @@ const authorization = require('../middleware/authorization')
 
 router.post('/ecmforms', getOneByIdController.findData);
 
-router.get('/ecmforms', authorization.checkNotAuthenticated, getOneByIdController.getAllPid);
+router.get('/ecmforms', authorization.checkNotAuthenticated, authorization.checkIfAdmin, getOneByIdController.getAllPid);
 
 router.get('/delete/all/:project_id', getOneByIdController.deleteAllData);
 
