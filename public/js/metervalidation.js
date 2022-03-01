@@ -365,7 +365,11 @@ $(document).ready(() => {
         $(".overlayMessage").text(
           "Server not responding, trying your search again. Please do not refresh the page"
         );
+      } else if (response[0] === "{\n    \"statusCode\": ,\n    \"body\": ,\n    \"headers\": {\n            }\n}") {
+        $("#overlay").fadeOut();
+        alert('No data has been returned for this model')
       } else {
+        $('.saveAttributes').attr('disabled', false)
         $(".displayData").show();
         $(".modelNotes").attr("disabled", false);
         $(".editModelNote").show();
@@ -1108,7 +1112,8 @@ $(document).ready(() => {
         `<i style="margin: 0 auto" class="far fa-check-circle fa-2x text-center"></i>`
       );
       setTimeout(() => {
-        $(".saveAttributes").html("Save");
+        $(".saveAttributes").html("Saved");
+        $('.saveAttributes').attr('disabled', true)
       }, 4000);
     });
   };

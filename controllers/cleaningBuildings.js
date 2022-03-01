@@ -1,53 +1,53 @@
-const { Bldg_metadata, Model_api_authorization } = require('../models');
+// const { Bldg_metadata, Model_api_authorization } = require('../models');
 
 
-module.exports = {
+// module.exports = {
     
-    getBuildings: async (req, res) => {
+//     getBuildings: async (req, res) => {
 
-        try {
+//         try {
         
-            const buildings = await Bldg_metadata.findAll({
+//             const buildings = await Bldg_metadata.findAll({
 
-                order: [
-                    ['building', 'ASC']
-                ]
-            })
+//                 order: [
+//                     ['building', 'ASC']
+//                 ]
+//             })
 
-            return res.json(buildings)
+//             return res.json(buildings)
 
-        } catch (error) {
-            console.error(error.message)
-        }
-    },
+//         } catch (error) {
+//             console.error(error.message)
+//         }
+//     },
 
-    getBuildingsBySteward: async (req, res) => {
+//     getBuildingsBySteward: async (req, res) => {
 
-        const { steward } = req.body
+//         const { steward } = req.body
 
-        try {
+//         try {
 
-            if (steward === 'All') {
-                const buildings = await Bldg_metadata.findAll({
-                    order: [
-                        ['building', 'ASC']
-                    ]
-                })
+//             if (steward === 'All') {
+//                 const buildings = await Bldg_metadata.findAll({
+//                     order: [
+//                         ['building', 'ASC']
+//                     ]
+//                 })
 
-                return res.json(buildings)
-            } else {
+//                 return res.json(buildings)
+//             } else {
 
-                const buildings = await Bldg_metadata.findAll({
-                    where: { steward },
-                    order: [
-                        ['building', 'ASC']
-                    ]
-                })
-                return res.json(buildings)
-            }
-        } catch (error) {
-            console.error(error.message)
-        }
+//                 const buildings = await Bldg_metadata.findAll({
+//                     where: { steward },
+//                     order: [
+//                         ['building', 'ASC']
+//                     ]
+//                 })
+//                 return res.json(buildings)
+//             }
+//         } catch (error) {
+//             console.error(error.message)
+//         }
 
-    }
-}
+//     }
+// }

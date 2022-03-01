@@ -98,9 +98,7 @@ app.get("/login", authorization.checkAuthenticated, (req, res) =>
     error: req.flash("error"),
   })
 );
-app.get("/register", authorization.checkAuthenticated, (req, res) =>
-  res.render("signup")
-);
+
 app.get("/forgot-password", authorization.checkAuthenticated, (req, res) =>
   res.render("userInfo/forgotPassword", {
     layout: 'loginLayout'
@@ -136,6 +134,7 @@ app.post(
   })
 );
 
+
 app.use("/", require("./routes/prjt_metadata"));
 app.use("/", require("./routes/prjt_costs_hours"));
 app.use("/", require("./routes/prjt_savings"));
@@ -144,7 +143,7 @@ app.use("/", require("./routes/prjt_baseline"));
 app.use("/", require("./routes/getDataById"));
 app.use("/", require("./routes/prjt_misc_savings"));
 app.use("/", require("./routes/users"));
-app.use("/", require("./routes/athenaData"));
+// app.use("/", require("./routes/athenaData"));
 app.use("/", require("./routes/meterAttributes"));
 app.use("/", require("./routes/apiGateway"));
 app.use("/", require("./routes/reviewedModels"));

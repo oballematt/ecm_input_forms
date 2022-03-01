@@ -21,7 +21,6 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Reviewed_models',
     tableName: 'reviewed_models',
-    timestamps: false
   });
   return Reviewed_models;
 };

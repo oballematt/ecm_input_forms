@@ -5,8 +5,8 @@ const Op = Sequelize.Op;
 const validator = require("validator");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
-let aws = require("@aws-sdk/client-ses");
-let { defaultProvider } = require("@aws-sdk/credential-provider-node");
+const aws = require("@aws-sdk/client-ses");
+const { defaultProvider } = require("@aws-sdk/credential-provider-node");
 require("dotenv").config();
 
 module.exports = {
