@@ -7,6 +7,8 @@ const session = require("express-session");
 const authorization = require("./middleware/authorization");
 const cors = require("cors");
 const compression = require("compression");
+const nodemailer = require("nodemailer");
+
 require("dotenv").config();
 
 const { sequelize } = require("./models");
@@ -99,8 +101,10 @@ app.get("/login", authorization.checkAuthenticated, (req, res) =>
 app.get("/register", authorization.checkAuthenticated, (req, res) =>
   res.render("signup")
 );
-app.get("/reset", authorization.checkAuthenticated, (req, res) =>
-  res.render("reset")
+app.get("/forgot-password", authorization.checkAuthenticated, (req, res) =>
+  res.render("userInfo/forgotPassword", {
+    layout: 'loginLayout'
+  })
 );
 app.get("/logout", (req, res) => {
   req.logout();
@@ -109,7 +113,7 @@ app.get("/logout", (req, res) => {
 
 app.get("/", authorization.checkNotAuthenticated, (req, res) => {
   if (req.user.role !== "Admin") {
-    res.render('landing/landingPublic', {layout: 'landingLayout'})
+    res.render("landing/landingPublic", { layout: "landingLayout" });
   } else {
     res.render("landing/landingAdmin", { layout: "landingLayout" });
   }
@@ -144,6 +148,8 @@ app.use("/", require("./routes/athenaData"));
 app.use("/", require("./routes/meterAttributes"));
 app.use("/", require("./routes/apiGateway"));
 app.use("/", require("./routes/reviewedModels"));
+
+
 
 app.listen(port, async () => {
   console.log(`Server started on port ${port}`);

@@ -985,34 +985,7 @@ $(document).ready(() => {
     );
   });
 
-  $(".register").on("click", function () {
-    $(".registerMessage").empty();
-    let data = {
-      name: $(".registerName").val(),
-      email: $(".registerEmail").val(),
-      password: $(".registerPassword").val(),
-      password2: $(".password2").val(),
-    };
-    $.ajax({
-      type: "POST",
-      url: "/register",
-      data: data,
-    }).then(function (response) {
-      console.log(response);
-      if (response.length > 0) {
-        $(".registerMessage").append(
-          `<div class="alert alert-danger" role="alert">
-                        ${response[0].text}
-                    </div`
-        );
-      } else {
-        $(".registerMessage").append(`
-                <div class="alert alert-success" role="alert">
-                    Registration successful! Please Login
-                </div`);
-      }
-    });
-  });
+  
 
   // clears items stored in session storage.
   $("#back").on("click", () => {

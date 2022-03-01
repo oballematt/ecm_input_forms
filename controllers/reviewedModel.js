@@ -36,7 +36,8 @@ module.exports = {
               truncate: true
           })
       } catch (error) {
-          
+        console.error(error);
+        return res.json(error);
       }
   }
 };

@@ -185,7 +185,7 @@ module.exports = {
     const { endTimestamp, startTimestamp, steward } = req.body;
     const email = req.user.email;
     try {
-      if (!steward || steward === 'All') {
+      if (!steward || steward === "All") {
         const token = await Model_api_authorization.findOne({
           where: {
             email: email,
@@ -235,10 +235,9 @@ module.exports = {
   },
 
   postModelNotes: async (req, res) => {
-    const { building_number, meter, notes } = req.body
+    const { building_number, meter, notes } = req.body;
     const email = req.user.email;
     try {
-
       const token = await Model_api_authorization.findOne({
         where: {
           email: email,
@@ -251,26 +250,24 @@ module.exports = {
         authorizationToken: token.token,
       };
 
-     const modelNotesData = {
-       data: {
-        building_number: JSON.parse(building_number),
-        meter: JSON.parse(meter),
-        notes: JSON.parse(notes)
-       }
-       
-      }
+      const modelNotesData = {
+        data: {
+          building_number: JSON.parse(building_number),
+          meter: JSON.parse(meter),
+          notes: JSON.parse(notes),
+        },
+      };
 
-      const modelNotes = process.env.POST_MODEL_NOTES
+      const modelNotes = process.env.POST_MODEL_NOTES;
 
       const response = await axios.post(modelNotes, modelNotesData, {
         headers: headers,
       });
 
-      return res.json(response.data)
-      
+      return res.json(response.data);
     } catch (error) {
       console.error(error);
       return res.json(error);
     }
-  }
+  },
 };
