@@ -7,7 +7,6 @@ const session = require("express-session");
 const authorization = require("./middleware/authorization");
 const cors = require("cors");
 const compression = require("compression");
-const nodemailer = require("nodemailer");
 
 require("dotenv").config();
 

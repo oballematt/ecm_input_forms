@@ -1,10 +1,9 @@
-let meterData = [];
-let reviewedModels = [];
-let analysisIndex;
-let replaceData = [];
+let meterData = []; //the data that is pushed into this array is used for the getModel function 
+let reviewedModels = []; //the data that is pushed to this array is used to determine if a meter has been reviewed when the page first loads or when a model is run
+let replaceData = []; //the data that is pushed to this array is used to send the replace data back to s3 using the user input from the replace data table that is below the charts.
 const d = new Date();
-let updateModelStart;
-let updateModelEnd;
+let updateModelStart;//These two variables are used for the google slider chart. These two are global variables so that copyModelDate function has access
+let updateModelEnd;//to these variables outside of the getModel function
 
 $(document).ready(() => {
   //Initialize Datepicker for model start and end and analysis start and end
@@ -15,34 +14,34 @@ $(document).ready(() => {
     dateFormat: "yy-mm-dd",
   });
 
-  //initializes the overlay and loading spinner when searching for a model
+  //initializes the overlay and loading spinner when searching for a model. This class is attached to the RUN MODEL button as well as the SUBMIT button on the replace data table
   $(".load").on("click", function() {
     $("#overlay").fadeIn();
   });
 
-  // This compares todays date to midnight and the start of next month. If both dates match then the /deleteModels route is called
-  // deleting all records from the reviewed_models table from postgres.
-  const lastDay = new Date(d.getFullYear(), d.getMonth() + 1, 1);
+ //This is supposed to delete the records in the table reviewed_model at the end of the month. I didnt take into account that someone needs to visit the
+ //metervalidation app in order for this script to run. This would be best implemented using a trigger function in pgAdmin to delete records at the end of the month.
+  // const lastDay = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1);
 
-  if (d === lastDay) {
-    $.ajax({
-      url: "/deleteModels",
-      type: "DELETE",
-    });
-  }
+  // if (d === lastDay) {
+  //   $.ajax({
+  //     url: "/deleteModels",
+  //     type: "DELETE",
+  //   });
+  // }
 
   //this function is responsible for using the ajax call on page load to populate the meter selection table.
-  //it also pulls data from the reviewed_models table in postgres
+  //it also pulls data from the reviewed_models table in postgres to indicate if a meter was previously reviewed.
   const getMeterAlarm = () => {
     $.when(
       $.ajax({
         url: "/getAlarm",
         type: "POST",
         data: {
-          startTimestamp: new Date(d.getFullYear(), d.getMonth() - 1, 1)
+          startTimestamp: new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1)
             .toISOString()
             .slice(0, 10),
-          endTimestamp: new Date(d.getFullYear(), d.getMonth(), 0)
+          endTimestamp: new Date(new Date().getFullYear(), new Date().getMonth(), 0)
             .toISOString()
             .slice(0, 10),
           steward: $("#filter-steward").val(),
@@ -59,6 +58,7 @@ $(document).ready(() => {
       ) {
         getMeterAlarm();
       } else {
+        //this else statement extends all the way to the $('.remove0) function
         console.log(response);
         $(".meterSelectionSpinner").hide();
         $(".apply").html("Apply");
@@ -68,7 +68,7 @@ $(document).ready(() => {
         const building_number = response[0].body.building_number;
         const commodity = response[0].body.commodity_tag;
         const notes = response[0].body.notes;
-
+        //This maps through the meter variable which is set to the response[0].body.meter. It will then populate the empty tablebody for the meter selection list.
         meter.map((meter, index) => {
           $(".meterList").append(`
             <tr>
@@ -84,6 +84,7 @@ $(document).ready(() => {
             `);
         });
 
+        //This click event displays the notes underneath the confirm meter selection button that are associated with the meter when a radio button is clicked.
         $('input[name="meterSelect"]').on("click", function() {
           const notes = $(this)
             .closest("tr")
@@ -148,6 +149,10 @@ $(document).ready(() => {
             });
           });
         });
+        //This on change event filters for meters that have or havent been reviewed using the reviewed select input above the meter selection table.
+        //If the value of the select input is "No" then all meters that havent been reviewed will be displayed and all the meters that have been reviewed will be hidden.
+        //If the value of the select input is "Yes" then all meters that have been reviewed will be displayed and all the meters that havent been reviewed will be hidden.
+        //If the value of the select input is "All"  then all meters will be displayed
         $(".reviewedFilter").on("change", function() {
           const value = $(this).val();
           $(".meterData tbody tr").each(function() {
@@ -181,6 +186,7 @@ $(document).ready(() => {
             }
           });
         });
+        //this on change function hides rows where # flagged days is equal to 0 if the value of the select input is "Yes"
         $(".remove0").on("change", function() {
           const value = $(this).val();
           $(".meterData tbody tr").each(function() {
@@ -200,16 +206,20 @@ $(document).ready(() => {
       }
     });
   };
-
+//getMeterAlarm is called on page load
   getMeterAlarm();
 
   //Calls the getMeterAlarm function only if the user wants to filter by a specific steward.
+  //This activates after the user has selected a steward to filter by and then has press the apply button that is appended to the steward select input
+  //Also everytime the apply button is clicked the meter selection table is refreshed using the load() function to refresh the meter selection table to display the stewards meters
   $(".filterBySteward").on("click", function() {
     $(".meterSelectionSpinner").show();
     $(".meterData").load(location.href + " .meterData");
     getMeterAlarm();
   });
 
+  //this function is used to review models. When the reviewed button is clicked the building and meter are sent to the reviewed_model table in postgres.
+  //then the reviewed model button is disabled and a checkmark is appended to the button to indicate that the model has been reviewed.
   const postModel = () => {
     $.ajax({
       url: "/postModels",
@@ -222,6 +232,10 @@ $(document).ready(() => {
       $(".reviewed").html(`Reviewed <i class="far fa-check-circle"></i>`);
       $(".reviewed").attr("disabled", true);
       $(".reviewed").addClass("btn-success");
+      //Each table cell in the Reviewed column has an id of whatever the meter is in that row. When the reviewed button is clicked on the model, it takes the 
+      //value of the currentMeter class and uses that as an id selector for the table cell for the Reviewed column in the meter selection table.
+      //It will then change the html output from 'No' to 'Yes' and then change the background color of the entire row to green. This is the indicate to the user that they
+      //have successfully reviewed that model
       $(`#${$(".currentMeter").text()}`).text("Yes");
       $(`#${$(".currentMeter").text()}`)
         .closest("tr")
@@ -229,33 +243,44 @@ $(document).ready(() => {
     });
   };
 
+  //This on change function will always set the model end date to 364 days ahead of the model start date
   $(".modelStart").on("change", function() {
     const modelStartDate = $(this).datepicker("getDate");
     modelStartDate.setDate(modelStartDate.getDate() + 364);
     $(".modelEnd").datepicker("setDate", modelStartDate);
   });
 
+  //This on change function will empty the global array variable meterData whenever a new radio button is selected in the meter selection table 
+  //This is necessary so that only the meter you select is used to search for the model, and not evey meter you may click.
   $(".meterData").on("change", $('input[name="meterSelect"]'), function() {
     meterData = [];
   });
+
+  //This is the on click event for the confirm meter selection button
   $(".confirmMeter").click(function() {
+    //when the confirm meter selection button is clicked, the model dates will automatically be determined.
+    //model start will be defaulted to the first day of the previous month of the previous year
     $(".modelStart").datepicker(
       "setDate",
-      new Date(d.getFullYear() - 1, d.getMonth() - 1, 1)
+      new Date(new Date().getFullYear() - 1, new Date().getMonth() - 1, 1)
     );
+    //model end will be defaulted to the default model start date + 364 days
     $(".modelEnd").datepicker(
       "setDate",
-      new Date(d.getFullYear() - 1, d.getMonth() - 1, +364)
+      new Date(new Date().getFullYear() - 1, new Date().getMonth() - 1, +364)
     );
+    //analysis start date will be defaulted to the first day of the previous month of the current year
     $(".analysisStart").datepicker(
       "setDate",
-      new Date(d.getFullYear(), d.getMonth() - 1, 1)
+      new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1)
     );
+    //analysis end date will be defaulted to the last day of the previous month of the current year
     $(".analysisEnd").datepicker(
       "setDate",
-      new Date(d.getFullYear(), d.getMonth(), 0)
+      new Date(new Date().getFullYear(), new Date().getMonth(), 0)
     );
 
+    //When the confirm meter selection button is clicked, the data for that specific row will be pushed into the global array variable meterData
     $('input[name="meterSelect"]:checked', $(".meterData")).each(function() {
       meterData.push({
         meter: $(this)
@@ -276,6 +301,7 @@ $(document).ready(() => {
           .text(),
       });
     });
+    //This populates the Current Meter Selection element with the confirmed meter
     $(".meterSelection").text(meterData[0].meter);
   });
 
@@ -290,13 +316,13 @@ $(document).ready(() => {
       $("#chartData").load(location.href + " #chartData");
       $(".tableData").load(location.href + " .tableData");
       $("#collapseRow").load(location.href + " #collapseRow");
-      modelApi();
+      getModel();
     }
   });
 
-  const modelApi = function() {
+  const getModel = function() {
     const endTime = new Date().toISOString().slice(0, 10);
-    const startTime = new Date(d.getFullYear() - 3, d.getMonth() - 1, 1)
+    const startTime = new Date(new Date().getFullYear() - 3, new Date().getMonth() - 1, 1)
       .toISOString()
       .slice(0, 10);
     const modelStart = $(".modelStart").val();
@@ -306,7 +332,7 @@ $(document).ready(() => {
     const buildingNumber = meterData[0].building_number;
     const commodity = meterData[0].commodity_tag;
     const meter = meterData[0].meter;
-
+  
     $.when(
       $.ajax({
         url: "/getModel",
@@ -322,7 +348,7 @@ $(document).ready(() => {
         },
         error: function(xhr, status, error, response) {
           if (xhr.status === 503) {
-            modelApi();
+            getModel();
             $(".overlayMessage").text(
               "Server not responding, trying your search again. Please do not refresh the page"
             );
@@ -361,7 +387,7 @@ $(document).ready(() => {
         response[0] === "Request failed with status code 503" ||
         response2[0] === "Request failed with status code 504"
       ) {
-        modelApi();
+        getModel();
         $(".overlayMessage").text(
           "Server not responding, trying your search again. Please do not refresh the page"
         );

@@ -136,9 +136,7 @@ module.exports = {
       (err, info) => {
         if (err) {
           console.log(err);
-        } else {
-          console.log(info);
-        }
+        } 
       }
     );
     return res.json({ status: "ok" });
