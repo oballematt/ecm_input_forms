@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const gatewayController = require('../controllers/apiGatewayModel')
+const gatewayController = require('../../controllers/meterValidation/apiGatewayModel')
 
 router.get('/getModel', gatewayController.getModel);
 

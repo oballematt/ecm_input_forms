@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const reviewedModelsController = require('../controllers/reviewedModel')
+const reviewedModelsController = require('../../controllers/meterValidation/reviewedModel')
 
 router.get('/reviewedModels', reviewedModelsController.getModels)
 

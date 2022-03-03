@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { Model_api_authorization } = require("../models");
+const { Model_api_authorization } = require("../../models");
 const axios = require("axios").default;
 module.exports = {
   getModel: async (req, res) => {

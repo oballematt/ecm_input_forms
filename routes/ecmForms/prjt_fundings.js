@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const authorization = require('../middleware/authorization')
+const authorization = require('../../middleware/authorization')
 
-const fundingController = require('../controllers/prjt_fundings');
+const fundingController = require('../../controllers/ecmForms/prjt_fundings');
 
 router.post('/update/funding/:id', fundingController.updateFunding);
 

@@ -1,4 +1,4 @@
-const { Meter_olsr_model } = require('../models')
+const { Meter_olsr_model } = require('../../models')
 
 module.exports = {
     getAttributes: async (req, res) => {

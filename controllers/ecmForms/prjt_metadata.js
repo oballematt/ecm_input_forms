@@ -1,5 +1,5 @@
 
-const { Prjt_metadata, Bldg_metadata, Prjt_status, Measure_types } = require('../models');
+const { Prjt_metadata, Bldg_metadata, Prjt_status, Measure_types } = require('../../models');
 
 
 module.exports = {

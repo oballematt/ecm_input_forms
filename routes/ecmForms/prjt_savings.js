@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const savingsController = require('../controllers/prjt_savings');
+const savingsController = require('../../controllers/ecmForms/prjt_savings');
 
 router.post('/savings', savingsController.createSavings);
 

@@ -6,6 +6,7 @@ const validator = require("validator");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const aws = require("@aws-sdk/client-ses");
+//This variable will automatially search the .env file for your aws access key and aws secret access key in order to access SES to use as the transporter for nodemailer
 const { defaultProvider } = require("@aws-sdk/credential-provider-node");
 require("dotenv").config();
 

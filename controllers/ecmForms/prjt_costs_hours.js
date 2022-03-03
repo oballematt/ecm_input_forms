@@ -1,17 +1,22 @@
-const { Prjt_funding, Prjt_metadata } = require('../models');
+const { Prjt_costs_hours, Prjt_metadata } = require('../../models');
 
 module.exports = {
 
-    createFunding: async (req, res) => {
+    // Add costs and hours to database
 
-        let { project_id, implementation, source, annual } = req.body;
+    createCostsHours: async (req, res) => {
+
+        let { project_id, imp_or_ann, category, cost, hours } = req.body;
+
 
         try {
-            const funding = await Prjt_funding.create({
-                project_id, implementation, source, annual
+
+            const costHours = await Prjt_costs_hours.create({
+               project_id, imp_or_ann, category, cost, hours,
             });
 
-            return res.json(funding);
+            return res.json(costHours)
+
 
         } catch (error) {
 
@@ -19,22 +24,21 @@ module.exports = {
             return res.status(500).json(error);
 
         }
-
     },
 
-    getOneFunding: async (req, res) => {
+    getOneCostsHours: async (req, res) => {
         const { id } = req.params
 
         try {
 
-            const funding = await Prjt_funding.findOne({
+            const costHours = await Prjt_costs_hours.findOne({
                 where: {
                     id
                 }
             });
 
-            return res.render('ecmForms/edit/editFundings', {
-                funding
+            return res.render('ecmForms/edit/editCostsHours', {
+                costHours
             });
 
         } catch (error) {
@@ -45,15 +49,14 @@ module.exports = {
         };
     },
 
-    updateFunding: async (req, res) => {
-
-        const { implementation, source, annual } = req.body;
-        const { id } = req.params
-
+    updateCostsHours: async (req, res) => {
         try {
 
-            const funding = await Prjt_funding.update({
-                implementation, source, annual
+            const { imp_or_ann, category, cost, hours } = req.body;
+            const { id } = req.params
+
+            const costHours = await Prjt_costs_hours.update({
+                imp_or_ann, category, cost, hours
             },
                 {
                     where: {
@@ -72,11 +75,12 @@ module.exports = {
 
     },
 
-    deleteFunding: async (req, res) => {
+    deleteCostsHours: async (req, res) => {
         const { id } = req.params;
 
         try {
-            await Prjt_funding.destroy({
+
+            const costHours = await Prjt_costs_hours.destroy({
                 where: {
                     id
                 }
@@ -90,6 +94,6 @@ module.exports = {
             return res.status(500).json(error);
 
         }
-    }
+    },
 
 }

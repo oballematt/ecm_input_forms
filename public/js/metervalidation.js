@@ -57,8 +57,8 @@ $(document).ready(() => {
         response[0] === "Request failed with status code 500"
       ) {
         getMeterAlarm();
-      } else {
         //this else statement extends all the way to the $('.remove0) function
+      } else {
         console.log(response);
         $(".meterSelectionSpinner").hide();
         $(".apply").html("Apply");
@@ -305,6 +305,8 @@ $(document).ready(() => {
     $(".meterSelection").text(meterData[0].meter);
   });
 
+  //This on click event is bound to the RUN MODEL button. If no meter has been selected in the meter selection table and the global array variable meterData is empty
+  //then an alert will popup indicating to the user that they havent selected a meter
   $(".loadModel").on("click", function(e) {
     e.preventDefault();
     if (meterData.length === 0) {
@@ -313,9 +315,12 @@ $(document).ready(() => {
       );
       $("#overlay").hide();
     } else {
+      //everytime the RUN MODEL button is clicked, the divs that contain the chart data, the google chart data that contains consumption data, and the replace data table
+      //will be refreshed so that the new data will be displayed when a new model is run
       $("#chartData").load(location.href + " #chartData");
       $(".tableData").load(location.href + " .tableData");
-      $("#collapseRow").load(location.href + " #collapseRow");
+      $("#consumptionRow").load(location.href + " #consumptionRow");
+      //calls the getModel function on click
       getModel();
     }
   });

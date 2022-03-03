@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const getOneByIdController = require('../controllers/getDataById');
-const authorization = require('../middleware/authorization')
+const getOneByIdController = require('../../controllers/ecmForms/getDataById');
+const authorization = require('../../middleware/authorization')
 
 router.post('/ecmforms', getOneByIdController.findData);
 

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const baselineController = require('../controllers/prjt_baseline');
+const baselineController = require('../../controllers/ecmForms/prjt_baseline');
 
 router.post('/baseline', baselineController.createBaseline);
 

@@ -1,7 +1,7 @@
 const router = require('express').Router()
-const authorization = require('../middleware/authorization')
+const authorization = require('../../middleware/authorization')
 
-const metadataController = require('../controllers/prjt_metadata')
+const metadataController = require('../../controllers/ecmForms/prjt_metadata')
 
 router.post('/ecmforms/metadata', metadataController.createMetadata)
 

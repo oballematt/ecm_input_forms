@@ -134,18 +134,18 @@ app.post(
 );
 
 
-app.use("/", require("./routes/prjt_metadata"));
-app.use("/", require("./routes/prjt_costs_hours"));
-app.use("/", require("./routes/prjt_savings"));
-app.use("/", require("./routes/prjt_fundings"));
-app.use("/", require("./routes/prjt_baseline"));
-app.use("/", require("./routes/getDataById"));
-app.use("/", require("./routes/prjt_misc_savings"));
+app.use("/", require("./routes/ecmForms/prjt_metadata"));
+app.use("/", require("./routes/ecmForms/prjt_costs_hours"));
+app.use("/", require("./routes/ecmForms/prjt_savings"));
+app.use("/", require("./routes/ecmForms/prjt_fundings"));
+app.use("/", require("./routes/ecmForms/prjt_baseline"));
+app.use("/", require("./routes/ecmForms/getDataById"));
+app.use("/", require("./routes/ecmForms/prjt_misc_savings"));
 app.use("/", require("./routes/users"));
 // app.use("/", require("./routes/athenaData"));
-app.use("/", require("./routes/meterAttributes"));
-app.use("/", require("./routes/apiGateway"));
-app.use("/", require("./routes/reviewedModels"));
+app.use("/", require("./routes/meterValidation/meterAttributes"));
+app.use("/", require("./routes/meterValidation/apiGateway"));
+app.use("/", require("./routes/meterValidation/reviewedModels"));
 
 
 

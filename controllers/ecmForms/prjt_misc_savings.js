@@ -1,21 +1,17 @@
-const { Prjt_costs_hours, Prjt_metadata } = require('../models');
+const { Prjt_misc_savings, Prjt_metadata } = require('../../models');
 
 module.exports = {
 
-    // Add costs and hours to database
-
-    createCostsHours: async (req, res) => {
-
-        let { project_id, imp_or_ann, category, cost, hours } = req.body;
-
+    createMiscSavings: async (req, res) => {
+        let { project_id, phase, misc_owner, misc_savings } = req.body;
 
         try {
 
-            const costHours = await Prjt_costs_hours.create({
-               project_id, imp_or_ann, category, cost, hours,
+            const miscSavings = await Prjt_misc_savings.create({
+                project_id, phase, misc_owner, misc_savings
             });
 
-            return res.json(costHours)
+            return res.json(miscSavings);
 
 
         } catch (error) {
@@ -26,19 +22,19 @@ module.exports = {
         }
     },
 
-    getOneCostsHours: async (req, res) => {
+    getOneMiscSavings: async (req, res) => {
         const { id } = req.params
 
         try {
 
-            const costHours = await Prjt_costs_hours.findOne({
+            const miscSavings = await Prjt_misc_savings.findOne({
                 where: {
                     id
                 }
             });
 
-            return res.render('ecmForms/edit/editCostsHours', {
-                costHours
+            return res.render('ecmForms/edit/editMiscSavings', {
+                miscSavings
             });
 
         } catch (error) {
@@ -49,14 +45,14 @@ module.exports = {
         };
     },
 
-    updateCostsHours: async (req, res) => {
+    updateMiscSavings: async (req, res) => {
         try {
 
-            const { imp_or_ann, category, cost, hours } = req.body;
+            const { phase, misc_owner, misc_savings } = req.body;
             const { id } = req.params
 
-            const costHours = await Prjt_costs_hours.update({
-                imp_or_ann, category, cost, hours
+            const miscSavings = await Prjt_misc_savings.update({
+                phase, misc_owner, misc_savings
             },
                 {
                     where: {
@@ -75,18 +71,17 @@ module.exports = {
 
     },
 
-    deleteCostsHours: async (req, res) => {
+    deleteMiscSavings: async (req, res) => {
         const { id } = req.params;
 
         try {
-
-            const costHours = await Prjt_costs_hours.destroy({
+            await Prjt_misc_savings.destroy({
                 where: {
                     id
                 }
             });
 
-            res.json("Deleted")
+            res.json("deleted")
 
         } catch (error) {
 
@@ -94,6 +89,5 @@ module.exports = {
             return res.status(500).json(error);
 
         }
-    },
-
+    }
 }

@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const authorization = require('../middleware/authorization')
+const authorization = require('../../middleware/authorization')
 
-const costsHoursController = require('../controllers/prjt_costs_hours');
+const costsHoursController = require('../../controllers/ecmForms/prjt_costs_hours');
 
 router.post('/update/costs_hours/:id', costsHoursController.updateCostsHours);
 

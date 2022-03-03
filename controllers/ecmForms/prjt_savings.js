@@ -1,34 +1,35 @@
-const { Prjt_baseline, Prjt_metadata } = require('../models');
+const { Prjt_savings, Prjt_metadata } = require('../../models');
 
 module.exports = {
 
-    createBaseline: async (req, res) => {
-        let { project_id, commodity, value } = req.body;
+    createSavings: async (req, res) => {
+        let { project_id, phase, commodity, value } = req.body;
 
         try {
-            
-            const baseline = await Prjt_baseline.create({
-                project_id, commodity, value
+
+            const savings = await Prjt_savings.create({
+                project_id, phase, commodity, value
             });
-            
-            return res.json(baseline);
+
+            return res.json(savings);
+
 
         } catch (error) {
 
             console.error(error.message);
             return res.status(500).json(error);
-            
-        };
+
+        }
     },
 
-    updateBaseline: async (req, res) => {
+    updateSavings: async (req, res) => {
         try {
-            
-            const { commodity, value }  = req.body;
+
+            const { phase, commodity, value } = req.body;
             const { id } = req.params
-    
-            const baseline = await Prjt_baseline.update({
-                commodity, value
+
+            const savings = await Prjt_savings.update({
+                phase, commodity, value
             },
                 {
                     where: {
@@ -36,22 +37,22 @@ module.exports = {
                     }
                 });
 
-                return res.redirect('/ecmforms')
+            return res.redirect('/ecmforms')
 
         } catch (error) {
 
             console.error(error.message);
             return res.status(500).json(error);
-            
+
         }
-        
+
     },
 
-    deleteBaseline: async (req, res) => {
+    deleteSavings: async (req, res) => {
         const { id } = req.params;
 
         try {
-            const baseline = await Prjt_baseline.destroy({ 
+            await Prjt_savings.destroy({
                 where: {
                     id
                 }
@@ -60,11 +61,10 @@ module.exports = {
             res.json("deleted")
 
         } catch (error) {
-            
+
             console.error(error.message);
             return res.status(500).json(error);
-            
+
         }
     }
-
 }

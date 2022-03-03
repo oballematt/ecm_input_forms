@@ -52,14 +52,14 @@ $(document).ready(() => {
         token: $("#tokenRp").val(),
       },
     }).then((response) => {
-      console.log(response)
+      console.log(response);
       if (response.status === "ok") {
         $(".reset-message")
           .removeClass("alert-danger")
           .addClass("alert-success")
           .show()
           .text(response.message);
-          $('#action').html('<a style="color: white" href="/">Log In</a>')
+        $("#action").html('<a style="color: white" href="/">Log In</a>');
         $("#resetPasswordForm").remove();
       } else {
         $(".reset-message")
@@ -67,7 +67,9 @@ $(document).ready(() => {
           .addClass("alert-danger")
           .show()
           .text(response.message);
-          $('#action').html('<a style="color: white" href="/forgot-password">Reset Password</a>')
+        $("#action").html(
+          '<a style="color: white" href="/forgot-password">Reset Password</a>'
+        );
       }
     });
   });
